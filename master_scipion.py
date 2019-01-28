@@ -405,6 +405,8 @@ def getScipionSchedulers(groupId):
     plugins.update({"scipion-em-locscale": locscalePluginData})
     for plugin in plugins:
         moduleName = str(plugin.rsplit('-', 1)[-1])
+        schedulers.append(triggerable.Triggerable(name="%s_%s" % (moduleName, groupId),
+                                                  builderNames=["%s_%s" % (moduleName, groupId)]))
 
         forceSchedulerName = '%s%s_%s' % (FORCE_BUILDER_PREFIX, moduleName, groupId)
         schedulers.append(

@@ -228,15 +228,7 @@ def getXmippBuilders(groupId):
     cudaEnv.update(env)
     installEnv = {'SCIPION_HOME': util.Property('SCIPION_HOME')}
     installEnv.update(cudaEnv)
-    builders.append(
-        BuilderConfig(name=XMIPP_INSTALL_PREFIX + groupId,
-                      workernames=[WORKER],
-                      tags=[groupId],
-                      factory=installXmippFactory(groupId),
-                      workerbuilddir=groupId,
-                      env=installEnv,
-                      properties=props)
-    )
+
 
     builders.append(
         BuilderConfig(name=XMIPP_BUNDLE_TESTS + groupId,
@@ -260,6 +252,16 @@ def getXmippBuilders(groupId):
         )
 
     else:
+        builders.append(
+            BuilderConfig(name=XMIPP_INSTALL_PREFIX + groupId,
+                          workernames=[WORKER],
+                          tags=[groupId],
+                          factory=installXmippFactory(groupId),
+                          workerbuilddir=groupId,
+                          env=installEnv,
+                          properties=props)
+        )
+
         builders.append(
             BuilderConfig(name=XMIPP_TESTS + groupId,
                           tags=[groupId],
