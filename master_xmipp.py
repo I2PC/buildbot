@@ -21,7 +21,6 @@ def xmippBashrc2Dict(rc, stdout, stderr):
         r = re.match('export (.*)=(.*)', l)
         if r:
             vars[r.group(1)] = r.group(2)
-
     return vars
 
 
