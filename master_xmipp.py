@@ -163,7 +163,6 @@ def xmippBundleFactory():
                                timeout=60))
 
     env = {k: util.Property(k) for k in XMIPP_BUNDLE_VARS}
-    env.update({"PATH": )
     xmippTestSteps.addStep(
         GenerateStagesCommand(command=["./xmipp", "test", "--show"],
                               name="Generate test stages for Xmipp programs",
