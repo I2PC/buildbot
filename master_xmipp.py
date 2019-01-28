@@ -69,14 +69,14 @@ def installXmippFactory(groupId):
     )
 
     installXmippSteps.addStep(
-        ShellCommand(command=changeConfVar('CUDA', CUDA, 'xmipp.conf'),
+        ShellCommand(command=changeConfVar('CUDA', CUDA, file='xmipp.conf'),
                      name='Set CUDA = True',
                      description='Set CUDA = True',
                      descriptionDone='Set CUDA = True',
                      timeout=300)
     )
     installXmippSteps.addStep(
-        ShellCommand(command=changeConfVar('NVCC', NVCC, 'xmipp.conf'),
+        ShellCommand(command=changeConfVar('NVCC', NVCC, file='xmipp.conf'),
                      name='Set NVCC',
                      description='Set NVCC',
                      descriptionDone='Set NVCC',
@@ -84,14 +84,14 @@ def installXmippFactory(groupId):
     )
     nvcc_cxxflags = '--x cu -D_FORCE_INLINES -Xcompiler -fPIC -Wno-deprecated-gpu-targets -ccbin g++-5'
     installXmippSteps.addStep(
-        ShellCommand(command=changeConfVar('NVCC_CXXFLAGS', NVCC_CXXFLAGS, 'xmipp.conf'),
+        ShellCommand(command=changeConfVar('NVCC_CXXFLAGS', NVCC_CXXFLAGS, file='xmipp.conf'),
                      name='Set NVCC_CXXFLAGS',
                      description='Set NVCC_CXXFLAGS',
                      descriptionDone='Set NVCC_CXXFLAGS',
                      timeout=300)
     )
     installXmippSteps.addStep(
-        ShellCommand(command=changeConfVar('NVCC_LINKFLAGS', NVCC_LINKFLAGS, 'xmipp.conf'),
+        ShellCommand(command=changeConfVar('NVCC_LINKFLAGS', NVCC_LINKFLAGS, file='xmipp.conf', escapeSlash=True),
                      name='Set NVCC_LINKFLAGS',
                      description='Set NVCC_LINKFLAGS',
                      descriptionDone='Set NVCC_LINKFLAGS',

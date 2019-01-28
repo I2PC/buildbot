@@ -71,5 +71,5 @@ XMIPP_SLACK_CHANNEL = "xmipp"
 CUDA = 'True'
 NVCC = 'nvcc'
 NVCC_CXXFLAGS = "--x cu -D_FORCE_INLINES -Xcompiler -fPIC -Wno-deprecated-gpu-targets -ccbin g++-5"
-NVCC_LINKFLAGS = '-L/usr/local/cuda/lib64'.replace('/', '\/')
+NVCC_LINKFLAGS = '-L/usr/local/cuda/lib64'
 

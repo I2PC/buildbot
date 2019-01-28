@@ -64,23 +64,21 @@ setNotifyAtFalse = ShellCommand(
 
 setMpiLibPath = ShellCommand(
     # command=changeConfVar.withArgs('MPI_LIBDIR', mpilibdir),
-    command=['sed', '-i', '-e',
-             's/MPI_LIBDIR = .*/MPI_LIBDIR = %s/' % MPI_LIBDIR,
-             'config/scipion.conf'],
+    command=changeConfVar("MPI_LIBDIR", MPI_LIBDIR, escapeSlash=True),
     name='Change MPI_LIBDIR',
     description='Add the right MPI_LIBDIR path',
     descriptionDone='Added MPI_LIBDIR',
     haltOnFailure=True)
 
 setMpiIncludePath = ShellCommand(
-    command=changeConfVar('MPI_INCLUDE', MPI_INCLUDE),
+    command=changeConfVar('MPI_INCLUDE', MPI_INCLUDE, escapeSlash=True),
     name='Change MPI_INCLUDE',
     description='Add the right MPI_INCLUDE path',
     descriptionDone='Added MPI_INCLUDE',
     haltOnFailure=True)
 
 setMpiBinPath = ShellCommand(
-    command=changeConfVar('MPI_BINDIR', MPI_BINDIR),
+    command=changeConfVar('MPI_BINDIR', MPI_BINDIR, escapeSlash=True),
     name='Change MPI_BINDIR',
     description='Add the right MPI_BINDIR path',
     descriptionDone='Added MPI_BINDIR',
