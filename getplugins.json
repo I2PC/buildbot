@@ -57,13 +57,13 @@
     "scipion-em-emxlib": {
         "pipName": "scipion-em-emxlib",
         "id": 15,
-        "name": "Emx",
+        "name": "emx",
         "pluginSourceUrl": "https://github.com/scipion-em/scipion-em-emxlib.git"
     },
     "scipion-em-locscale": {
         "pipName": "scipion-em-locscale",
         "id": 32,
-        "name": "Locscale",
+        "name": "locscale",
         "pluginSourceUrl": "https://github.com/scipion-em/scipion-em-locscale.git",
         "slackChannel": "locscale"
     },
@@ -148,5 +148,11 @@
           "id": 31,
           "name": "atomstructutils",
           "pluginSourceUrl": "https://github.com/scipion-em/scipion-em-atomstructutils"
+  },
+  "scipion-em-xmipp": {
+    "pipName": "scipion-em-xmipp",
+    "id": 31,
+    "name": "xmipp",
+    "slackChannel": "xmipp"
   }
 }

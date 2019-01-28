@@ -8,9 +8,11 @@ from buildbot.config import BuilderConfig
 from buildbot.schedulers import triggerable
 from buildbot.schedulers.forcesched import ForceScheduler
 
-from settings import (MPI_BINDIR, MPI_INCLUDE, MPI_LIBDIR, CUDA_LIB, CCP4_HOME, SCIPION_BUILD_ID,
-                      SCIPION_INSTALL_PREFIX, SCIPION_TESTS_PREFIX, PLUGINS_JSON_FILE, CLEANUP_PREFIX,
-                      FORCE_BUILDER_PREFIX, DEVEL_GROUP_ID, PHENIX_HOME, EMAN212, gitRepoURL, timeOutInstall, branchsDict)
+from settings import (MPI_BINDIR, MPI_INCLUDE, MPI_LIBDIR, CUDA_LIB, CCP4_HOME,
+                      SCIPION_BUILD_ID, SCIPION_INSTALL_PREFIX, SCIPION_TESTS_PREFIX,
+                      PLUGINS_JSON_FILE, CLEANUP_PREFIX, SCIPION_SLACK_CHANNEL,
+                      FORCE_BUILDER_PREFIX, DEVEL_GROUP_ID, PHENIX_HOME, EMAN212,
+                      gitRepoURL, timeOutInstall, branchsDict, WORKER)
 from common_utils import changeConfVar, GenerateStagesCommand
 
 # #############################################################################
@@ -21,6 +23,8 @@ with open(PLUGINS_JSON_FILE) as f:
     # read in order, since we have taken into account dependencies in
     # between plugins when completing the json file
     scipionPlugins = json.load(f, object_pairs_hook=OrderedDict)
+    xmippPluginData = scipionPlugins.pop('scipion-em-xmipp')
+    locscalePluginData = scipionPlugins.pop("scipion-em-locscale")
 
 # Remove config/scipion.conf
 removeScipionConf = ShellCommand(
@@ -269,10 +273,10 @@ def scipionTestFactory():
 # *****************************************************************************
 #                         PLUGIN FACTORY
 # *****************************************************************************
-def pluginFactory(pluginName, factorySteps=None):
+def pluginFactory(pluginName, factorySteps=None, shortname=None):
     factorySteps = factorySteps or util.BuildFactory()
     factorySteps.workdir = util.Property('SCIPION_HOME')
-    shortName = str(pluginName.rsplit('-', 1)[-1])  # todo: get module names more properly?
+    shortName = shortname or str(pluginName.rsplit('-', 1)[-1])  # todo: get module names more properly?
     factorySteps.addStep(ShellCommand(command=['./scipion', 'installp', '-p', pluginName],
                                       name='Install plugin %s' % shortName,
                                       description='Install plugin %s' % shortName,
@@ -315,16 +319,31 @@ def cleanUpFactory():
 # #############################################################################
 # ############################## BUILDERS #####################################
 # #############################################################################
+def getLocscaleBuilder(groupId, env):
+    builderFactory = util.BuildFactory()
+    builderFactory.addStep(installEman212)
+    locscaleEnv = {}
+    locscaleEnv.update(env)
+    locscaleEnv.update(EMAN212)
+    return BuilderConfig(name="%s_%s" % (locscalePluginData['name'], groupId),
+                      tags=[groupId, locscalePluginData['name']],
+                      workernames=[WORKER],
+                      factory=pluginFactory('scipion-em-locscale', factorySteps=builderFactory),
+                      workerbuilddir=groupId,
+                      properties={'slackChannel': locscalePluginData.get('slackChannel', "")},
+                      env=locscaleEnv)
+
 def getScipionBuilders(groupId):
     scipionBuilders = []
+    env = {"SCIPION_IGNORE_PYTHONPATH": "True"}
     scipionBuilders.append(
         BuilderConfig(name=SCIPION_INSTALL_PREFIX + groupId,
                       tags=[groupId],
                       workernames=['einstein'],
                       factory=installScipionFactory(groupId),
                       workerbuilddir=groupId,
-                      properties={"slackChannel": "buildbot"},
-                      env={"SCIPION_IGNORE_PYTHONPATH": "True"})
+                      properties={"slackChannel": SCIPION_SLACK_CHANNEL},
+                      env=env)
     )
     scipionBuilders.append(
         BuilderConfig(name=SCIPION_TESTS_PREFIX + groupId,
@@ -332,8 +351,8 @@ def getScipionBuilders(groupId):
                       workernames=['einstein'],
                       factory=scipionTestFactory(),
                       workerbuilddir=groupId,
-                      properties={'slackChannel': "buildbot"},
-                      env={"SCIPION_IGNORE_PYTHONPATH": "True"})
+                      properties={'slackChannel': SCIPION_SLACK_CHANNEL},
+                      env=env)
     )
 
     scipionBuilders.append(
@@ -342,39 +361,28 @@ def getScipionBuilders(groupId):
                       workernames=['einstein'],
                       factory=cleanUpFactory(),
                       workerbuilddir=groupId,
-                      properties={'slackChannel': "buildbot"},
-                      env={"SCIPION_IGNORE_PYTHONPATH": "True"})
+                      properties={'slackChannel': SCIPION_SLACK_CHANNEL},
+                      env=env)
     )
-    env = {"SCIPION_IGNORE_PYTHONPATH": "True"}
     if groupId == DEVEL_GROUP_ID:
         env['SCIPION_PLUGIN_JSON'] = 'plugins.json'
+
+    # special locscale case, we need to install eman212
+
     for plugin in scipionPlugins:
         moduleName = str(plugin.rsplit('-', 1)[-1])
         tags = [groupId, moduleName]
+        scipionBuilders.append(
+            BuilderConfig(name="%s_%s" % (moduleName, groupId),
+                          tags=tags,
+                          workernames=['einstein'],
+                          factory=pluginFactory(plugin),
+                          workerbuilddir=groupId,
+                          properties={'slackChannel': scipionPlugins[plugin].get('slackChannel', "")},
+                          env=env)
+        )
 
-        if moduleName == 'locscale':  # special case, depends on eman-2.12
-            builderFactory = util.BuildFactory()
-            builderFactory.addStep(installEman212)
-            env.update(EMAN212)
-            scipionBuilders.append(
-                BuilderConfig(name="%s_%s" % (moduleName, groupId),
-                              tags=tags,
-                              workernames=['einstein'],
-                              factory=pluginFactory(plugin, factorySteps=builderFactory),
-                              workerbuilddir=groupId,
-                              properties={'slackChannel': scipionPlugins[plugin].get('slackChannel', "")},
-                              env=env)
-            )
-        else:
-            scipionBuilders.append(
-                BuilderConfig(name="%s_%s" % (moduleName, groupId),
-                              tags=tags,
-                              workernames=['einstein'],
-                              factory=pluginFactory(plugin),
-                              workerbuilddir=groupId,
-                              properties={'slackChannel': scipionPlugins[plugin].get('slackChannel', "")},
-                              env=env)
-            )
+    scipionBuilders.append(getLocscaleBuilder(groupId, env))
 
     return scipionBuilders
 

@@ -6,11 +6,12 @@ from buildbot.config import BuilderConfig
 from buildbot.schedulers import triggerable
 from buildbot.schedulers.forcesched import ForceScheduler
 
-from settings import (XMIPP_SCRIPT_URL, XMIPP_BUILD_ID, SCIPION_BUILD_ID, XMIPP_INSTALL_PREFIX,
-                      XMIPP_TESTS, XMIPP_BUNDLE_TESTS, NVCC_LINKFLAGS, NVCC_CXXFLAGS, NVCC, CUDA, EMAN212,
-                      FORCE_BUILDER_PREFIX, branchsDict, timeOutInstall, WORKER)
+from settings import (XMIPP_SCRIPT_URL, XMIPP_BUILD_ID, SCIPION_BUILD_ID,
+                      XMIPP_INSTALL_PREFIX, timeOutInstall, WORKER, XMIPP_SLACK_CHANNEL,
+                      XMIPP_TESTS, XMIPP_BUNDLE_TESTS, NVCC_LINKFLAGS, NVCC_CXXFLAGS,
+                      NVCC, CUDA, EMAN212, FORCE_BUILDER_PREFIX, branchsDict, PROD_GROUP_ID)
 from common_utils import changeConfVar, GenerateStagesCommand
-
+from master_scipion import pluginFactory, xmippPluginData
 
 # #############################################################################
 # ########################## COMMANDS & UTILS #################################
@@ -219,18 +220,22 @@ def xmippTestFactory():
 
 def getXmippBuilders(groupId):
     builders = []
+    props = {'slackChannel': XMIPP_SLACK_CHANNEL}
+    env = {
+        "SCIPION_IGNORE_PYTHONPATH": "True",
+           }
+    cudaEnv = {'PATH': ["/usr/local/cuda/bin", "${PATH}"]}
+    cudaEnv.update(env)
+    installEnv = {'SCIPION_HOME': util.Property('SCIPION_HOME')}
+    installEnv.update(cudaEnv)
     builders.append(
         BuilderConfig(name=XMIPP_INSTALL_PREFIX + groupId,
                       workernames=[WORKER],
                       tags=[groupId],
                       factory=installXmippFactory(groupId),
                       workerbuilddir=groupId,
-                      env={'SCIPION_HOME': util.Property('SCIPION_HOME'),
-                           "SCIPION_IGNORE_PYTHONPATH": "True",
-                           'PATH': ["/usr/local/cuda/bin",
-                                    "${PATH}"]
-                           },
-                      properties={'slackChannel': "xmipp"})
+                      env=installEnv,
+                      properties=props)
     )
 
     builders.append(
@@ -239,11 +244,8 @@ def getXmippBuilders(groupId):
                       workernames=[WORKER],
                       factory=xmippBundleFactory(),
                       workerbuilddir=groupId,
-                      env={"SCIPION_IGNORE_PYTHONPATH": "True",
-                           'PATH': ["/usr/local/cuda/bin",
-                                    "${PATH}"]
-                           },
-                      properties={'slackChannel': "xmipp"})
+                      env=cudaEnv,
+                      properties=props)
     )
 
     builders.append(
@@ -252,9 +254,20 @@ def getXmippBuilders(groupId):
                       workernames=[WORKER],
                       factory=xmippTestFactory(),
                       workerbuilddir=groupId,
-                      properties={'slackChannel': "xmipp"},
-                      env={"SCIPION_IGNORE_PYTHONPATH": "True"})
+                      properties=props,
+                      env=env)
     )
+
+    if groupId == PROD_GROUP_ID:
+        builders.append(
+            BuilderConfig(name="%s_%s" % (xmippPluginData['name'], groupId),
+                          tags=[groupId, xmippPluginData['name']],
+                          workernames=['einstein'],
+                          factory=pluginFactory('scipion-em-xmipp', shortname='xmipp3'),
+                          workerbuilddir=groupId,
+                          properties={'slackChannel': xmippPluginData.get('slackChannel', "")},
+                          env=env)
+        )
 
     return builders
 

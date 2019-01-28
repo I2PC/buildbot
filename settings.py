@@ -55,6 +55,8 @@ SCIPION_INSTALL_PREFIX = 'Install_Scipion_'
 SCIPION_TESTS_PREFIX = 'Test_Scipion_'
 CLEANUP_PREFIX = 'CleanUp_'
 
+# slack channel
+SCIPION_SLACK_CHANNEL = "buildbot"
 
 ################### Xmipp settings ##################
 XMIPP_SCRIPT_URL = "https://raw.githubusercontent.com/I2PC/xmipp/devel/xmipp"
@@ -62,9 +64,12 @@ XMIPP_SCRIPT_URL = "https://raw.githubusercontent.com/I2PC/xmipp/devel/xmipp"
 XMIPP_INSTALL_PREFIX = 'Install_Xmipp_'
 XMIPP_TESTS = 'xmipp_'
 XMIPP_BUNDLE_TESTS = 'xmipp_bundle_'
+# slack channel
+XMIPP_SLACK_CHANNEL = "xmipp"
 
 # xmipp.conf variables
 CUDA = 'True'
 NVCC = 'nvcc'
 NVCC_CXXFLAGS = "--x cu -D_FORCE_INLINES -Xcompiler -fPIC -Wno-deprecated-gpu-targets -ccbin g++-5"
 NVCC_LINKFLAGS = '-L/usr/local/cuda/lib64'.replace('/', '\/')
+
