@@ -12,7 +12,7 @@ from settings import (MPI_BINDIR, MPI_INCLUDE, MPI_LIBDIR, CUDA_LIB, CCP4_HOME,
                       SCIPION_BUILD_ID, SCIPION_INSTALL_PREFIX, SCIPION_TESTS_PREFIX,
                       PLUGINS_JSON_FILE, CLEANUP_PREFIX, SCIPION_SLACK_CHANNEL,
                       FORCE_BUILDER_PREFIX, DEVEL_GROUP_ID, PHENIX_HOME, EMAN212,
-                      gitRepoURL, timeOutInstall, branchsDict, WORKER)
+                      gitRepoURL, timeOutInstall, branchsDict, WORKER, PROD_GROUP_ID)
 from common_utils import changeConfVar, GenerateStagesCommand
 
 # #############################################################################
@@ -400,6 +400,10 @@ def getScipionSchedulers(groupId):
                                                   builderNames=[name]))
         schedulers.append(ForceScheduler(name='%s%s' % (FORCE_BUILDER_PREFIX, name),
                                          builderNames=[name]))
+
+    plugins = {}
+    plugins.update(scipionPlugins)
+    plugins.update({"scipion-em-locscale": locscalePluginData})
     for plugin in scipionPlugins:
         moduleName = str(plugin.rsplit('-', 1)[-1])
 
