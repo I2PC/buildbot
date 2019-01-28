@@ -283,9 +283,10 @@ def getXmippBuilders(groupId):
 # #############################################################################
 
 def getXmippSchedulers(groupId):
-    xmippSchedulerNames = [XMIPP_INSTALL_PREFIX + groupId,
-                           XMIPP_BUNDLE_TESTS + groupId,
+    xmippSchedulerNames = [XMIPP_BUNDLE_TESTS + groupId,
                            XMIPP_TESTS + groupId]
+    if groupId != PROD_GROUP_ID:
+        xmippSchedulerNames.append(XMIPP_INSTALL_PREFIX + groupId)
     schedulers = []
     for name in xmippSchedulerNames:
         schedulers.append(
