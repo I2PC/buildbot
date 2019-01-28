@@ -248,16 +248,6 @@ def getXmippBuilders(groupId):
                       properties=props)
     )
 
-    builders.append(
-        BuilderConfig(name=XMIPP_TESTS + groupId,
-                      tags=[groupId],
-                      workernames=[WORKER],
-                      factory=xmippTestFactory(),
-                      workerbuilddir=groupId,
-                      properties=props,
-                      env=env)
-    )
-
     if groupId == PROD_GROUP_ID:
         builders.append(
             BuilderConfig(name="%s%s" % (XMIPP_TESTS, groupId),
@@ -266,6 +256,17 @@ def getXmippBuilders(groupId):
                           factory=pluginFactory('scipion-em-xmipp', shortname='xmipp3'),
                           workerbuilddir=groupId,
                           properties={'slackChannel': xmippPluginData.get('slackChannel', "")},
+                          env=env)
+        )
+
+    else:
+        builders.append(
+            BuilderConfig(name=XMIPP_TESTS + groupId,
+                          tags=[groupId],
+                          workernames=[WORKER],
+                          factory=xmippTestFactory(),
+                          workerbuilddir=groupId,
+                          properties=props,
                           env=env)
         )
 
