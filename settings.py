@@ -29,7 +29,7 @@ FORCE_BUILDER_PREFIX = 'Force_'
 # plugins are defined in plugins.json (e.g. using a pluginSourceUrl that points to the specific branch).
 # Buildbot will have one "orchestrator" builder for each build group, which will be in charge of
 # triggering the installation and testing stages of scipion, xmipp and each plugin.
-branchsDict = {DEVEL_GROUP_ID: {SCIPION_BUILD_ID: 'devel-pluginization-fixes',
+branchsDict = {DEVEL_GROUP_ID: {SCIPION_BUILD_ID: 'add_queuestepexecutor',
                                 XMIPP_BUILD_ID: 'devel'},
                PROD_GROUP_ID: {
                    SCIPION_BUILD_ID: 'devel-pluginization'
