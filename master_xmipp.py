@@ -163,6 +163,7 @@ def xmippBundleFactory():
                                timeout=60))
 
     env = {k: util.Property(k) for k in XMIPP_BUNDLE_VARS}
+    env.update({"PATH": )
     xmippTestSteps.addStep(
         GenerateStagesCommand(command=["./xmipp", "test", "--show"],
                               name="Generate test stages for Xmipp programs",
@@ -231,15 +232,15 @@ def getXmippBuilders(groupId):
     cudaEnv.update(env)
     installEnv = {'SCIPION_HOME': util.Property('SCIPION_HOME')}
     installEnv.update(cudaEnv)
-
-
+    bundleEnv = {'PATH': [util.Interpolate(" %(prop:SCIPION_HOME)s/software/bin"), "${PATH}"]}
+    bundleEnv.update(cudaEnv)
     builders.append(
         BuilderConfig(name=XMIPP_BUNDLE_TESTS + groupId,
                       tags=[groupId],
                       workernames=[WORKER],
                       factory=xmippBundleFactory(),
                       workerbuilddir=groupId,
-                      env=installEnv,
+                      env=bundleEnv,
                       properties=props)
     )
 
