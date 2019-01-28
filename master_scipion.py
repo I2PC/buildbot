@@ -325,8 +325,9 @@ def getLocscaleBuilder(groupId, env):
     locscaleEnv = {}
     locscaleEnv.update(env)
     locscaleEnv.update(EMAN212)
-    return BuilderConfig(name="%s_%s" % (locscalePluginData['name'], groupId),
-                      tags=[groupId, locscalePluginData['name']],
+    name = str(locscalePluginData['name'])
+    return BuilderConfig(name="%s_%s" % (name, groupId),
+                      tags=[groupId, name],
                       workernames=[WORKER],
                       factory=pluginFactory('scipion-em-locscale', factorySteps=builderFactory),
                       workerbuilddir=groupId,

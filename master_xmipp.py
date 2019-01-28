@@ -260,7 +260,7 @@ def getXmippBuilders(groupId):
 
     if groupId == PROD_GROUP_ID:
         builders.append(
-            BuilderConfig(name="%s_%s" % (XMIPP_TESTS, groupId),
+            BuilderConfig(name="%s%s" % (XMIPP_TESTS, groupId),
                           tags=[groupId, XMIPP_TESTS],
                           workernames=['einstein'],
                           factory=pluginFactory('scipion-em-xmipp', shortname='xmipp3'),
