@@ -239,7 +239,7 @@ def getXmippBuilders(groupId):
                       workernames=[WORKER],
                       factory=xmippBundleFactory(),
                       workerbuilddir=groupId,
-                      env=cudaEnv,
+                      env=installEnv,
                       properties=props)
     )
 
