@@ -9,7 +9,7 @@ from buildbot.schedulers.forcesched import ForceScheduler
 from settings import (XMIPP_SCRIPT_URL, XMIPP_BUILD_ID, SCIPION_BUILD_ID,
                       XMIPP_INSTALL_PREFIX, timeOutInstall, WORKER, XMIPP_SLACK_CHANNEL,
                       XMIPP_TESTS, XMIPP_BUNDLE_TESTS, NVCC_LINKFLAGS, NVCC_CXXFLAGS,
-                      NVCC, CUDA, EMAN212, FORCE_BUILDER_PREFIX, branchsDict, PROD_GROUP_ID)
+                      NVCC, CUDA, EMAN212, FORCE_BUILDER_PREFIX, branchsDict, PROD_GROUP_ID, XMIPP_BUNDLE_VARS)
 from common_utils import changeConfVar, GenerateStagesCommand
 from master_scipion import pluginFactory, xmippPluginData
 
@@ -162,23 +162,26 @@ def xmippBundleFactory():
                                descriptionDone='Get vars from xmipp.bashrc',
                                timeout=60))
 
+    env = {k: util.Property(k) for k in XMIPP_BUNDLE_VARS}
     xmippTestSteps.addStep(
         GenerateStagesCommand(command=["./xmipp", "test", "--show"],
-                              name="Generate test stages for Xmipp",
-                              description="Generating test stages for Xmipp",
-                              descriptionDone="Generate test stages for Xmipp",
+                              name="Generate test stages for Xmipp programs",
+                              description="Generating test stages for Xmipp programs",
+                              descriptionDone="Generate test stages for Xmipp programs",
                               haltOnFailure=False,
                               pattern='./xmipp test (.*)',
-                              stagePrefix=['./xmipp', 'test']))
+                              stagePrefix=['./xmipp', 'test'],
+                              env=env))
 
     xmippTestSteps.addStep(
         GenerateStagesCommand(command=["./xmipp", "test", "--show"],
-                              name="Generate test stages for Xmipp",
-                              description="Generating test stages for Xmipp",
-                              descriptionDone="Generate test stages for Xmipp",
+                              name="Generate test stages for Xmipp functions",
+                              description="Generating test stages for Xmipp functions",
+                              descriptionDone="Generate test stages for Xmipp functions",
                               haltOnFailure=False,
                               pattern='xmipp_test_(.*)',
-                              stagePrefix=[]))
+                              stagePrefix=[],
+                              env=env))
 
     return xmippTestSteps
 
@@ -209,7 +212,7 @@ def xmippTestFactory():
                               descriptionDone="Generate Scipion test stages for Xmipp",
                               haltOnFailure=False,
                               targetTestSet='xmipp3',
-                              envs=envs))
+                              stageEnvs=envs))
 
     return xmippTestSteps
 

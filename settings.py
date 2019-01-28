@@ -72,4 +72,5 @@ CUDA = 'True'
 NVCC = 'nvcc'
 NVCC_CXXFLAGS = "--x cu -D_FORCE_INLINES -Xcompiler -fPIC -Wno-deprecated-gpu-targets -ccbin g++-5"
 NVCC_LINKFLAGS = '-L/usr/local/cuda/lib64'
-
+XMIPP_BUNDLE_VARS = ["LD_LIBRARY_PATH", "PATH", "PYTHONPATH",
+                     "XMIPP_HOME", "XMIPP_SRC"]

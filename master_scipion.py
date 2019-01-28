@@ -263,7 +263,7 @@ def scipionTestFactory():
                               haltOnFailure=False,
                               targetTestSet='pyworkflow',
                               blacklist=blacklist,
-                              envs={wfRelionExtractStreaming: EMAN212}))
+                              stageEnvs={wfRelionExtractStreaming: EMAN212}))
 
     return scipionTestSteps
 

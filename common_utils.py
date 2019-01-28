@@ -39,7 +39,8 @@ class GenerateStagesCommand(buildstep.ShellMixin, steps.BuildStep):
         self.rootName = kwargs.pop('rootName', '')
         self.targetTestSet = kwargs.pop('targetTestSet', 'pyworkflow')
         self.blacklist = kwargs.pop('blacklist', [])
-        self.envs = kwargs.pop('envs', {})
+        self.stageEnvs = kwargs.pop('stageEnvs', {})
+        self.env = kwargs.pop('env', {})
         self.pattern = kwargs.pop('pattern', '')
         self.stagePrefix = kwargs.pop('stagePrefix', ["./scipion", "test"])
         kwargs = self.setupShellMixin(kwargs)
@@ -86,14 +87,16 @@ class GenerateStagesCommand(buildstep.ShellMixin, steps.BuildStep):
         if result == util.SUCCESS:
             # create a ShellCommand for each stage and add them to the build
             testShellCommands = []
+            env = self.env
             for stage in self.extract_stages(self.observer.getStdout()):
+                env.update(self.stageEnvs)
                 testShellCommands.append(steps.ShellCommand(
                     command=self.stagePrefix + [stage],
                     name=stage,
                     description="Testing %s" % self.rootName + stage.split('.')[-1],
                     descriptionDone=self.rootName + stage.split('.')[-1],
                     timeout=self.timeout,
-                    env=self.envs.get(stage, {})))
+                    env=env))
             self.build.addStepsAfterCurrentStep(testShellCommands)
 
         defer.returnValue(result)
