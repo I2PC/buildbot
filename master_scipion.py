@@ -262,6 +262,7 @@ def scipionTestFactory():
                               descriptionDone="Generate Scipion test stages",
                               haltOnFailure=False,
                               targetTestSet='pyworkflow',
+                              stagePrefix=["./scipion", "test"],
                               blacklist=blacklist,
                               stageEnvs={wfRelionExtractStreaming: EMAN212}))
 
@@ -286,6 +287,7 @@ def pluginFactory(pluginName, factorySteps=None, shortname=None):
                               name="Generate Scipion test stages for %s" % shortName,
                               description="Generating Scipion test stages for %s" % shortName,
                               descriptionDone="Generate Scipion test stages for %s" % shortName,
+                              stagePrefix=["./scipion", "test"],
                               haltOnFailure=False,
                               targetTestSet=shortName))
 

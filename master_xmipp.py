@@ -1,7 +1,7 @@
 import re
 
 from buildbot.plugins import util, steps
-from buildbot.steps.shell import ShellCommand, SetPropertyFromCommand
+from buildbot.steps.shell import ShellCommand, SetProperty, SetPropertyFromCommand
 from buildbot.config import BuilderConfig
 from buildbot.schedulers import triggerable
 from buildbot.schedulers.forcesched import ForceScheduler
@@ -23,6 +23,18 @@ def xmippBashrc2Dict(rc, stdout, stderr):
         if r:
             vars[r.group(1)] = r.group(2)
     return vars
+
+
+def glob2list(rc, stdout, stderr):
+    ''' Function used as the extrat_fn function for SetProperty class
+        This takes the output from env command and creates a dictionary of
+        the environment, the result of which is stored in a property names
+        env'''
+    if not rc:
+        env_list = [ l.strip() for l in stdout.split('\n') ]
+        env_dict={ l.split('=',1)[0]:l.split('=',1)[1] for l in
+                      env_list if len(l.split('=',1))==2 }
+        return {'env':env_dict}
 
 
 # *****************************************************************************
@@ -154,13 +166,16 @@ def installXmippFactory(groupId):
 def xmippBundleFactory():
     xmippTestSteps = util.BuildFactory()
     xmippTestSteps.workdir = XMIPP_BUILD_ID
-    xmippTestSteps.addStep(
-        SetPropertyFromCommand(command='cat build/xmipp.bashrc',
-                               extract_fn=xmippBashrc2Dict,
-                               name='Get vars from xmipp.bashrc',
-                               description='Get vars from xmipp.bashrc',
-                               descriptionDone='Get vars from xmipp.bashrc',
-                               timeout=60))
+    xmippTestSteps.addStep(SetProperty(command=["bash",  "-c", "source build/xmipp.bashrc; env"],
+                                       extract_fn=glob2list,
+                                       env={"SCIPION_HOME": util.Property("SCIPION_HOME")}))
+    # xmippTestSteps.addStep(
+    #     SetPropertyFromCommand(command='cat build/xmipp.bashrc',
+    #                            extract_fn=xmippBashrc2Dict,
+    #                            name='Get vars from xmipp.bashrc',
+    #                            description='Get vars from xmipp.bashrc',
+    #                            descriptionDone='Get vars from xmipp.bashrc',
+    #                            timeout=60))
 
     env = {k: util.Property(k) for k in XMIPP_BUNDLE_VARS}
     xmippTestSteps.addStep(
@@ -170,8 +185,7 @@ def xmippBundleFactory():
                               descriptionDone="Generate test stages for Xmipp programs",
                               haltOnFailure=False,
                               pattern='./xmipp test (.*)',
-                              stagePrefix=['./xmipp', 'test'],
-                              env=env))
+                              env=util.Property('env')))
 
     xmippTestSteps.addStep(
         GenerateStagesCommand(command=["./xmipp", "test", "--show"],
@@ -180,8 +194,7 @@ def xmippBundleFactory():
                               descriptionDone="Generate test stages for Xmipp functions",
                               haltOnFailure=False,
                               pattern='xmipp_test_(.*)',
-                              stagePrefix=[],
-                              env=env))
+                              env=util.Property('env')))
 
     return xmippTestSteps
 
@@ -211,6 +224,7 @@ def xmippTestFactory():
                               description="Generating Scipion test stages for Xmipp",
                               descriptionDone="Generate Scipion test stages for Xmipp",
                               haltOnFailure=False,
+                              stagePrefix=["./scipion", "test"],
                               targetTestSet='xmipp3',
                               stageEnvs=envs))
 
@@ -231,8 +245,9 @@ def getXmippBuilders(groupId):
     cudaEnv.update(env)
     installEnv = {'SCIPION_HOME': util.Property('SCIPION_HOME')}
     installEnv.update(cudaEnv)
-    bundleEnv = {'PATH': [util.Interpolate(" %(prop:SCIPION_HOME)s/software/bin"), "${PATH}"]}
+    bundleEnv = {}
     bundleEnv.update(cudaEnv)
+    bundleEnv.update(installEnv)
     builders.append(
         BuilderConfig(name=XMIPP_BUNDLE_TESTS + groupId,
                       tags=[groupId],

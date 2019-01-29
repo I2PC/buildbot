@@ -42,7 +42,7 @@ class GenerateStagesCommand(buildstep.ShellMixin, steps.BuildStep):
         self.stageEnvs = kwargs.pop('stageEnvs', {})
         self.env = kwargs.pop('env', {})
         self.pattern = kwargs.pop('pattern', '')
-        self.stagePrefix = kwargs.pop('stagePrefix', ["./scipion", "test"])
+        self.stagePrefix = kwargs.pop('stagePrefix', [])
         kwargs = self.setupShellMixin(kwargs)
         steps.BuildStep.__init__(self, **kwargs)
         self.observer = logobserver.BufferLogObserver()
@@ -89,9 +89,10 @@ class GenerateStagesCommand(buildstep.ShellMixin, steps.BuildStep):
             testShellCommands = []
             env = self.env
             for stage in self.extract_stages(self.observer.getStdout()):
+
                 env.update(self.stageEnvs)
                 testShellCommands.append(steps.ShellCommand(
-                    command=self.stagePrefix + [stage],
+                    command=self.stagePrefix + stage.strip().split(),
                     name=stage,
                     description="Testing %s" % self.rootName + stage.split('.')[-1],
                     descriptionDone=self.rootName + stage.split('.')[-1],
