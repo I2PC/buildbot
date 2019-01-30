@@ -90,7 +90,7 @@ class GenerateStagesCommand(buildstep.ShellMixin, steps.BuildStep):
             env = self.env
             for stage in self.extract_stages(self.observer.getStdout()):
 
-                env.update(self.stageEnvs)
+                env.update(self.stageEnvs.get(stage, {}))
                 testShellCommands.append(steps.ShellCommand(
                     command=self.stagePrefix + stage.strip().split(),
                     name=stage,
