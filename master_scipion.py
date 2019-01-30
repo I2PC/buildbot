@@ -57,7 +57,7 @@ def setNotifyAtFalse(configPath='$HOME/.config/scipion/scipion.conf'):
     return ShellCommand(
         command=['bash', '-c', 'sed -i -e '
                                '"s/MPI_LIBDIR = True/'
-                               'SCIPION_NOTIFY = False/g" ' % configPath],
+                               'SCIPION_NOTIFY = False/g" %s' % configPath],
         name='Cancel notifications',
         description='Do not notify usage. Server will be out of '
                     'the blacklist in order for the notify test to work',
