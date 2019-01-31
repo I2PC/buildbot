@@ -35,10 +35,8 @@ removeScipionConf = ShellCommand(
     haltOnFailure=False)
 
 # Remove HOME/.config/scipion/scipion.conf
-def removeHomeConfig(configPath=""):
-    if configPath == "":
-        configPath = "$HOME/.config/scipion/scipion.conf"
-    return ShellCommand(command=['bash', '-c', 'rm %s' % configPath],
+removeHomeConfig = ShellCommand(command=['bash', '-c',
+                                 util.Interpolate("rm %(prop:SCIPION_LOCAL_CONFIG)s")],
                         name='Clean Scipion Config at USERS HOME',
                         description='Delete existing conf file at users HOME',
                         descriptionDone='Remove USER HOME scipion.conf',
@@ -53,11 +51,10 @@ configScipion = ShellCommand(
     haltOnFailure=True)
 
 # Avoid notifications from BuildBot
-def setNotifyAtFalse(configPath='$HOME/.config/scipion/scipion.conf'):
-    return ShellCommand(
-        command=['bash', '-c', 'sed -i -e '
-                               '"s/MPI_LIBDIR = True/'
-                               'SCIPION_NOTIFY = False/g" %s' % configPath],
+setNotifyAtFalse = ShellCommand(
+        command=['bash', '-c', util.Interpolate('sed -i -e '
+                                                '"s/MPI_LIBDIR = True/'
+                                                'SCIPION_NOTIFY = False/g" %(prop:SCIPION_LOCAL_CONFIG)s')],
         name='Cancel notifications',
         description='Do not notify usage. Server will be out of '
                     'the blacklist in order for the notify test to work',
@@ -104,11 +101,12 @@ setDataTestsDir = ShellCommand(
 def renderScipionUserDataCmd(props):
     command = ['bash', '-c']
     userDataHome = props.getProperty('BUILD_GROUP_HOME')
+    userConfig = props.getProperty('SCIPION_LOCAL_CONFIG')
     if userDataHome:
         command.append('sed -i -e '
                        '"s/SCIPION_USER_DATA = ~\/ScipionUserData/'
                        'SCIPION_USER_DATA = %s\/ScipionUserData/g" '
-                       '$HOME/.config/scipion/scipion.conf' % userDataHome.replace('/', '\/'))
+                       '%s' % (userDataHome.replace('/', '\/'), userConfig))
 
     return command
 
@@ -120,25 +118,22 @@ setScipionUserData = ShellCommand(
     descriptionDone='Change ScipionUserData dir',
     haltOnFailure=True)
 
-def setMotioncorrCuda(configPath='$HOME/.config/scipion/scipion.conf'):
-    return ShellCommand(
-    command='sed -ie "\$aMOTIONCORR_CUDA_LIB = %s" %s' % (CUDA_LIB, configPath),
+setMotioncorrCuda = ShellCommand(
+    command=util.Interpolate('sed -ie "\$aMOTIONCORR_CUDA_LIB = {}" %(prop:SCIPION_LOCAL_CONFIG)s'.format(CUDA_LIB)),
     name='Set MOTIONCORR_CUDA_LIB in scipion conf',
     description='Set MOTIONCORR_CUDA_LIB in scipion conf',
     descriptionDone='Set MOTIONCORR_CUDA_LIB in scipion conf',
     haltOnFailure=True)
 
-def setCcp4Home(configPath='$HOME/.config/scipion/scipion.conf'):
-    return ShellCommand(
-    command='sed -ie "\$aCCP4_HOME = %s" %s' % (CCP4_HOME, configPath),
+setCcp4Home = ShellCommand(
+    command=util.Interpolate('sed -ie "\$aCCP4_HOME = {}" %(prop:SCIPION_LOCAL_CONFIG)s'.format(CCP4_HOME)),
     name='Set CCP4_HOME in scipion conf',
     description='Set CCP4_HOME in scipion conf',
     descriptionDone='Set CCP4_HOME in scipion conf',
     haltOnFailure=True)
 
-def setPhenixHome(configPath='$HOME/.config/scipion/scipion.conf'):
-    return ShellCommand(
-    command='sed -ie "\$aPHENIX_HOME = %s" %s' % (PHENIX_HOME, configPath),
+setPhenixHome = ShellCommand(
+    command=util.Interpolate('sed -ie "\$aPHENIX_HOME = {}" %(prop:SCIPION_LOCAL_CONFIG)s'.format(PHENIX_HOME)),
     name='Set PHENIX_HOME in scipion conf',
     description='Set PHENIX_HOME in scipion conf',
     descriptionDone='Set PHENIX_HOME in scipion conf',
@@ -188,9 +183,9 @@ def addScipionGitAndConfigSteps(factorySteps, groupId):
 
     factorySteps.addStep(removeScipionConf)
 
-    factorySteps.addStep(removeHomeConfig(configPath=util.Property('SCIPION_LOCAL_CONFIG')))
+    factorySteps.addStep(removeHomeConfig)
     factorySteps.addStep(configScipion)
-    factorySteps.addStep(setNotifyAtFalse(configPath=util.Property('SCIPION_LOCAL_CONFIG')))
+    factorySteps.addStep(setNotifyAtFalse)
     factorySteps.addStep(setMpiLibPath)
     factorySteps.addStep(setMpiBinPath)
     factorySteps.addStep(setMpiIncludePath)
@@ -238,9 +233,9 @@ def installScipionFactory(groupId):
                      haltOnFailure=True))
     installScipionFactorySteps.addStep(
         steps.JSONStringDownload(scipionPlugins, workerdest="plugins.json"))
-    installScipionFactorySteps.addStep(setMotioncorrCuda(configPath=util.Property('SCIPION_LOCAL_CONFIG')))
-    installScipionFactorySteps.addStep(setPhenixHome(configPath=util.Property('SCIPION_LOCAL_CONFIG')))
-    installScipionFactorySteps.addStep(setCcp4Home(configPath=util.Property('SCIPION_LOCAL_CONFIG')))
+    installScipionFactorySteps.addStep(setMotioncorrCuda)
+    installScipionFactorySteps.addStep(setPhenixHome)
+    installScipionFactorySteps.addStep(setCcp4Home)
     return installScipionFactorySteps
 
 # *****************************************************************************

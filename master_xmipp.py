@@ -168,7 +168,8 @@ def xmippBundleFactory():
     xmippTestSteps.workdir = XMIPP_BUILD_ID
     xmippTestSteps.addStep(SetProperty(command=["bash",  "-c", "source build/xmipp.bashrc; env"],
                                        extract_fn=glob2list,
-                                       env={"SCIPION_HOME": util.Property("SCIPION_HOME")}))
+                                       env={"SCIPION_HOME": util.Property("SCIPION_HOME"),
+                                            "SCIPION_LOCAL_CONFIG": util.Property("SCIPION_LOCAL_CONFIG")}))
     # xmippTestSteps.addStep(
     #     SetPropertyFromCommand(command='cat build/xmipp.bashrc',
     #                            extract_fn=xmippBashrc2Dict,
@@ -177,7 +178,6 @@ def xmippBundleFactory():
     #                            descriptionDone='Get vars from xmipp.bashrc',
     #                            timeout=60))
 
-    env = {k: util.Property(k) for k in XMIPP_BUNDLE_VARS}
     xmippTestSteps.addStep(
         GenerateStagesCommand(command=["./xmipp", "test", "--show"],
                               name="Generate test stages for Xmipp programs",
