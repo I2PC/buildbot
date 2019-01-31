@@ -240,6 +240,7 @@ def getXmippBuilders(groupId):
     props = {'slackChannel': XMIPP_SLACK_CHANNEL}
     env = {
         "SCIPION_IGNORE_PYTHONPATH": "True",
+        "SCIPION_LOCAL_CONFIG": util.Property("SCIPION_LOCAL_CONFIG")
            }
     cudaEnv = {'PATH': ["/usr/local/cuda/bin", "${PATH}"]}
     cudaEnv.update(env)
