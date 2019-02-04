@@ -118,9 +118,9 @@ def installXmippFactory(groupId):
     )
     installXmippSteps.addStep(
         ShellCommand(command=['./xmipp', 'install'],
-                     name='Compile Xmipp',
-                     description='Compile Xmipp',
-                     descriptionDone='Compiled Xmipp',
+                     name='Install Xmipp',
+                     description='Install Xmipp',
+                     descriptionDone='Installed Xmipp',
                      timeout=300)
     )
 
