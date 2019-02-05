@@ -373,13 +373,13 @@ def getScipionBuilders(groupId):
     # special locscale case, we need to install eman212
 
     for plugin in scipionPlugins:
-        moduleName = str(plugin.rsplit('-', 1)[-1])
+        moduleName = str(plugin.rsplit('-', 1)[-1])  # TODO: get module name more properly
         tags = [groupId, moduleName]
         scipionBuilders.append(
             BuilderConfig(name="%s_%s" % (moduleName, groupId),
                           tags=tags,
                           workernames=['einstein'],
-                          factory=pluginFactory(plugin),
+                          factory=pluginFactory(plugin, shortname=scipionPlugins[plugin].get("name", moduleName)),
                           workerbuilddir=groupId,
                           properties={'slackChannel': scipionPlugins[plugin].get('slackChannel', "")},
                           env=env)
