@@ -379,7 +379,7 @@ def getScipionBuilders(groupId):
             BuilderConfig(name="%s_%s" % (moduleName, groupId),
                           tags=tags,
                           workernames=['einstein'],
-                          factory=pluginFactory(plugin, shortname=scipionPlugins[plugin].get("name", moduleName)),
+                          factory=pluginFactory(plugin, shortname=str(scipionPlugins[plugin].get("name", moduleName))),
                           workerbuilddir=groupId,
                           properties={'slackChannel': scipionPlugins[plugin].get('slackChannel', "")},
                           env=env)
