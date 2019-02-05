@@ -2,14 +2,14 @@
   "scipion-em-grigoriefflab": {
         "pipName": "scipion-em-grigoriefflab",
         "id": 11,
-        "name": "Grigorieff lab",
+        "name": "grigoriefflab",
         "pluginSourceUrl": "https://github.com/scipion-em/scipion-em-grigoriefflab.git",
         "slackChannel":"grigoriefflab"
     },
      "scipion-em-eman2": {
         "pipName": "scipion-em-eman2",
         "id": 4,
-        "name": "Eman",
+        "name": "eman2",
         "pluginSourceUrl": "https://github.com/scipion-em/scipion-em-eman2.git",
         "slackChannel":"eman"
     },
@@ -29,28 +29,28 @@
     "scipion-em-resmap": {
         "pipName": "scipion-em-resmap",
         "id": 20,
-        "name": "Resmap",
+        "name": "resmap",
         "pluginSourceUrl": "https://github.com/scipion-em/scipion-em-resmap.git",
         "slackChannel": "resmap"
     },
     "scipion-em-bsoft": {
         "pipName": "scipion-em-bsoft",
         "id": 13,
-        "name": "BSOFT",
+        "name": "bsoft",
         "pluginSourceUrl": "https://github.com/scipion-em/scipion-em-bsoft.git",
         "slackChannel":"bsoft"
     },
     "scipion-em-chimera": {
         "pipName": "scipion-em-chimera",
         "id": 27,
-        "name": "Chimera",
+        "name": "chimera",
         "pluginSourceUrl": "https://github.com/scipion-em/scipion-em-chimera.git",
         "slackChannel" : "chimera"
     },
     "scipion-em-appion": {
         "pipName": "scipion-em-appion",
         "id": 14,
-        "name": "Appion",
+        "name": "appion",
         "pluginSourceUrl": "https://github.com/scipion-em/scipion-em-appion.git",
         "slackChannel":"appion"
     },
@@ -106,7 +106,7 @@
   "scipion-em-powerfit": {
           "pipName": "scipion-em-powerfit",
           "id": 31,
-          "name": "powerfit",
+          "name": "powerfit_scipion",
           "pluginSourceUrl": "https://github.com/scipion-em/scipion-em-powerfit.git",
           "slackChannel": "powerfit"
       },
