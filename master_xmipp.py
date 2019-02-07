@@ -73,8 +73,15 @@ def installXmippFactory(groupId):
                      timeout=300))
 
     installXmippSteps.addStep(
+        ShellCommand(command=['./xmipp', 'get_dependencies', xmippBranch],
+                     name='./xmipp get_dependencies',
+                     description='Get Xmipp dependencies',
+                     descriptionDone='Get Xmipp dependencies',
+                     timeout=300))
+
+    installXmippSteps.addStep(
         ShellCommand(command=['./xmipp', 'config'],
-                     name='Generate xmipp config',
+                     name='./xmipp config',
                      description='Generate xmipp config',
                      descriptionDone='Generate xmipp config',
                      timeout=300)
@@ -111,14 +118,14 @@ def installXmippFactory(groupId):
     )
     installXmippSteps.addStep(
         ShellCommand(command=['./xmipp', 'compile', '8'],
-                     name='Compile Xmipp',
+                     name='./xmipp compile',
                      description='Compile Xmipp',
                      descriptionDone='Compiled Xmipp',
                      timeout=300)
     )
     installXmippSteps.addStep(
         ShellCommand(command=['./xmipp', 'install'],
-                     name='Install Xmipp',
+                     name='./xmipp install',
                      description='Install Xmipp',
                      descriptionDone='Installed Xmipp',
                      timeout=300)
