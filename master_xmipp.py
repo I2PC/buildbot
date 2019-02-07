@@ -13,6 +13,7 @@ from settings import (XMIPP_SCRIPT_URL, XMIPP_BUILD_ID, SCIPION_BUILD_ID,
 from common_utils import changeConfVar, GenerateStagesCommand
 from master_scipion import pluginFactory, xmippPluginData
 
+
 # #############################################################################
 # ########################## COMMANDS & UTILS #################################
 # #############################################################################
@@ -31,10 +32,10 @@ def glob2list(rc, stdout, stderr):
         the environment, the result of which is stored in a property names
         env'''
     if not rc:
-        env_list = [ l.strip() for l in stdout.split('\n') ]
-        env_dict={ l.split('=',1)[0]:l.split('=',1)[1] for l in
-                      env_list if len(l.split('=',1))==2 }
-        return {'env':env_dict}
+        env_list = [l.strip() for l in stdout.split('\n')]
+        env_dict = {l.split('=', 1)[0]: l.split('=', 1)[1] for l in
+                    env_list if len(l.split('=', 1)) == 2}
+        return {'env': env_dict}
 
 
 # *****************************************************************************
@@ -63,7 +64,14 @@ def installXmippFactory(groupId):
                      descriptionDone='Xmipp script made executable',
                      timeout=300))
 
-    xmippBranch = branchsDict[groupId].get(XMIPP_BUILD_ID, None)
+    installXmippSteps.addStep(
+        ShellCommand(command=['rm', '-f', 'xmipp.conf'],
+                     name='Clean Xmipp Config',
+                     description='Delete existing xmipp.conf',
+                     descriptionDone='Remove xmipp.conf',
+                     haltOnFailure=False))
+
+    xmippBranch = branchsDict[groupId].get(XMIPP_BUILD_ID, "")
 
     installXmippSteps.addStep(
         ShellCommand(command=['./xmipp', 'get_devel_sources', xmippBranch],
@@ -173,17 +181,10 @@ def installXmippFactory(groupId):
 def xmippBundleFactory():
     xmippTestSteps = util.BuildFactory()
     xmippTestSteps.workdir = XMIPP_BUILD_ID
-    xmippTestSteps.addStep(SetProperty(command=["bash",  "-c", "source build/xmipp.bashrc; env"],
+    xmippTestSteps.addStep(SetProperty(command=["bash", "-c", "source build/xmipp.bashrc; env"],
                                        extract_fn=glob2list,
                                        env={"SCIPION_HOME": util.Property("SCIPION_HOME"),
                                             "SCIPION_LOCAL_CONFIG": util.Property("SCIPION_LOCAL_CONFIG")}))
-    # xmippTestSteps.addStep(
-    #     SetPropertyFromCommand(command='cat build/xmipp.bashrc',
-    #                            extract_fn=xmippBashrc2Dict,
-    #                            name='Get vars from xmipp.bashrc',
-    #                            description='Get vars from xmipp.bashrc',
-    #                            descriptionDone='Get vars from xmipp.bashrc',
-    #                            timeout=60))
 
     xmippTestSteps.addStep(
         GenerateStagesCommand(command=["./xmipp", "test", "--show"],
@@ -248,7 +249,7 @@ def getXmippBuilders(groupId):
     env = {
         "SCIPION_IGNORE_PYTHONPATH": "True",
         "SCIPION_LOCAL_CONFIG": util.Property("SCIPION_LOCAL_CONFIG")
-           }
+    }
     cudaEnv = {'PATH': ["/usr/local/cuda/bin", "${PATH}"]}
     cudaEnv.update(env)
     installEnv = {'SCIPION_HOME': util.Property('SCIPION_HOME')}
