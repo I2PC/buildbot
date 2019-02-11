@@ -109,7 +109,6 @@ def installXmippFactory(groupId):
                      descriptionDone='Set NVCC',
                      timeout=300)
     )
-    nvcc_cxxflags = '--x cu -D_FORCE_INLINES -Xcompiler -fPIC -Wno-deprecated-gpu-targets -ccbin g++-5'
     installXmippSteps.addStep(
         ShellCommand(command=changeConfVar('NVCC_CXXFLAGS', NVCC_CXXFLAGS, file='xmipp.conf'),
                      name='Set NVCC_CXXFLAGS',
