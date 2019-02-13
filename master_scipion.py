@@ -329,7 +329,7 @@ def cleanUpFactory(rmAll=True):
 
     else:
         cleanUpSteps.workdir = util.Property('SCIPION_HOME')
-        cleanUpSteps.addStep(ShellCommand(command=['scipion', 'python', 'pyworkflow/install/clean.py'],
+        cleanUpSteps.addStep(ShellCommand(command=['./scipion', 'python', 'pyworkflow/install/clean.py'],
                                           name='Cleaning Scipion',
                                           description='Cleaning Scipion',
                                           descriptionDone='Cleaning Scipion',
