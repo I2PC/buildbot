@@ -141,9 +141,9 @@ setPhenixHome = ShellCommand(
 
 setChimeraHome = ShellCommand(
     command=util.Interpolate('sed -ie "\$CHIMERA_HOME = {}" %(prop:SCIPION_LOCAL_CONFIG)s'.format(CHIMERA_HOME)),
-    name='Set PHENIX_HOME in scipion conf',
-    description='Set PHENIX_HOME in scipion conf',
-    descriptionDone='Set PHENIX_HOME in scipion conf',
+    name='Set CHIMERA_HOME in scipion conf',
+    description='Set CHIMERA_HOME in scipion conf',
+    descriptionDone='Set CHIMERA_HOME in scipion conf',
     haltOnFailure=True)
 
 installEman212 = ShellCommand(command=['./scipion', 'installb', 'eman-2.12'],
