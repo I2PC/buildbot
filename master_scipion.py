@@ -140,7 +140,8 @@ setPhenixHome = ShellCommand(
     haltOnFailure=True)
 
 setChimeraHome = ShellCommand(
-    command=util.Interpolate('sed -ie "\$CHIMERA_HOME = {}" %(prop:SCIPION_LOCAL_CONFIG)s'.format(CHIMERA_HOME)),
+    command=util.Interpolate('sed -ie "s/CHIMERA_HOME = .*/CHIMERA_HOME = {}/"'
+                             ' %(prop:SCIPION_LOCAL_CONFIG)s'.format(CHIMERA_HOME.replace('/', '\/'))),
     name='Set CHIMERA_HOME in scipion conf',
     description='Set CHIMERA_HOME in scipion conf',
     descriptionDone='Set CHIMERA_HOME in scipion conf',
@@ -308,21 +309,31 @@ def pluginFactory(pluginName, factorySteps=None, shortname=None, doInstall=True,
 # *****************************************************************************
 #                         CLEAN-UP FACTORY
 # *****************************************************************************
-def cleanUpFactory():
+def cleanUpFactory(rmAll=True):
     cleanUpSteps = util.BuildFactory()
-    cleanUpSteps.workdir = util.Property('BUILD_GROUP_HOME')
 
-    cleanUpSteps.addStep(ShellCommand(command=['rm', '-rf', 'scipion'],
-                                      name='Removing Scipion',
-                                      description='Removing Scipion',
-                                      descriptionDone='Scipion removed',
-                                      timeout=timeOutInstall))
 
-    cleanUpSteps.addStep(ShellCommand(command=['rm', '-rf', 'xmipp'],
-                                      name='Removing Xmipp',
-                                      description='Removing Xmipp',
-                                      descriptionDone='Xmipp removed',
-                                      timeout=timeOutInstall))
+    if rmAll:
+        cleanUpSteps.workdir = util.Property('BUILD_GROUP_HOME')
+        cleanUpSteps.addStep(ShellCommand(command=['rm', '-rf', 'scipion'],
+                                          name='Removing Scipion',
+                                          description='Removing Scipion',
+                                          descriptionDone='Scipion removed',
+                                          timeout=timeOutInstall))
+
+        cleanUpSteps.addStep(ShellCommand(command=['rm', '-rf', 'xmipp'],
+                                          name='Removing Xmipp',
+                                          description='Removing Xmipp',
+                                          descriptionDone='Xmipp removed',
+                                          timeout=timeOutInstall))
+
+    else:
+        cleanUpSteps.workdir = util.Property('SCIPION_HOME')
+        cleanUpSteps.addStep(ShellCommand(command=['scipion', 'python', 'pyworkflow/install/clean.py'],
+                                          name='Cleaning Scipion',
+                                          description='Cleaning Scipion',
+                                          descriptionDone='Cleaning Scipion',
+                                          timeout=timeOutInstall))
 
     return cleanUpSteps
 
@@ -368,17 +379,28 @@ def getScipionBuilders(groupId):
                       env=env)
     )
 
-    scipionBuilders.append(
-        BuilderConfig(name=CLEANUP_PREFIX + groupId,
-                      tags=[groupId],
-                      workernames=['einstein'],
-                      factory=cleanUpFactory(),
-                      workerbuilddir=groupId,
-                      properties={'slackChannel': SCIPION_SLACK_CHANNEL},
-                      env=env)
-    )
+
     if groupId == DEVEL_GROUP_ID:
         env['SCIPION_PLUGIN_JSON'] = 'plugins.json'
+        scipionBuilders.append(
+            BuilderConfig(name=CLEANUP_PREFIX + groupId,
+                          tags=[groupId],
+                          workernames=['einstein'],
+                          factory=cleanUpFactory(),
+                          workerbuilddir=groupId,
+                          properties={'slackChannel': SCIPION_SLACK_CHANNEL},
+                          env=env)
+        )
+    else:
+        scipionBuilders.append(
+            BuilderConfig(name=CLEANUP_PREFIX + groupId,
+                          tags=[groupId],
+                          workernames=['einstein'],
+                          factory=cleanUpFactory(rmAll=False),
+                          workerbuilddir=groupId,
+                          properties={'slackChannel': SCIPION_SLACK_CHANNEL},
+                          env=env)
+        )
 
     # special locscale case, we need to install eman212
 
