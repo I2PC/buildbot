@@ -11,7 +11,7 @@ from buildbot.schedulers.forcesched import ForceScheduler
 from settings import (MPI_BINDIR, MPI_INCLUDE, MPI_LIBDIR, CUDA_LIB, CCP4_HOME,
                       SCIPION_BUILD_ID, SCIPION_INSTALL_PREFIX, SCIPION_TESTS_PREFIX,
                       PLUGINS_JSON_FILE, CLEANUP_PREFIX, SCIPION_SLACK_CHANNEL,
-                      FORCE_BUILDER_PREFIX, DEVEL_GROUP_ID, PHENIX_HOME, EMAN212,
+                      FORCE_BUILDER_PREFIX, DEVEL_GROUP_ID, PHENIX_HOME, CHIMERA_HOME, EMAN212,
                       gitRepoURL, timeOutInstall, branchsDict, WORKER, PROD_GROUP_ID)
 from common_utils import changeConfVar, GenerateStagesCommand
 
@@ -139,6 +139,13 @@ setPhenixHome = ShellCommand(
     descriptionDone='Set PHENIX_HOME in scipion conf',
     haltOnFailure=True)
 
+setChimeraHome = ShellCommand(
+    command=util.Interpolate('sed -ie "\$CHIMERA_HOME = {}" %(prop:SCIPION_LOCAL_CONFIG)s'.format(CHIMERA_HOME)),
+    name='Set PHENIX_HOME in scipion conf',
+    description='Set PHENIX_HOME in scipion conf',
+    descriptionDone='Set PHENIX_HOME in scipion conf',
+    haltOnFailure=True)
+
 installEman212 = ShellCommand(command=['./scipion', 'installb', 'eman-2.12'],
                               name='Install eman-2.12',
                               description='Install eman-2.12',
@@ -235,6 +242,7 @@ def installScipionFactory(groupId):
         steps.JSONStringDownload(scipionPlugins, workerdest="plugins.json"))
     installScipionFactorySteps.addStep(setMotioncorrCuda)
     installScipionFactorySteps.addStep(setPhenixHome)
+    installScipionFactorySteps.addStep(setChimeraHome)
     installScipionFactorySteps.addStep(setCcp4Home)
     return installScipionFactorySteps
 
@@ -273,24 +281,26 @@ def scipionTestFactory():
 # *****************************************************************************
 #                         PLUGIN FACTORY
 # *****************************************************************************
-def pluginFactory(pluginName, factorySteps=None, shortname=None):
+def pluginFactory(pluginName, factorySteps=None, shortname=None, doInstall=True, doTest=True):
     factorySteps = factorySteps or util.BuildFactory()
     factorySteps.workdir = util.Property('SCIPION_HOME')
     shortName = shortname or str(pluginName.rsplit('-', 1)[-1])  # todo: get module names more properly?
-    factorySteps.addStep(ShellCommand(command=['./scipion', 'installp', '-p', pluginName],
-                                      name='Install plugin %s' % shortName,
-                                      description='Install plugin %s' % shortName,
-                                      descriptionDone='Installed plugin %s' % shortName,
-                                      timeout=timeOutInstall,
-                                      haltOnFailure=True))
-    factorySteps.addStep(
-        GenerateStagesCommand(command=["./scipion", "test", "--show", "--grep", shortName, '--mode', 'onlyclasses'],
-                              name="Generate Scipion test stages for %s" % shortName,
-                              description="Generating Scipion test stages for %s" % shortName,
-                              descriptionDone="Generate Scipion test stages for %s" % shortName,
-                              stagePrefix=["./scipion", "test"],
-                              haltOnFailure=False,
-                              targetTestSet=shortName))
+    if doInstall:
+        factorySteps.addStep(ShellCommand(command=['./scipion', 'installp', '-p', pluginName],
+                                          name='Install plugin %s' % shortName,
+                                          description='Install plugin %s' % shortName,
+                                          descriptionDone='Installed plugin %s' % shortName,
+                                          timeout=timeOutInstall,
+                                          haltOnFailure=True))
+    if doTest:
+        factorySteps.addStep(
+            GenerateStagesCommand(command=["./scipion", "test", "--show", "--grep", shortName, '--mode', 'onlyclasses'],
+                                  name="Generate Scipion test stages for %s" % shortName,
+                                  description="Generating Scipion test stages for %s" % shortName,
+                                  descriptionDone="Generate Scipion test stages for %s" % shortName,
+                                  stagePrefix=["./scipion", "test"],
+                                  haltOnFailure=False,
+                                  targetTestSet=shortName))
 
     return factorySteps
 
