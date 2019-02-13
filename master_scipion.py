@@ -287,7 +287,7 @@ def pluginFactory(pluginName, factorySteps=None, shortname=None, doInstall=True,
     factorySteps.workdir = util.Property('SCIPION_HOME')
     shortName = shortname or str(pluginName.rsplit('-', 1)[-1])  # todo: get module names more properly?
     if doInstall:
-        factorySteps.addStep(ShellCommand(command=['./scipion', 'installp', '-p', pluginName],
+        factorySteps.addStep(ShellCommand(command=['./scipion', 'installp', '-p', pluginName, '-j', '8'],
                                           name='Install plugin %s' % shortName,
                                           description='Install plugin %s' % shortName,
                                           descriptionDone='Installed plugin %s' % shortName,
