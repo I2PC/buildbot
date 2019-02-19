@@ -43,7 +43,7 @@ MPI_INCLUDE = "/usr/lib/x86_64-linux-gnu/openmpi/include"
 MPI_BINDIR = "/usr/bin"
 CUDA_LIB = "/usr/local/cuda-8.0/lib64"
 CCP4_HOME = "/opt/ccp4-7.0"
-PHENIX_HOME = "/usr/local/phenix-1.14-3260"
+PHENIX_HOME = "/usr/local/phenix-1.13-2998"
 CHIMERA_HOME = "%(prop:SCIPION_HOME)s/software/em/chimera-1.13.1"
 
 # data for the builders
