@@ -29,10 +29,10 @@ FORCE_BUILDER_PREFIX = 'Force_'
 # plugins are defined in plugins.json (e.g. using a pluginSourceUrl that points to the specific branch).
 # Buildbot will have one "orchestrator" builder for each build group, which will be in charge of
 # triggering the installation and testing stages of scipion, xmipp and each plugin.
-branchsDict = {DEVEL_GROUP_ID: {SCIPION_BUILD_ID: 'devel-pluginization',
+branchsDict = {DEVEL_GROUP_ID: {SCIPION_BUILD_ID: 'release-2.0.0-fixes',
                                 XMIPP_BUILD_ID: 'devel'},
                PROD_GROUP_ID: {
-                   SCIPION_BUILD_ID: 'devel-pluginization'
+                   SCIPION_BUILD_ID: 'release-2.0.0-fixes'
                }}
 
 ################## Scipion settings ##################
@@ -44,7 +44,6 @@ MPI_BINDIR = "/usr/bin"
 CUDA_LIB = "/usr/local/cuda-8.0/lib64"
 CCP4_HOME = "/opt/ccp4-7.0"
 PHENIX_HOME = "/usr/local/phenix-1.13-2998"
-CHIMERA_HOME = util.Interpolate("%(prop:SCIPION_HOME)s/software/em/chimera-1.13.1")
 
 # data for the builders
 PLUGINS_JSON_FILE = "getplugins.json"

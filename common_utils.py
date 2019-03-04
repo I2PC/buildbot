@@ -98,6 +98,8 @@ class GenerateStagesCommand(buildstep.ShellMixin, steps.BuildStep):
                     descriptionDone=self.rootName + stage.split('.')[-1],
                     timeout=self.timeout,
                     env=env))
+            if len(testShellCommands) == 0:
+                defer.returnValue(util.FAILURE)
             self.build.addStepsAfterCurrentStep(testShellCommands)
 
         defer.returnValue(result)

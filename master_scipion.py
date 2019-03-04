@@ -243,7 +243,6 @@ def installScipionFactory(groupId):
         steps.JSONStringDownload(scipionPlugins, workerdest="plugins.json"))
     installScipionFactorySteps.addStep(setMotioncorrCuda)
     installScipionFactorySteps.addStep(setPhenixHome)
-    installScipionFactorySteps.addStep(setChimeraHome)
     installScipionFactorySteps.addStep(setCcp4Home)
     return installScipionFactorySteps
 
@@ -404,14 +403,15 @@ def getScipionBuilders(groupId):
 
     # special locscale case, we need to install eman212
 
-    for plugin in scipionPlugins:
-        moduleName = str(plugin.rsplit('-', 1)[-1])  # TODO: get module name more properly
+    for plugin, pluginDict in scipionPlugins.iteritems():
+        moduleName = pluginDict.get("name", str(plugin.rsplit('-', 1)[-1]))
         tags = [groupId, moduleName]
+        hastests=not pluginDict.get("NO_TESTS", False)
         scipionBuilders.append(
             BuilderConfig(name="%s_%s" % (moduleName, groupId),
                           tags=tags,
                           workernames=['einstein'],
-                          factory=pluginFactory(plugin, shortname=str(scipionPlugins[plugin].get("name", moduleName))),
+                          factory=pluginFactory(plugin, shortname=moduleName, doTest=hastests),
                           workerbuilddir=groupId,
                           properties={'slackChannel': scipionPlugins[plugin].get('slackChannel', "")},
                           env=env)

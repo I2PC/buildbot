@@ -52,7 +52,8 @@
         "id": 14,
         "name": "appion",
         "pluginSourceUrl": "https://github.com/scipion-em/scipion-em-appion.git",
-        "slackChannel":"appion"
+        "slackChannel":"appion",
+        "NO_TESTS": true
     },
     "scipion-em-emxlib": {
         "pipName": "scipion-em-emxlib",
@@ -72,7 +73,8 @@
         "id": 31,
         "name": "atsas",
         "pluginSourceUrl": "https://github.com/scipion-em/scipion-em-atsas.git",
-        "slackChannel":"atsas"
+        "slackChannel":"atsas",
+        "NO_TESTS": true
     },
     "scipion-em-cryoef": {
           "pipName": "scipion-em-cryoef",

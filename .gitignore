@@ -3,6 +3,7 @@
 
 #### Python
 *.pyc
+venv
 
 #### Eclipse and so on
 .project
