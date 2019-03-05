@@ -11,7 +11,7 @@ from buildbot.schedulers.forcesched import ForceScheduler
 from settings import (MPI_BINDIR, MPI_INCLUDE, MPI_LIBDIR, CUDA_LIB, CCP4_HOME,
                       SCIPION_BUILD_ID, SCIPION_INSTALL_PREFIX, SCIPION_TESTS_PREFIX,
                       PLUGINS_JSON_FILE, CLEANUP_PREFIX, SCIPION_SLACK_CHANNEL,
-                      FORCE_BUILDER_PREFIX, DEVEL_GROUP_ID, PHENIX_HOME, CHIMERA_HOME, EMAN212,
+                      FORCE_BUILDER_PREFIX, DEVEL_GROUP_ID, PHENIX_HOME, EMAN212,
                       gitRepoURL, timeOutInstall, branchsDict, WORKER, PROD_GROUP_ID)
 from common_utils import changeConfVar, GenerateStagesCommand
 
@@ -137,14 +137,6 @@ setPhenixHome = ShellCommand(
     name='Set PHENIX_HOME in scipion conf',
     description='Set PHENIX_HOME in scipion conf',
     descriptionDone='Set PHENIX_HOME in scipion conf',
-    haltOnFailure=True)
-
-setChimeraHome = ShellCommand(
-    command=util.Interpolate('sed -ie "s/CHIMERA_HOME = .*/CHIMERA_HOME = {}/"'
-                             ' %(prop:SCIPION_LOCAL_CONFIG)s'.format(CHIMERA_HOME.replace('/', '\/'))),
-    name='Set CHIMERA_HOME in scipion conf',
-    description='Set CHIMERA_HOME in scipion conf',
-    descriptionDone='Set CHIMERA_HOME in scipion conf',
     haltOnFailure=True)
 
 installEman212 = ShellCommand(command=['./scipion', 'installb', 'eman-2.12'],
