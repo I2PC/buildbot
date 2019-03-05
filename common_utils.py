@@ -43,6 +43,7 @@ class GenerateStagesCommand(buildstep.ShellMixin, steps.BuildStep):
         self.env = kwargs.pop('env', {})
         self.pattern = kwargs.pop('pattern', '')
         self.stagePrefix = kwargs.pop('stagePrefix', [])
+        self.failOnEmptyTestStages = kwargs.pop('failOnEmptyTestStages', True)
         kwargs = self.setupShellMixin(kwargs)
         steps.BuildStep.__init__(self, **kwargs)
         self.observer = logobserver.BufferLogObserver()
@@ -98,7 +99,7 @@ class GenerateStagesCommand(buildstep.ShellMixin, steps.BuildStep):
                     descriptionDone=self.rootName + stage.split('.')[-1],
                     timeout=self.timeout,
                     env=env))
-            if len(testShellCommands) == 0:
+            if len(testShellCommands) == 0 and self.failOnEmptyTestStages:
                 defer.returnValue(util.FAILURE)
             self.build.addStepsAfterCurrentStep(testShellCommands)
 
