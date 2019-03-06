@@ -284,6 +284,14 @@ def pluginFactory(pluginName, factorySteps=None, shortname=None, doInstall=True,
                                           descriptionDone='Installed plugin %s' % shortName,
                                           timeout=timeOutInstall,
                                           haltOnFailure=True))
+
+        factorySteps.addStep(ShellCommand(command=['./scipion', 'python', 'pyworkflow/install/inspect-plugins.py',
+                                                   shortName],
+                                          name='Inspect plugin %s' % shortName,
+                                          description='Inspect plugin %s' % shortName,
+                                          descriptionDone='Inspected plugin %s' % shortName,
+                                          timeout=timeOutInstall,
+                                          haltOnFailure=False))
     if doTest:
         factorySteps.addStep(
             GenerateStagesCommand(command=["./scipion", "test", "--show", "--grep", shortName, '--mode', 'onlyclasses'],
