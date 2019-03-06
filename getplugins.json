@@ -17,6 +17,7 @@
           "pipName": "scipion-em-spider",
           "id": 31,
           "name": "spider",
+          "slackChannel": "spider",
           "pluginSourceUrl": "https://github.com/scipion-em/scipion-em-spider.git"
       },
   "scipion-em-relion": {
