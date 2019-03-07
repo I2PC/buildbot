@@ -59,7 +59,7 @@
     "scipion-em-emxlib": {
         "pipName": "scipion-em-emxlib",
         "id": 15,
-        "name": "emx",
+        "name": "emxlib",
         "pluginSourceUrl": "https://github.com/scipion-em/scipion-em-emxlib.git"
     },
     "scipion-em-locscale": {
