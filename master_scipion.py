@@ -232,7 +232,8 @@ def installScipionFactory(groupId):
                      descriptionDone='Test scipion installation',
                      haltOnFailure=True))
     installScipionFactorySteps.addStep(
-        steps.JSONStringDownload(scipionPlugins, workerdest="plugins.json"))
+        steps.JSONStringDownload(dict(scipionPlugins, **{"scipion-em-locscale": locscalePluginData}),
+                                 workerdest="plugins.json"))
     installScipionFactorySteps.addStep(setMotioncorrCuda)
     installScipionFactorySteps.addStep(setPhenixHome)
     installScipionFactorySteps.addStep(setCcp4Home)
