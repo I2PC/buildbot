@@ -30,7 +30,7 @@ FORCE_BUILDER_PREFIX = 'Force_'
 # Buildbot will have one "orchestrator" builder for each build group, which will be in charge of
 # triggering the installation and testing stages of scipion, xmipp and each plugin.
 branchsDict = {DEVEL_GROUP_ID: {SCIPION_BUILD_ID: 'release-2.0.0-fixes',
-                                XMIPP_BUILD_ID: 'devel'},
+                                XMIPP_BUILD_ID: 'release-19.03-fixes'},
                PROD_GROUP_ID: {
                    SCIPION_BUILD_ID: 'release-2.0.0-fixes'
                }}
