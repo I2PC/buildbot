@@ -78,15 +78,8 @@ def installXmippFactory(groupId):
                      name='Get Xmipp devel sources',
                      description='Get Xmipp devel sources',
                      descriptionDone='Get Xmipp devel sources',
-                     timeout=300))
-
-    installXmippSteps.addStep(
-        ShellCommand(command=['./xmipp', 'get_dependencies', xmippBranch],
-                     name='./xmipp get_dependencies',
-                     description='Get Xmipp dependencies',
-                     descriptionDone='Get Xmipp dependencies',
-                     timeout=300))
-
+                     timeout=300)
+    )
     installXmippSteps.addStep(
         ShellCommand(command=['./xmipp', 'config'],
                      name='./xmipp config',
@@ -94,7 +87,6 @@ def installXmippFactory(groupId):
                      descriptionDone='Generate xmipp config',
                      timeout=300)
     )
-
     installXmippSteps.addStep(
         ShellCommand(command=changeConfVar('CUDA', CUDA, file='xmipp.conf'),
                      name='Set CUDA = True',
@@ -121,6 +113,13 @@ def installXmippFactory(groupId):
                      name='Set NVCC_LINKFLAGS',
                      description='Set NVCC_LINKFLAGS',
                      descriptionDone='Set NVCC_LINKFLAGS',
+                     timeout=300)
+    )
+    installXmippSteps.addStep(
+        ShellCommand(command=['./xmipp', 'get_dependencies', xmippBranch],
+                     name='./xmipp get_dependencies',
+                     description='Get Xmipp dependencies',
+                     descriptionDone='Get Xmipp dependencies',
                      timeout=300)
     )
     installXmippSteps.addStep(
