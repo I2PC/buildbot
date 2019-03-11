@@ -60,7 +60,7 @@ SCIPION_SLACK_CHANNEL = "buildbot"
 
 ################### Xmipp settings ##################
 XMIPP_SCRIPT_URL = ("https://raw.githubusercontent.com/I2PC/xmipp/%s/xmipp"
-                    % branchsDict[DEVEL_GROUP_ID][XMIPP_BUILD_ID])
+                    % branchsDict[DEVEL_GROUP_ID].get(XMIPP_BUILD_ID, "devel")
 # builder prefixes
 XMIPP_INSTALL_PREFIX = 'Install_Xmipp_'
 XMIPP_TESTS = 'xmipp_'
