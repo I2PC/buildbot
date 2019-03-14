@@ -256,15 +256,7 @@ def getXmippBuilders(groupId):
     bundleEnv = {}
     bundleEnv.update(cudaEnv)
     bundleEnv.update(installEnv)
-    builders.append(
-        BuilderConfig(name=XMIPP_BUNDLE_TESTS + groupId,
-                      tags=[groupId],
-                      workernames=[WORKER],
-                      factory=xmippBundleFactory(),
-                      workerbuilddir=groupId,
-                      env=bundleEnv,
-                      properties=props)
-    )
+
 
     if groupId == PROD_GROUP_ID:
         builders.append(
@@ -306,6 +298,16 @@ def getXmippBuilders(groupId):
                           workerbuilddir=groupId,
                           properties=props,
                           env=env)
+        )
+
+        builders.append(
+            BuilderConfig(name=XMIPP_BUNDLE_TESTS + groupId,
+                          tags=[groupId],
+                          workernames=[WORKER],
+                          factory=xmippBundleFactory(),
+                          workerbuilddir=groupId,
+                          env=bundleEnv,
+                          properties=props)
         )
 
     return builders
