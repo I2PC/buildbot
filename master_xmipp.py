@@ -9,7 +9,8 @@ from buildbot.schedulers.forcesched import ForceScheduler
 from settings import (XMIPP_SCRIPT_URL, XMIPP_BUILD_ID, SCIPION_BUILD_ID,
                       XMIPP_INSTALL_PREFIX, timeOutInstall, WORKER, XMIPP_SLACK_CHANNEL,
                       XMIPP_TESTS, XMIPP_BUNDLE_TESTS, NVCC_LINKFLAGS, NVCC_CXXFLAGS,
-                      NVCC, CUDA, EMAN212, FORCE_BUILDER_PREFIX, branchsDict, PROD_GROUP_ID, XMIPP_BUNDLE_VARS)
+                      NVCC, CUDA, EMAN212, FORCE_BUILDER_PREFIX, branchsDict, PROD_GROUP_ID, XMIPP_BUNDLE_VARS,
+                      DEVEL_GROUP_ID)
 from common_utils import changeConfVar, GenerateStagesCommand
 from master_scipion import pluginFactory, xmippPluginData
 
@@ -315,9 +316,10 @@ def getXmippBuilders(groupId):
 # #############################################################################
 
 def getXmippSchedulers(groupId):
-    xmippSchedulerNames = [XMIPP_BUNDLE_TESTS + groupId,
-                           XMIPP_TESTS + groupId]
-    xmippSchedulerNames.append(XMIPP_INSTALL_PREFIX + groupId)
+    xmippSchedulerNames = [XMIPP_TESTS + groupId, XMIPP_INSTALL_PREFIX + groupId]
+
+    if groupId == DEVEL_GROUP_ID:
+        xmippSchedulerNames.append(XMIPP_BUNDLE_TESTS + groupId)
     schedulers = []
     for name in xmippSchedulerNames:
         schedulers.append(
