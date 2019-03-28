@@ -384,6 +384,8 @@ def docsFactory(groupId):
                                descriptionDone='Pushed built docs',
                                timeout=timeOutInstall))
 
+    return factorySteps
+
 
 # #############################################################################
 # ############################## BUILDERS #####################################
