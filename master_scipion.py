@@ -491,7 +491,7 @@ def getScipionSchedulers(groupId):
                              CLEANUP_PREFIX + groupId]
 
     if branchsDict[groupId].get(DOCS_BUILD_ID, None) is not None:
-        scipionSchedulerNames += "%s%s" % (DOCS_PREFIX, groupId)
+        scipionSchedulerNames.append("%s%s" % (DOCS_PREFIX, groupId))
     schedulers = []
     for name in scipionSchedulerNames:
         schedulers.append(triggerable.Triggerable(name=name,
