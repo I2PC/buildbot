@@ -347,8 +347,8 @@ def docsFactory(groupId):
                       haltOnFailure=True))
 
     factorySteps.addStep(ShellCommand(command=['sphinx-apidoc', '-f', '-e', '-o', 'api/',
-                                        util.Interpolate("(prop:SCIPION_HOME)s/pyworkflow"),
-                                        util.Interpolate("(prop:SCIPION_HOME)s/pyworkflow/tests/*")],
+                                        util.Interpolate("%(prop:SCIPION_HOME)s/pyworkflow"),
+                                        util.Interpolate("%(prop:SCIPION_HOME)s/pyworkflow/tests/*")],
                                name='Generate API docs',
                                description='Generate API docs',
                                descriptionDone='Generated API docs',
