@@ -1,7 +1,7 @@
 import json
 from collections import OrderedDict
 
-from buildbot.steps.shell import ShellCommand
+from buildbot.steps.shell import ShellCommand, SetPropertyFromCommand
 from buildbot.plugins import util, steps
 from buildbot.steps.source.git import Git
 from buildbot.config import BuilderConfig
@@ -337,46 +337,46 @@ def cleanUpFactory(rmAll=True):
 #                         DOCS FACTORY
 # *****************************************************************************
 def docsFactory(groupId):
-    steps = util.BuildFactory()
+    factorySteps = util.BuildFactory()
     docsBranch = branchsDict[groupId].get(DOCS_BUILD_ID, None)
-    steps.addStep(Git(repourl=DOCS_REPO,
+    factorySteps.addStep(Git(repourl=DOCS_REPO,
                       branch=docsBranch,
                       mode='incremental',
                       name='Scipion docs repository pull',
                       haltOnFailure=True))
 
-    steps.addStep(ShellCommand(command=['sphinx-apidoc', '-f', '-e', '-o', 'api/',
+    factorySteps.addStep(ShellCommand(command=['sphinx-apidoc', '-f', '-e', '-o', 'api/',
                                         util.Interpolate("(prop:SCIPION_HOME)s/pyworkflow"),
                                         util.Interpolate("(prop:SCIPION_HOME)s/pyworkflow/tests/*")],
                                name='Generate API docs',
                                description='Generate API docs',
                                descriptionDone='Generated API docs',
                                timeout=timeOutInstall))
-    steps.addStep(
-        steps.SetPropertyFromCommand(command='which sphinx-versioning', property='sphinx-versioning'))
+    factorySteps.addStep(
+        SetPropertyFromCommand(command='which sphinx-versioning', property='sphinx-versioning'))
 
-    steps.addStep(
-        steps.SetPropertyFromCommand(command='echo $PWD', property='DOCS_HOME'))
+    factorySteps.addStep(
+        SetPropertyFromCommand(command='echo $PWD', property='DOCS_HOME'))
 
-    steps.addStep(ShellCommand(command=["git", "add", "-A"],
+    factorySteps.addStep(ShellCommand(command=["git", "add", "-A"],
                                name='Git add docs',
                                description='Git add docs',
                                descriptionDone='Git added docs',
                                timeout=timeOutInstall))
 
-    steps.addStep(ShellCommand(command=["git", "commit", "-m", "buildbot automated-update"],
+    factorySteps.addStep(ShellCommand(command=["git", "commit", "-m", "buildbot automated-update"],
                                name='Git commit docs',
                                description='Git commit docs',
                                descriptionDone='Git commit docs',
                                timeout=timeOutInstall))
 
-    steps.addStep(ShellCommand(command=["git", "push"],
+    factorySteps.addStep(ShellCommand(command=["git", "push"],
                                name='Git push docs to repo',
                                description='Git push docs to repo',
                                descriptionDone='Git push docs to repo',
                                timeout=timeOutInstall))
 
-    steps.addStep(ShellCommand(command=[util.Interpolate("(prop:SCIPION_HOME)s/scipion"),
+    factorySteps.addStep(ShellCommand(command=[util.Interpolate("(prop:SCIPION_HOME)s/scipion"),
                                         "run", util.Property('sphinx-versioning'), 'push', '-r', docsBranch,
                                         util.Property('DOCS_HOME'), DOCS_HTML_BRANCH, "."],
                                name='Push built docs',
