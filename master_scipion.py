@@ -338,6 +338,7 @@ def cleanUpFactory(rmAll=True):
 # *****************************************************************************
 def docsFactory(groupId):
     factorySteps = util.BuildFactory()
+    factorySteps.workdir = DOCS_BUILD_ID
     docsBranch = branchsDict[groupId].get(DOCS_BUILD_ID, None)
     factorySteps.addStep(Git(repourl=DOCS_REPO,
                       branch=docsBranch,

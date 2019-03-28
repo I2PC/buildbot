@@ -58,7 +58,7 @@ DOCS_HTML_BRANCH = 'gh-pages'
 SCIPION_INSTALL_PREFIX = 'Install_Scipion_'
 SCIPION_TESTS_PREFIX = 'Test_Scipion_'
 CLEANUP_PREFIX = 'CleanUp_'
-DOCS_PREFIX = "Docs_"
+DOCS_PREFIX = "docs_"
 
 # slack channel
 SCIPION_SLACK_CHANNEL = "buildbot"
