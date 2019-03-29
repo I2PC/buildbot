@@ -8,7 +8,7 @@ from buildbot.config import BuilderConfig
 from buildbot.schedulers import triggerable
 from buildbot.schedulers.forcesched import ForceScheduler
 
-from settings import (MPI_BINDIR, MPI_INCLUDE, MPI_LIBDIR, CUDA_LIB, CCP4_HOME,
+from settings import (MPI_BINDIR, MPI_INCLUDE, MPI_LIBDIR, CUDA, CUDA_LIB, CCP4_HOME,
                       SCIPION_BUILD_ID, SCIPION_INSTALL_PREFIX, SCIPION_TESTS_PREFIX,
                       PLUGINS_JSON_FILE, CLEANUP_PREFIX, SCIPION_SLACK_CHANNEL,
                       FORCE_BUILDER_PREFIX, DEVEL_GROUP_ID, PHENIX_HOME, EMAN212,
@@ -60,6 +60,13 @@ setNotifyAtFalse = ShellCommand(
                     'the blacklist in order for the notify test to work',
         descriptionDone='Disable notification',
         haltOnFailure=True)
+
+setGeneralCuda = ShellCommand(
+    command=changeConfVar("CUDA", CUDA),
+    name='Set CUDA equals True',
+    description='Set CUDA equals True',
+    descriptionDone='Set CUDA equals True',
+    haltOnFailure=True)
 
 setMpiLibPath = ShellCommand(
     # command=changeConfVar.withArgs('MPI_LIBDIR', mpilibdir),
@@ -186,6 +193,7 @@ def addScipionGitAndConfigSteps(factorySteps, groupId):
     factorySteps.addStep(removeHomeConfig)
     factorySteps.addStep(configScipion)
     factorySteps.addStep(setNotifyAtFalse)
+    factorySteps.addStep(setGeneralCuda)
     factorySteps.addStep(setMpiLibPath)
     factorySteps.addStep(setMpiBinPath)
     factorySteps.addStep(setMpiIncludePath)
