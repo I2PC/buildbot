@@ -274,7 +274,8 @@ def getXmippBuilders(groupId):
             BuilderConfig(name=XMIPP_INSTALL_PREFIX + groupId,
                           workernames=[WORKER],
                           tags=[groupId],
-                          factory=pluginFactory('scipion-em-xmipp', shortname='xmipp3', doTest=False),
+                          factory=pluginFactory('scipion-em-xmipp', shortname='xmipp3', doTest=False,
+                                                extraBinaries=['deepLearningToolkit, nma']),
                           workerbuilddir=groupId,
                           env=env,
                           properties=props)
