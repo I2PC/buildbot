@@ -50,7 +50,7 @@ PHENIX_HOME = "/usr/local/phenix-1.13-2998"
 PLUGINS_JSON_FILE = "getplugins.json"
 EMAN212 = {"EMAN2DIR": util.Interpolate("%(prop:SCIPION_HOME)s/software/em/eman-2.12")}
 gitRepoURL = 'https://github.com/I2PC/scipion.git'
-DOCS_REPO = "https://github.com/scipion-em/docs"
+DOCS_REPO = "git@github.com:scipion-em/docs.git"
 DOCS_HTML_BRANCH = 'gh-pages'
 
 
