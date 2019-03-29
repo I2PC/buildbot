@@ -21,6 +21,7 @@ DEVEL_GROUP_ID = 'devel'
 PROD_GROUP_ID = 'prod'
 SCIPION_BUILD_ID = 'scipion'  # this will be the name of the builder dir i.e. the scipion home
 XMIPP_BUILD_ID = 'xmipp'  # this will be the dir name of xmipp's home
+DOCS_BUILD_ID = 'docs'
 FORCE_BUILDER_PREFIX = 'Force_'
 
 # Here we define the structure of the builders. For each build group (prod and devel up to now)
@@ -29,7 +30,8 @@ FORCE_BUILDER_PREFIX = 'Force_'
 # Buildbot will have one "orchestrator" builder for each build group, which will be in charge of
 # triggering the installation and testing stages of scipion, xmipp and each plugin.
 branchsDict = {DEVEL_GROUP_ID: {SCIPION_BUILD_ID: 'release-2.0.0-fixes',
-                                XMIPP_BUILD_ID: 'release-19.03-fixes'},
+                                XMIPP_BUILD_ID: 'release-19.03-fixes',
+                                DOCS_BUILD_ID: 'release-2.0.0'},
                PROD_GROUP_ID: {
                    SCIPION_BUILD_ID: 'release-2.0.0-fixes'
                }}
@@ -48,11 +50,15 @@ PHENIX_HOME = "/usr/local/phenix-1.13-2998"
 PLUGINS_JSON_FILE = "getplugins.json"
 EMAN212 = {"EMAN2DIR": util.Interpolate("%(prop:SCIPION_HOME)s/software/em/eman-2.12")}
 gitRepoURL = 'https://github.com/I2PC/scipion.git'
+DOCS_REPO = "git@github.com:scipion-em/docs.git"
+DOCS_HTML_BRANCH = 'gh-pages'
+
 
 # builder prefixes
 SCIPION_INSTALL_PREFIX = 'Install_Scipion_'
 SCIPION_TESTS_PREFIX = 'Test_Scipion_'
 CLEANUP_PREFIX = 'CleanUp_'
+DOCS_PREFIX = "docs_"
 
 # slack channel
 SCIPION_SLACK_CHANNEL = "buildbot"
