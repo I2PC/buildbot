@@ -171,6 +171,16 @@ def installXmippFactory(groupId):
                      workdir=SCIPION_BUILD_ID)
     )
 
+    installXmippSteps.addStep(
+        ShellCommand(command=['./scipion', 'installb', 'deepLearningToolkit'],
+                     name='Install deepLearningToolkit',
+                     description='Install deepLearningToolkit',
+                     descriptionDone='Installed deepLearningToolkit',
+                     timeout=timeOutInstall,
+                     haltOnFailure=True,
+                     workdir=SCIPION_BUILD_ID)
+    )
+
     return installXmippSteps
 
 
