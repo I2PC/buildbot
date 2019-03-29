@@ -380,7 +380,7 @@ def docsFactory(groupId):
                                       descriptionDone='Git push docs to repo',
                                       timeout=timeOutInstall))
 
-    factorySteps.addStep(ShellCommand(command=[util.Interpolate("(prop:SCIPION_HOME)s/scipion"),
+    factorySteps.addStep(ShellCommand(command=[util.Interpolate("%(prop:SCIPION_HOME)s/scipion"),
                                                "run", util.Property('sphinx-versioning'), 'push', '-r', docsBranch,
                                                util.Property('DOCS_HOME'), DOCS_HTML_BRANCH, "."],
                                       name='Push built docs',
