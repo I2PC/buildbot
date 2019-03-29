@@ -23,7 +23,6 @@ SCIPION_BUILD_ID = 'scipion'  # this will be the name of the builder dir i.e. th
 XMIPP_BUILD_ID = 'xmipp'  # this will be the dir name of xmipp's home
 FORCE_BUILDER_PREFIX = 'Force_'
 
-
 # Here we define the structure of the builders. For each build group (prod and devel up to now)
 # we can define the branches of scipion and xmipp that we want to test. The branches of the
 # plugins are defined in plugins.json (e.g. using a pluginSourceUrl that points to the specific branch).
@@ -57,6 +56,14 @@ CLEANUP_PREFIX = 'CleanUp_'
 
 # slack channel
 SCIPION_SLACK_CHANNEL = "buildbot"
+
+# Scipion test blacklist
+SCIPION_TESTS_BLACKLIST = ["pyworkflow.tests.em.workflows.test_parallel_gpu_queue.TestNoQueueSmall",
+                           "pyworkflow.tests.em.workflows.test_parallel_gpu_queue.TestNoQueueALL",
+                           "pyworkflow.tests.em.workflows.test_parallel_gpu_queue.TestQueueSmall",
+                           "pyworkflow.tests.em.workflows.test_parallel_gpu_queue.TestQueueALL",
+                           "pyworkflow.tests.em.workflows.test_parallel_gpu_queue.TestQueueSteps",
+                           "pyworkflow.tests.em.workflows.test_workflow_existing.TestXmippWorkflow"]
 
 ################### Xmipp settings ##################
 XMIPP_SCRIPT_URL = ("https://raw.githubusercontent.com/I2PC/xmipp/%s/xmipp"

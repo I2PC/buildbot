@@ -10,7 +10,7 @@ from settings import (XMIPP_SCRIPT_URL, XMIPP_BUILD_ID, SCIPION_BUILD_ID,
                       XMIPP_INSTALL_PREFIX, timeOutInstall, WORKER, XMIPP_SLACK_CHANNEL,
                       XMIPP_TESTS, XMIPP_BUNDLE_TESTS, NVCC_LINKFLAGS, NVCC_CXXFLAGS,
                       NVCC, CUDA, EMAN212, FORCE_BUILDER_PREFIX, branchsDict, PROD_GROUP_ID,
-                      XMIPP_BUNDLE_VARS, LD_LIBRARY_PATH)
+                      XMIPP_BUNDLE_VARS, DEVEL_GROUP_ID, LD_LIBRARY_PATH)
 from common_utils import changeConfVar, GenerateStagesCommand
 from master_scipion import pluginFactory, xmippPluginData
 
@@ -257,15 +257,7 @@ def getXmippBuilders(groupId):
     bundleEnv = {}
     bundleEnv.update(cudaEnv)
     bundleEnv.update(installEnv)
-    builders.append(
-        BuilderConfig(name=XMIPP_BUNDLE_TESTS + groupId,
-                      tags=[groupId],
-                      workernames=[WORKER],
-                      factory=xmippBundleFactory(),
-                      workerbuilddir=groupId,
-                      env=bundleEnv,
-                      properties=props)
-    )
+
 
     if groupId == PROD_GROUP_ID:
         builders.append(
@@ -309,6 +301,16 @@ def getXmippBuilders(groupId):
                           env=env)
         )
 
+        builders.append(
+            BuilderConfig(name=XMIPP_BUNDLE_TESTS + groupId,
+                          tags=[groupId],
+                          workernames=[WORKER],
+                          factory=xmippBundleFactory(),
+                          workerbuilddir=groupId,
+                          env=bundleEnv,
+                          properties=props)
+        )
+
     return builders
 
 
@@ -317,9 +319,10 @@ def getXmippBuilders(groupId):
 # #############################################################################
 
 def getXmippSchedulers(groupId):
-    xmippSchedulerNames = [XMIPP_BUNDLE_TESTS + groupId,
-                           XMIPP_TESTS + groupId]
-    xmippSchedulerNames.append(XMIPP_INSTALL_PREFIX + groupId)
+    xmippSchedulerNames = [XMIPP_TESTS + groupId, XMIPP_INSTALL_PREFIX + groupId]
+
+    if groupId == DEVEL_GROUP_ID:
+        xmippSchedulerNames.append(XMIPP_BUNDLE_TESTS + groupId)
     schedulers = []
     for name in xmippSchedulerNames:
         schedulers.append(

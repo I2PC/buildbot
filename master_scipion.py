@@ -12,7 +12,7 @@ from settings import (MPI_BINDIR, MPI_INCLUDE, MPI_LIBDIR, CUDA_LIB, CCP4_HOME,
                       SCIPION_BUILD_ID, SCIPION_INSTALL_PREFIX, SCIPION_TESTS_PREFIX,
                       PLUGINS_JSON_FILE, CLEANUP_PREFIX, SCIPION_SLACK_CHANNEL,
                       FORCE_BUILDER_PREFIX, DEVEL_GROUP_ID, PHENIX_HOME, EMAN212,
-                      gitRepoURL, timeOutInstall, branchsDict, WORKER, PROD_GROUP_ID)
+                      gitRepoURL, timeOutInstall, branchsDict, WORKER, SCIPION_TESTS_BLACKLIST)
 from common_utils import changeConfVar, GenerateStagesCommand
 
 # #############################################################################
@@ -249,12 +249,6 @@ def scipionTestFactory():
     # add TestRelionExtractStreaming manually because it needs eman 2.12
     wfRelionExtractStreaming = 'pyworkflow.tests.em.workflows.test_workflow_streaming.TestRelionExtractStreaming'
 
-    # blacklist all queue tests and TestRelionExtractStreaming because we add it manually
-    blacklist = ["pyworkflow.tests.em.workflows.test_parallel_gpu_queue.Test_noQueue_Small",
-                 "pyworkflow.tests.em.workflows.test_parallel_gpu_queue.Test_noQueue_ALL",
-                 "pyworkflow.tests.em.workflows.test_parallel_gpu_queue.Test_Queue_Small",
-                 "pyworkflow.tests.em.workflows.test_parallel_gpu_queue.Test_Queue_ALL",
-                 "pyworkflow.tests.em.workflows.test_workflow_existing.TestXmippWorkflow"]
     # gen stages
     genStagesCmd = ["./scipion", "test", "--show", "--grep", "pyworkflow", "--mode", "onlyclasses"]
     scipionTestSteps.addStep(
@@ -265,7 +259,7 @@ def scipionTestFactory():
                               haltOnFailure=False,
                               targetTestSet='pyworkflow',
                               stagePrefix=["./scipion", "test"],
-                              blacklist=blacklist,
+                              blacklist=SCIPION_TESTS_BLACKLIST,
                               stageEnvs={wfRelionExtractStreaming: EMAN212}))
 
     return scipionTestSteps
