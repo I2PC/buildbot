@@ -9,7 +9,8 @@ from buildbot.schedulers.forcesched import ForceScheduler
 from settings import (XMIPP_SCRIPT_URL, XMIPP_BUILD_ID, SCIPION_BUILD_ID,
                       XMIPP_INSTALL_PREFIX, timeOutInstall, WORKER, XMIPP_SLACK_CHANNEL,
                       XMIPP_TESTS, XMIPP_BUNDLE_TESTS, NVCC_LINKFLAGS, NVCC_CXXFLAGS,
-                      NVCC, CUDA, EMAN212, FORCE_BUILDER_PREFIX, branchsDict, PROD_GROUP_ID, XMIPP_BUNDLE_VARS)
+                      NVCC, CUDA, EMAN212, FORCE_BUILDER_PREFIX, branchsDict, PROD_GROUP_ID,
+                      XMIPP_BUNDLE_VARS, LD_LIBRARY_PATH)
 from common_utils import changeConfVar, GenerateStagesCommand
 from master_scipion import pluginFactory, xmippPluginData
 
@@ -182,7 +183,8 @@ def xmippBundleFactory():
     xmippTestSteps.addStep(SetProperty(command=["bash", "-c", "source build/xmipp.bashrc; env"],
                                        extract_fn=glob2list,
                                        env={"SCIPION_HOME": util.Property("SCIPION_HOME"),
-                                            "SCIPION_LOCAL_CONFIG": util.Property("SCIPION_LOCAL_CONFIG")}))
+                                            "SCIPION_LOCAL_CONFIG": util.Property("SCIPION_LOCAL_CONFIG"),
+                                            "LD_LIBRARY_PATH": util.Property(LD_LIBRARY_PATH)}))
 
     xmippTestSteps.addStep(
         GenerateStagesCommand(command=["./xmipp", "test", "--show"],
