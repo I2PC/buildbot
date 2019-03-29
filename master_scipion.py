@@ -335,6 +335,13 @@ def cleanUpFactory(rmAll=True):
 # *****************************************************************************
 #                         DOCS FACTORY
 # *****************************************************************************
+def doCommit(step):
+    if step.getProperty("DOCS_REPO_STATUS") == 'clean':
+        return False
+    else:
+        return True
+
+
 def docsFactory(groupId):
     factorySteps = util.BuildFactory()
     factorySteps.workdir = DOCS_BUILD_ID
@@ -368,10 +375,17 @@ def docsFactory(groupId):
                                       descriptionDone='Git added docs',
                                       timeout=timeOutInstall))
 
+    factorySteps.addStep(
+        SetPropertyFromCommand(command="[[ -n $(git status -s) ]] || echo 'clean'",
+                               property='DOCS_REPO_STATUS',
+                               name='Set property DOCS_REPO_STATUS',
+                               description='Check repo status'))
+
     factorySteps.addStep(ShellCommand(command=["git", "commit", "-m", "buildbot automated-update"],
                                       name='Git commit docs',
                                       description='Git commit docs',
                                       descriptionDone='Git commit docs',
+                                      doStepIf=doCommit,
                                       timeout=timeOutInstall))
 
     factorySteps.addStep(ShellCommand(command=["git", "push"],
