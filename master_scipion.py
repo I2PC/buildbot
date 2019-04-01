@@ -277,7 +277,8 @@ def scipionTestFactory():
 # *****************************************************************************
 #                         PLUGIN FACTORY
 # *****************************************************************************
-def pluginFactory(pluginName, factorySteps=None, shortname=None, doInstall=True, doTest=True):
+def pluginFactory(pluginName, factorySteps=None, shortname=None,
+                  doInstall=True, extraBinaries=[], doTest=True,):
     factorySteps = factorySteps or util.BuildFactory()
     factorySteps.workdir = util.Property('SCIPION_HOME')
     shortName = shortname or str(pluginName.rsplit('-', 1)[-1])  # todo: get module names more properly?
@@ -296,6 +297,15 @@ def pluginFactory(pluginName, factorySteps=None, shortname=None, doInstall=True,
                                           descriptionDone='Inspected plugin %s' % shortName,
                                           timeout=timeOutInstall,
                                           haltOnFailure=False))
+    if extraBinaries:
+        extraBinaries = [extraBinaries] if isinstance(extraBinaries, str) else extraBinaries
+        for binary in extraBinaries:
+            factorySteps.addStep(ShellCommand(command=['./scipion', 'installb', binary, '-j', '8'],
+                                              name='Install extra package %s' % binary,
+                                              description='Install extra package  %s' % binary,
+                                              descriptionDone='Installed extra package  %s' % binary,
+                                              timeout=timeOutInstall,
+                                              haltOnFailure=True))
     if doTest:
         factorySteps.addStep(
             GenerateStagesCommand(command=["./scipion", "test", "--show", "--grep", shortName, '--mode', 'onlyclasses'],
