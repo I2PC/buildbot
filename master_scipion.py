@@ -8,19 +8,14 @@ from buildbot.config import BuilderConfig
 from buildbot.schedulers import triggerable
 from buildbot.schedulers.forcesched import ForceScheduler
 
-from settings import (MPI_BINDIR, MPI_INCLUDE, MPI_LIBDIR, CUDA, CUDA_LIB, CCP4_HOME,
-                      SCIPION_BUILD_ID, SCIPION_INSTALL_PREFIX, SCIPION_TESTS_PREFIX,
-                      PLUGINS_JSON_FILE, CLEANUP_PREFIX, SCIPION_SLACK_CHANNEL,
-                      FORCE_BUILDER_PREFIX, DEVEL_GROUP_ID, PHENIX_HOME, EMAN212,
-                      gitRepoURL, timeOutInstall, branchsDict, WORKER, SCIPION_TESTS_BLACKLIST, DOCS_REPO,
-                      DOCS_BUILD_ID, DOCS_HTML_BRANCH, DOCS_PREFIX)
+import settings
 from common_utils import changeConfVar, GenerateStagesCommand
 
 # #############################################################################
 # ########################## COMMANDS & UTILS #################################
 # #############################################################################
 
-with open(PLUGINS_JSON_FILE) as f:
+with open(settings.PLUGINS_JSON_FILE) as f:
     # read in order, since we have taken into account dependencies in
     # between plugins when completing the json file
     scipionPlugins = json.load(f, object_pairs_hook=OrderedDict)
@@ -63,7 +58,7 @@ setNotifyAtFalse = ShellCommand(
     haltOnFailure=True)
 
 setGeneralCuda = ShellCommand(
-    command=changeConfVar("CUDA", CUDA),
+    command=changeConfVar("CUDA", settings.CUDA),
     name='Set CUDA equals True',
     description='Set CUDA equals True',
     descriptionDone='Set CUDA equals True',
@@ -71,21 +66,21 @@ setGeneralCuda = ShellCommand(
 
 setMpiLibPath = ShellCommand(
     # command=changeConfVar.withArgs('MPI_LIBDIR', mpilibdir),
-    command=changeConfVar("MPI_LIBDIR", MPI_LIBDIR, escapeSlash=True),
+    command=changeConfVar("MPI_LIBDIR", settings.MPI_LIBDIR, escapeSlash=True),
     name='Change MPI_LIBDIR',
     description='Add the right MPI_LIBDIR path',
     descriptionDone='Added MPI_LIBDIR',
     haltOnFailure=True)
 
 setMpiIncludePath = ShellCommand(
-    command=changeConfVar('MPI_INCLUDE', MPI_INCLUDE, escapeSlash=True),
+    command=changeConfVar('MPI_INCLUDE', settings.MPI_INCLUDE, escapeSlash=True),
     name='Change MPI_INCLUDE',
     description='Add the right MPI_INCLUDE path',
     descriptionDone='Added MPI_INCLUDE',
     haltOnFailure=True)
 
 setMpiBinPath = ShellCommand(
-    command=changeConfVar('MPI_BINDIR', MPI_BINDIR, escapeSlash=True),
+    command=changeConfVar('MPI_BINDIR', settings.MPI_BINDIR, escapeSlash=True),
     name='Change MPI_BINDIR',
     description='Add the right MPI_BINDIR path',
     descriptionDone='Added MPI_BINDIR',
@@ -126,21 +121,23 @@ setScipionUserData = ShellCommand(
     haltOnFailure=True)
 
 setMotioncorrCuda = ShellCommand(
-    command=util.Interpolate('sed -ie "\$aMOTIONCORR_CUDA_LIB = {}" %(prop:SCIPION_LOCAL_CONFIG)s'.format(CUDA_LIB)),
+    command=util.Interpolate(
+        'sed -ie "\$aMOTIONCORR_CUDA_LIB = {}" %(prop:SCIPION_LOCAL_CONFIG)s'.format(settings.CUDA_LIB)),
     name='Set MOTIONCORR_CUDA_LIB in scipion conf',
     description='Set MOTIONCORR_CUDA_LIB in scipion conf',
     descriptionDone='Set MOTIONCORR_CUDA_LIB in scipion conf',
     haltOnFailure=True)
 
 setCcp4Home = ShellCommand(
-    command=util.Interpolate('sed -ie "\$aCCP4_HOME = {}" %(prop:SCIPION_LOCAL_CONFIG)s'.format(CCP4_HOME)),
+    command=util.Interpolate('sed -ie "\$aCCP4_HOME = {}" %(prop:SCIPION_LOCAL_CONFIG)s'.format(settings.CCP4_HOME)),
     name='Set CCP4_HOME in scipion conf',
     description='Set CCP4_HOME in scipion conf',
     descriptionDone='Set CCP4_HOME in scipion conf',
     haltOnFailure=True)
 
 setPhenixHome = ShellCommand(
-    command=util.Interpolate('sed -ie "\$aPHENIX_HOME = {}" %(prop:SCIPION_LOCAL_CONFIG)s'.format(PHENIX_HOME)),
+    command=util.Interpolate(
+        'sed -ie "\$aPHENIX_HOME = {}" %(prop:SCIPION_LOCAL_CONFIG)s'.format(settings.PHENIX_HOME)),
     name='Set PHENIX_HOME in scipion conf',
     description='Set PHENIX_HOME in scipion conf',
     descriptionDone='Set PHENIX_HOME in scipion conf',
@@ -150,7 +147,7 @@ installEman212 = ShellCommand(command=['./scipion', 'installb', 'eman-2.12'],
                               name='Install eman-2.12',
                               description='Install eman-2.12',
                               descriptionDone='Installed eman-2.12',
-                              timeout=timeOutInstall,
+                              timeout=settings.timeOutInstall,
                               haltOnFailure=True)
 
 # Command to clean software/EM packages
@@ -182,8 +179,8 @@ def addScipionGitAndConfigSteps(factorySteps, groupId):
          5. set dataTests folder to a common dir (to save space)
          6. set ScipionUserData to an internal folder (to allow branch-dependent project inspection)
     """
-    factorySteps.addStep(Git(repourl=gitRepoURL,
-                             branch=branchsDict[groupId].get(SCIPION_BUILD_ID, None),
+    factorySteps.addStep(Git(repourl=settings.gitRepoURL,
+                             branch=settings.branchsDict[groupId].get(settings.SCIPION_BUILD_ID, None),
                              mode='incremental',
                              name='Scipion Git Repository Pull',
                              haltOnFailure=True))
@@ -209,7 +206,7 @@ installScipion = ShellCommand(command=['./scipion', 'install', '-j', '8'],
                               name='Scipion Install',
                               description='Compiling everything that needs re-compiling',
                               descriptionDone='Install Scipion',
-                              timeout=timeOutInstall,
+                              timeout=settings.timeOutInstall,
                               haltOnFailure=True)
 
 
@@ -222,7 +219,7 @@ installScipion = ShellCommand(command=['./scipion', 'install', '-j', '8'],
 # *****************************************************************************
 def installScipionFactory(groupId):
     installScipionFactorySteps = util.BuildFactory()
-    installScipionFactorySteps.workdir = SCIPION_BUILD_ID
+    installScipionFactorySteps.workdir = settings.SCIPION_BUILD_ID
     installScipionFactorySteps = addScipionGitAndConfigSteps(installScipionFactorySteps,
                                                              groupId)
     installScipionFactorySteps.addStep(ShellCommand(command=['echo', 'SCIPION_LOCAL_CONFIG',
@@ -268,8 +265,15 @@ def scipionTestFactory():
                               haltOnFailure=False,
                               targetTestSet='pyworkflow',
                               stagePrefix=["./scipion", "test"],
-                              blacklist=SCIPION_TESTS_BLACKLIST,
-                              stageEnvs={wfRelionExtractStreaming: EMAN212}))
+                              blacklist=settings.SCIPION_TESTS_BLACKLIST,
+                              stageEnvs={wfRelionExtractStreaming: settings.EMAN212}))
+
+    for pwLongTest in settings.SCIPION_LONG_TESTS:  # execute long tests at the end
+        scipionTestSteps.addStep(ShellCommand(command=['./scipion', 'test', pwLongTest],
+                                              name=pwLongTest,
+                                              description='Testing %s' % pwLongTest.split('.')[-1],
+                                              descriptionDone=pwLongTest.split('.')[-1],
+                                              timeout=settings.timeOutExecute))
 
     return scipionTestSteps
 
@@ -278,7 +282,7 @@ def scipionTestFactory():
 #                         PLUGIN FACTORY
 # *****************************************************************************
 def pluginFactory(pluginName, factorySteps=None, shortname=None,
-                  doInstall=True, extraBinaries=[], doTest=True,):
+                  doInstall=True, extraBinaries=[], doTest=True):
     factorySteps = factorySteps or util.BuildFactory()
     factorySteps.workdir = util.Property('SCIPION_HOME')
     shortName = shortname or str(pluginName.rsplit('-', 1)[-1])  # todo: get module names more properly?
@@ -287,7 +291,7 @@ def pluginFactory(pluginName, factorySteps=None, shortname=None,
                                           name='Install plugin %s' % shortName,
                                           description='Install plugin %s' % shortName,
                                           descriptionDone='Installed plugin %s' % shortName,
-                                          timeout=timeOutInstall,
+                                          timeout=settings.timeOutInstall,
                                           haltOnFailure=True))
 
         factorySteps.addStep(ShellCommand(command=['./scipion', 'python', 'pyworkflow/install/inspect-plugins.py',
@@ -295,7 +299,7 @@ def pluginFactory(pluginName, factorySteps=None, shortname=None,
                                           name='Inspect plugin %s' % shortName,
                                           description='Inspect plugin %s' % shortName,
                                           descriptionDone='Inspected plugin %s' % shortName,
-                                          timeout=timeOutInstall,
+                                          timeout=settings.timeOutInstall,
                                           haltOnFailure=False))
     if extraBinaries:
         extraBinaries = [extraBinaries] if isinstance(extraBinaries, str) else extraBinaries
@@ -304,7 +308,7 @@ def pluginFactory(pluginName, factorySteps=None, shortname=None,
                                               name='Install extra package %s' % binary,
                                               description='Install extra package  %s' % binary,
                                               descriptionDone='Installed extra package  %s' % binary,
-                                              timeout=timeOutInstall,
+                                              timeout=settings.timeOutInstall,
                                               haltOnFailure=True))
     if doTest:
         factorySteps.addStep(
@@ -331,13 +335,13 @@ def cleanUpFactory(rmAll=True):
                                           name='Removing Scipion',
                                           description='Removing Scipion',
                                           descriptionDone='Scipion removed',
-                                          timeout=timeOutInstall))
+                                          timeout=settings.timeOutInstall))
 
         cleanUpSteps.addStep(ShellCommand(command=['rm', '-rf', 'xmipp'],
                                           name='Removing Xmipp',
                                           description='Removing Xmipp',
                                           descriptionDone='Xmipp removed',
-                                          timeout=timeOutInstall))
+                                          timeout=settings.timeOutInstall))
 
     else:
         cleanUpSteps.workdir = util.Property('SCIPION_HOME')
@@ -345,7 +349,7 @@ def cleanUpFactory(rmAll=True):
                                           name='Cleaning Scipion',
                                           description='Cleaning Scipion',
                                           descriptionDone='Cleaning Scipion',
-                                          timeout=timeOutInstall))
+                                          timeout=settings.timeOutInstall))
 
     return cleanUpSteps
 
@@ -362,9 +366,9 @@ def doCommit(step):
 
 def docsFactory(groupId):
     factorySteps = util.BuildFactory()
-    factorySteps.workdir = DOCS_BUILD_ID
-    docsBranch = branchsDict[groupId].get(DOCS_BUILD_ID, None)
-    factorySteps.addStep(Git(repourl=DOCS_REPO,
+    factorySteps.workdir = settings.DOCS_BUILD_ID
+    docsBranch = settings.branchsDict[groupId].get(settings.DOCS_BUILD_ID, None)
+    factorySteps.addStep(Git(repourl=settings.DOCS_REPO,
                              branch=docsBranch,
                              mode='incremental',
                              name='Scipion docs repository pull',
@@ -377,7 +381,7 @@ def docsFactory(groupId):
                      name='Generate API docs',
                      description='Generate API docs',
                      descriptionDone='Generated API docs',
-                     timeout=timeOutInstall))
+                     timeout=settings.timeOutInstall))
     factorySteps.addStep(
         SetPropertyFromCommand(command='which sphinx-versioning',
                                property='sphinx-versioning',
@@ -391,7 +395,7 @@ def docsFactory(groupId):
                                       name='Git add docs',
                                       description='Git add docs',
                                       descriptionDone='Git added docs',
-                                      timeout=timeOutInstall))
+                                      timeout=settings.timeOutInstall))
 
     factorySteps.addStep(
         SetPropertyFromCommand(command="[[ -n $(git status -s) ]] || echo 'clean'",
@@ -404,21 +408,21 @@ def docsFactory(groupId):
                                       description='Git commit docs',
                                       descriptionDone='Git commit docs',
                                       doStepIf=doCommit,
-                                      timeout=timeOutInstall))
+                                      timeout=settings.timeOutInstall))
 
     factorySteps.addStep(ShellCommand(command=["git", "push"],
                                       name='Git push docs to repo',
                                       description='Git push docs to repo',
                                       descriptionDone='Git push docs to repo',
-                                      timeout=timeOutInstall))
+                                      timeout=settings.timeOutInstall))
 
     factorySteps.addStep(ShellCommand(command=[util.Interpolate("%(prop:SCIPION_HOME)s/scipion"),
                                                "run", util.Property('sphinx-versioning'), 'push', '-r', docsBranch,
-                                               util.Property('DOCS_HOME'), DOCS_HTML_BRANCH, "."],
+                                               util.Property('DOCS_HOME'), settings.DOCS_HTML_BRANCH, "."],
                                       name='Push built docs',
                                       description='Pushing built docs',
                                       descriptionDone='Pushed built docs',
-                                      timeout=timeOutInstall))
+                                      timeout=settings.timeOutInstall))
 
     return factorySteps
 
@@ -431,11 +435,11 @@ def getLocscaleBuilder(groupId, env):
     builderFactory.addStep(installEman212)
     locscaleEnv = {}
     locscaleEnv.update(env)
-    locscaleEnv.update(EMAN212)
+    locscaleEnv.update(settings.EMAN212)
     name = str(locscalePluginData['name'])
     return BuilderConfig(name="%s_%s" % (name, groupId),
                          tags=[groupId, name],
-                         workernames=[WORKER],
+                         workernames=[settings.WORKER],
                          factory=pluginFactory('scipion-em-locscale', factorySteps=builderFactory),
                          workerbuilddir=groupId,
                          properties={'slackChannel': locscalePluginData.get('slackChannel', "")},
@@ -447,44 +451,44 @@ def getScipionBuilders(groupId):
     env = {"SCIPION_IGNORE_PYTHONPATH": "True",
            "SCIPION_LOCAL_CONFIG": util.Property('SCIPION_LOCAL_CONFIG')}
     scipionBuilders.append(
-        BuilderConfig(name=SCIPION_INSTALL_PREFIX + groupId,
+        BuilderConfig(name=settings.SCIPION_INSTALL_PREFIX + groupId,
                       tags=[groupId],
                       workernames=['einstein'],
                       factory=installScipionFactory(groupId),
                       workerbuilddir=groupId,
-                      properties={"slackChannel": SCIPION_SLACK_CHANNEL},
+                      properties={"slackChannel": settings.SCIPION_SLACK_CHANNEL},
                       env=env)
     )
     scipionBuilders.append(
-        BuilderConfig(name=SCIPION_TESTS_PREFIX + groupId,
+        BuilderConfig(name=settings.SCIPION_TESTS_PREFIX + groupId,
                       tags=[groupId],
                       workernames=['einstein'],
                       factory=scipionTestFactory(),
                       workerbuilddir=groupId,
-                      properties={'slackChannel': SCIPION_SLACK_CHANNEL},
+                      properties={'slackChannel': settings.SCIPION_SLACK_CHANNEL},
                       env=env)
     )
 
-    if groupId == DEVEL_GROUP_ID:
+    if groupId == settings.DEVEL_GROUP_ID:
         env['SCIPION_PLUGIN_JSON'] = 'plugins.json'
         scipionBuilders.append(
-            BuilderConfig(name=CLEANUP_PREFIX + groupId,
+            BuilderConfig(name=settings.CLEANUP_PREFIX + groupId,
                           tags=[groupId],
                           workernames=['einstein'],
                           factory=cleanUpFactory(),
                           workerbuilddir=groupId,
-                          properties={'slackChannel': SCIPION_SLACK_CHANNEL},
+                          properties={'slackChannel': settings.SCIPION_SLACK_CHANNEL},
                           env=env)
         )
 
     else:
         scipionBuilders.append(
-            BuilderConfig(name=CLEANUP_PREFIX + groupId,
+            BuilderConfig(name=settings.CLEANUP_PREFIX + groupId,
                           tags=[groupId],
                           workernames=['einstein'],
                           factory=cleanUpFactory(rmAll=False),
                           workerbuilddir=groupId,
-                          properties={'slackChannel': SCIPION_SLACK_CHANNEL},
+                          properties={'slackChannel': settings.SCIPION_SLACK_CHANNEL},
                           env=env)
         )
 
@@ -497,7 +501,7 @@ def getScipionBuilders(groupId):
         scipionBuilders.append(
             BuilderConfig(name="%s_%s" % (moduleName, groupId),
                           tags=tags,
-                          workernames=[WORKER],
+                          workernames=[settings.WORKER],
                           factory=pluginFactory(plugin, shortname=moduleName, doTest=hastests),
                           workerbuilddir=groupId,
                           properties={'slackChannel': scipionPlugins[plugin].get('slackChannel', "")},
@@ -506,10 +510,10 @@ def getScipionBuilders(groupId):
 
     scipionBuilders.append(getLocscaleBuilder(groupId, env))
 
-    if branchsDict[groupId].get(DOCS_BUILD_ID, None) is not None:
-        scipionBuilders.append(BuilderConfig(name="%s%s" % (DOCS_PREFIX, groupId),
+    if settings.branchsDict[groupId].get(settings.DOCS_BUILD_ID, None) is not None:
+        scipionBuilders.append(BuilderConfig(name="%s%s" % (settings.DOCS_PREFIX, groupId),
                                              tags=["docs", groupId],
-                                             workernames=[WORKER],
+                                             workernames=[settings.WORKER],
                                              factory=docsFactory(groupId),
                                              workerbuilddir=groupId,
                                              properties={
@@ -523,17 +527,17 @@ def getScipionBuilders(groupId):
 # ############################## SCHEDULERS ###################################
 # #############################################################################
 def getScipionSchedulers(groupId):
-    scipionSchedulerNames = [SCIPION_INSTALL_PREFIX + groupId,
-                             SCIPION_TESTS_PREFIX + groupId,
-                             CLEANUP_PREFIX + groupId]
+    scipionSchedulerNames = [settings.SCIPION_INSTALL_PREFIX + groupId,
+                             settings.SCIPION_TESTS_PREFIX + groupId,
+                             settings.CLEANUP_PREFIX + groupId]
 
-    if branchsDict[groupId].get(DOCS_BUILD_ID, None) is not None:
-        scipionSchedulerNames.append("%s%s" % (DOCS_PREFIX, groupId))
+    if settings.branchsDict[groupId].get(settings.DOCS_BUILD_ID, None) is not None:
+        scipionSchedulerNames.append("%s%s" % (settings.DOCS_PREFIX, groupId))
     schedulers = []
     for name in scipionSchedulerNames:
         schedulers.append(triggerable.Triggerable(name=name,
                                                   builderNames=[name]))
-        schedulers.append(ForceScheduler(name='%s%s' % (FORCE_BUILDER_PREFIX, name),
+        schedulers.append(ForceScheduler(name='%s%s' % (settings.FORCE_BUILDER_PREFIX, name),
                                          builderNames=[name]))
 
     plugins = {}
@@ -544,7 +548,7 @@ def getScipionSchedulers(groupId):
         schedulers.append(triggerable.Triggerable(name="%s_%s" % (moduleName, groupId),
                                                   builderNames=["%s_%s" % (moduleName, groupId)]))
 
-        forceSchedulerName = '%s%s_%s' % (FORCE_BUILDER_PREFIX, moduleName, groupId)
+        forceSchedulerName = '%s%s_%s' % (settings.FORCE_BUILDER_PREFIX, moduleName, groupId)
         schedulers.append(
             ForceScheduler(name=forceSchedulerName,
                            builderNames=["%s_%s" % (moduleName, groupId)]))

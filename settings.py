@@ -54,7 +54,6 @@ gitRepoURL = 'https://github.com/I2PC/scipion.git'
 DOCS_REPO = "git@github.com:scipion-em/docs.git"
 DOCS_HTML_BRANCH = 'gh-pages'
 
-
 # builder prefixes
 SCIPION_INSTALL_PREFIX = 'Install_Scipion_'
 SCIPION_TESTS_PREFIX = 'Test_Scipion_'
@@ -64,13 +63,23 @@ DOCS_PREFIX = "docs_"
 # slack channel
 SCIPION_SLACK_CHANNEL = "buildbot"
 
-# Scipion test blacklist
-SCIPION_TESTS_BLACKLIST = ["pyworkflow.tests.em.workflows.test_parallel_gpu_queue.TestNoQueueSmall",
-                           "pyworkflow.tests.em.workflows.test_parallel_gpu_queue.TestNoQueueALL",
-                           "pyworkflow.tests.em.workflows.test_parallel_gpu_queue.TestQueueSmall",
-                           "pyworkflow.tests.em.workflows.test_parallel_gpu_queue.TestQueueALL",
-                           "pyworkflow.tests.em.workflows.test_parallel_gpu_queue.TestQueueSteps",
-                           "pyworkflow.tests.em.workflows.test_workflow_existing.TestXmippWorkflow"]
+# List of the lengthy tests so that we put them at the end.
+SCIPION_LONG_TESTS = ["pyworkflow.tests.em.workflows.test_workflow_mixed_large.TestMixedRelionTutorial",
+                      "pyworkflow.tests.em.workflows.test_workflow_mixed_large.TestMixedFrealignClassify",
+                      "pyworkflow.tests.em.workflows.test_workflow_modeling.TestMolprobityValidation",
+                      "pyworkflow.tests.em.workflows.test_workflow_initialvolume.TestRibosome",
+                      "pyworkflow.tests.em.workflows.test_workflow_initialvolume.TestBPV",
+                      "pyworkflow.tests.em.workflows.test_workflow_xmipp_rct.TestXmippRCTWorkflow",
+                      ]
+
+# Scipion test blacklist - these wont be executed with the rest of pyworkflow tests
+SCIPION_TESTS_BLACKLIST = (SCIPION_LONG_TESTS +
+                           ["pyworkflow.tests.em.workflows.test_parallel_gpu_queue.TestNoQueueSmall",
+                            "pyworkflow.tests.em.workflows.test_parallel_gpu_queue.TestNoQueueALL",
+                            "pyworkflow.tests.em.workflows.test_parallel_gpu_queue.TestQueueSmall",
+                            "pyworkflow.tests.em.workflows.test_parallel_gpu_queue.TestQueueALL",
+                            "pyworkflow.tests.em.workflows.test_parallel_gpu_queue.TestQueueSteps",
+                            "pyworkflow.tests.em.workflows.test_workflow_existing.TestXmippWorkflow"])
 
 ################### Xmipp settings ##################
 XMIPP_SCRIPT_URL = ("https://raw.githubusercontent.com/I2PC/xmipp/%s/xmipp"
