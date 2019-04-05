@@ -194,7 +194,7 @@ def xmippBundleFactory():
                                        extract_fn=glob2list,
                                        env={"SCIPION_HOME": util.Property("SCIPION_HOME"),
                                             "SCIPION_LOCAL_CONFIG": util.Property("SCIPION_LOCAL_CONFIG"),
-                                            "LD_LIBRARY_PATH": util.Property(LD_LIBRARY_PATH)}))
+                                            "LD_LIBRARY_PATH": LD_LIBRARY_PATH}))
 
     xmippTestSteps.addStep(
         GenerateStagesCommand(command=["./xmipp", "test", "--show"],
