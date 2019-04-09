@@ -20,6 +20,13 @@
           "slackChannel": "spider",
           "pluginSourceUrl": "https://github.com/scipion-em/scipion-em-spider.git"
       },
+    "scipion-em-gctf": {
+          "pipName": "scipion-em-gctf",
+          "id": 31,
+          "name": "gctf",
+          "pluginSourceUrl": "https://github.com/scipion-em/scipion-em-gctf.git",
+          "slackChannel":"gctf"
+      },
   "scipion-em-relion": {
           "pipName": "scipion-em-relion",
           "id": 31,
@@ -91,14 +98,6 @@
           "pluginSourceUrl": "https://github.com/scipion-em/scipion-em-bamfordlab.git",
           "slackChannel":"bamfordlab"
       },
-  "scipion-em-gctf": {
-          "pipName": "scipion-em-gctf",
-          "id": 31,
-          "name": "gctf",
-          "pluginSourceUrl": "https://github.com/scipion-em/scipion-em-gctf.git",
-          "slackChannel":"gctf"
-      },
-
   "scipion-em-simple": {
           "pipName": "scipion-em-simple",
           "id": 31,
