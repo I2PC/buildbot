@@ -254,7 +254,6 @@ def scipionTestFactory():
 
     # add TestRelionExtractStreaming manually because it needs eman 2.12
     wfRelionExtractStreaming = 'pyworkflow.tests.em.workflows.test_workflow_streaming.TestRelionExtractStreaming'
-    testBPV = "pyworkflow.tests.em.workflows.test_workflow_initialvolume.TestBPV"
 
     # gen stages
     genStagesCmd = ["./scipion", "test", "--show", "--grep", "pyworkflow", "--mode", "onlyclasses"]
@@ -277,6 +276,7 @@ def scipionTestFactory():
                                                   descriptionDone=pwLongTest.split('.')[-1],
                                                   timeout=settings.timeOutExecute,
                                                   env=settings.EMAN212))
+            continue
 
         scipionTestSteps.addStep(ShellCommand(command=['./scipion', 'test', pwLongTest],
                                               name=pwLongTest,
