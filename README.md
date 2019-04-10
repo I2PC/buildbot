@@ -129,6 +129,8 @@ If we have to concatenate the value of a property with another string, we need t
 
 ## Adding a plugin
 
+The file `plugins.json` contains the list of plugins that are tested. The order of the plugins is important because it takes dependencies into account. To test a new plugin you only need to add it to this list :)
+
 
 # BUILDBOT WORKER
 
