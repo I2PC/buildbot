@@ -335,30 +335,25 @@ def pluginFactory(pluginName, factorySteps=None, shortname=None,
 # *****************************************************************************
 #                         CLEAN-UP FACTORY
 # *****************************************************************************
-def cleanUpFactory(rmAll=True):
+def cleanUpFactory(rmXmipp=False):
     cleanUpSteps = util.BuildFactory()
 
-    if rmAll:
-        cleanUpSteps.workdir = util.Property('BUILD_GROUP_HOME')
-        cleanUpSteps.addStep(ShellCommand(command=['rm', '-rf', 'scipion'],
-                                          name='Removing Scipion',
-                                          description='Removing Scipion',
-                                          descriptionDone='Scipion removed',
-                                          timeout=settings.timeOutInstall))
 
+    cleanUpSteps.workdir = util.Property('BUILD_GROUP_HOME')
+    cleanUpSteps.addStep(ShellCommand(command=['rm', '-rf', 'scipion'],
+                                      name='Removing Scipion',
+                                      description='Removing Scipion',
+                                      descriptionDone='Scipion removed',
+                                      timeout=settings.timeOutInstall))
+
+    if rmXmipp:
         cleanUpSteps.addStep(ShellCommand(command=['rm', '-rf', 'xmipp'],
                                           name='Removing Xmipp',
                                           description='Removing Xmipp',
                                           descriptionDone='Xmipp removed',
                                           timeout=settings.timeOutInstall))
 
-    else:
-        cleanUpSteps.workdir = util.Property('SCIPION_HOME')
-        cleanUpSteps.addStep(ShellCommand(command=['./scipion', 'python', 'pyworkflow/install/clean.py', 'python'],
-                                          name='Cleaning Scipion',
-                                          description='Cleaning Scipion',
-                                          descriptionDone='Cleaning Scipion',
-                                          timeout=settings.timeOutInstall))
+
 
     return cleanUpSteps
 
@@ -484,7 +479,7 @@ def getScipionBuilders(groupId):
             BuilderConfig(name=settings.CLEANUP_PREFIX + groupId,
                           tags=[groupId],
                           workernames=['einstein'],
-                          factory=cleanUpFactory(),
+                          factory=cleanUpFactory(rmXmipp=True),
                           workerbuilddir=groupId,
                           properties={'slackChannel': settings.SCIPION_SLACK_CHANNEL},
                           env=env)
@@ -495,7 +490,7 @@ def getScipionBuilders(groupId):
             BuilderConfig(name=settings.CLEANUP_PREFIX + groupId,
                           tags=[groupId],
                           workernames=['einstein'],
-                          factory=cleanUpFactory(rmAll=False),
+                          factory=cleanUpFactory(),
                           workerbuilddir=groupId,
                           properties={'slackChannel': settings.SCIPION_SLACK_CHANNEL},
                           env=env)
