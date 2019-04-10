@@ -29,7 +29,7 @@ buildbot@arquimedes:~$ git pull
 
 Now we can restart
 ```
-buildbot@arquimedes:~$ buildbot restart ~/master
+buildbot@arquimedes:~$ sudo systemctl restart buildbot-master
 ```
 
 ## settings.py
