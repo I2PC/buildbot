@@ -127,8 +127,12 @@ If we have to concatenate the value of a property with another string, we need t
                     util.Interpolate('%(prop:SCIPION_HOME)s/software/lib/python2.7/site-packages/')]
 ```
 
+## Adding a plugin
+
 
 # BUILDBOT WORKER
+
+## Opening a failed test
 We ssh into the machine: 
 
 ```bash
@@ -138,10 +142,19 @@ $ ssh -X buildbot@einstein.cnb.csic.es
 We will show up by default at Scipion devel directory. Before we launch Scipion, we need to select the right config file:
 
 ```bash
-buildbot@einstein:~/scipionBot/devel/scipion$ export   SCIPION_LOCAL_CONFIG=~/.config/scipion/scipion_devel
+buildbot@einstein:~/scipionBot/devel/scipion$ export   SCIPION_LOCAL_CONFIG=~/.config/scipion/scipion_devel.conf
 ```
 
 Now we can check any test that failed, for example TestEmanRefine2D:
 ```bash
 buildbot@einstein:~/scipionBot/devel/scipion$ ./scipion project TestEmanRefine2D
+```
+
+If we wanted to do this but with prod, we would have to navigate to `~/scipionBot/prod/scipion`, use the config `scipion_prod.conf`.
+
+## Restarting the worker
+If for whatever reason you need to restart the worker, navigate to `~/scipionBot` and run:
+
+```bash
+buildbot@einstein:~/scipionBot/devel/scipion$ buildbot-worker restart
 ```
