@@ -158,5 +158,6 @@ If we wanted to do this but with prod, we would have to navigate to `~/scipionBo
 If for whatever reason you need to restart the worker, navigate to `~/scipionBot` and run:
 
 ```bash
-buildbot@einstein:~/scipionBot/devel/scipion$ buildbot-worker restart
+buildbot@einstein:~/scipionBot/devel/scipion$ sudo systemctl restart buildbot-worker
 ```
+We can also check the status, start and stop the worker by replacing `restart` with `status`, `start` or `stop`
