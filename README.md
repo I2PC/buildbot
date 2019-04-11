@@ -9,13 +9,15 @@ Buildbot master is in charge of the configuration. It basically knows what to ru
 
 ## Restarting the master
 
-We ssh into the machine: 
+1. We ssh into the machine: 
 
 ```bash
 $ ssh -X buildbot@arquimedes
 ```
 
-Are we just getting started with some new changes we added to buildbot? Then we probably **don't want to notify slack** users of any failures. Set **`DONT_NOTIFY_SLACK`** before restarting buildbot:
+### Testing changes
+
+2. Are we just getting started with some new changes we added to buildbot? Then we probably **don't want to notify slack** users of any failures. Set **`DONT_NOTIFY_SLACK`** before restarting buildbot:
 
 ```bash
 buildbot@arquimedes:~$ export DONT_NOTIFY_SLACK=True
@@ -27,9 +29,39 @@ buildbot@arquimedes:~$ cd master
 buildbot@arquimedes:~$ git pull
 ```
 
-Now we can restart
+3. Stop buildbot service. 
+```
+buildbot@arquimedes:~$ sudo systemctl stop buildbot-master
+```
+
+4. Restart without `systemctl` to test changes
+```
+buildbot@arquimedes:~$ buildbot restart ~/master
+```
+
+5. Once you're confident with your changes, stop buildbot and start with `systemctl`. 
+```
+buildbot@arquimedes:~$ buildbot stop ~/master
+buildbot@arquimedes:~$ sudo systemctl start buildbot-master
+```
+
+### Restarting buildbot service
+If you don't want to test any changes and just want to restart buildbot, just do:
 ```
 buildbot@arquimedes:~$ sudo systemctl restart buildbot-master
+```
+You can also check the status:
+```
+buildbot@arquimedes:~$ sudo systemctl status buildbot-master
+● buildbot-master.service - BuildBot master service
+   Loaded: loaded (/etc/systemd/system/buildbot-master.service; enabled; vendor preset: enabled)
+   Active: active (running) since Wed 2019-04-10 16:38:46 CEST; 18h ago
+ Main PID: 15398 (buildbot)
+    Tasks: 4 (limit: 4915)
+   CGroup: /system.slice/buildbot-master.service
+           └─15398 /usr/bin/python /usr/local/bin/buildbot start --nodaemon
+
+Apr 10 16:38:46 arquimedes.cnb.csic.es systemd[1]: Started BuildBot master service.
 ```
 
 ## settings.py
