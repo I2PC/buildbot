@@ -151,6 +151,12 @@
           "name": "atomstructutils",
           "pluginSourceUrl": "https://github.com/scipion-em/scipion-em-atomstructutils"
   },
+  "scipion-em-sphire": {
+    "pipName": "scipion-em-sphire",
+          "id": 51,
+          "name": "sphire",
+          "pluginSourceUrl": "https://github.com/scipion-em/scipion-em-sphire.git@refactor-and-1.3.2"
+  },
   "scipion-em-xmipp": {
     "pipName": "scipion-em-xmipp",
     "id": 31,
