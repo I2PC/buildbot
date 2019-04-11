@@ -46,6 +46,7 @@ CUDA = "True"
 CUDA_LIB = "/usr/local/cuda-8.0/lib64"
 CCP4_HOME = "/opt/ccp4-7.0"
 PHENIX_HOME = "/usr/local/phenix-1.13-2998"
+CRYOLO_GENERIC_MODEL = "/home/buildbot/gmodel_phosnet_20190314.h5"
 
 # data for the builders
 PLUGINS_JSON_FILE = "getplugins.json"

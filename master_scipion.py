@@ -135,6 +135,14 @@ setCcp4Home = ShellCommand(
     descriptionDone='Set CCP4_HOME in scipion conf',
     haltOnFailure=True)
 
+setCryoloModel = ShellCommand(
+    command=util.Interpolate('sed -ie "\$aCRYOLO_GENERIC_MODEL = {}" %(prop:SCIPION_LOCAL_CONFIG)s'.format(settings.CRYOLO_GENERIC_MODEL)),
+    name='Set CRYOLO_GENERIC_MODEL in scipion conf',
+    description='Set CRYOLO_GENERIC_MODEL in scipion conf',
+    descriptionDone='Set CRYOLO_GENERIC_MODEL in scipion conf',
+    haltOnFailure=True)
+
+
 setPhenixHome = ShellCommand(
     command=util.Interpolate(
         'sed -ie "\$aPHENIX_HOME = {}" %(prop:SCIPION_LOCAL_CONFIG)s'.format(settings.PHENIX_HOME)),
@@ -242,6 +250,7 @@ def installScipionFactory(groupId):
     installScipionFactorySteps.addStep(setMotioncorrCuda)
     installScipionFactorySteps.addStep(setPhenixHome)
     installScipionFactorySteps.addStep(setCcp4Home)
+    installScipionFactorySteps.addStep(setCryoloModel)
     return installScipionFactorySteps
 
 
