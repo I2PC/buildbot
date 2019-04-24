@@ -1,4 +1,9 @@
-{
+{"scipion-em-sphire": {
+	    "pipName": "scipion-em-sphire",
+	              "id": 51,
+		                "name": "sphire",
+				          "pluginSourceUrl": "https://github.com/scipion-em/scipion-em-sphire.git@refactor-and-1.3.2"
+					    },
   "scipion-em-grigoriefflab": {
         "pipName": "scipion-em-grigoriefflab",
         "id": 11,
@@ -170,3 +175,4 @@
     "slackChannel": "xmipp"
   }
 }
+
