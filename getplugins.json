@@ -151,6 +151,12 @@
           "name": "atomstructutils",
           "pluginSourceUrl": "https://github.com/scipion-em/scipion-em-atomstructutils"
   },
+  "scipion-em-localrec": {
+    "pipName": "scipion-em-localrec",
+          "id": 30,
+          "name": "localrec",
+          "pluginSourceUrl": "https://github.com/scipion-em/scipion-em-localrec"
+  },
   "scipion-em-sphire": {
     "pipName": "scipion-em-sphire",
           "id": 51,
