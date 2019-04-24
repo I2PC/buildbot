@@ -235,7 +235,7 @@ def installScipionFactory(groupId):
                                                     name='Echo SCIPION_LOCAL_CONFIG',
                                                     description='Echo SCIPION_LOCAL_CONFIG',
                                                     descriptionDone='Echo SCIPION_LOCAL_CONFIG',
-                                                    timeout=300
+                                                    timeout=settings.timeOutShort
                                                     ))
     installScipionFactorySteps.addStep(installScipion)
     installScipionFactorySteps.addStep(

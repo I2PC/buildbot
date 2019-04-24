@@ -10,7 +10,7 @@ from settings import (XMIPP_SCRIPT_URL, XMIPP_BUILD_ID, SCIPION_BUILD_ID,
                       XMIPP_INSTALL_PREFIX, timeOutInstall, WORKER, XMIPP_SLACK_CHANNEL,
                       XMIPP_TESTS, XMIPP_BUNDLE_TESTS, NVCC_LINKFLAGS, NVCC_CXXFLAGS,
                       NVCC, CUDA, EMAN212, FORCE_BUILDER_PREFIX, branchsDict, PROD_GROUP_ID,
-                      XMIPP_BUNDLE_VARS, DEVEL_GROUP_ID, LD_LIBRARY_PATH)
+                      XMIPP_BUNDLE_VARS, DEVEL_GROUP_ID, LD_LIBRARY_PATH, timeOutShort)
 from common_utils import changeConfVar, GenerateStagesCommand
 from master_scipion import pluginFactory, xmippPluginData
 
@@ -51,19 +51,19 @@ def installXmippFactory(groupId):
                      name='Echo scipion home',
                      description='Echo scipion home',
                      descriptionDone='Echo scipion home',
-                     timeout=300))
+                     timeout=timeOutShort))
     installXmippSteps.addStep(
         ShellCommand(command=['wget', XMIPP_SCRIPT_URL, '-O', 'xmipp'],
                      name='Get XMIPP script',
                      description='Getting Xmipp script',
                      descriptionDone='Xmipp script downloaded',
-                     timeout=300))
+                     timeout=timeOutShort))
     installXmippSteps.addStep(
         ShellCommand(command=['chmod', 'a+x', 'xmipp'],
                      name='Make Xmipp script executable',
                      description='Making Xmipp script executable',
                      descriptionDone='Xmipp script made executable',
-                     timeout=300))
+                     timeout=timeOutShort))
 
     installXmippSteps.addStep(
         ShellCommand(command=['rm', '-f', 'xmipp.conf'],
@@ -79,63 +79,63 @@ def installXmippFactory(groupId):
                      name='Get Xmipp devel sources',
                      description='Get Xmipp devel sources',
                      descriptionDone='Get Xmipp devel sources',
-                     timeout=300)
+                     timeout=timeOutShort)
     )
     installXmippSteps.addStep(
         ShellCommand(command=['./xmipp', 'config'],
                      name='./xmipp config',
                      description='Generate xmipp config',
                      descriptionDone='Generate xmipp config',
-                     timeout=300)
+                     timeout=timeOutShort)
     )
     installXmippSteps.addStep(
         ShellCommand(command=changeConfVar('CUDA', CUDA, file='xmipp.conf'),
                      name='Set CUDA = True',
                      description='Set CUDA = True',
                      descriptionDone='Set CUDA = True',
-                     timeout=300)
+                     timeout=timeOutShort)
     )
     installXmippSteps.addStep(
         ShellCommand(command=changeConfVar('NVCC', NVCC, file='xmipp.conf'),
                      name='Set NVCC',
                      description='Set NVCC',
                      descriptionDone='Set NVCC',
-                     timeout=300)
+                     timeout=timeOutShort)
     )
     installXmippSteps.addStep(
         ShellCommand(command=changeConfVar('NVCC_CXXFLAGS', NVCC_CXXFLAGS, file='xmipp.conf'),
                      name='Set NVCC_CXXFLAGS',
                      description='Set NVCC_CXXFLAGS',
                      descriptionDone='Set NVCC_CXXFLAGS',
-                     timeout=300)
+                     timeout=timeOutShort)
     )
     installXmippSteps.addStep(
         ShellCommand(command=changeConfVar('NVCC_LINKFLAGS', NVCC_LINKFLAGS, file='xmipp.conf', escapeSlash=True),
                      name='Set NVCC_LINKFLAGS',
                      description='Set NVCC_LINKFLAGS',
                      descriptionDone='Set NVCC_LINKFLAGS',
-                     timeout=300)
+                     timeout=timeOutShort)
     )
     installXmippSteps.addStep(
         ShellCommand(command=['./xmipp', 'get_dependencies', xmippBranch],
                      name='./xmipp get_dependencies',
                      description='Get Xmipp dependencies',
                      descriptionDone='Get Xmipp dependencies',
-                     timeout=300)
+                     timeout=timeOutShort)
     )
     installXmippSteps.addStep(
         ShellCommand(command=['./xmipp', 'compile', '8'],
                      name='./xmipp compile',
                      description='Compile Xmipp',
                      descriptionDone='Compiled Xmipp',
-                     timeout=300)
+                     timeout=timeOutInstall)
     )
     installXmippSteps.addStep(
         ShellCommand(command=['./xmipp', 'install'],
                      name='./xmipp install',
                      description='Install Xmipp',
                      descriptionDone='Installed Xmipp',
-                     timeout=300)
+                     timeout=timeOutShort)
     )
 
     installXmippSteps.addStep(
@@ -149,7 +149,7 @@ def installXmippFactory(groupId):
                      name='Link Xmipp on site-packages',
                      description='Make a link to xmipp on Scipions site-packages',
                      descriptionDone='Xmipp linked to site packages',
-                     timeout=300))
+                     timeout=timeOutShort))
 
     linkToSoftwareEm = ['ln', '-fs', util.Interpolate("%(prop:XMIPP_HOME)s/build"),
                         util.Interpolate('%(prop:SCIPION_HOME)s/software/em/xmipp')]
@@ -158,7 +158,7 @@ def installXmippFactory(groupId):
                      name='Link Xmipp build on software/em',
                      description='Make a link to xmipp/build on software/em',
                      descriptionDone='Xmipp build linked to Scipion',
-                     timeout=300)
+                     timeout=timeOutShort)
     )
 
     installXmippSteps.addStep(
@@ -227,7 +227,7 @@ def xmippTestFactory():
                                         name='Echo scipion home',
                                         description='Echo scipion home',
                                         descriptionDone='Echo scipion home',
-                                        timeout=300
+                                        timeout=timeOutShort
                                         ))
     # add TestRelionExtractStreaming manually because it needs eman 2.12
     gpucorrclassifiers = ["xmipp3.tests.test_protocols_gpuCorr_classifier.TestGpuCorrClassifier",
