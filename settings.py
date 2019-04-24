@@ -12,9 +12,10 @@ WEB_PORT = 9980
 WEB_URL = 'http://arquimedes.cnb.csic.es:9980/'
 
 # builder timeouts
-timeOutInstall = 3600  # 1 hour
-timeOutExecute = 36000  # 10 hours
-timeOutLongExecute = 72000  # 20 hours
+timeOutShort = 5*60  # 5 minutes
+timeOutInstall = 60*60  # 1 hour
+timeOutExecute = 5*60*60  # 5 hours
+timeOutLongExecute = 20*60*60  # 20 hours
 
 # builder branches
 DEVEL_GROUP_ID = 'devel'
