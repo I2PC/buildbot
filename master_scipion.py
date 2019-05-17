@@ -143,7 +143,7 @@ setCryoloModel = ShellCommand(
     haltOnFailure=True)
 
 setCryoloEnvActivation = ShellCommand(
-    command=util.Interpolate('sed -ie "\$CRYOLO_ENV_ACTIVATION = {}" %(prop:SCIPION_LOCAL_CONFIG)s'.format(settings.CRYOLO_ENV_ACTIVATION)),
+    command=util.Interpolate('sed -ie "\$aCRYOLO_ENV_ACTIVATION = {}" %(prop:SCIPION_LOCAL_CONFIG)s'.format(settings.CRYOLO_ENV_ACTIVATION)),
     name='Set CRYOLO_ENV_ACTIVATION in scipion conf',
     description='Set CRYOLO_ENV_ACTIVATION in scipion conf',
     descriptionDone='Set CRYOLO_ENV_ACTIVATION in scipion conf',
