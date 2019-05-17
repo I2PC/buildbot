@@ -1,3 +1,10 @@
+### log and other buildbot things
+*.log
+*.log.*
+*.sqlite
+*.pid
+*.tac
+
 ###tmp file
 *KK
 

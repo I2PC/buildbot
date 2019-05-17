@@ -308,7 +308,7 @@ def scipionTestFactory():
 #                         PLUGIN FACTORY
 # *****************************************************************************
 def pluginFactory(pluginName, factorySteps=None, shortname=None,
-                  doInstall=True, extraBinaries=[], doTest=True):
+                  doInstall=True, extraBinaries='', doTest=True):
     factorySteps = factorySteps or util.BuildFactory()
     factorySteps.workdir = util.Property('SCIPION_HOME')
     shortName = shortname or str(pluginName.rsplit('-', 1)[-1])  # todo: get module names more properly?
