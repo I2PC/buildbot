@@ -34,7 +34,7 @@ branchsDict = {DEVEL_GROUP_ID: {SCIPION_BUILD_ID: 'release-2.0.0',
                                 XMIPP_BUILD_ID: 'release-19.03-fixes',
                                 DOCS_BUILD_ID: 'release-2.0.0'},
                PROD_GROUP_ID: {
-                   SCIPION_BUILD_ID: 'release-2.0.0-fixes'
+                   SCIPION_BUILD_ID: 'release-2.0.0'
                }}
 
 ################## Scipion settings ##################
