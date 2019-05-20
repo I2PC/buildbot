@@ -9,7 +9,7 @@ PORT = 9989
 
 # Website settings
 WEB_PORT = 9980
-WEB_URL = 'http://arquimedes.cnb.csic.es:9980/'
+WEB_URL = 'http://scipion-test.cnb.csic.es:9980/'
 
 # builder timeouts
 timeOutShort = 5*60  # 5 minutes
