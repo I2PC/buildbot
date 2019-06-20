@@ -166,7 +166,7 @@ installEman212 = ShellCommand(command=['./scipion', 'installb', 'eman-2.12'],
                               haltOnFailure=True)
 
 setCondaActivation = ShellCommand(
-    command=util.Interpolate('sed -ie "\$aCONDA_ENV_ACTIVATION = {}" %(prop:SCIPION_LOCAL_CONFIG)s'.format(settings.CONDA_ENV_ACTIVATION)),
+    command=util.Interpolate('sed -ie "\$aCONDA_ENV_ACTIVATION = {}" %(prop:SCIPION_LOCAL_CONFIG)s'.format(settings.CONDA_ACTIVATION_CMD)),
     name='Set CONDA_ENV_ACTIVATION in scipion conf',
     description='Set CONDA_ENV_ACTIVATION in scipion conf',
     descriptionDone='Set CONDA_ENV_ACTIVATION in scipion conf',
