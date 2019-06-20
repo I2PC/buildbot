@@ -165,6 +165,14 @@ installEman212 = ShellCommand(command=['./scipion', 'installb', 'eman-2.12'],
                               timeout=settings.timeOutInstall,
                               haltOnFailure=True)
 
+setCondaActivation = ShellCommand(
+    command=util.Interpolate('sed -ie "\$aCONDA_ENV_ACTIVATION = {}" %(prop:SCIPION_LOCAL_CONFIG)s'.format(settings.CONDA_ENV_ACTIVATION)),
+    name='Set CONDA_ENV_ACTIVATION in scipion conf',
+    description='Set CONDA_ENV_ACTIVATION in scipion conf',
+    descriptionDone='Set CONDA_ENV_ACTIVATION in scipion conf',
+    haltOnFailure=True)
+
+
 # Command to clean software/EM packages
 removeEMPackages = ShellCommand(
     command=['bash', '-c', 'ls software/em/ -1 -I xmipp | '
@@ -259,6 +267,7 @@ def installScipionFactory(groupId):
     installScipionFactorySteps.addStep(setCcp4Home)
     installScipionFactorySteps.addStep(setCryoloModel)
     installScipionFactorySteps.addStep(setCryoloEnvActivation)
+    installScipionFactorySteps.addStep(setCondaActivation)
     return installScipionFactorySteps
 
 
