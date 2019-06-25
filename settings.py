@@ -33,8 +33,7 @@ FORCE_BUILDER_PREFIX = 'Force_'
 # triggering the installation and testing stages of scipion, xmipp and each plugin.
 branchsDict = {DEVEL_GROUP_ID: {SCIPION_BUILD_ID: 'devel',
                                 XMIPP_BUILD_ID: 'devel',
-                                DOCS_BUILD_ID: 'release-2.0.0',
-                                NYSBC_BUILD_ID: 'conda_refactoring'},
+                                DOCS_BUILD_ID: 'release-2.0.0'},
                PROD_GROUP_ID: {
                    SCIPION_BUILD_ID: 'master'
                }}

@@ -9,7 +9,7 @@
         "pipName": "scipion-em-eman2",
         "id": 4,
         "name": "eman2",
-        "pluginSourceUrl": "https://github.com/scipion-em/scipion-em-eman2.git",
+        "pluginSourceUrl": "https://github.com/scipion-em/scipion-em-eman2.git@update-version",
         "slackChannel":"eman"
     },
    "scipion-em-spider": {
