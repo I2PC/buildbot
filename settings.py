@@ -53,7 +53,11 @@ CRYOLO_ENV_ACTIVATION = ". /home/buildbot/miniconda3/etc/profile.d/conda.sh; con
 CONDA_ACTIVATION_CMD = ". /home/buildbot/miniconda3/etc/profile.d/conda.sh"
 # data for the builders
 PLUGINS_JSON_FILE = "getplugins.json"
+
+#So far, what is in prod has to work with EMAN2.12
 EMAN212 = {"EMAN2DIR": util.Interpolate("%(prop:SCIPION_HOME)s/software/em/eman-2.12")}
+# Eman plugin in devel installs 2.3 ans is compatible with locscale
+EMAN23 = {"EMAN2DIR": util.Interpolate("%(prop:SCIPION_HOME)s/software/em/eman-23")}
 gitRepoURL = 'https://github.com/I2PC/scipion.git'
 DOCS_REPO = "git@github.com:scipion-em/docs.git"
 DOCS_HTML_BRANCH = 'gh-pages'

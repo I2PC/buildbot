@@ -274,9 +274,13 @@ def installScipionFactory(groupId):
 # *****************************************************************************
 #                         SCIPION TEST FACTORY
 # *****************************************************************************
-def scipionTestFactory():
+def scipionTestFactory(groupId):
+
+
     scipionTestSteps = util.BuildFactory()
     scipionTestSteps.workdir = util.Property('SCIPION_HOME')
+
+    emanVar = settings.EMAN212 if groupId == settings.PROD_GROUP_ID else settings.EMAN23
 
     # add TestRelionExtractStreaming manually because it needs eman 2.12
     wfRelionExtractStreaming = 'pyworkflow.tests.em.workflows.test_workflow_streaming.TestRelionExtractStreaming'
@@ -292,7 +296,7 @@ def scipionTestFactory():
                               targetTestSet='pyworkflow',
                               stagePrefix=["./scipion", "test"],
                               blacklist=settings.SCIPION_TESTS_BLACKLIST,
-                              stageEnvs={wfRelionExtractStreaming: settings.EMAN212}))
+                              stageEnvs={wfRelionExtractStreaming: emanVar}))
 
     for pwLongTest in settings.SCIPION_LONG_TESTS:  # execute long tests at the end
         if pwLongTest.endswith("TestBPV"):
@@ -301,7 +305,7 @@ def scipionTestFactory():
                                                   description='Testing %s' % pwLongTest.split('.')[-1],
                                                   descriptionDone=pwLongTest.split('.')[-1],
                                                   timeout=settings.timeOutExecute,
-                                                  env=settings.EMAN212))
+                                                  env=emanVar))
             continue
 
         scipionTestSteps.addStep(ShellCommand(command=['./scipion', 'test', pwLongTest],
@@ -462,10 +466,17 @@ def docsFactory(groupId):
 # #############################################################################
 def getLocscaleBuilder(groupId, env):
     builderFactory = util.BuildFactory()
-    builderFactory.addStep(installEman212)
+
     locscaleEnv = {}
+
+    if groupId == settings.PROD_GROUP_ID:
+        builderFactory.addStep(installEman212)
+        locscaleEnv.update(settings.EMAN212)
+    else:
+        locscaleEnv.update(settings.EMAN23)
+
     locscaleEnv.update(env)
-    locscaleEnv.update(settings.EMAN212)
+
     name = str(locscalePluginData['name'])
     return BuilderConfig(name="%s_%s" % (name, groupId),
                          tags=[groupId, name],
@@ -493,7 +504,7 @@ def getScipionBuilders(groupId):
         BuilderConfig(name=settings.SCIPION_TESTS_PREFIX + groupId,
                       tags=[groupId],
                       workernames=['einstein'],
-                      factory=scipionTestFactory(),
+                      factory=scipionTestFactory(groupId),
                       workerbuilddir=groupId,
                       properties={'slackChannel': settings.SCIPION_SLACK_CHANNEL},
                       env=env)
