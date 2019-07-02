@@ -2,7 +2,7 @@
         "pipName": "scipion-em-grigoriefflab",
         "id": 11,
         "name": "grigoriefflab",
-        "pluginSourceUrl": "https://github.com/scipion-em/scipion-em-grigoriefflab.git",
+        "pluginSourceUrl": "https://github.com/scipion-em/scipion-em-grigoriefflab.git@devel",
         "slackChannel":"grigoriefflab"
     },
      "scipion-em-eman2": {
@@ -17,48 +17,48 @@
           "id": 31,
           "name": "spider",
           "slackChannel": "spider",
-          "pluginSourceUrl": "https://github.com/scipion-em/scipion-em-spider.git"
+          "pluginSourceUrl": "https://github.com/scipion-em/scipion-em-spider.git@devel"
       },
     "scipion-em-gctf": {
           "pipName": "scipion-em-gctf",
           "id": 31,
           "name": "gctf",
-          "pluginSourceUrl": "https://github.com/scipion-em/scipion-em-gctf.git",
+          "pluginSourceUrl": "https://github.com/scipion-em/scipion-em-gctf.git@devel",
           "slackChannel":"gctf"
       },
   "scipion-em-relion": {
           "pipName": "scipion-em-relion",
           "id": 31,
           "name": "relion",
-          "pluginSourceUrl": "https://github.com/scipion-em/scipion-em-relion.git",
+          "pluginSourceUrl": "https://github.com/scipion-em/scipion-em-relion.git@devel",
           "slackChannel": "relion"
       },
     "scipion-em-resmap": {
         "pipName": "scipion-em-resmap",
         "id": 20,
         "name": "resmap",
-        "pluginSourceUrl": "https://github.com/scipion-em/scipion-em-resmap.git",
+        "pluginSourceUrl": "https://github.com/scipion-em/scipion-em-resmap.git@devel",
         "slackChannel": "resmap"
     },
     "scipion-em-bsoft": {
         "pipName": "scipion-em-bsoft",
         "id": 13,
         "name": "bsoft",
-        "pluginSourceUrl": "https://github.com/scipion-em/scipion-em-bsoft.git",
+        "pluginSourceUrl": "https://github.com/scipion-em/scipion-em-bsoft.git@devel",
         "slackChannel":"bsoft"
     },
     "scipion-em-chimera": {
         "pipName": "scipion-em-chimera",
         "id": 27,
         "name": "chimera",
-        "pluginSourceUrl": "https://github.com/scipion-em/scipion-em-chimera.git",
+        "pluginSourceUrl": "https://github.com/scipion-em/scipion-em-chimera.git@devel",
         "slackChannel" : "chimera"
     },
     "scipion-em-appion": {
         "pipName": "scipion-em-appion",
         "id": 14,
         "name": "appion",
-        "pluginSourceUrl": "https://github.com/scipion-em/scipion-em-appion.git",
+        "pluginSourceUrl": "https://github.com/scipion-em/scipion-em-appion.git@devel",
         "slackChannel":"appion",
         "NO_TESTS": true
     },
@@ -66,20 +66,20 @@
         "pipName": "scipion-em-emxlib",
         "id": 15,
         "name": "emxlib",
-        "pluginSourceUrl": "https://github.com/scipion-em/scipion-em-emxlib.git"
+        "pluginSourceUrl": "https://github.com/scipion-em/scipion-em-emxlib.git@devel"
     },
     "scipion-em-locscale": {
         "pipName": "scipion-em-locscale",
         "id": 32,
         "name": "locscale",
-        "pluginSourceUrl": "https://github.com/scipion-em/scipion-em-locscale.git",
+        "pluginSourceUrl": "https://github.com/scipion-em/scipion-em-locscale.git@locscale",
         "slackChannel": "locscale"
     },
     "scipion-em-atsas": {
         "pipName": "scipion-em-atsas",
         "id": 31,
         "name": "atsas",
-        "pluginSourceUrl": "https://github.com/scipion-em/scipion-em-atsas.git",
+        "pluginSourceUrl": "https://github.com/scipion-em/scipion-em-atsas.git@devel",
         "slackChannel":"atsas",
         "NO_TESTS": true
     },
@@ -87,80 +87,80 @@
           "pipName": "scipion-em-cryoef",
           "id": 31,
           "name": "cryoef",
-          "pluginSourceUrl": "https://github.com/scipion-em/scipion-em-cryoef.git",
+          "pluginSourceUrl": "https://github.com/scipion-em/scipion-em-cryoef.git@devel",
           "slackChannel":"cryoef"
       },
   "scipion-em-bamfordlab": {
           "pipName": "scipion-em-bamfordlab",
           "id": 31,
           "name": "bamfordlab",
-          "pluginSourceUrl": "https://github.com/scipion-em/scipion-em-bamfordlab.git",
+          "pluginSourceUrl": "https://github.com/scipion-em/scipion-em-bamfordlab.git@devel",
           "slackChannel":"bamfordlab"
       },
   "scipion-em-simple": {
           "pipName": "scipion-em-simple",
           "id": 31,
           "name": "simple",
-          "pluginSourceUrl": "https://github.com/scipion-em/scipion-em-simple.git",
+          "pluginSourceUrl": "https://github.com/scipion-em/scipion-em-simple.git@devel",
           "slackChannel":"simple"
       },
   "scipion-em-powerfit": {
           "pipName": "scipion-em-powerfit",
           "id": 31,
           "name": "powerfit_scipion",
-          "pluginSourceUrl": "https://github.com/scipion-em/scipion-em-powerfit.git",
+          "pluginSourceUrl": "https://github.com/scipion-em/scipion-em-powerfit.git@devel",
           "slackChannel": "powerfit"
       },
   "scipion-em-nysbc": {
           "pipName": "scipion-em-nysbc",
           "id": 31,
           "name": "nysbc",
-          "pluginSourceUrl": "https://github.com/scipion-em/scipion-em-nysbc.git"
+          "pluginSourceUrl": "https://github.com/scipion-em/scipion-em-nysbc.git@devel"
       },
   "scipion-em-ccp4": {
           "pipName": "scipion-em-ccp4",
           "id": 31,
           "name": "ccp4",
-          "pluginSourceUrl": "https://github.com/scipion-em/scipion-em-ccp4.git"
+          "pluginSourceUrl": "https://github.com/scipion-em/scipion-em-ccp4.git@devel"
       },
   "scipion-em-phenix": {
           "pipName": "scipion-em-phenix",
           "id": 31,
           "name": "phenix",
-          "pluginSourceUrl": "https://github.com/scipion-em/scipion-em-phenix.git",
+          "pluginSourceUrl": "https://github.com/scipion-em/scipion-em-phenix.git@devel",
           "slackChannel":"phenix"
       },
   "scipion-em-gautomatch": {
           "pipName": "scipion-em-gautomatch",
           "id": 31,
           "name": "gautomatch",
-          "pluginSourceUrl": "https://github.com/scipion-em/scipion-em-gautomatch.git",
+          "pluginSourceUrl": "https://github.com/scipion-em/scipion-em-gautomatch.git@devel",
           "slackChannel":"gautomatch"
       },
   "scipion-em-motioncorr": {
           "pipName": "scipion-em-motioncorr",
           "id": 31,
           "name": "motioncorr",
-          "pluginSourceUrl": "https://github.com/scipion-em/scipion-em-motioncorr.git",
+          "pluginSourceUrl": "https://github.com/scipion-em/scipion-em-motioncorr.git@devel",
           "slackChannel":"motioncorr"
       },
   "scipion-em-atomstructutils": {
     "pipName": "scipion-em-atomstructutils",
           "id": 31,
           "name": "atomstructutils",
-          "pluginSourceUrl": "https://github.com/scipion-em/scipion-em-atomstructutils"
+          "pluginSourceUrl": "https://github.com/scipion-em/scipion-em-atomstructutils@devel"
   },
   "scipion-em-localrec": {
     "pipName": "scipion-em-localrec",
           "id": 30,
           "name": "localrec",
-          "pluginSourceUrl": "https://github.com/scipion-em/scipion-em-localrec.git"
+          "pluginSourceUrl": "https://github.com/scipion-em/scipion-em-localrec.git@devel"
   },
   "scipion-em-sphire": {
     "pipName": "scipion-em-sphire",
           "id": 51,
           "name": "sphire",
-          "pluginSourceUrl": "https://github.com/scipion-em/scipion-em-sphire.git"
+          "pluginSourceUrl": "https://github.com/scipion-em/scipion-em-sphire.git@devel"
   },
   "scipion-em-xmipp": {
     "pipName": "scipion-em-xmipp",
