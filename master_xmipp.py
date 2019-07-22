@@ -6,7 +6,7 @@ from buildbot.config import BuilderConfig
 from buildbot.schedulers import triggerable
 from buildbot.schedulers.forcesched import ForceScheduler
 
-from settings import (XMIPP_SCRIPT_URL, XMIPP_BUILD_ID, SCIPION_BUILD_ID,
+from settings import (XMIPP_REPO_URL, XMIPP_BUILD_ID, SCIPION_BUILD_ID,
                       XMIPP_INSTALL_PREFIX, timeOutInstall, WORKER, XMIPP_SLACK_CHANNEL,
                       XMIPP_TESTS, XMIPP_BUNDLE_TESTS, NVCC_LINKFLAGS, NVCC_CXXFLAGS,
                       NVCC, CUDA, EMAN212, FORCE_BUILDER_PREFIX, branchsDict, PROD_GROUP_ID,
@@ -53,10 +53,10 @@ def installXmippFactory(groupId):
                      descriptionDone='Echo scipion home',
                      timeout=timeOutShort))
     installXmippSteps.addStep(
-        ShellCommand(command=['wget', XMIPP_SCRIPT_URL, '-O', 'xmipp'],
-                     name='Get XMIPP script',
-                     description='Getting Xmipp script',
-                     descriptionDone='Xmipp script downloaded',
+        ShellCommand(command=[XMIPP_REPO_URL],
+                     name='Clone Xmipp repository',
+                     description='Getting Xmipp repository',
+                     descriptionDone='Xmipp repo downloaded',
                      timeout=timeOutShort))
     installXmippSteps.addStep(
         ShellCommand(command=['chmod', 'a+x', 'xmipp'],
