@@ -90,7 +90,7 @@ SCIPION_TESTS_BLACKLIST = (SCIPION_LONG_TESTS +
                             "pyworkflow.tests.em.workflows.test_workflow_existing.TestXmippWorkflow"])
 
 ################### Xmipp settings ##################
-XMIPP_REPO_URL = ("clone -b %s https://github.com/I2PC/xmipp.git ."
+XMIPP_REPO_URL = ("-b %s https://github.com/I2PC/xmipp.git ."
                     % branchsDict[DEVEL_GROUP_ID].get(XMIPP_BUILD_ID, "devel"))
 # builder prefixes
 XMIPP_INSTALL_PREFIX = 'Install_Xmipp_'
