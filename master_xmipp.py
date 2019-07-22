@@ -46,6 +46,21 @@ def installXmippFactory(groupId):
     installXmippSteps = util.BuildFactory()
     installXmippSteps.workdir = XMIPP_BUILD_ID
     installXmippSteps.addStep(
+        ShellCommand(command=['pwd'],
+                     name='Remove Xmipp directory',
+                     description='Delete existing Xmipp version',
+                     descriptionDone='Remove Xmipp'))
+    installXmippSteps.addStep(
+        ShellCommand(command=['ls', '-al'],
+                     name='Remove Xmipp directory',
+                     description='Delete existing Xmipp version',
+                     descriptionDone='Remove Xmipp'))
+    installXmippSteps.addStep(
+        ShellCommand(command=['rm', '-rf', 'xmipp'],
+                     name='Remove Xmipp directory',
+                     description='Delete existing Xmipp version',
+                     descriptionDone='Remove Xmipp'))
+    installXmippSteps.addStep(
         ShellCommand(command=['echo', 'SCIPION_HOME: ',
                               util.Property('SCIPION_HOME')],
                      name='Echo scipion home',
@@ -53,25 +68,20 @@ def installXmippFactory(groupId):
                      descriptionDone='Echo scipion home',
                      timeout=timeOutShort))
     installXmippSteps.addStep(
-        ShellCommand(command=['git', 'clone'] + XMIPP_REPO_URL.split(),
+        ShellCommand(command=['git', 'clone'] + XMIPP_REPO_URL.split() + ['xmipp'],
                      name='Clone Xmipp repository',
                      description='Getting Xmipp repository',
                      descriptionDone='Xmipp repo downloaded',
                      timeout=timeOutShort,
                      haltOnFailure=True))
-    installXmippSteps.addStep(
-        ShellCommand(command=['chmod', 'a+x', 'xmipp'],
-                     name='Make Xmipp script executable',
-                     description='Making Xmipp script executable',
-                     descriptionDone='Xmipp script made executable',
-                     timeout=timeOutShort))
+    # installXmippSteps.addStep(
+    #     ShellCommand(command=['chmod', 'a+x', 'xmipp'],
+    #                  name='Make Xmipp script executable',
+    #                  description='Making Xmipp script executable',
+    #                  descriptionDone='Xmipp script made executable',
+    #                  timeout=timeOutShort))
 
-    installXmippSteps.addStep(
-        ShellCommand(command=['rm', '-f', 'xmipp.conf'],
-                     name='Clean Xmipp Config',
-                     description='Delete existing xmipp.conf',
-                     descriptionDone='Remove xmipp.conf',
-                     haltOnFailure=False))
+
 
     xmippBranch = branchsDict[groupId].get(XMIPP_BUILD_ID, "")
 
