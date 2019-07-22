@@ -53,7 +53,7 @@ def installXmippFactory(groupId):
                      descriptionDone='Echo scipion home',
                      timeout=timeOutShort))
     installXmippSteps.addStep(
-        ShellCommand(command=['git', 'clone', XMIPP_REPO_URL],
+        ShellCommand(command=['git', 'clone', '-b', XMIPP_REPO_URL],
                      name='Clone Xmipp repository',
                      description='Getting Xmipp repository',
                      descriptionDone='Xmipp repo downloaded',
