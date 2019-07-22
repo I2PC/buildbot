@@ -46,19 +46,9 @@ def installXmippFactory(groupId):
     installXmippSteps = util.BuildFactory()
     installXmippSteps.workdir = XMIPP_BUILD_ID
     installXmippSteps.addStep(
-        ShellCommand(command=['pwd'],
+        ShellCommand(command=['rm', '-rf', '*'],
                      name='Remove Xmipp directory',
-                     description='Delete existing Xmipp version',
-                     descriptionDone='Remove Xmipp'))
-    installXmippSteps.addStep(
-        ShellCommand(command=['ls', '-al'],
-                     name='Remove Xmipp directory',
-                     description='Delete existing Xmipp version',
-                     descriptionDone='Remove Xmipp'))
-    installXmippSteps.addStep(
-        ShellCommand(command=['rm', '-rf', 'xmipp'],
-                     name='Remove Xmipp directory',
-                     description='Delete existing Xmipp version',
+                     description='Delete existing Xmipp dir content',
                      descriptionDone='Remove Xmipp'))
     installXmippSteps.addStep(
         ShellCommand(command=['echo', 'SCIPION_HOME: ',
@@ -68,7 +58,7 @@ def installXmippFactory(groupId):
                      descriptionDone='Echo scipion home',
                      timeout=timeOutShort))
     installXmippSteps.addStep(
-        ShellCommand(command=['git', 'clone'] + XMIPP_REPO_URL.split() + ['xmipp'],
+        ShellCommand(command=['git', 'clone'] + XMIPP_REPO_URL.split() + ['.'],
                      name='Clone Xmipp repository',
                      description='Getting Xmipp repository',
                      descriptionDone='Xmipp repo downloaded',
