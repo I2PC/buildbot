@@ -46,10 +46,20 @@ def installXmippFactory(groupId):
     installXmippSteps = util.BuildFactory()
     installXmippSteps.workdir = XMIPP_BUILD_ID
     installXmippSteps.addStep(
-        ShellCommand(command=['rm', '-rf', '*'],
+        ShellCommand(command=['cd', '..'],
+                     name='Move to root directory',
+                     description='Move to root directory',
+                     descriptionDone='Move to root directory'))
+    installXmippSteps.addStep(
+        ShellCommand(command=['rm', '-rf', 'xmipp'],
                      name='Remove Xmipp directory',
                      description='Delete existing Xmipp dir content',
                      descriptionDone='Remove Xmipp'))
+    installXmippSteps.addStep(
+        ShellCommand(command=['mkdir', 'xmipp'],
+                     name='Move to Xmipp directory',
+                     description='Move to Xmipp dir content',
+                     descriptionDone='Move to Xmipp folder'))
     installXmippSteps.addStep(
         ShellCommand(command=['echo', 'SCIPION_HOME: ',
                               util.Property('SCIPION_HOME')],
