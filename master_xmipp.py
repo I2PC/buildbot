@@ -46,6 +46,11 @@ def installXmippFactory(groupId):
     installXmippSteps = util.BuildFactory()
     installXmippSteps.workdir = XMIPP_BUILD_ID
     installXmippSteps.addStep(
+        ShellCommand(command=['cd', '/home/buildbot/scipionBot/devel/xmipp'],
+                     name='Move to Xmipp directory',
+                     description='Move to Xmipp directory',
+                     descriptionDone='Move to Xmipp'))
+    installXmippSteps.addStep(
         ShellCommand(command=['rm', '-rf', '*'],
                      name='Remove Xmipp directory',
                      description='Delete existing Xmipp dir content',
