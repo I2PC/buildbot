@@ -46,7 +46,7 @@ def installXmippFactory(groupId):
     installXmippSteps = util.BuildFactory()
     installXmippSteps.workdir = XMIPP_BUILD_ID
     installXmippSteps.addStep(
-        ShellCommand(command=['rm', '-rf', '*.*'],
+        ShellCommand(command=['find', '.', '-mindepth', '1', '-delete'],
                      name='Remove Xmipp directory',
                      description='Delete existing Xmipp dir content',
                      descriptionDone='Remove Xmipp'))
