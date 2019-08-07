@@ -142,15 +142,15 @@ def installXmippFactory(groupId):
     installXmippSteps.addStep(
         steps.SetPropertyFromCommand(command='echo $PWD', property='XMIPP_HOME'))
 
-    linkToSitePkgs = ['ln', '-fs', util.Interpolate('%(prop:XMIPP_HOME)s/src/scipion-em-xmipp/xmipp3'),
-                      util.Interpolate('%(prop:SCIPION_HOME)s/software/lib/python2.7/site-packages/')]
-
-    installXmippSteps.addStep(
-        ShellCommand(command=linkToSitePkgs,
-                     name='Link Xmipp on site-packages',
-                     description='Make a link to xmipp on Scipions site-packages',
-                     descriptionDone='Xmipp linked to site packages',
-                     timeout=timeOutShort))
+    # linkToSitePkgs = ['ln', '-fs', util.Interpolate('%(prop:XMIPP_HOME)s/src/scipion-em-xmipp/xmipp3'),
+    #                   util.Interpolate('%(prop:SCIPION_HOME)s/software/lib/python2.7/site-packages/')]
+    #
+    # installXmippSteps.addStep(
+    #     ShellCommand(command=linkToSitePkgs,
+    #                  name='Link Xmipp on site-packages',
+    #                  description='Make a link to xmipp on Scipions site-packages',
+    #                  descriptionDone='Xmipp linked to site packages',
+    #                  timeout=timeOutShort))
 
     linkToSoftwareEm = ['ln', '-fs', util.Interpolate("%(prop:XMIPP_HOME)s/build"),
                         util.Interpolate('%(prop:SCIPION_HOME)s/software/em/xmipp')]

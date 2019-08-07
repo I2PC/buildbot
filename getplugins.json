@@ -1,5 +1,12 @@
 {
-     "scipion-em-eman2": {
+  "scipion-em-xmipp": {
+        "pipName": "scipion-em-xmipp",
+        "id": 4,
+        "name": "xmipp",
+        "pluginSourceUrl": "https://github.com/I2PC/scipion-em-xmipp.git@devel",
+        "slackChannel":"xmipp"
+    },
+  "scipion-em-eman2": {
         "pipName": "scipion-em-eman2",
         "id": 4,
         "name": "eman2",
