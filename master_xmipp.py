@@ -152,6 +152,16 @@ def installXmippFactory(groupId):
     #                  descriptionDone='Xmipp linked to site packages',
     #                  timeout=timeOutShort))
 
+    installXmippSteps.addStep(
+        ShellCommand(command=['./scipion', 'installp', '-p', util.Interpolate('%(prop:XMIPP_HOME)s/src/scipion-em-xmipp'), '--devel'],
+                     name='Install scipion-em-xmipp in devel mode',
+                     description='Install scipion-em-xmipp in devel mode',
+                     descriptionDone='scipion-em-xmipp in devel mode',
+                     timeout=timeOutInstall,
+                     haltOnFailure=True,
+                     workdir=SCIPION_BUILD_ID)
+    )
+
     linkToSoftwareEm = ['ln', '-fs', util.Interpolate("%(prop:XMIPP_HOME)s/build"),
                         util.Interpolate('%(prop:SCIPION_HOME)s/software/em/xmipp')]
     installXmippSteps.addStep(
@@ -177,6 +187,17 @@ def installXmippFactory(groupId):
                      name='Install deepLearningToolkit',
                      description='Install deepLearningToolkit',
                      descriptionDone='Installed deepLearningToolkit',
+                     timeout=timeOutInstall,
+                     haltOnFailure=True,
+                     workdir=SCIPION_BUILD_ID)
+    )
+
+    installXmippSteps.addStep(
+        ShellCommand(command=['./scipion', 'python', '-m', 'pip', 'install',
+                              'scikit-learn==0.19.1'],
+                     name='Install NMA',
+                     description='Install NMA',
+                     descriptionDone='Installed NMA',
                      timeout=timeOutInstall,
                      haltOnFailure=True,
                      workdir=SCIPION_BUILD_ID)
