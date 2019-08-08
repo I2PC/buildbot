@@ -195,9 +195,9 @@ def installXmippFactory(groupId):
     installXmippSteps.addStep(
         ShellCommand(command=['./scipion', 'python', '-m', 'pip', 'install',
                               'scikit-learn==0.19.1'],
-                     name='Install NMA',
-                     description='Install NMA',
-                     descriptionDone='Installed NMA',
+                     name='Install scikit-learn',
+                     description='Install scikit-learn',
+                     descriptionDone='Installed scikit-learn',
                      timeout=timeOutInstall,
                      haltOnFailure=True,
                      workdir=SCIPION_BUILD_ID)
