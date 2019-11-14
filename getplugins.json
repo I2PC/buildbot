@@ -162,6 +162,13 @@
           "id": 51,
           "name": "sphire",
           "pluginSourceUrl": "https://github.com/scipion-em/scipion-em-sphire.git@devel"
-  }
+  },
+  "scipion-em-xmipp": {
+        "pipName": "scipion-em-xmipp",
+        "id": 32,
+        "name": "xmipp",
+        "pluginSourceUrl": "https://github.com/I2PC/xmipp.git@devel",
+        "slackChannel": "locscale"
+    }
 }
 
