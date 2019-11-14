@@ -19,7 +19,7 @@ with open(settings.PLUGINS_JSON_FILE) as f:
     # read in order, since we have taken into account dependencies in
     # between plugins when completing the json file
     scipionPlugins = json.load(f, object_pairs_hook=OrderedDict)
-    xmippPluginData = scipionPlugins.pop('scipion-em-xmipp')
+    #xmippPluginData = scipionPlugins.pop('scipion-em-xmipp')
     locscalePluginData = scipionPlugins.pop("scipion-em-locscale")
 
 # Remove config/scipion.conf
