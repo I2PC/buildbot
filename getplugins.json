@@ -37,7 +37,7 @@
   "scipion-em-cryosparc2": {
           "pipName": "scipion-em-cryosparc2",
           "id": 31,
-          "name": "relion",
+          "name": "cryosparc",
           "pluginSourceUrl": "https://github.com/scipion-em/scipion-em-cryosparc2.git@devel",
           "slackChannel": "cryosparc"
       },
