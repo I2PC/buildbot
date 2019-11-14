@@ -20,13 +20,6 @@
           "pluginSourceUrl": "https://github.com/scipion-em/scipion-em-gctf.git@devel",
           "slackChannel":"gctf"
       },
-  "scipion-em-relion": {
-          "pipName": "scipion-em-relion",
-          "id": 31,
-          "name": "relion",
-          "pluginSourceUrl": "https://github.com/scipion-em/scipion-em-relion.git@devel",
-          "slackChannel": "relion"
-      },
   "scipion-em-grigoriefflab": {
         "pipName": "scipion-em-grigoriefflab",
         "id": 11,
@@ -34,6 +27,13 @@
         "pluginSourceUrl": "https://github.com/scipion-em/scipion-em-grigoriefflab.git@devel",
         "slackChannel":"grigoriefflab"
     },
+  "scipion-em-relion": {
+          "pipName": "scipion-em-relion",
+          "id": 31,
+          "name": "relion",
+          "pluginSourceUrl": "https://github.com/scipion-em/scipion-em-relion.git@devel",
+          "slackChannel": "relion"
+      },
     "scipion-em-resmap": {
         "pipName": "scipion-em-resmap",
         "id": 20,
