@@ -51,6 +51,14 @@ PHENIX_HOME = "/usr/local/phenix-1.13-2998"
 CRYOLO_GENERIC_MODEL = "/home/buildbot/cryolo/gmodel_phosnet_20190314.h5"
 CRYOLO_ENV_ACTIVATION = ". /home/buildbot/miniconda3/etc/profile.d/conda.sh; conda activate cryolo"
 CONDA_ACTIVATION_CMD = ". /home/buildbot/miniconda3/etc/profile.d/conda.sh"
+
+# Cryosparc variables
+# The root directory where cryoSPARC code and dependencies is installed.
+CRYOSPARC_DIR = "/home/buildbot/cryosparc"
+
+# full name of the initial admin account to be created
+CRYOSPARC_USER = "Yunior C. Fonseca Reyna"
+
 # data for the builders
 PLUGINS_JSON_FILE = "getplugins.json"
 

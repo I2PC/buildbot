@@ -34,6 +34,13 @@
           "pluginSourceUrl": "https://github.com/scipion-em/scipion-em-relion.git@devel",
           "slackChannel": "relion"
       },
+  "scipion-em-cryosparc2": {
+          "pipName": "scipion-em-cryosparc2",
+          "id": 31,
+          "name": "relion",
+          "pluginSourceUrl": "https://github.com/scipion-em/scipion-em-cryosparc2.git@devel",
+          "slackChannel": "cryosparc"
+      },
     "scipion-em-resmap": {
         "pipName": "scipion-em-resmap",
         "id": 20,
