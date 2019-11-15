@@ -54,7 +54,7 @@ CONDA_ACTIVATION_CMD = ". /home/buildbot/miniconda3/etc/profile.d/conda.sh"
 
 # Cryosparc variables
 # The root directory where cryoSPARC code and dependencies is installed.
-CRYOSPARC_DIR = "/home/buildbot/cryosparc"
+CRYOSPARC_DIR = "/home/buildbot/cryosparc/"
 
 # full name of the initial admin account to be created
 CRYOSPARC_USER = "Yunior C. Fonseca Reyna"

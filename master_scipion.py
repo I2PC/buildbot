@@ -158,6 +158,24 @@ setPhenixHome = ShellCommand(
     descriptionDone='Set PHENIX_HOME in scipion conf',
     haltOnFailure=True)
 
+
+setCryosparcHome = ShellCommand(
+    command=util.Interpolate(
+        'sed -ie "\$aCRYOSPARC_DIR = {}" %(prop:SCIPION_LOCAL_CONFIG)s'.format(settings.CRYOSPARC_DIR)),
+    name='Set CRYOSPARC_DIR in scipion conf',
+    description='Set CRYOSPARC_DIR in scipion conf',
+    descriptionDone='Set CRYOSPARC_DIR in scipion conf',
+    haltOnFailure=True)
+
+setCryosparcUser = ShellCommand(
+    command=util.Interpolate(
+        'sed -ie "\$aCRYOSPARC_USER = {}" %(prop:SCIPION_LOCAL_CONFIG)s'.format(settings.CRYOSPARC_USER)),
+    name='Set CRYOSPARC_USER in scipion conf',
+    description='Set CRYOSPARC_USER in scipion conf',
+    descriptionDone='Set CRYOSPARC_USER in scipion conf',
+    haltOnFailure=True)
+
+
 installEman212 = ShellCommand(command=['./scipion', 'installb', 'eman-2.12'],
                               name='Install eman-2.12',
                               description='Install eman-2.12',
@@ -190,6 +208,15 @@ removeEMtgz = ShellCommand(
     name='Clean tgz files',
     description='Delete downloaded tgz files to get the last version',
     descriptionDone='Remove EM tgz',
+    haltOnFailure=False)
+
+# Clean the Cryosparc projects
+removeCryosParcProjectTest = ShellCommand(
+    command=['bash', '-c',
+             'rm -rf /home/buildbot/cryosparc/scipion_projects/* ; '],
+    name='Clean CryosPARC projects',
+    description='Delete CryosPARC projects',
+    descriptionDone='Delete CryosPARC projects',
     haltOnFailure=False)
 
 
@@ -264,6 +291,8 @@ def installScipionFactory(groupId):
                                  workerdest="plugins.json"))
     installScipionFactorySteps.addStep(setMotioncorrCuda)
     installScipionFactorySteps.addStep(setPhenixHome)
+    installScipionFactorySteps.addStep(setCryosparcHome)
+    installScipionFactorySteps.addStep(setCryosparcUser)
     installScipionFactorySteps.addStep(setCcp4Home)
     installScipionFactorySteps.addStep(setCryoloModel)
     installScipionFactorySteps.addStep(setCryoloEnvActivation)
