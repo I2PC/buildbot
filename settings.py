@@ -20,6 +20,8 @@ timeOutLongExecute = 20*60*60  # 20 hours
 # builder branches
 DEVEL_GROUP_ID = 'devel'
 PROD_GROUP_ID = 'prod'
+SDEVEL_GROUP_ID = 'sdevel'
+
 SCIPION_BUILD_ID = 'scipion'  # this will be the name of the builder dir i.e. the scipion home
 XMIPP_BUILD_ID = 'xmipp'  # this will be the dir name of xmipp's home
 DOCS_BUILD_ID = 'docs'
@@ -36,6 +38,9 @@ branchsDict = {DEVEL_GROUP_ID: {SCIPION_BUILD_ID: 'devel',
                                 DOCS_BUILD_ID: 'release-2.0.0'},
                PROD_GROUP_ID: {
                    SCIPION_BUILD_ID: 'master'
+               },
+               SDEVEL_GROUP_ID: {
+                   SCIPION_BUILD_ID: 'devel'
                }}
 
 ################## Scipion settings ##################
@@ -51,6 +56,8 @@ PHENIX_HOME = "/usr/local/phenix-1.13-2998"
 CRYOLO_GENERIC_MODEL = "/home/buildbot/cryolo/gmodel_phosnet_20190314.h5"
 CRYOLO_ENV_ACTIVATION = ". /home/buildbot/miniconda3/etc/profile.d/conda.sh; conda activate cryolo"
 CONDA_ACTIVATION_CMD = ". /home/buildbot/miniconda3/etc/profile.d/conda.sh"
+
+
 
 # Cryosparc variables
 # The root directory where cryoSPARC code and dependencies is installed.
@@ -69,6 +76,11 @@ EMAN23 = {"EMAN2DIR": util.Interpolate("%(prop:SCIPION_HOME)s/software/em/eman-2
 gitRepoURL = 'https://github.com/I2PC/scipion.git'
 DOCS_REPO = "git@github.com:scipion-em/docs.git"
 DOCS_HTML_BRANCH = 'gh-pages'
+
+#New verion of Scipion
+sdevel_gitRepoURL = 'https://github.com/scipion-em/scipion-app.git@devel'
+
+SCIPION_ENV_ACTIVATION = ". /home/buildbot/miniconda3/etc/profile.d/conda.sh; conda activate scipion"
 
 # builder prefixes
 SCIPION_INSTALL_PREFIX = 'Install_Scipion_'

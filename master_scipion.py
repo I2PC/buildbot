@@ -229,14 +229,22 @@ def addScipionGitAndConfigSteps(factorySteps, groupId):
          5. set dataTests folder to a common dir (to save space)
          6. set ScipionUserData to an internal folder (to allow branch-dependent project inspection)
     """
-    factorySteps.addStep(Git(repourl=settings.gitRepoURL,
-                             branch=settings.branchsDict[groupId].get(settings.SCIPION_BUILD_ID, None),
-                             mode='incremental',
-                             name='Scipion Git Repository Pull',
-                             haltOnFailure=True))
+    if groupId == settings.SDEVEL_GROUP_ID:
+        factorySteps.addStep(Git(repourl=settings.sdevel_gitRepoURL,
+                                 branch=settings.branchsDict[groupId].get(
+                                     settings.SCIPION_BUILD_ID, None),
+                                 mode='incremental',
+                                 name='Scipion-App Git Repository Pull',
+                                 haltOnFailure=True))
+
+    else:
+        factorySteps.addStep(Git(repourl=settings.gitRepoURL,
+                                 branch=settings.branchsDict[groupId].get(settings.SCIPION_BUILD_ID, None),
+                                 mode='incremental',
+                                 name='Scipion Git Repository Pull',
+                                 haltOnFailure=True))
 
     factorySteps.addStep(removeScipionConf)
-
     factorySteps.addStep(removeHomeConfig)
     factorySteps.addStep(configScipion)
     factorySteps.addStep(setNotifyAtFalse)
@@ -520,6 +528,7 @@ def getScipionBuilders(groupId):
     scipionBuilders = []
     env = {"SCIPION_IGNORE_PYTHONPATH": "True",
            "SCIPION_LOCAL_CONFIG": util.Property('SCIPION_LOCAL_CONFIG')}
+
     scipionBuilders.append(
         BuilderConfig(name=settings.SCIPION_INSTALL_PREFIX + groupId,
                       tags=[groupId],
@@ -601,26 +610,30 @@ def getScipionSchedulers(groupId):
                              settings.SCIPION_TESTS_PREFIX + groupId,
                              settings.CLEANUP_PREFIX + groupId]
 
-    if settings.branchsDict[groupId].get(settings.DOCS_BUILD_ID, None) is not None:
-        scipionSchedulerNames.append("%s%s" % (settings.DOCS_PREFIX, groupId))
-    schedulers = []
-    for name in scipionSchedulerNames:
-        schedulers.append(triggerable.Triggerable(name=name,
-                                                  builderNames=[name]))
-        schedulers.append(ForceScheduler(name='%s%s' % (settings.FORCE_BUILDER_PREFIX, name),
-                                         builderNames=[name]))
+    if groupId == settings.SDEVEL_GROUP_ID:
+        schedulers = []
 
-    plugins = {}
-    plugins.update(scipionPlugins)
-    plugins.update({"scipion-em-locscale": locscalePluginData})
-    for plugin, pluginDict in plugins.iteritems():
-        moduleName = str(pluginDict.get("name", plugin.rsplit('-', 1)[-1]))
-        schedulers.append(triggerable.Triggerable(name="%s_%s" % (moduleName, groupId),
-                                                  builderNames=["%s_%s" % (moduleName, groupId)]))
+    else:
+        if settings.branchsDict[groupId].get(settings.DOCS_BUILD_ID, None) is not None:
+            scipionSchedulerNames.append("%s%s" % (settings.DOCS_PREFIX, groupId))
+        schedulers = []
+        for name in scipionSchedulerNames:
+            schedulers.append(triggerable.Triggerable(name=name,
+                                                      builderNames=[name]))
+            schedulers.append(ForceScheduler(name='%s%s' % (settings.FORCE_BUILDER_PREFIX, name),
+                                             builderNames=[name]))
 
-        forceSchedulerName = '%s%s_%s' % (settings.FORCE_BUILDER_PREFIX, moduleName, groupId)
-        schedulers.append(
-            ForceScheduler(name=forceSchedulerName,
-                           builderNames=["%s_%s" % (moduleName, groupId)]))
+        plugins = {}
+        plugins.update(scipionPlugins)
+        plugins.update({"scipion-em-locscale": locscalePluginData})
+        for plugin, pluginDict in plugins.iteritems():
+            moduleName = str(pluginDict.get("name", plugin.rsplit('-', 1)[-1]))
+            schedulers.append(triggerable.Triggerable(name="%s_%s" % (moduleName, groupId),
+                                                      builderNames=["%s_%s" % (moduleName, groupId)]))
+
+            forceSchedulerName = '%s%s_%s' % (settings.FORCE_BUILDER_PREFIX, moduleName, groupId)
+            schedulers.append(
+                ForceScheduler(name=forceSchedulerName,
+                               builderNames=["%s_%s" % (moduleName, groupId)]))
 
     return schedulers
