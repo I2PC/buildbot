@@ -294,60 +294,59 @@ def getXmippBuilders(groupId):
     bundleEnv.update(cudaEnv)
     bundleEnv.update(installEnv)
 
-    if groupId != SDEVEL_GROUP_ID:
 
-        if groupId == PROD_GROUP_ID:
-            builders.append(
-                BuilderConfig(name=XMIPP_INSTALL_PREFIX + groupId,
-                              workernames=[WORKER],
-                              tags=[groupId],
-                              factory=pluginFactory('scipion-em-xmipp', shortname='xmipp3', doTest=False,
-                                                    extraBinaries=['xmippSrc', 'deepLearningToolkit', 'nma']),
-                              workerbuilddir=groupId,
-                              env=env,
-                              properties=props)
-            )
+    if groupId == PROD_GROUP_ID:
+        builders.append(
+            BuilderConfig(name=XMIPP_INSTALL_PREFIX + groupId,
+                          workernames=[WORKER],
+                          tags=[groupId],
+                          factory=pluginFactory('scipion-em-xmipp', shortname='xmipp3', doTest=False,
+                                                extraBinaries=['xmippSrc', 'deepLearningToolkit', 'nma']),
+                          workerbuilddir=groupId,
+                          env=env,
+                          properties=props)
+        )
 
-            builders.append(
-                BuilderConfig(name="%s%s" % (XMIPP_TESTS, groupId),
-                              tags=[groupId, XMIPP_TESTS],
-                              workernames=[WORKER],
-                              factory=pluginFactory('scipion-em-xmipp', shortname='xmipp3', doInstall=False),
-                              workerbuilddir=groupId,
-                              properties={'slackChannel': xmippPluginData.get('slackChannel', "")},
-                              env=env)
-            )
+        builders.append(
+            BuilderConfig(name="%s%s" % (XMIPP_TESTS, groupId),
+                          tags=[groupId, XMIPP_TESTS],
+                          workernames=[WORKER],
+                          factory=pluginFactory('scipion-em-xmipp', shortname='xmipp3', doInstall=False),
+                          workerbuilddir=groupId,
+                          properties={'slackChannel': xmippPluginData.get('slackChannel', "")},
+                          env=env)
+        )
 
-        else:
-            builders.append(
-                BuilderConfig(name=XMIPP_INSTALL_PREFIX + groupId,
-                              workernames=[WORKER],
-                              tags=[groupId],
-                              factory=installXmippFactory(groupId),
-                              workerbuilddir=groupId,
-                              env=installEnv,
-                              properties=props)
-            )
+    else:
+        builders.append(
+            BuilderConfig(name=XMIPP_INSTALL_PREFIX + groupId,
+                          workernames=[WORKER],
+                          tags=[groupId],
+                          factory=installXmippFactory(groupId),
+                          workerbuilddir=groupId,
+                          env=installEnv,
+                          properties=props)
+        )
 
-            builders.append(
-                BuilderConfig(name=XMIPP_TESTS + groupId,
-                              tags=[groupId],
-                              workernames=[WORKER],
-                              factory=xmippTestFactory(),
-                              workerbuilddir=groupId,
-                              properties=props,
-                              env=env)
-            )
+        builders.append(
+            BuilderConfig(name=XMIPP_TESTS + groupId,
+                          tags=[groupId],
+                          workernames=[WORKER],
+                          factory=xmippTestFactory(),
+                          workerbuilddir=groupId,
+                          properties=props,
+                          env=env)
+        )
 
-            builders.append(
-                BuilderConfig(name=XMIPP_BUNDLE_TESTS + groupId,
-                              tags=[groupId],
-                              workernames=[WORKER],
-                              factory=xmippBundleFactory(),
-                              workerbuilddir=groupId,
-                              env=bundleEnv,
-                              properties=props)
-            )
+        builders.append(
+            BuilderConfig(name=XMIPP_BUNDLE_TESTS + groupId,
+                          tags=[groupId],
+                          workernames=[WORKER],
+                          factory=xmippBundleFactory(),
+                          workerbuilddir=groupId,
+                          env=bundleEnv,
+                          properties=props)
+        )
 
     return builders
 
