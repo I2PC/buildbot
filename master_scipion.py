@@ -149,6 +149,13 @@ setCryoloEnvActivation = ShellCommand(
     descriptionDone='Set CRYOLO_ENV_ACTIVATION in scipion conf',
     haltOnFailure=True)
 
+setScipionEnvActivation = ShellCommand(
+    command=util.Interpolate('sed -ie "\$aSCIPION_ENV_ACTIVATION = {}" %(prop:SCIPION_LOCAL_CONFIG)s'.format(settings.SCIPION_ENV_ACTIVATION)),
+    name='Set SCIPION_ENV_ACTIVATION in scipion conf',
+    description='Set SCIPION_ENV_ACTIVATION in scipion conf',
+    descriptionDone='Set SCIPION_ENV_ACTIVATION in scipion conf',
+    haltOnFailure=True)
+
 
 setPhenixHome = ShellCommand(
     command=util.Interpolate(
@@ -268,6 +275,32 @@ installScipion = ShellCommand(command=['./scipion', 'install', '-j', '8'],
                               haltOnFailure=True)
 
 
+# Command to change the virtual environment to install the new version of Scipion
+setScipionEnv = ShellCommand(command=['conda', 'activate', 'scipion_python3'],
+                              name='Setting Scipion Environ',
+                              description='Setting Scipion Environ',
+                              descriptionDone='Setting Scipion Environ',
+                              timeout=settings.timeOutInstall,
+                              haltOnFailure=True)
+
+
+installSdevelScipion = ShellCommand(command=['python', '-m', 'pip', 'install', '-e', '.'],
+                              name='Scipion Install',
+                              description='Install Scipion-App as devel mode',
+                              descriptionDone='Install Scipion',
+                              timeout=settings.timeOutInstall,
+                              haltOnFailure=True)
+
+moveScipionApp = ShellCommand(
+    command=['cd', 'scipion-app'],
+    name='Scipion-App directory',
+    description='Move to Scipion-App directory',
+    descriptionDone='Scipion-App directory',
+    haltOnFailure=False)
+
+
+
+
 # #############################################################################
 # ############################## FACTORIES ####################################
 # #############################################################################
@@ -313,6 +346,7 @@ def installSDevelScipionFactory(groupId):
     installScipionFactorySteps.workdir = settings.SCIPION_BUILD_ID
     installScipionFactorySteps = addScipionGitAndConfigSteps(installScipionFactorySteps,
                                                              groupId)
+
     installScipionFactorySteps.addStep(ShellCommand(command=['echo', 'SCIPION_LOCAL_CONFIG',
                                                              util.Property('SCIPION_LOCAL_CONFIG')],
                                                     name='Echo SCIPION_LOCAL_CONFIG',
@@ -320,7 +354,9 @@ def installSDevelScipionFactory(groupId):
                                                     descriptionDone='Echo SCIPION_LOCAL_CONFIG',
                                                     timeout=settings.timeOutShort
                                                     ))
-    installScipionFactorySteps.addStep(installScipion)
+    installScipionFactorySteps.addStep(moveScipionApp)
+    installScipionFactorySteps.addStep(setScipionEnv)
+    installScipionFactorySteps.addStep(installSdevelScipion)
     return installScipionFactorySteps
 
 

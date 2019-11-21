@@ -57,8 +57,6 @@ CRYOLO_GENERIC_MODEL = "/home/buildbot/cryolo/gmodel_phosnet_20190314.h5"
 CRYOLO_ENV_ACTIVATION = ". /home/buildbot/miniconda3/etc/profile.d/conda.sh; conda activate cryolo"
 CONDA_ACTIVATION_CMD = ". /home/buildbot/miniconda3/etc/profile.d/conda.sh"
 
-
-
 # Cryosparc variables
 # The root directory where cryoSPARC code and dependencies is installed.
 CRYOSPARC_DIR = "/home/buildbot/cryosparc/"
@@ -80,7 +78,7 @@ DOCS_HTML_BRANCH = 'gh-pages'
 #New verion of Scipion
 sdevel_gitRepoURL = 'https://github.com/scipion-em/scipion-app.git@devel'
 
-SCIPION_ENV_ACTIVATION = ". /home/buildbot/miniconda3/etc/profile.d/conda.sh; conda activate scipion"
+SCIPION_ENV_ACTIVATION = ". /home/buildbot/miniconda3/etc/profile.d/conda.sh; conda activate scipion_python3"
 
 # builder prefixes
 SCIPION_INSTALL_PREFIX = 'Install_Scipion_'
