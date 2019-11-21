@@ -77,7 +77,7 @@ DOCS_REPO = "git@github.com:scipion-em/docs.git"
 DOCS_HTML_BRANCH = 'gh-pages'
 
 #New verion of Scipion
-sdevel_gitRepoURL = 'https://github.com/scipion-em/scipion-app.git@devel'
+sdevel_gitRepoURL = 'https://github.com/scipion-em/scipion-app.git'
 
 SCIPION_ENV_ACTIVATION = ". /home/buildbot/miniconda3/etc/profile.d/conda.sh; conda activate scipion_python3"
 
