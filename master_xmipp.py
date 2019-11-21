@@ -373,6 +373,17 @@ def getXmippSchedulers(groupId):
                 ForceScheduler(name=forceScheduler,
                                builderNames=[name]))
     else:
+        xmippSchedulerNames = [XMIPP_TESTS + groupId,
+                               XMIPP_INSTALL_PREFIX + groupId]
+        xmippSchedulerNames.append(XMIPP_BUNDLE_TESTS + groupId)
         schedulers = []
+        for name in xmippSchedulerNames:
+            schedulers.append(
+                triggerable.Triggerable(name=name,
+                                        builderNames=[name]))
+            forceScheduler = '%s%s' % (FORCE_BUILDER_PREFIX, name)
+            schedulers.append(
+                ForceScheduler(name=forceScheduler,
+                               builderNames=[name]))
 
     return schedulers
