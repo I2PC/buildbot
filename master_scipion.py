@@ -661,8 +661,19 @@ def getScipionBuilders(groupId):
                           workerbuilddir=groupId,
                           properties={
                               "slackChannel": settings.SCIPION_SLACK_CHANNEL},
+                          env=env))
+        env['SCIPION_PLUGIN_JSON'] = 'plugins.json'
+        scipionBuilders.append(
+            BuilderConfig(name=settings.CLEANUP_PREFIX + groupId,
+                          tags=[groupId],
+                          workernames=['einstein'],
+                          factory=cleanUpFactory(rmXmipp=True),
+                          workerbuilddir=groupId,
+                          properties={
+                              'slackChannel': settings.SCIPION_SLACK_CHANNEL},
                           env=env)
         )
+
 
     return scipionBuilders
 
