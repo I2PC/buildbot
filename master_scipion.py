@@ -657,7 +657,7 @@ def getScipionBuilders(groupId):
             BuilderConfig(name=settings.SCIPION_INSTALL_PREFIX + groupId,
                           tags=[groupId],
                           workernames=['einstein'],
-                          factory=installSDevelScipionFactory(groupId),
+                          factory=installScipionFactory(groupId),
                           workerbuilddir=groupId,
                           properties={
                               "slackChannel": settings.SCIPION_SLACK_CHANNEL},
