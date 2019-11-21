@@ -40,7 +40,8 @@ branchsDict = {DEVEL_GROUP_ID: {SCIPION_BUILD_ID: 'devel',
                    SCIPION_BUILD_ID: 'master'
                },
                SDEVEL_GROUP_ID: {
-                   SCIPION_BUILD_ID: 'devel'
+                   SCIPION_BUILD_ID: 'devel',
+                   XMIPP_BUILD_ID: 'devel',
                }}
 
 ################## Scipion settings ##################
