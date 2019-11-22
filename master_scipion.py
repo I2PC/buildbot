@@ -253,7 +253,12 @@ def addScipionGitAndConfigSteps(factorySteps, groupId):
 
     factorySteps.addStep(removeScipionConf)
     factorySteps.addStep(removeHomeConfig)
-    factorySteps.addStep(configScipion)
+
+    if groupId == settings.SDEVEL_GROUP_ID:
+        factorySteps.addStep(sdevelConfigScipion)
+    else:
+        factorySteps.addStep(configScipion)
+        
     factorySteps.addStep(setNotifyAtFalse)
     factorySteps.addStep(setGeneralCuda)
     factorySteps.addStep(setMpiLibPath)
@@ -297,6 +302,13 @@ moveScipionApp = ShellCommand(
     description='Move to Scipion-App directory',
     descriptionDone='Scipion-App directory',
     haltOnFailure=False)
+
+sdevelConfigScipion = ShellCommand(
+    command=['bash', 'scipion.sh', 'config', '--notify', '--overwrite'],
+    name='Scipion Config',
+    description='Create installation configuration files',
+    descriptionDone='Scipion config',
+    haltOnFailure=True)
 
 
 
