@@ -316,8 +316,6 @@ def addSDevelScipionGitAndConfigSteps(factorySteps, groupId):
                      haltOnFailure=True))
 
     factorySteps.addStep(removeScipionConf)
-    # factorySteps.addStep(removeScipionUserData)  # to avoid old tests when are renamed
-    factorySteps.addStep(setScipionUserData)
 
     return factorySteps
 
@@ -465,6 +463,8 @@ def installSDevelScipionFactory(groupId):
     installScipionFactorySteps.addStep(moveUpLevel)
     installScipionFactorySteps.addStep(moveScipionApp)
 
+    # factorySteps.addStep(removeScipionUserData)  # to avoid old tests when are renamed
+    installScipionFactorySteps.addStep(setScipionUserData)
     installScipionFactorySteps.addStep(sdevelConfigScipion)
     installScipionFactorySteps.addStep(removeHomeConfig)
     installScipionFactorySteps.addStep(setNotifyAtFalse)
