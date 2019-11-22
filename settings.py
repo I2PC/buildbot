@@ -62,7 +62,7 @@ CCP4_HOME = "/opt/ccp4-7.0"
 PHENIX_HOME = "/usr/local/phenix-1.13-2998"
 CRYOLO_GENERIC_MODEL = "/home/buildbot/cryolo/gmodel_phosnet_20190314.h5"
 CRYOLO_ENV_ACTIVATION = ". /home/buildbot/miniconda3/etc/profile.d/conda.sh; conda activate cryolo"
-CONDA_ACTIVATION_CMD = "bash /home/buildbot/miniconda3/etc/profile.d/conda.sh"
+CONDA_ACTIVATION_CMD = ". /home/buildbot/miniconda3/etc/profile.d/conda.sh"
 
 # Cryosparc variables
 # The root directory where cryoSPARC code and dependencies is installed.
