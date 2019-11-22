@@ -290,7 +290,7 @@ def addSDevelScipionGitAndConfigSteps(factorySteps, groupId):
     """
 
     factorySteps.addStep(
-        ShellCommand(command=['git', 'clone', settings.sdevel_gitRepoURL],
+        ShellCommand(command=['git', 'clone'] + settings.sdevel_gitRepoURL.split(),
                      name='Clone scipion-app repository',
                      description='Getting scipion-app repository',
                      descriptionDone='scipion-app repo downloaded',
@@ -298,7 +298,7 @@ def addSDevelScipionGitAndConfigSteps(factorySteps, groupId):
                      haltOnFailure=True))
 
     factorySteps.addStep(
-        ShellCommand(command=['git', 'clone', settings.sdevel_pw_gitRepoURL],
+        ShellCommand(command=['git', 'clone'] + settings.sdevel_pw_gitRepoURL.split(),
                      name='Clone scipion-pyworkflow repository',
                      description='Getting scipion-pyworkflow repository',
                      descriptionDone='scipion-pyworkflow repo downloaded',
@@ -306,7 +306,7 @@ def addSDevelScipionGitAndConfigSteps(factorySteps, groupId):
                      haltOnFailure=True))
 
     factorySteps.addStep(
-        ShellCommand(command=['git', 'clone', settings.sdevel_pyem_gitRepoURL],
+        ShellCommand(command=['git', 'clone'] + settings.sdevel_pyem_gitRepoURL.split(),
                      name='Clone scipion-em repository',
                      description='Getting scipion-em repository',
                      descriptionDone='scipion-em repo downloaded',
