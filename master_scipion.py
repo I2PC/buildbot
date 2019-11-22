@@ -237,6 +237,14 @@ def addScipionGitAndConfigSteps(factorySteps, groupId):
          6. set ScipionUserData to an internal folder (to allow branch-dependent project inspection)
     """
     if groupId == settings.SDEVEL_GROUP_ID:
+
+        factorySteps.addStep(Git(repourl=settings.sdevel_pw_gitRepoURL,
+                                 branch=settings.branchsDict[groupId].get(
+                                     settings.SCIPION_BUILD_ID, None),
+                                 mode='incremental',
+                                 name='Scipion-Pyworkflow Git Repository Pull',
+                                 haltOnFailure=True))
+
         factorySteps.addStep(Git(repourl=settings.sdevel_gitRepoURL,
                                  branch=settings.branchsDict[groupId].get(
                                      settings.SCIPION_BUILD_ID, None),
@@ -258,7 +266,7 @@ def addScipionGitAndConfigSteps(factorySteps, groupId):
         factorySteps.addStep(sdevelConfigScipion)
     else:
         factorySteps.addStep(configScipion)
-        
+
     factorySteps.addStep(setNotifyAtFalse)
     factorySteps.addStep(setGeneralCuda)
     factorySteps.addStep(setMpiLibPath)
@@ -269,6 +277,51 @@ def addScipionGitAndConfigSteps(factorySteps, groupId):
     factorySteps.addStep(setScipionUserData)
 
     return factorySteps
+
+
+def addSDevelScipionGitAndConfigSteps(factorySteps, groupId):
+    """ The initial steps to sdevel builders.
+         1. git pull in a certain branch.
+         2. remove scipion.config files.
+         3. regenerate scipion.config files
+         4. set notify at False
+         5. set dataTests folder to a common dir (to save space)
+         6. set ScipionUserData to an internal folder (to allow branch-dependent project inspection)
+    """
+
+    factorySteps.addStep(Git(repourl=settings.sdevel_pw_gitRepoURL,
+                             branch=settings.branchsDict[groupId].get(
+                                 settings.SCIPION_BUILD_ID, None),
+                             mode='incremental',
+                             name='Scipion-Pyworkflow Git Repository Pull',
+                             haltOnFailure=True))
+    factorySteps.addStep(Git(repourl=settings.sdevel_gitRepoURL,
+                             branch=settings.branchsDict[groupId].get(
+                                 settings.SCIPION_BUILD_ID, None),
+                             mode='incremental',
+                             name='Scipion-App Git Repository Pull',
+                             haltOnFailure=True))
+
+    factorySteps.addStep(moveScipionPyworkflow)
+    factorySteps.addStep(setScipionEnv)
+    factorySteps.addStep(installSdevelScipion)
+
+    factorySteps.addStep(removeScipionConf)
+    factorySteps.addStep(removeHomeConfig)
+    factorySteps.addStep(sdevelConfigScipion)
+    factorySteps.addStep(setNotifyAtFalse)
+    factorySteps.addStep(setGeneralCuda)
+    factorySteps.addStep(setMpiLibPath)
+    factorySteps.addStep(setMpiBinPath)
+    factorySteps.addStep(setMpiIncludePath)
+    factorySteps.addStep(setDataTestsDir)
+    # factorySteps.addStep(removeScipionUserData)  # to avoid old tests when are renamed
+    factorySteps.addStep(setScipionUserData)
+
+    return factorySteps
+
+
+
 
 
 # Command to install Scipion and/or recompile Xmipp
@@ -291,7 +344,7 @@ setScipionEnv = ShellCommand(command=['conda', 'activate', 'scipion_python3'],
 
 installSdevelScipion = ShellCommand(command=['python', '-m', 'pip', 'install', '-e', '.'],
                               name='Scipion Install',
-                              description='Install Scipion-App as devel mode',
+                              description='Install Scipion-module as devel mode',
                               descriptionDone='Install Scipion',
                               timeout=settings.timeOutInstall,
                               haltOnFailure=True)
@@ -299,7 +352,14 @@ installSdevelScipion = ShellCommand(command=['python', '-m', 'pip', 'install', '
 moveScipionApp = ShellCommand(
     command=['cd', 'scipion-app'],
     name='Scipion-App directory',
-    description='Move to Scipion-App directory',
+    description='Move to scipion-App directory',
+    descriptionDone='Scipion-App directory',
+    haltOnFailure=False)
+
+moveScipionPyworkflow = ShellCommand(
+    command=['cd', 'scipion-pyworkflow'],
+    name='Scipion-App directory',
+    description='Move to scipion-pyworkflow directory',
     descriptionDone='Scipion-App directory',
     haltOnFailure=False)
 
@@ -356,7 +416,7 @@ def installScipionFactory(groupId):
 def installSDevelScipionFactory(groupId):
     installScipionFactorySteps = util.BuildFactory()
     installScipionFactorySteps.workdir = settings.SCIPION_BUILD_ID
-    installScipionFactorySteps = addScipionGitAndConfigSteps(installScipionFactorySteps,
+    installScipionFactorySteps = addSDevelScipionGitAndConfigSteps(installScipionFactorySteps,
                                                              groupId)
 
     installScipionFactorySteps.addStep(ShellCommand(command=['echo', 'SCIPION_LOCAL_CONFIG',
@@ -367,7 +427,7 @@ def installSDevelScipionFactory(groupId):
                                                     timeout=settings.timeOutShort
                                                     ))
     installScipionFactorySteps.addStep(moveScipionApp)
-    installScipionFactorySteps.addStep(setScipionEnv)
+    # installScipionFactorySteps.addStep(setScipionEnv)
     installScipionFactorySteps.addStep(installSdevelScipion)
     return installScipionFactorySteps
 
