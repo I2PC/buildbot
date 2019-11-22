@@ -44,7 +44,10 @@ branchsDict = {DEVEL_GROUP_ID: {SCIPION_BUILD_ID: 'devel',
                    SCIPION_BUILD_ID: 'master'
                },
                SDEVEL_GROUP_ID: {
-                   SCIPION_APP_BUILD_ID: 'devel'
+                   SCIPION_APP_BUILD_ID: 'devel',
+                   SCIPION_EM_BUILD_ID: 'devel',
+                   SCIPION_PYWORKFLOW_BUILD_ID: 'devel',
+
                }}
 
 ################## Scipion settings ##################
@@ -80,9 +83,16 @@ DOCS_REPO = "git@github.com:scipion-em/docs.git"
 DOCS_HTML_BRANCH = 'gh-pages'
 
 #New verion of Scipion
-sdevel_gitRepoURL = 'https://github.com/scipion-em/scipion-app.git@devel'
-sdevel_pw_gitRepoURL = 'https://github.com/scipion-em/scipion-pyworkflow.git@devel'
-sdevel_pyem_gitRepoURL = 'https://github.com/scipion-em/scipion-em.git@devel'
+sdevel_gitRepoURL = ("-b %s https://github.com/scipion-em/scipion-app.git"
+                    % branchsDict[SDEVEL_GROUP_ID].get(SCIPION_APP_BUILD_ID, "devel"))
+
+sdevel_pw_gitRepoURL = ("-b %s https://github.com/scipion-em/scipion-pyworkflow.git"
+                    % branchsDict[SDEVEL_GROUP_ID].get(SCIPION_PYWORKFLOW_BUILD_ID, "devel"))
+
+sdevel_pyem_gitRepoURL = ("-b %s https://github.com/scipion-em/scipion-em.git"
+                    % branchsDict[SDEVEL_GROUP_ID].get(SCIPION_EM_BUILD_ID, "devel"))
+
+
 
 SCIPION_ENV_ACTIVATION = ". /home/buildbot/miniconda3/etc/profile.d/conda.sh; conda activate scipion_python3"
 
