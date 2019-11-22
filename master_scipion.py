@@ -281,7 +281,7 @@ def addScipionGitAndConfigSteps(factorySteps, groupId):
 
 def addSDevelScipionGitAndConfigSteps(factorySteps, groupId):
     """ The initial steps to sdevel builders.
-         1. git pull in a certain branch.
+         1. git pull scipion-app, scipion-pyworkflow, scipion-em.
          2. remove scipion.config files.
          3. regenerate scipion.config files
          4. set notify at False
@@ -289,39 +289,49 @@ def addSDevelScipionGitAndConfigSteps(factorySteps, groupId):
          6. set ScipionUserData to an internal folder (to allow branch-dependent project inspection)
     """
 
-    factorySteps.addStep(Git(repourl=settings.sdevel_pw_gitRepoURL,
-                             branch=settings.branchsDict[groupId].get(
-                                 settings.SCIPION_PYWORKFLOW_BUILD_ID, None),
-                             mode='incremental',
-                             name='Scipion-Pyworkflow Git Repository Pull',
-                             haltOnFailure=True))
+    factorySteps.addStep(
+        ShellCommand(command=['git', 'clone'] + settings.sdevel_gitRepoURL,
+                     name='Clone scipion-app repository',
+                     description='Getting scipion-app repository',
+                     descriptionDone='scipion-app repo downloaded',
+                     timeout=settings.timeOutShort,
+                     haltOnFailure=True))
 
-    factorySteps.addStep(Git(repourl=settings.sdevel_gitRepoURL,
-                             branch=settings.branchsDict[groupId].get(
-                                 settings.SCIPION_APP_BUILD_ID, None),
-                             mode='incremental',
-                             name='Scipion-App Git Repository Pull',
-                             haltOnFailure=True))
+    factorySteps.addStep(
+        ShellCommand(command=['git', 'clone'] + settings.sdevel_pw_gitRepoURL,
+                     name='Clone scipion-pyworkflow repository',
+                     description='Getting scipion-pyworkflow repository',
+                     descriptionDone='scipion-pyworkflow repo downloaded',
+                     timeout=settings.timeOutShort,
+                     haltOnFailure=True))
 
-    factorySteps.addStep(moveScipionPyworkflow)
-    factorySteps.addStep(setScipionEnv)
-    factorySteps.addStep(installSdevelScipion)
+    factorySteps.addStep(
+        ShellCommand(command=['git', 'clone'] + settings.sdevel_pyem_gitRepoURL,
+                     name='Clone scipion-em repository',
+                     description='Getting scipion-em repository',
+                     descriptionDone='scipion-em repo downloaded',
+                     timeout=settings.timeOutShort,
+                     haltOnFailure=True))
 
-    factorySteps.addStep(moveUpLevel)
-    factorySteps.addStep(moveScipionApp)
-    factorySteps.addStep(installSdevelScipion)
-
-    factorySteps.addStep(removeScipionConf)
-    factorySteps.addStep(removeHomeConfig)
-    factorySteps.addStep(sdevelConfigScipion)
-    factorySteps.addStep(setNotifyAtFalse)
-    factorySteps.addStep(setGeneralCuda)
-    factorySteps.addStep(setMpiLibPath)
-    factorySteps.addStep(setMpiBinPath)
-    factorySteps.addStep(setMpiIncludePath)
-    factorySteps.addStep(setDataTestsDir)
-    # factorySteps.addStep(removeScipionUserData)  # to avoid old tests when are renamed
-    factorySteps.addStep(setScipionUserData)
+    # factorySteps.addStep(moveScipionPyworkflow)
+    # factorySteps.addStep(setScipionEnv)
+    # factorySteps.addStep(installSdevelScipion)
+    #
+    # factorySteps.addStep(moveUpLevel)
+    # factorySteps.addStep(moveScipionApp)
+    # factorySteps.addStep(installSdevelScipion)
+    #
+    # factorySteps.addStep(removeScipionConf)
+    # factorySteps.addStep(removeHomeConfig)
+    # factorySteps.addStep(sdevelConfigScipion)
+    # factorySteps.addStep(setNotifyAtFalse)
+    # factorySteps.addStep(setGeneralCuda)
+    # factorySteps.addStep(setMpiLibPath)
+    # factorySteps.addStep(setMpiBinPath)
+    # factorySteps.addStep(setMpiIncludePath)
+    # factorySteps.addStep(setDataTestsDir)
+    # # factorySteps.addStep(removeScipionUserData)  # to avoid old tests when are renamed
+    # factorySteps.addStep(setScipionUserData)
 
     return factorySteps
 
