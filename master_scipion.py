@@ -759,16 +759,6 @@ def getScipionBuilders(groupId):
                                                  env=env))
     else:
         scipionBuilders.append(
-            BuilderConfig(name=settings.SCIPION_INSTALL_PREFIX + groupId,
-                          tags=[groupId],
-                          workernames=['einstein'],
-                          factory=installSDevelScipionFactory(groupId),
-                          workerbuilddir=groupId,
-                          properties={
-                              "slackChannel": settings.SCIPION_SLACK_CHANNEL},
-                          env=env))
-        env['SCIPION_PLUGIN_JSON'] = 'plugins.json'
-        scipionBuilders.append(
             BuilderConfig(name=settings.CLEANUP_PREFIX + groupId,
                           tags=[groupId],
                           workernames=['einstein'],
@@ -778,6 +768,16 @@ def getScipionBuilders(groupId):
                               'slackChannel': settings.SCIPION_SLACK_CHANNEL},
                           env=env)
         )
+        scipionBuilders.append(
+            BuilderConfig(name=settings.SCIPION_INSTALL_PREFIX + groupId,
+                          tags=[groupId],
+                          workernames=['einstein'],
+                          factory=installSDevelScipionFactory(groupId),
+                          workerbuilddir=groupId,
+                          properties={
+                              "slackChannel": settings.SCIPION_SLACK_CHANNEL},
+                          env=env))
+        env['SCIPION_PLUGIN_JSON'] = 'plugins.json'
 
 
     return scipionBuilders
