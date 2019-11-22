@@ -28,6 +28,10 @@ DOCS_BUILD_ID = 'docs'
 NYSBC_BUILD_ID = 'nysbc'
 FORCE_BUILDER_PREFIX = 'Force_'
 
+SCIPION_APP_BUILD_ID = 'scipion-app'
+SCIPION_PYWORKFLOW_BUILD_ID = 'scipion-pyworkflow'
+SCIPION_EM_BUILD_ID = 'scipion-em'
+
 # Here we define the structure of the builders. For each build group (prod and devel up to now)
 # we can define the branches of scipion and xmipp that we want to test. The branches of the
 # plugins are defined in plugins.json (e.g. using a pluginSourceUrl that points to the specific branch).
@@ -40,8 +44,7 @@ branchsDict = {DEVEL_GROUP_ID: {SCIPION_BUILD_ID: 'devel',
                    SCIPION_BUILD_ID: 'master'
                },
                SDEVEL_GROUP_ID: {
-                   SCIPION_BUILD_ID: 'devel',
-                   XMIPP_BUILD_ID: 'devel',
+                   SCIPION_APP_BUILD_ID: 'devel'
                }}
 
 ################## Scipion settings ##################

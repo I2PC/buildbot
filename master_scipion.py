@@ -291,19 +291,24 @@ def addSDevelScipionGitAndConfigSteps(factorySteps, groupId):
 
     factorySteps.addStep(Git(repourl=settings.sdevel_pw_gitRepoURL,
                              branch=settings.branchsDict[groupId].get(
-                                 settings.SCIPION_BUILD_ID, None),
+                                 settings.SCIPION_PYWORKFLOW_BUILD_ID, None),
                              mode='incremental',
                              name='Scipion-Pyworkflow Git Repository Pull',
                              haltOnFailure=True))
+
     factorySteps.addStep(Git(repourl=settings.sdevel_gitRepoURL,
                              branch=settings.branchsDict[groupId].get(
-                                 settings.SCIPION_BUILD_ID, None),
+                                 settings.SCIPION_APP_BUILD_ID, None),
                              mode='incremental',
                              name='Scipion-App Git Repository Pull',
                              haltOnFailure=True))
 
     factorySteps.addStep(moveScipionPyworkflow)
     factorySteps.addStep(setScipionEnv)
+    factorySteps.addStep(installSdevelScipion)
+
+    factorySteps.addStep(moveUpLevel)
+    factorySteps.addStep(moveScipionApp)
     factorySteps.addStep(installSdevelScipion)
 
     factorySteps.addStep(removeScipionConf)
@@ -348,6 +353,13 @@ installSdevelScipion = ShellCommand(command=['python', '-m', 'pip', 'install', '
                               descriptionDone='Install Scipion',
                               timeout=settings.timeOutInstall,
                               haltOnFailure=True)
+
+moveUpLevel = ShellCommand(
+    command=['cd', ' ..'],
+    name='Move to parent directory',
+    description='Move to parent directory',
+    descriptionDone='to parent directory',
+    haltOnFailure=False)
 
 moveScipionApp = ShellCommand(
     command=['cd', 'scipion-app'],
