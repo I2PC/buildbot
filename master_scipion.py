@@ -329,7 +329,7 @@ installScipion = ShellCommand(command=['./scipion', 'install', '-j', '8'],
 
 
 # Command to change the virtual environment to install the new version of Scipion
-setScipionEnv = ShellCommand(command=['conda', 'activate', 'scipion_python3'],
+setScipionEnv = ShellCommand(command= settings.SCIPION_ENV_ACTIVATION.split(),
                               name='Setting Scipion Environ',
                               description='Setting Scipion Environ',
                               descriptionDone='Setting Scipion Environ',
