@@ -313,25 +313,16 @@ def addSDevelScipionGitAndConfigSteps(factorySteps, groupId):
                      timeout=settings.timeOutShort,
                      haltOnFailure=True))
 
-    # factorySteps.addStep(moveScipionPyworkflow)
-    # factorySteps.addStep(setScipionEnv)
-    # factorySteps.addStep(installSdevelScipion)
-    #
-    # factorySteps.addStep(moveUpLevel)
-    # factorySteps.addStep(moveScipionApp)
-    # factorySteps.addStep(installSdevelScipion)
-    #
-    # factorySteps.addStep(removeScipionConf)
-    # factorySteps.addStep(removeHomeConfig)
-    # factorySteps.addStep(sdevelConfigScipion)
-    # factorySteps.addStep(setNotifyAtFalse)
-    # factorySteps.addStep(setGeneralCuda)
-    # factorySteps.addStep(setMpiLibPath)
-    # factorySteps.addStep(setMpiBinPath)
-    # factorySteps.addStep(setMpiIncludePath)
-    # factorySteps.addStep(setDataTestsDir)
-    # # factorySteps.addStep(removeScipionUserData)  # to avoid old tests when are renamed
-    # factorySteps.addStep(setScipionUserData)
+    factorySteps.addStep(removeScipionConf)
+    factorySteps.addStep(removeHomeConfig)
+    factorySteps.addStep(setNotifyAtFalse)
+    factorySteps.addStep(setGeneralCuda)
+    factorySteps.addStep(setMpiLibPath)
+    factorySteps.addStep(setMpiBinPath)
+    factorySteps.addStep(setMpiIncludePath)
+    factorySteps.addStep(setDataTestsDir)
+    # factorySteps.addStep(removeScipionUserData)  # to avoid old tests when are renamed
+    factorySteps.addStep(setScipionUserData)
 
     return factorySteps
 
@@ -373,6 +364,13 @@ moveUpLevel = ShellCommand(
 
 moveScipionApp = ShellCommand(
     command=['cd', 'scipion-app'],
+    name='Scipion-App directory',
+    description='Move to scipion-App directory',
+    descriptionDone='Scipion-App directory',
+    haltOnFailure=False)
+
+moveScipionEm = ShellCommand(
+    command=['cd', 'scipion-em'],
     name='Scipion-App directory',
     description='Move to scipion-App directory',
     descriptionDone='Scipion-App directory',
@@ -448,9 +446,24 @@ def installSDevelScipionFactory(groupId):
                                                     descriptionDone='Echo SCIPION_LOCAL_CONFIG',
                                                     timeout=settings.timeOutShort
                                                     ))
-    installScipionFactorySteps.addStep(moveScipionApp)
-    # installScipionFactorySteps.addStep(setScipionEnv)
+
+    # Set the anaconda environment
+    installScipionFactorySteps.addStep(setScipionEnv)
+
+    # Install scipion-pyworkflow
+    installScipionFactorySteps.addStep(moveScipionPyworkflow)
     installScipionFactorySteps.addStep(installSdevelScipion)
+
+    # Install scipion-em
+    installScipionFactorySteps.addStep(moveUpLevel)
+    installScipionFactorySteps.addStep(moveScipionEm)
+    installScipionFactorySteps.addStep(installSdevelScipion)
+
+    # Install scipion-app
+    installScipionFactorySteps.addStep(moveUpLevel)
+    installScipionFactorySteps.addStep(moveScipionApp)
+    installScipionFactorySteps.addStep(installSdevelScipion)
+
     return installScipionFactorySteps
 
 
