@@ -94,7 +94,7 @@ sdevel_pyem_gitRepoURL = ("-b %s https://github.com/scipion-em/scipion-em.git"
 
 
 
-SCIPION_ENV_ACTIVATION = ". /home/buildbot/miniconda3/etc/profile.d/conda.sh; conda activate scipion_python3"
+SCIPION_ENV_ACTIVATION = "conda activate scipion_python3"
 
 # builder prefixes
 SCIPION_INSTALL_PREFIX = 'Install_Scipion_'

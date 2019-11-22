@@ -329,12 +329,21 @@ installScipion = ShellCommand(command=['./scipion', 'install', '-j', '8'],
 
 
 # Command to change the virtual environment to install the new version of Scipion
-setScipionEnv = ShellCommand(command= settings.SCIPION_ENV_ACTIVATION.split(),
+EnvActivation = ShellCommand(command=settings.CONDA_ACTIVATION_CMD.split(),
+                              name='Conda activation command',
+                              description='Conda activation command',
+                              descriptionDone='Conda activation command',
+                              timeout=settings.timeOutInstall,
+                              haltOnFailure=True)
+
+setScipionEnv = ShellCommand(command=settings.SCIPION_ENV_ACTIVATION.split(),
                               name='Setting Scipion Environ',
                               description='Setting Scipion Environ',
                               descriptionDone='Setting Scipion Environ',
                               timeout=settings.timeOutInstall,
                               haltOnFailure=True)
+
+
 
 
 installSdevelScipion = ShellCommand(command=['python', '-m', 'pip', 'install', '-e', '.'],
@@ -446,6 +455,8 @@ def installSDevelScipionFactory(groupId):
                                                     descriptionDone='Echo SCIPION_LOCAL_CONFIG',
                                                     timeout=settings.timeOutShort
                                                     ))
+    # Activating the Anaconda environment
+    installScipionFactorySteps.addStep(EnvActivation)
 
     # Set the anaconda environment
     installScipionFactorySteps.addStep(setScipionEnv)
