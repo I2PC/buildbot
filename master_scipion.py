@@ -281,6 +281,7 @@ def addScipionGitAndConfigSteps(factorySteps, groupId):
 
 def addSDevelScipionGitAndConfigSteps(factorySteps, groupId):
     """ The initial steps to sdevel builders.
+         1. Remove scipion-em, scipion-app and scipion-pyworkflow to get the last version
          1. git pull scipion-app, scipion-pyworkflow, scipion-em.
          2. remove scipion.config files.
          3. regenerate scipion.config files
@@ -288,6 +289,7 @@ def addSDevelScipionGitAndConfigSteps(factorySteps, groupId):
          5. set dataTests folder to a common dir (to save space)
          6. set ScipionUserData to an internal folder (to allow branch-dependent project inspection)
     """
+    factorySteps.addStep(removeScipionModules)
 
     factorySteps.addStep(
         ShellCommand(command=['git', 'clone'] + settings.sdevel_gitRepoURL.split(),
@@ -370,6 +372,17 @@ moveScipionPyworkflow = ShellCommand(
     name='Scipion-App directory',
     description='Move to scipion-pyworkflow directory',
     descriptionDone='Scipion-App directory',
+    haltOnFailure=False)
+
+
+removeScipionModules = ShellCommand(
+    command=['bash', '-c',
+             'rm -rf scipion-em ; '
+             'rm -rf scipion-pyworkflow ; '
+             'rm -rf scipion-app'],
+    name='Clean scipion modules',
+    description='Delete the scipion modules to get the last versions',
+    descriptionDone='Remove EM scipion modules',
     haltOnFailure=False)
 
 sdevelConfigScipion = ShellCommand(
@@ -759,16 +772,6 @@ def getScipionBuilders(groupId):
                                                  env=env))
     else:
         scipionBuilders.append(
-            BuilderConfig(name=settings.CLEANUP_PREFIX + groupId,
-                          tags=[groupId],
-                          workernames=['einstein'],
-                          factory=cleanUpFactory(),
-                          workerbuilddir=groupId,
-                          properties={
-                              'slackChannel': settings.SCIPION_SLACK_CHANNEL},
-                          env=env)
-        )
-        scipionBuilders.append(
             BuilderConfig(name=settings.SCIPION_INSTALL_PREFIX + groupId,
                           tags=[groupId],
                           workernames=['einstein'],
@@ -778,6 +781,16 @@ def getScipionBuilders(groupId):
                               "slackChannel": settings.SCIPION_SLACK_CHANNEL},
                           env=env))
         env['SCIPION_PLUGIN_JSON'] = 'plugins.json'
+        scipionBuilders.append(
+            BuilderConfig(name=settings.CLEANUP_PREFIX + groupId,
+                          tags=[groupId],
+                          workernames=['einstein'],
+                          factory=cleanUpFactory(),
+                          workerbuilddir=groupId,
+                          properties={
+                              'slackChannel': settings.SCIPION_SLACK_CHANNEL},
+                          env=env)
+        )
 
 
     return scipionBuilders
