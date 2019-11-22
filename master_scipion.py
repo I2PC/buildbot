@@ -314,21 +314,10 @@ def addSDevelScipionGitAndConfigSteps(factorySteps, groupId):
                      haltOnFailure=True))
 
     factorySteps.addStep(removeScipionConf)
-    factorySteps.addStep(removeHomeConfig)
-    factorySteps.addStep(setNotifyAtFalse)
-    factorySteps.addStep(setGeneralCuda)
-    factorySteps.addStep(setMpiLibPath)
-    factorySteps.addStep(setMpiBinPath)
-    factorySteps.addStep(setMpiIncludePath)
-    factorySteps.addStep(setDataTestsDir)
     # factorySteps.addStep(removeScipionUserData)  # to avoid old tests when are renamed
     factorySteps.addStep(setScipionUserData)
 
     return factorySteps
-
-
-
-
 
 # Command to install Scipion and/or recompile Xmipp
 installScipion = ShellCommand(command=['./scipion', 'install', '-j', '8'],
@@ -462,7 +451,16 @@ def installSDevelScipionFactory(groupId):
     # Install scipion-app
     installScipionFactorySteps.addStep(moveUpLevel)
     installScipionFactorySteps.addStep(moveScipionApp)
-    installScipionFactorySteps.addStep(installSdevelScipion)
+
+    installScipionFactorySteps.addStep(sdevelConfigScipion)
+    installScipionFactorySteps.addStep(removeHomeConfig)
+    installScipionFactorySteps.addStep(setNotifyAtFalse)
+    installScipionFactorySteps.addStep(setGeneralCuda)
+    installScipionFactorySteps.addStep(setMpiLibPath)
+    installScipionFactorySteps.addStep(setMpiBinPath)
+    installScipionFactorySteps.addStep(setMpiIncludePath)
+    installScipionFactorySteps.addStep(setDataTestsDir)
+
 
     return installScipionFactorySteps
 
@@ -774,7 +772,7 @@ def getScipionBuilders(groupId):
             BuilderConfig(name=settings.CLEANUP_PREFIX + groupId,
                           tags=[groupId],
                           workernames=['einstein'],
-                          factory=cleanUpFactory(rmXmipp=True),
+                          factory=cleanUpFactory(),
                           workerbuilddir=groupId,
                           properties={
                               'slackChannel': settings.SCIPION_SLACK_CHANNEL},
