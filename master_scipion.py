@@ -343,14 +343,14 @@ moveScipionApp = ShellCommand(
     haltOnFailure=False)
 
 moveScipionEm = ShellCommand(
-    command=['cd', 'scipion-em'],
+    command=['bash', '-c', 'cd scipion-em'],
     name='Scipion-App directory',
     description='Move to scipion-App directory',
     descriptionDone='Scipion-App directory',
     haltOnFailure=False)
 
 moveScipionPyworkflow = ShellCommand(
-    command=['cd', 'scipion-pyworkflow'],
+    command=['bash', '-c', 'cd scipion-pyworkflow'],
     name='Scipion-App directory',
     description='Move to scipion-pyworkflow directory',
     descriptionDone='Scipion-App directory',
