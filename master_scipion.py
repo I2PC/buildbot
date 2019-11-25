@@ -322,7 +322,7 @@ EnvActivation = ShellCommand(command=settings.CONDA_ACTIVATION_CMD.split(),
                               haltOnFailure=True)
 
 # Command to change the virtual environment to install the new version of Scipion
-setScipionEnv = ShellCommand(command=['bash'] + settings.SCIPION_ENV_ACTIVATION.split(),
+setScipionEnv = ShellCommand(command=settings.SCIPION_ENV_ACTIVATION.split(),
                               name='Setting Scipion Environ',
                               description='Setting Scipion Environ',
                               descriptionDone='Setting Scipion Environ',
