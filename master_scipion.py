@@ -329,7 +329,12 @@ installScipion = ShellCommand(command=['./scipion', 'install', '-j', '8'],
 
 
 # Command to activate the Snaconda virtual environment
-EnvActivation = setCondaActivation
+EnvActivation = ShellCommand(command=settings.CONDA_ACTIVATION_CMD.split(),
+                              name='Conda activation command',
+                              description='Conda activation command',
+                              descriptionDone='Conda activation command',
+                              timeout=settings.timeOutInstall,
+                              haltOnFailure=True)
 
 # Command to change the virtual environment to install the new version of Scipion
 setScipionEnv = ShellCommand(command=settings.SCIPION_ENV_ACTIVATION.split(),
