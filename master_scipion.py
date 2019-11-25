@@ -454,9 +454,8 @@ def installSDevelScipionFactory(groupId):
                                                     timeout=settings.timeOutShort
                                                     ))
     # Activating the Anaconda environment
-    installScipionFactorySteps.addStep(EnvActivation)
-
     # Set the anaconda environment
+    installScipionFactorySteps.addStep(setScipionEnvActivation)
     installScipionFactorySteps.addStep(setScipionEnv)
 
     # Install scipion-pyworkflow
