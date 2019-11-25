@@ -386,10 +386,10 @@ class ScipionCommandStep(ShellCommand):
         kwargs['command'] = [
             'bash', '-c', '%s; %s' % (settings.SCIPION_ENV_ACTIVATION, command)
         ]
-        kwargs['name'] = 'Setting Scipion Environ',
-        kwargs['description'] = 'Setting Scipion Environ',
-        kwargs['descriptionDone'] = 'Setting Scipion Environ',
-        kwargs['timeout'] = settings.timeOutInstall,
+        kwargs['name'] = 'Setting Scipion Environ'
+        kwargs['description'] = 'Setting Scipion Environ'
+        kwargs['descriptionDone'] = 'Setting Scipion Environ'
+        kwargs['timeout'] = settings.timeOutInstall
         kwargs['haltOnFailure'] = True
 
         ShellCommand.__init__(self, **kwargs)
