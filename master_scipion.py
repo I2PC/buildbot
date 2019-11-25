@@ -300,7 +300,7 @@ def addSDevelScipionGitAndConfigSteps(factorySteps, groupId):
                      haltOnFailure=True))
 
     factorySteps.addStep(removeScipionConf)
-    factorySteps.addStep(removeHomeConfig)
+    # factorySteps.addStep(removeHomeConfig)
 
     return factorySteps
 
@@ -440,6 +440,7 @@ def installSDevelScipionFactory(groupId):
                                                     ))
     # Activating the Anaconda environment
     # Set the anaconda environment
+    installScipionFactorySteps.addStep(setScipionEnvActivation)
     installScipionFactorySteps.addStep(setScipionEnv)
 
     # Install scipion-pyworkflow
