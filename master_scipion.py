@@ -328,35 +328,6 @@ setScipionEnv = ShellCommand(command=settings.SCIPION_ENV_ACTIVATION.split(),
 
 installSdevelScipionPyworkflow = 'cd scipion-pyworkflow ; python -m pip install -e .'
 
-moveUpLevel = ShellCommand(
-    command=['cd', ' ..'],
-    name='Move to parent directory',
-    description='Move to parent directory',
-    descriptionDone='to parent directory',
-    haltOnFailure=False)
-
-moveScipionApp = ShellCommand(
-    command=['cd', 'scipion-app'],
-    name='Scipion-App directory',
-    description='Move to scipion-App directory',
-    descriptionDone='Scipion-App directory',
-    haltOnFailure=False)
-
-moveScipionEm = ShellCommand(
-    command=['bash', '-c', 'cd scipion-em'],
-    name='Scipion-App directory',
-    description='Move to scipion-App directory',
-    descriptionDone='Scipion-App directory',
-    haltOnFailure=False)
-
-moveScipionPyworkflow = ShellCommand(
-    command=['bash', '-c', 'cd scipion-pyworkflow'],
-    name='Scipion-App directory',
-    description='Move to scipion-pyworkflow directory',
-    descriptionDone='Scipion-App directory',
-    haltOnFailure=False)
-
-
 removeScipionModules = ShellCommand(
     command=['bash', '-c',
              'rm -rf scipion-em ; '
