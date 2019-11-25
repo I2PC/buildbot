@@ -93,7 +93,7 @@ sdevel_pyem_gitRepoURL = ("-b %s https://github.com/scipion-em/scipion-em.git"
                     % branchsDict[SDEVEL_GROUP_ID].get(SCIPION_EM_BUILD_ID, "devel"))
 
 
-SCIPION_ENV_ACTIVATION = "source /home/buildbot/miniconda3/etc/profile.d/conda.sh"
+SCIPION_ENV_ACTIVATION = ". /home/buildbot/miniconda3/etc/profile.d/conda.sh"
 
 # builder prefixes
 SCIPION_INSTALL_PREFIX = 'Install_Scipion_'
