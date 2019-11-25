@@ -296,9 +296,6 @@ def addSDevelScipionGitAndConfigSteps(factorySteps, groupId):
                      timeout=settings.timeOutShort,
                      haltOnFailure=True))
 
-    factorySteps.addStep(removeScipionConf)
-    # factorySteps.addStep(removeHomeConfig)
-
     return factorySteps
 
 # Command to install Scipion and/or recompile Xmipp
@@ -442,6 +439,11 @@ def installSDevelScipionFactory(groupId):
                            description='Install Scipion-pyworkflow as devel mode',
                            descriptionDone='Install Scipion-pyworkflow',
                            ))
+
+    installScipionFactorySteps.addStep(removeScipionConf)
+    installScipionFactorySteps.addStep(removeHomeConfig)
+    installScipionFactorySteps.addStep(sdevelConfigScipion)
+
     installScipionFactorySteps.addStep(setScipionUserData)
     installScipionFactorySteps.addStep(setNotifyAtFalse)
     installScipionFactorySteps.addStep(setGeneralCuda)
