@@ -326,7 +326,7 @@ setScipionEnv = ShellCommand(command=settings.SCIPION_ENV_ACTIVATION.split(),
                               timeout=settings.timeOutInstall,
                               haltOnFailure=True)
 
-installSdevelScipion = 'python -m pip install -e .'
+installSdevelScipionPyworkflow = 'cd scipion-pyworkflow ; python -m pip install -e .'
 
 moveUpLevel = ShellCommand(
     command=['cd', ' ..'],
@@ -449,11 +449,10 @@ def installSDevelScipionFactory(groupId):
     installScipionFactorySteps.addStep(setCondaActivation)
     installScipionFactorySteps.addStep(setScipionEnvActivation)
     # Install scipion-pyworkflow
-    installScipionFactorySteps.addStep(moveScipionPyworkflow)
-    installScipionFactorySteps.addStep(ScipionCommandStep(command=installSdevelScipion,
-                                                          name='Scipion Install',
-                                                          description='Install Scipion-module as devel mode',
-                                                          descriptionDone='Install Scipion',
+    installScipionFactorySteps.addStep(ScipionCommandStep(command=installSdevelScipionPyworkflow,
+                                                          name='Scipion-Pyworkflow Install',
+                                                          description='Install Scipion-pyworkflow as devel mode',
+                                                          descriptionDone='Install Scipion-pyworkflow',
                                                           ))
 
     #
