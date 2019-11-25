@@ -382,8 +382,7 @@ sdevelConfigScipion = ShellCommand(
     descriptionDone='Scipion config',
     haltOnFailure=True)
 
-setScipionEnv = ShellCommand(command=['.', '/home/buildbot/miniconda3/etc/profile.d/conda.sh ; ',
-                                      'conda', 'activate', 'scipion_python3'],
+setScipionEnv = ShellCommand(command=settings.CONDA_ACTIVATION_CMD.split(),
                               name='Setting Scipion Environ',
                               description='Setting Scipion Environ',
                               descriptionDone='Setting Scipion Environ',
@@ -451,29 +450,29 @@ def installSDevelScipionFactory(groupId):
     installScipionFactorySteps.addStep(setScipionEnvActivation)
     installScipionFactorySteps.addStep(setScipionEnv)
 
-    # Install scipion-pyworkflow
-    installScipionFactorySteps.addStep(moveScipionPyworkflow)
-    installScipionFactorySteps.addStep(installSdevelScipion)
-
-    # Install scipion-em
-    installScipionFactorySteps.addStep(moveUpLevel)
-    installScipionFactorySteps.addStep(moveScipionEm)
-    installScipionFactorySteps.addStep(installSdevelScipion)
-
-    # Install scipion-app
-    installScipionFactorySteps.addStep(moveUpLevel)
-    installScipionFactorySteps.addStep(moveScipionApp)
-    installScipionFactorySteps.addStep(sdevelConfigScipion)
-    installScipionFactorySteps.addStep(setScipionEnvActivation)
-    installScipionFactorySteps.addStep(moveUpLevel)
-    # factorySteps.addStep(removeScipionUserData)  # to avoid old tests when are renamed
-    installScipionFactorySteps.addStep(setScipionUserData)
-    installScipionFactorySteps.addStep(setNotifyAtFalse)
-    installScipionFactorySteps.addStep(setGeneralCuda)
-    installScipionFactorySteps.addStep(setMpiLibPath)
-    installScipionFactorySteps.addStep(setMpiBinPath)
-    installScipionFactorySteps.addStep(setMpiIncludePath)
-    installScipionFactorySteps.addStep(setDataTestsDir)
+    # # Install scipion-pyworkflow
+    # installScipionFactorySteps.addStep(moveScipionPyworkflow)
+    # installScipionFactorySteps.addStep(installSdevelScipion)
+    #
+    # # Install scipion-em
+    # installScipionFactorySteps.addStep(moveUpLevel)
+    # installScipionFactorySteps.addStep(moveScipionEm)
+    # installScipionFactorySteps.addStep(installSdevelScipion)
+    #
+    # # Install scipion-app
+    # installScipionFactorySteps.addStep(moveUpLevel)
+    # installScipionFactorySteps.addStep(moveScipionApp)
+    # installScipionFactorySteps.addStep(sdevelConfigScipion)
+    # installScipionFactorySteps.addStep(setScipionEnvActivation)
+    # installScipionFactorySteps.addStep(moveUpLevel)
+    # # factorySteps.addStep(removeScipionUserData)  # to avoid old tests when are renamed
+    # installScipionFactorySteps.addStep(setScipionUserData)
+    # installScipionFactorySteps.addStep(setNotifyAtFalse)
+    # installScipionFactorySteps.addStep(setGeneralCuda)
+    # installScipionFactorySteps.addStep(setMpiLibPath)
+    # installScipionFactorySteps.addStep(setMpiBinPath)
+    # installScipionFactorySteps.addStep(setMpiIncludePath)
+    # installScipionFactorySteps.addStep(setDataTestsDir)
 
     return installScipionFactorySteps
 
