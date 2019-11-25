@@ -247,7 +247,7 @@ def addScipionGitAndConfigSteps(factorySteps, groupId):
     factorySteps.addStep(removeHomeConfig)
 
     if groupId == settings.SDEVEL_GROUP_ID:
-        factorySteps.addStep(sdevelConfigScipion)
+        factorySteps.addStep(sdevelScipionConfig)
     else:
         factorySteps.addStep(configScipion)
 
@@ -337,12 +337,15 @@ removeScipionModules = ShellCommand(
     descriptionDone='Remove EM scipion modules',
     haltOnFailure=False)
 
-sdevelConfigScipion = ShellCommand(
-    command=['bash', 'scipion-app/scipion.sh', 'config', '--notify', '--overwrite'],
-    name='Scipion Config',
-    description='Create installation configuration files',
-    descriptionDone='Scipion config',
+sdevelScipionConfig = 'scipion-app/scipion.sh config --notify --overwrite'
+
+setSDevelScipionHome = ShellCommand(
+    command=util.Interpolate('sed -ie "\$aSCIPION_HOME = {}" %(prop:SCIPION_LOCAL_CONFIG)s'.format(settings.SDEVEL_SCIPION_HOME)),
+    name='Set SCIPION_HOME in scipion conf',
+    description='Set SCIPION_HOME in scipion conf',
+    descriptionDone='Set SCIPION_HOME in scipion conf',
     haltOnFailure=True)
+
 
 
 class ScipionCommandStep(ShellCommand):
@@ -442,7 +445,14 @@ def installSDevelScipionFactory(groupId):
 
     installScipionFactorySteps.addStep(removeScipionConf)
     installScipionFactorySteps.addStep(removeHomeConfig)
-    installScipionFactorySteps.addStep(sdevelConfigScipion)
+    installScipionFactorySteps.addStep(setSDevelScipionHome)
+    installScipionFactorySteps.addStep(ScipionCommandStep(command=sdevelScipionConfig,
+                                                          name='Scipion Config',
+                                                          description='Create installation configuration files',
+                                                          descriptionDone='Scipion config',
+                                                          haltOnFailure=True))
+
+
 
     installScipionFactorySteps.addStep(setScipionUserData)
     installScipionFactorySteps.addStep(setNotifyAtFalse)
