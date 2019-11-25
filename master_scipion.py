@@ -387,7 +387,7 @@ removeScipionModules = ShellCommand(
     haltOnFailure=False)
 
 sdevelConfigScipion = ShellCommand(
-    command=['bash', 'scipion.sh', 'config', '--notify', '--overwrite'],
+    command=['bash', 'scipion-app/scipion.sh', 'config', '--notify', '--overwrite'],
     name='Scipion Config',
     description='Create installation configuration files',
     descriptionDone='Scipion config',
