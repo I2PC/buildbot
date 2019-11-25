@@ -327,6 +327,8 @@ setScipionEnv = ShellCommand(command=settings.SCIPION_ENV_ACTIVATION.split(),
                               haltOnFailure=True)
 
 installSdevelScipionPyworkflow = 'cd scipion-pyworkflow ; python -m pip install -e .'
+installSdevelScipionEM = 'cd scipion-em ; python -m pip install -e .'
+installSdevelScipionApp = 'cd scipion-app ; python -m pip install -e .'
 
 removeScipionModules = ShellCommand(
     command=['bash', '-c',
@@ -421,31 +423,32 @@ def installSDevelScipionFactory(groupId):
     installScipionFactorySteps.addStep(setScipionEnvActivation)
     # Install scipion-pyworkflow
     installScipionFactorySteps.addStep(ScipionCommandStep(command=installSdevelScipionPyworkflow,
-                                                          name='Scipion-Pyworkflow Install',
+                                                          name='Installing scipion-pyworkflow...',
                                                           description='Install Scipion-pyworkflow as devel mode',
                                                           descriptionDone='Install Scipion-pyworkflow',
                                                           ))
 
-    #
     # # Install scipion-em
-    # installScipionFactorySteps.addStep(moveUpLevel)
-    # installScipionFactorySteps.addStep(moveScipionEm)
-    # installScipionFactorySteps.addStep(installSdevelScipion)
-    #
-    # # Install scipion-app
-    # installScipionFactorySteps.addStep(moveUpLevel)
-    # installScipionFactorySteps.addStep(moveScipionApp)
-    # installScipionFactorySteps.addStep(sdevelConfigScipion)
-    # installScipionFactorySteps.addStep(setScipionEnvActivation)
-    # installScipionFactorySteps.addStep(moveUpLevel)
-    # # factorySteps.addStep(removeScipionUserData)  # to avoid old tests when are renamed
-    # installScipionFactorySteps.addStep(setScipionUserData)
-    # installScipionFactorySteps.addStep(setNotifyAtFalse)
-    # installScipionFactorySteps.addStep(setGeneralCuda)
-    # installScipionFactorySteps.addStep(setMpiLibPath)
-    # installScipionFactorySteps.addStep(setMpiBinPath)
-    # installScipionFactorySteps.addStep(setMpiIncludePath)
-    # installScipionFactorySteps.addStep(setDataTestsDir)
+    installScipionFactorySteps.addStep(
+        ScipionCommandStep(command=installSdevelScipionEM,
+                           name='Installing scipion-em...',
+                           description='Install Scipion-em as devel mode',
+                           descriptionDone='Install Scipion-pyworkflow',
+                           ))
+    #Install scipion-app
+    installScipionFactorySteps.addStep(
+        ScipionCommandStep(command=installSdevelScipionApp,
+                           name='Installing scipion-app...',
+                           description='Install Scipion-pyworkflow as devel mode',
+                           descriptionDone='Install Scipion-pyworkflow',
+                           ))
+    installScipionFactorySteps.addStep(setScipionUserData)
+    installScipionFactorySteps.addStep(setNotifyAtFalse)
+    installScipionFactorySteps.addStep(setGeneralCuda)
+    installScipionFactorySteps.addStep(setMpiLibPath)
+    installScipionFactorySteps.addStep(setMpiBinPath)
+    installScipionFactorySteps.addStep(setMpiIncludePath)
+    installScipionFactorySteps.addStep(setDataTestsDir)
 
     return installScipionFactorySteps
 
