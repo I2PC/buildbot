@@ -301,7 +301,9 @@ def addSDevelScipionGitAndConfigSteps(factorySteps, groupId):
 
     factorySteps.addStep(removeScipionConf)
     factorySteps.addStep(removeHomeConfig)
+    factorySteps.addStep(moveScipionApp)
     factorySteps.addStep(sdevelConfigScipion)
+    factorySteps.addStep(moveUpLevel)
     # factorySteps.addStep(removeScipionUserData)  # to avoid old tests when are renamed
     factorySteps.addStep(setScipionUserData)
     factorySteps.addStep(setNotifyAtFalse)
