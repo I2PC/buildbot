@@ -266,12 +266,9 @@ def addScipionGitAndConfigSteps(factorySteps, groupId):
 def addSDevelScipionGitAndConfigSteps(factorySteps, groupId):
     """ The initial steps to sdevel builders.
          1. Remove scipion-em, scipion-app and scipion-pyworkflow to get the last version
-         1. git pull scipion-app, scipion-pyworkflow, scipion-em.
-         2. remove scipion.config files.
-         3. regenerate scipion.config files
+         2. git pull scipion-app, scipion-pyworkflow, scipion-em.
+         3. remove scipion.config files.
          4. set notify at False
-         5. set dataTests folder to a common dir (to save space)
-         6. set ScipionUserData to an internal folder (to allow branch-dependent project inspection)
     """
     factorySteps.addStep(removeScipionModules)
 
@@ -441,8 +438,8 @@ def installSDevelScipionFactory(groupId):
                                                     ))
     # Activating the Anaconda environment
     # Set the anaconda environment
-    installScipionFactorySteps.addStep(setCondaActivation)
-    installScipionFactorySteps.addStep(setScipionEnvActivation)
+    # installScipionFactorySteps.addStep(setCondaActivation)
+    # installScipionFactorySteps.addStep(setScipionEnvActivation)
     installScipionFactorySteps.addStep(setScipionEnv)
 
     # # Install scipion-pyworkflow
