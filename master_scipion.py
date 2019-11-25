@@ -236,23 +236,7 @@ def addScipionGitAndConfigSteps(factorySteps, groupId):
          5. set dataTests folder to a common dir (to save space)
          6. set ScipionUserData to an internal folder (to allow branch-dependent project inspection)
     """
-    if groupId == settings.SDEVEL_GROUP_ID:
-
-        factorySteps.addStep(Git(repourl=settings.sdevel_pw_gitRepoURL,
-                                 branch=settings.branchsDict[groupId].get(
-                                     settings.SCIPION_BUILD_ID, None),
-                                 mode='incremental',
-                                 name='Scipion-Pyworkflow Git Repository Pull',
-                                 haltOnFailure=True))
-
-        factorySteps.addStep(Git(repourl=settings.sdevel_gitRepoURL,
-                                 branch=settings.branchsDict[groupId].get(
-                                     settings.SCIPION_BUILD_ID, None),
-                                 mode='incremental',
-                                 name='Scipion-App Git Repository Pull',
-                                 haltOnFailure=True))
-
-    else:
+    if groupId != settings.SDEVEL_GROUP_ID:
         factorySteps.addStep(Git(repourl=settings.gitRepoURL,
                                  branch=settings.branchsDict[groupId].get(settings.SCIPION_BUILD_ID, None),
                                  mode='incremental',
@@ -316,6 +300,16 @@ def addSDevelScipionGitAndConfigSteps(factorySteps, groupId):
                      haltOnFailure=True))
 
     factorySteps.addStep(removeScipionConf)
+    factorySteps.addStep(removeHomeConfig)
+    factorySteps.addStep(sdevelConfigScipion)
+    # factorySteps.addStep(removeScipionUserData)  # to avoid old tests when are renamed
+    factorySteps.addStep(setScipionUserData)
+    factorySteps.addStep(setNotifyAtFalse)
+    factorySteps.addStep(setGeneralCuda)
+    factorySteps.addStep(setMpiLibPath)
+    factorySteps.addStep(setMpiBinPath)
+    factorySteps.addStep(setMpiIncludePath)
+    factorySteps.addStep(setDataTestsDir)
 
     return factorySteps
 
@@ -453,6 +447,7 @@ def installSDevelScipionFactory(groupId):
                                                     descriptionDone='Echo SCIPION_LOCAL_CONFIG',
                                                     timeout=settings.timeOutShort
                                                     ))
+    installScipionFactorySteps.addStep(sdevelConfigScipion)
     # Activating the Anaconda environment
     # Set the anaconda environment
     installScipionFactorySteps.addStep(setScipionEnvActivation)
@@ -470,18 +465,6 @@ def installSDevelScipionFactory(groupId):
     # Install scipion-app
     installScipionFactorySteps.addStep(moveUpLevel)
     installScipionFactorySteps.addStep(moveScipionApp)
-
-    # factorySteps.addStep(removeScipionUserData)  # to avoid old tests when are renamed
-    installScipionFactorySteps.addStep(setScipionUserData)
-    installScipionFactorySteps.addStep(sdevelConfigScipion)
-    installScipionFactorySteps.addStep(removeHomeConfig)
-    installScipionFactorySteps.addStep(setNotifyAtFalse)
-    installScipionFactorySteps.addStep(setGeneralCuda)
-    installScipionFactorySteps.addStep(setMpiLibPath)
-    installScipionFactorySteps.addStep(setMpiBinPath)
-    installScipionFactorySteps.addStep(setMpiIncludePath)
-    installScipionFactorySteps.addStep(setDataTestsDir)
-
 
     return installScipionFactorySteps
 
