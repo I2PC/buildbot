@@ -382,8 +382,7 @@ sdevelConfigScipion = ShellCommand(
     descriptionDone='Scipion config',
     haltOnFailure=True)
 
-setScipionEnv = ShellCommand(command=['.', '/home/buildbot/miniconda3/etc/profile.d/conda.sh ; '
-                                      'conda activate scipion_python3'],
+setScipionEnv = ShellCommand(command=['.', '/home/buildbot/miniconda3/etc/profile.d/conda.sh ; ','conda activate scipion_python3'],
                               name='Setting Scipion Environ',
                               description='Setting Scipion Environ',
                               descriptionDone='Setting Scipion Environ',
