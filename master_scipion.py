@@ -339,13 +339,6 @@ removeScipionModules = ShellCommand(
 
 sdevelScipionConfig = 'python -m scipion config --notify --overwrite'
 
-setSDevelScipionHome = ShellCommand(
-    command=util.Interpolate('sed -ie "\$aSCIPION_HOME = {}" %(prop:SCIPION_LOCAL_CONFIG)s'.format(settings.SDEVEL_SCIPION_HOME)),
-    name='Set SCIPION_HOME in scipion conf',
-    description='Set SCIPION_HOME in scipion conf',
-    descriptionDone='Set SCIPION_HOME in scipion conf',
-    haltOnFailure=True)
-
 class ScipionCommandStep(ShellCommand):
     def __init__(self, command='', name='', description='',
                  descriptionDone='', timeout=settings.timeOutInstall,
@@ -443,7 +436,6 @@ def installSDevelScipionFactory(groupId):
 
     # installScipionFactorySteps.addStep(removeScipionConf)
     # installScipionFactorySteps.addStep(removeHomeConfig)
-    installScipionFactorySteps.addStep(setSDevelScipionHome)
     installScipionFactorySteps.addStep(ScipionCommandStep(command=sdevelScipionConfig,
                                                           name='Scipion Config',
                                                           description='Create installation configuration files',
