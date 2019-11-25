@@ -326,12 +326,7 @@ setScipionEnv = ShellCommand(command=settings.SCIPION_ENV_ACTIVATION.split(),
                               timeout=settings.timeOutInstall,
                               haltOnFailure=True)
 
-installSdevelScipion = ShellCommand(command=['python', '-m', 'pip', 'install', '-e', '.'],
-                              name='Scipion Install',
-                              description='Install Scipion-module as devel mode',
-                              descriptionDone='Install Scipion',
-                              timeout=settings.timeOutInstall,
-                              haltOnFailure=True)
+installSdevelScipion = 'python -m pip install -e .'
 
 moveUpLevel = ShellCommand(
     command=['cd', ' ..'],
@@ -380,17 +375,18 @@ sdevelConfigScipion = ShellCommand(
     haltOnFailure=True)
 
 
-
 class ScipionCommandStep(ShellCommand):
-    def __init__(self, command='', **kwargs):
+    def __init__(self, command='', name='', description='',
+                 descriptionDone='', timeout=settings.timeOutInstall,
+                 haltOnFailure=True, **kwargs):
         kwargs['command'] = [
             'bash', '-c', '%s; %s' % (settings.SCIPION_ENV_ACTIVATION, command)
         ]
-        kwargs['name'] = 'Setting Scipion Environ'
-        kwargs['description'] = 'Setting Scipion Environ'
-        kwargs['descriptionDone'] = 'Setting Scipion Environ'
-        kwargs['timeout'] = settings.timeOutInstall
-        kwargs['haltOnFailure'] = True
+        kwargs['name'] = name
+        kwargs['description'] = description
+        kwargs['descriptionDone'] = descriptionDone
+        kwargs['timeout'] = timeout
+        kwargs['haltOnFailure'] = haltOnFailure
 
         ShellCommand.__init__(self, **kwargs)
 
@@ -452,11 +448,14 @@ def installSDevelScipionFactory(groupId):
     # Set the anaconda environment
     installScipionFactorySteps.addStep(setCondaActivation)
     installScipionFactorySteps.addStep(setScipionEnvActivation)
-    installScipionFactorySteps.addStep(ScipionCommandStep())
+    # Install scipion-pyworkflow
+    installScipionFactorySteps.addStep(moveScipionPyworkflow)
+    installScipionFactorySteps.addStep(ScipionCommandStep(command=installSdevelScipion,
+                                                          name='Scipion Install',
+                                                          description='Install Scipion-module as devel mode',
+                                                          descriptionDone='Install Scipion',
+                                                          ))
 
-    # # Install scipion-pyworkflow
-    # installScipionFactorySteps.addStep(moveScipionPyworkflow)
-    # installScipionFactorySteps.addStep(installSdevelScipion)
     #
     # # Install scipion-em
     # installScipionFactorySteps.addStep(moveUpLevel)
