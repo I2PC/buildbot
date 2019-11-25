@@ -440,7 +440,6 @@ def installSDevelScipionFactory(groupId):
                                                     ))
     # Activating the Anaconda environment
     # Set the anaconda environment
-    installScipionFactorySteps.addStep(setScipionEnvActivation)
     installScipionFactorySteps.addStep(setScipionEnv)
 
     # Install scipion-pyworkflow
@@ -455,9 +454,8 @@ def installSDevelScipionFactory(groupId):
     # Install scipion-app
     installScipionFactorySteps.addStep(moveUpLevel)
     installScipionFactorySteps.addStep(moveScipionApp)
-
-    installScipionFactorySteps.addStep(moveScipionApp)
     installScipionFactorySteps.addStep(sdevelConfigScipion)
+    installScipionFactorySteps.addStep(setScipionEnvActivation)
     installScipionFactorySteps.addStep(moveUpLevel)
     # factorySteps.addStep(removeScipionUserData)  # to avoid old tests when are renamed
     installScipionFactorySteps.addStep(setScipionUserData)
