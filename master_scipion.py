@@ -381,6 +381,18 @@ sdevelConfigScipion = ShellCommand(
 
 
 
+class ScipionCommandStep(ShellCommand):
+    def __init__(self, command='', **kwargs):
+        kwargs['command'] = [
+            'bash', '-c', '%s; %s' % (settings.SCIPION_ENV_ACTIVATION, command)
+        ]
+        kwargs['name'] = 'Setting Scipion Environ',
+        kwargs['description'] = 'Setting Scipion Environ',
+        kwargs['descriptionDone'] = 'Setting Scipion Environ',
+        kwargs['timeout'] = settings.timeOutInstall,
+        kwargs['haltOnFailure'] = True
+
+        ShellCommand.__init__(self, **kwargs)
 
 
 # #############################################################################
@@ -440,7 +452,7 @@ def installSDevelScipionFactory(groupId):
     # Set the anaconda environment
     installScipionFactorySteps.addStep(setCondaActivation)
     installScipionFactorySteps.addStep(setScipionEnvActivation)
-    installScipionFactorySteps.addStep(setScipionEnv)
+    installScipionFactorySteps.addStep(ScipionCommandStep())
 
     # # Install scipion-pyworkflow
     # installScipionFactorySteps.addStep(moveScipionPyworkflow)
