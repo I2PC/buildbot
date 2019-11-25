@@ -322,12 +322,12 @@ EnvActivation = ShellCommand(command=settings.CONDA_ACTIVATION_CMD.split(),
                               haltOnFailure=True)
 
 # Command to change the virtual environment to install the new version of Scipion
-setScipionEnv = ShellCommand(command=settings.SCIPION_ENV_ACTIVATION.split(),
-                              name='Setting Scipion Environ',
-                              description='Setting Scipion Environ',
-                              descriptionDone='Setting Scipion Environ',
-                              timeout=settings.timeOutInstall,
-                              haltOnFailure=True)
+# setScipionEnv = ShellCommand(command=settings.SCIPION_ENV_ACTIVATION.split(),
+#                               name='Setting Scipion Environ',
+#                               description='Setting Scipion Environ',
+#                               descriptionDone='Setting Scipion Environ',
+#                               timeout=settings.timeOutInstall,
+#                               haltOnFailure=True)
 
 installSdevelScipion = ShellCommand(command=['python', '-m', 'pip', 'install', '-e', '.'],
                               name='Scipion Install',
@@ -381,6 +381,14 @@ sdevelConfigScipion = ShellCommand(
     description='Create installation configuration files',
     descriptionDone='Scipion config',
     haltOnFailure=True)
+
+setScipionEnv = ShellCommand(command=['.', '/home/buildbot/miniconda3/etc/profile.d/conda.sh ;'
+                                      'conda activate scipion_python3'],
+                              name='Setting Scipion Environ',
+                              description='Setting Scipion Environ',
+                              descriptionDone='Setting Scipion Environ',
+                              timeout=settings.timeOutInstall,
+                              haltOnFailure=True)
 
 
 
