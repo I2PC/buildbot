@@ -443,8 +443,8 @@ def installSDevelScipionFactory(groupId):
                            descriptionDone='Install Scipion-pyworkflow',
                            ))
 
-    installScipionFactorySteps.addStep(removeScipionConf)
-    installScipionFactorySteps.addStep(removeHomeConfig)
+    # installScipionFactorySteps.addStep(removeScipionConf)
+    # installScipionFactorySteps.addStep(removeHomeConfig)
     installScipionFactorySteps.addStep(setSDevelScipionHome)
     installScipionFactorySteps.addStep(ScipionCommandStep(command=sdevelScipionConfig,
                                                           name='Scipion Config',
