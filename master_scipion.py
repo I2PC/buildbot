@@ -334,21 +334,21 @@ installSdevelScipion = ShellCommand(command=['python', '-m', 'pip', 'install', '
                               haltOnFailure=True)
 
 moveUpLevel = ShellCommand(
-    command=['bash', '-c', 'cd', ' ..'],
+    command=['cd', ' ..'],
     name='Move to parent directory',
     description='Move to parent directory',
     descriptionDone='to parent directory',
     haltOnFailure=False)
 
 moveScipionApp = ShellCommand(
-    command=['bash', '-c', 'cd', 'scipion-app'],
+    command=['cd', 'scipion-app'],
     name='Scipion-App directory',
     description='Move to scipion-App directory',
     descriptionDone='Scipion-App directory',
     haltOnFailure=False)
 
 moveScipionEm = ShellCommand(
-    command=['bash', '-c', 'cd', 'scipion-em'],
+    command=['cd', 'scipion-em'],
     name='Scipion-App directory',
     description='Move to scipion-App directory',
     descriptionDone='Scipion-App directory',
