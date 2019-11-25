@@ -441,6 +441,7 @@ def installSDevelScipionFactory(groupId):
                                                     ))
     # Activating the Anaconda environment
     # Set the anaconda environment
+    installScipionFactorySteps.addStep(setCondaActivation)
     installScipionFactorySteps.addStep(setScipionEnvActivation)
     installScipionFactorySteps.addStep(setScipionEnv)
 
