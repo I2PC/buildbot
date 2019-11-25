@@ -337,7 +337,7 @@ removeScipionModules = ShellCommand(
     descriptionDone='Remove EM scipion modules',
     haltOnFailure=False)
 
-sdevelScipionConfig = 'scipion-app/scipion.sh config --notify --overwrite'
+sdevelScipionConfig = 'python -m scipion config --notify --overwrite'
 
 setSDevelScipionHome = ShellCommand(
     command=util.Interpolate('sed -ie "\$aSCIPION_HOME = {}" %(prop:SCIPION_LOCAL_CONFIG)s'.format(settings.SDEVEL_SCIPION_HOME)),
@@ -345,8 +345,6 @@ setSDevelScipionHome = ShellCommand(
     description='Set SCIPION_HOME in scipion conf',
     descriptionDone='Set SCIPION_HOME in scipion conf',
     haltOnFailure=True)
-
-
 
 class ScipionCommandStep(ShellCommand):
     def __init__(self, command='', name='', description='',
@@ -758,6 +756,7 @@ def getScipionBuilders(groupId):
                                                      'slackChannel': "buildbot"},
                                                  env=env))
     else:
+        env['SCIPION_HOME'] = settings.SDEVEL_SCIPION_HOME
         scipionBuilders.append(
             BuilderConfig(name=settings.SCIPION_INSTALL_PREFIX + groupId,
                           tags=[groupId],
