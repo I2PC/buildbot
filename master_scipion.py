@@ -681,7 +681,7 @@ def getScipionBuilders(groupId):
         scipionBuilders.append(
             BuilderConfig(name=settings.SCIPION_INSTALL_PREFIX + groupId,
                           tags=[groupId],
-                          workernames=['einstein'],
+                          workernames=[settings.WORKER],
                           factory=installScipionFactory(groupId),
                           workerbuilddir=groupId,
                           properties={"slackChannel": settings.SCIPION_SLACK_CHANNEL},
@@ -690,7 +690,7 @@ def getScipionBuilders(groupId):
         scipionBuilders.append(
             BuilderConfig(name=settings.SCIPION_TESTS_PREFIX + groupId,
                           tags=[groupId],
-                          workernames=['einstein'],
+                          workernames=[settings.WORKER],
                           factory=scipionTestFactory(groupId),
                           workerbuilddir=groupId,
                           properties={'slackChannel': settings.SCIPION_SLACK_CHANNEL},
@@ -702,7 +702,7 @@ def getScipionBuilders(groupId):
             scipionBuilders.append(
                 BuilderConfig(name=settings.CLEANUP_PREFIX + groupId,
                               tags=[groupId],
-                              workernames=['einstein'],
+                              workernames=[settings.WORKER],
                               factory=cleanUpFactory(rmXmipp=True),
                               workerbuilddir=groupId,
                               properties={'slackChannel': settings.SCIPION_SLACK_CHANNEL},
@@ -713,7 +713,7 @@ def getScipionBuilders(groupId):
             scipionBuilders.append(
                 BuilderConfig(name=settings.CLEANUP_PREFIX + groupId,
                               tags=[groupId],
-                              workernames=['einstein'],
+                              workernames=[settings.WORKER],
                               factory=cleanUpFactory(),
                               workerbuilddir=groupId,
                               properties={'slackChannel': settings.SCIPION_SLACK_CHANNEL},
@@ -722,7 +722,7 @@ def getScipionBuilders(groupId):
 
         # special locscale case, we need to install eman212
 
-        for plugin, pluginDict in scipionPlugins.iteritems():
+        for plugin, pluginDict in scipionPlugins.items():
             moduleName = str(pluginDict.get("name", plugin.rsplit('-', 1)[-1]))
             tags = [groupId, moduleName]
             hastests = not pluginDict.get("NO_TESTS", False)
@@ -752,7 +752,7 @@ def getScipionBuilders(groupId):
         scipionBuilders.append(
             BuilderConfig(name=settings.SCIPION_INSTALL_PREFIX + groupId,
                           tags=[groupId],
-                          workernames=['einstein'],
+                          workernames=[settings.WORKER],
                           factory=installSDevelScipionFactory(groupId),
                           workerbuilddir=groupId,
                           properties={
@@ -762,7 +762,7 @@ def getScipionBuilders(groupId):
         scipionBuilders.append(
             BuilderConfig(name=settings.CLEANUP_PREFIX + groupId,
                           tags=[groupId],
-                          workernames=['einstein'],
+                          workernames=[settings.WORKER],
                           factory=cleanUpFactory(),
                           workerbuilddir=groupId,
                           properties={
@@ -806,7 +806,7 @@ def getScipionSchedulers(groupId):
         plugins = {}
         plugins.update(scipionPlugins)
         plugins.update({"scipion-em-locscale": locscalePluginData})
-        for plugin, pluginDict in plugins.iteritems():
+        for plugin, pluginDict in plugins.items():
             moduleName = str(pluginDict.get("name", plugin.rsplit('-', 1)[-1]))
             schedulers.append(triggerable.Triggerable(name="%s_%s" % (moduleName, groupId),
                                                       builderNames=["%s_%s" % (moduleName, groupId)]))

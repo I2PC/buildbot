@@ -4,13 +4,15 @@
 *.sqlite
 *.pid
 *.tac
-
+master.py
+*.sample
 ###tmp file
 *KK
 
 #### Python
 *.pyc
 venv
+localsettings.py
 
 #### Eclipse and so on
 .project
@@ -18,3 +20,4 @@ venv
 .pydevproject
 .classpath
 .idea
+worker/

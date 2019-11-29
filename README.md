@@ -5,7 +5,11 @@ Unit tests for Scipion and its plugins.
 
 # BUILDBOT MASTER
 
-Buildbot master is in charge of the configuration. It basically knows what to run and when to do it by reading `master.cfg`. However the code is actually run in a separate machine, the **buildbot worker**. The main implication of this, is that at the time we launch buildbot master, we DO NOT HAVE ACCESS TO ACTUAL RUNTIME INFORMATION, like paths, environment variables, etc. But there are ways to work around this. 
+Buildbot master is in charge of the configuration. It basically knows what to run 
+and when to do it by reading `master.cfg`. However the code is actually run in a 
+separate machine, the **buildbot worker**. The main implication of this, is that 
+at the time we launch buildbot master, we DO NOT HAVE ACCESS TO ACTUAL RUNTIME INFORMATION, 
+like paths, environment variables, etc. But there are ways to work around this. 
 
 ## Restarting the master
 
@@ -17,7 +21,9 @@ $ ssh -X buildbot@arquimedes
 
 ### Testing changes
 
-2. Are we just getting started with some new changes we added to buildbot? Then we probably **don't want to notify slack** users of any failures. Set **`DONT_NOTIFY_SLACK`** before restarting buildbot:
+2. Are we just getting started with some new changes we added to buildbot? Then 
+we probably **don't want to notify slack** users of any failures. 
+Set **`DONT_NOTIFY_SLACK`** before restarting buildbot:
 
 ```bash
 buildbot@arquimedes:~$ export DONT_NOTIFY_SLACK=True
@@ -66,9 +72,16 @@ Apr 10 16:38:46 arquimedes.cnb.csic.es systemd[1]: Started BuildBot master servi
 
 ## settings.py
 
-In this file we can find all the constants that we need for the builders. Please note that the worker name and the worker pass are taken from the environment (i.e. they need to be set for example in `.bash_profile`).
+In this file we can find all the constants that we need for the builders. Please 
+note that the worker name and the worker pass are taken from the environment 
+(i.e. they need to be set for example in `.bash_profile`).
 
-One key part of `settings.py` is `branchsDict`. At the time of this writing, we have two orchestrator builders: `devel` and `prod`. In the variable `branchsDict` we can assign which branches we want to build in each orchestrator. As we can see, we can change the many of the branches we want to test in DEVEL: docs, xmipp, and scipion. In prod we only choose the scipion branch because we don't build docs, and because we install xmipp from pypi.
+One key part of `settings.py` is `branchsDict`. At the time of this writing, 
+we have two orchestrator builders: `devel` and `prod`. In the variable `branchsDict` 
+we can assign which branches we want to build in each orchestrator. As we can see, 
+we can change the many of the branches we want to test in DEVEL: docs, xmipp, 
+and scipion. In prod we only choose the scipion branch because we don't build 
+docs, and because we install xmipp from pypi.
 
 ```python
 branchsDict = {DEVEL_GROUP_ID: {SCIPION_BUILD_ID: 'release-2.0.0-fixes',
