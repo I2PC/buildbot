@@ -1,0 +1,9 @@
+{
+  "scipion-em-appion": {
+        "pipName": "scipion-em-appion",
+        "id": 1,
+        "name": "appion",
+        "pluginSourceUrl": "https://github.com/scipion-em/scipion-em-appion.git",
+        "slackChannel":"eman"
+    }
+}

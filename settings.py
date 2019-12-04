@@ -53,6 +53,7 @@ except ImportError:
                        SCIPION_APP_BUILD_ID: 'devel',
                        SCIPION_EM_BUILD_ID: 'devel',
                        SCIPION_PYWORKFLOW_BUILD_ID: 'devel',
+                       XMIPP_BUILD_ID: 'python3_migration'
 
                    }}
 
@@ -70,6 +71,7 @@ except ImportError:
     CRYOLO_ENV_ACTIVATION = ". /home/buildbot/miniconda3/etc/profile.d/conda.sh; conda activate cryolo"
     CONDA_ACTIVATION_CMD = ". /home/buildbot/miniconda3/etc/profile.d/conda.sh;"
     SDEVEL_SCIPION_HOME = '/home/buildbot/sdevel/scipion'
+    SDEVEL_XMIPP_HOME = '/home/buildbot/sdevel/xmipp'
 
     # Cryosparc variables
     # The root directory where cryoSPARC code and dependencies is installed.
@@ -80,6 +82,9 @@ except ImportError:
 
     # data for the builders
     PLUGINS_JSON_FILE = "getplugins.json"
+
+    # data for the sdevel builders
+    SDEVELPLUGINS_JSON_FILE = "getsdevelplugins.json"
 
     #So far, what is in prod has to work with EMAN2.12
     EMAN212 = {"EMAN2DIR": util.Interpolate("%(prop:SCIPION_HOME)s/software/em/eman-2.12")}
@@ -99,8 +104,12 @@ except ImportError:
     sdevel_pyem_gitRepoURL = ("-b %s https://github.com/scipion-em/scipion-em.git"
                         % branchsDict[SDEVEL_GROUP_ID].get(SCIPION_EM_BUILD_ID, "devel"))
 
+    sdevelXmipp_gitRepoURL = ("-b %s https://github.com/I2PC/scipion-em-xmipp.git"
+                         % branchsDict[SDEVEL_GROUP_ID].get(XMIPP_BUILD_ID, "devel"))
+
 
     SCIPION_ENV_ACTIVATION = "source /home/buildbot/miniconda3/etc/profile.d/conda.sh ; conda activate scipion_python3"
+    SCIPION_CMD = "python -m scipion"
 
     # builder prefixes
     SCIPION_INSTALL_PREFIX = 'Install_Scipion_'

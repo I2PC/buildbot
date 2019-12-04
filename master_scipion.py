@@ -22,6 +22,15 @@ with open(settings.PLUGINS_JSON_FILE) as f:
     xmippPluginData = scipionPlugins.pop('scipion-em-xmipp')
     locscalePluginData = scipionPlugins.pop("scipion-em-locscale")
 
+
+with open(settings.SDEVELPLUGINS_JSON_FILE) as f:
+    # read in order, since we have taken into account dependencies in
+    # between plugins when completing the json file
+    scipionSdevelPlugins = json.load(f, object_pairs_hook=OrderedDict)
+    xmippSdevelPluginData = scipionSdevelPlugins.pop('scipion-em-xmipp')
+
+
+
 # Remove config/scipion.conf
 removeScipionConf = ShellCommand(
     command=['rm', '-f', 'config/scipion.conf'],
