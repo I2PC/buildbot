@@ -1,4 +1,5 @@
 import re
+import settings
 
 
 # *****************************************************************************
@@ -91,10 +92,17 @@ class GenerateStagesCommand(buildstep.ShellMixin, steps.BuildStep):
             env = {}
             env.update(self.env)
             for stage in self.extract_stages(self.observer.getStdout()):
-
                 env.update(self.stageEnvs.get(stage, {}))
+                command = self.stagePrefix + stage.strip().split()
+
+                if settings.SCIPION_CMD in self.stagePrefix:
+                    command = ["bash", "-c",
+                               settings.SCIPION_ENV_ACTIVATION +
+                               " ; " + "python -m scipion test" + " " +
+                               stage.strip()]
+
                 testShellCommands.append(steps.ShellCommand(
-                    command=self.stagePrefix + stage.strip().split(),
+                    command=command,
                     name=stage,
                     description="Testing %s" % self.rootName + stage.split('.')[-1],
                     descriptionDone=self.rootName + stage.split('.')[-1],

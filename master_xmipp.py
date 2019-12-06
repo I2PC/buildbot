@@ -369,9 +369,10 @@ def xmippBundleFactory(groupId):
                  "SCIPION_LOCAL_CONFIG": util.Property("SCIPION_LOCAL_CONFIG"),
                  "LD_LIBRARY_PATH": LD_LIBRARY_PATH}))
 
+        xmippTestShowcmd = ["bash", "-c", settings.SCIPION_ENV_ACTIVATION +
+                            " ; " + "./xmipp test --show"]
         xmippTestSteps.addStep(
-            GenerateStagesCommand(command=["bash", "-c",
-                                           settings.SCIPION_ENV_ACTIVATION + " ; " + "./xmipp test --show"],
+            GenerateStagesCommand(command=xmippTestShowcmd,
                                   name="Generate test stages for Xmipp programs",
                                   description="Generating test stages for Xmipp programs",
                                   descriptionDone="Generate test stages for Xmipp programs",
@@ -380,7 +381,7 @@ def xmippBundleFactory(groupId):
                                   env=util.Property('env')))
 
         # xmippTestSteps.addStep(
-        #     GenerateStagesCommand(command=["./xmipp", "test", "--show"],
+        #     GenerateStagesCommand(command=xmippTestShowcmd,
         #                           name="Generate test stages for Xmipp functions",
         #                           description="Generating test stages for Xmipp functions",
         #                           descriptionDone="Generate test stages for Xmipp functions",
@@ -398,11 +399,10 @@ def xmippTestFactory(groupId):
     xmippTestSteps = util.BuildFactory()
     xmippTestSteps.workdir = util.Property('SCIPION_HOME')
     xmippTestSteps.addStep(ShellCommand(command=['echo', 'SCIPION_HOME: ', util.Property('SCIPION_HOME')],
-                                        name='Echo scipion home',
-                                        description='Echo scipion home',
-                                        descriptionDone='Echo scipion home',
-                                        timeout=timeOutShort
-                                        ))
+                     name='Echo scipion home',
+                     description='Echo scipion home',
+                     descriptionDone='Echo scipion home',
+                     timeout=timeOutShort))
     # add TestRelionExtractStreaming manually because it needs eman 2.12
     gpucorrclassifiers = ["xmipp3.tests.test_protocols_gpuCorr_classifier.TestGpuCorrClassifier",
                           "xmipp3.tests.test_protocols_gpuCorr_semiStreaming.TestGpuCorrSemiStreaming",
@@ -422,16 +422,18 @@ def xmippTestFactory(groupId):
                                   stageEnvs=envs))
 
     else:
-        testCmd = (settings.SCIPION_ENV_ACTIVATION + ";" + settings.SCIPION_CMD + ";")
+
+        xmippTestShowcmd = ["bash", "-c", settings.SCIPION_ENV_ACTIVATION +
+                            " ; " + "python -m scipion test --show --grep xmipp3 --mode onlyclasses"]
+
         xmippTestSteps.addStep(
             GenerateStagesCommand(
-                command=[settings.SCIPION_CMD, "test", "--show", "--grep", "xmipp3",
-                         "--mode", "onlyclasses"],
+                command=xmippTestShowcmd,
                 name="Generate Scipion test stages for Xmipp",
                 description="Generating Scipion test stages for Xmipp",
                 descriptionDone="Generate Scipion test stages for Xmipp",
                 haltOnFailure=False,
-                stagePrefix=["./scipion", "test"],
+                stagePrefix=[settings.SCIPION_CMD, "test"],
                 targetTestSet='xmipp3',
                 stageEnvs=envs))
 
@@ -447,7 +449,8 @@ def getXmippBuilders(groupId):
     props = {'slackChannel': XMIPP_SLACK_CHANNEL}
     env = {
         "SCIPION_IGNORE_PYTHONPATH": "True",
-        "SCIPION_LOCAL_CONFIG": util.Property("SCIPION_LOCAL_CONFIG")
+        "SCIPION_LOCAL_CONFIG": util.Property("SCIPION_LOCAL_CONFIG"),
+        "SCIPION_HOME": util.Property('SCIPION_HOME')
     }
     cudaEnv = {'PATH': ["/usr/local/cuda/bin", "${PATH}"]}
     cudaEnv.update(env)
@@ -522,7 +525,11 @@ def getXmippBuilders(groupId):
                           env=installEnv,
                           properties=props)
         )
-        env['SCIPION_HOME'] = util.Property('SCIPION_HOME')
+        env = {
+            "SCIPION_IGNORE_PYTHONPATH": "True",
+            "SCIPION_LOCAL_CONFIG": util.Property("SCIPION_LOCAL_CONFIG"),
+            "SCIPION_HOME": util.Property('SCIPION_HOME')
+        }
         builders.append(
             BuilderConfig(name=XMIPP_TESTS + groupId,
                           tags=[groupId],

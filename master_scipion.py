@@ -27,7 +27,7 @@ with open(settings.SDEVELPLUGINS_JSON_FILE) as f:
     # read in order, since we have taken into account dependencies in
     # between plugins when completing the json file
     scipionSdevelPlugins = json.load(f, object_pairs_hook=OrderedDict)
-    xmippSdevelPluginData = scipionSdevelPlugins.pop('scipion-em-xmipp')
+    locscaleSdevelPluginData = scipionSdevelPlugins.pop("scipion-em-locscale")
 
 
 
@@ -475,37 +475,45 @@ def scipionTestFactory(groupId):
 
     emanVar = settings.EMAN212 if groupId == settings.PROD_GROUP_ID else settings.EMAN23
 
-    # add TestRelionExtractStreaming manually because it needs eman 2.12
-    wfRelionExtractStreaming = 'pyworkflow.tests.em.workflows.test_workflow_streaming.TestRelionExtractStreaming'
+    if groupId != settings.SDEVEL_GROUP_ID:
+        # add TestRelionExtractStreaming manually because it needs eman 2.12
+        wfRelionExtractStreaming = 'pyworkflow.tests.em.workflows.test_workflow_streaming.TestRelionExtractStreaming'
 
-    # gen stages
-    genStagesCmd = ["./scipion", "test", "--show", "--grep", "pyworkflow", "--mode", "onlyclasses"]
-    scipionTestSteps.addStep(
-        GenerateStagesCommand(command=genStagesCmd,
-                              name="Generate Scipion test stages",
-                              description="Generating Scipion test stages",
-                              descriptionDone="Generate Scipion test stages",
-                              haltOnFailure=False,
-                              targetTestSet='pyworkflow',
-                              stagePrefix=["./scipion", "test"],
-                              blacklist=settings.SCIPION_TESTS_BLACKLIST,
-                              stageEnvs={wfRelionExtractStreaming: emanVar}))
+        # gen stages
+        genStagesCmd = ["./scipion", "test", "--show", "--grep", "pyworkflow", "--mode", "onlyclasses"]
+        scipionTestSteps.addStep(
+            GenerateStagesCommand(command=genStagesCmd,
+                                  name="Generate Scipion test stages",
+                                  description="Generating Scipion test stages",
+                                  descriptionDone="Generate Scipion test stages",
+                                  haltOnFailure=False,
+                                  targetTestSet='pyworkflow',
+                                  stagePrefix=["./scipion", "test"],
+                                  blacklist=settings.SCIPION_TESTS_BLACKLIST,
+                                  stageEnvs={wfRelionExtractStreaming: emanVar}))
 
-    for pwLongTest in settings.SCIPION_LONG_TESTS:  # execute long tests at the end
-        if pwLongTest.endswith("TestBPV"):
+        for pwLongTest in settings.SCIPION_LONG_TESTS:  # execute long tests at the end
+            if pwLongTest.endswith("TestBPV"):
+                scipionTestSteps.addStep(ShellCommand(command=['./scipion', 'test', pwLongTest],
+                                                      name=pwLongTest,
+                                                      description='Testing %s' % pwLongTest.split('.')[-1],
+                                                      descriptionDone=pwLongTest.split('.')[-1],
+                                                      timeout=settings.timeOutExecute,
+                                                      env=emanVar))
+                continue
+
             scipionTestSteps.addStep(ShellCommand(command=['./scipion', 'test', pwLongTest],
                                                   name=pwLongTest,
                                                   description='Testing %s' % pwLongTest.split('.')[-1],
                                                   descriptionDone=pwLongTest.split('.')[-1],
-                                                  timeout=settings.timeOutExecute,
-                                                  env=emanVar))
-            continue
-
-        scipionTestSteps.addStep(ShellCommand(command=['./scipion', 'test', pwLongTest],
-                                              name=pwLongTest,
-                                              description='Testing %s' % pwLongTest.split('.')[-1],
-                                              descriptionDone=pwLongTest.split('.')[-1],
-                                              timeout=settings.timeOutExecute))
+                                                  timeout=settings.timeOutExecute))
+    else:
+        scipionTestSteps.addStep(ShellCommand(
+            command=['echo', 'SCIPION_HOME: ', util.Property('SCIPION_HOME')],
+            name='Echo scipion home',
+            description='Echo scipion home',
+            descriptionDone='Echo scipion home',
+            timeout=settings.timeOutExecute))
 
     return scipionTestSteps
 
@@ -513,44 +521,57 @@ def scipionTestFactory(groupId):
 # *****************************************************************************
 #                         PLUGIN FACTORY
 # *****************************************************************************
-def pluginFactory(pluginName, factorySteps=None, shortname=None,
+def pluginFactory(groupId, pluginName, factorySteps=None, shortname=None,
                   doInstall=True, extraBinaries='', doTest=True):
     factorySteps = factorySteps or util.BuildFactory()
     factorySteps.workdir = util.Property('SCIPION_HOME')
     shortName = shortname or str(pluginName.rsplit('-', 1)[-1])  # todo: get module names more properly?
-    if doInstall:
-        factorySteps.addStep(ShellCommand(command=['./scipion', 'installp', '-p', pluginName, '-j', '8'],
-                                          name='Install plugin %s' % shortName,
-                                          description='Install plugin %s' % shortName,
-                                          descriptionDone='Installed plugin %s' % shortName,
-                                          timeout=settings.timeOutInstall,
-                                          haltOnFailure=True))
 
-        factorySteps.addStep(ShellCommand(command=['./scipion', 'python', 'pyworkflow/install/inspect-plugins.py',
-                                                   shortName],
-                                          name='Inspect plugin %s' % shortName,
-                                          description='Inspect plugin %s' % shortName,
-                                          descriptionDone='Inspected plugin %s' % shortName,
-                                          timeout=settings.timeOutInstall,
-                                          haltOnFailure=False))
-    if extraBinaries:
-        extraBinaries = [extraBinaries] if isinstance(extraBinaries, str) else extraBinaries
-        for binary in extraBinaries:
-            factorySteps.addStep(ShellCommand(command=['./scipion', 'installb', binary, '-j', '8'],
-                                              name='Install extra package %s' % binary,
-                                              description='Install extra package  %s' % binary,
-                                              descriptionDone='Installed extra package  %s' % binary,
+    if groupId != settings.SDEVEL_GROUP_ID:
+        if doInstall:
+            factorySteps.addStep(ShellCommand(command=['./scipion', 'installp', '-p', pluginName, '-j', '8'],
+                                              name='Install plugin %s' % shortName,
+                                              description='Install plugin %s' % shortName,
+                                              descriptionDone='Installed plugin %s' % shortName,
                                               timeout=settings.timeOutInstall,
                                               haltOnFailure=True))
-    if doTest:
-        factorySteps.addStep(
-            GenerateStagesCommand(command=["./scipion", "test", "--show", "--grep", shortName, '--mode', 'onlyclasses'],
-                                  name="Generate Scipion test stages for %s" % shortName,
-                                  description="Generating Scipion test stages for %s" % shortName,
-                                  descriptionDone="Generate Scipion test stages for %s" % shortName,
-                                  stagePrefix=["./scipion", "test"],
-                                  haltOnFailure=False,
-                                  targetTestSet=shortName))
+
+            factorySteps.addStep(ShellCommand(command=['./scipion', 'python', 'pyworkflow/install/inspect-plugins.py',
+                                                       shortName],
+                                              name='Inspect plugin %s' % shortName,
+                                              description='Inspect plugin %s' % shortName,
+                                              descriptionDone='Inspected plugin %s' % shortName,
+                                              timeout=settings.timeOutInstall,
+                                              haltOnFailure=False))
+        if extraBinaries:
+            extraBinaries = [extraBinaries] if isinstance(extraBinaries, str) else extraBinaries
+            for binary in extraBinaries:
+                factorySteps.addStep(ShellCommand(command=['./scipion', 'installb', binary, '-j', '8'],
+                                                  name='Install extra package %s' % binary,
+                                                  description='Install extra package  %s' % binary,
+                                                  descriptionDone='Installed extra package  %s' % binary,
+                                                  timeout=settings.timeOutInstall,
+                                                  haltOnFailure=True))
+        if doTest:
+            factorySteps.addStep(
+                GenerateStagesCommand(command=["./scipion", "test", "--show", "--grep", shortName, '--mode', 'onlyclasses'],
+                                      name="Generate Scipion test stages for %s" % shortName,
+                                      description="Generating Scipion test stages for %s" % shortName,
+                                      descriptionDone="Generate Scipion test stages for %s" % shortName,
+                                      stagePrefix=["./scipion", "test"],
+                                      haltOnFailure=False,
+                                      targetTestSet=shortName))
+    else:
+        installCmd = (settings.SCIPION_CMD + ' installp -p ' + pluginName +
+                      ' -j ' + '8')
+        factorySteps.addStep(ScipionCommandStep(
+            command=installCmd,
+            name='Install plugin %s' % shortName,
+            description='Install plugin %s' % shortName,
+            descriptionDone='Installed plugin %s' % shortName,
+            timeout=settings.timeOutInstall,
+            haltOnFailure=True))
+
 
     return factorySteps
 
@@ -674,7 +695,7 @@ def getLocscaleBuilder(groupId, env):
     return BuilderConfig(name="%s_%s" % (name, groupId),
                          tags=[groupId, name],
                          workernames=[settings.WORKER],
-                         factory=pluginFactory('scipion-em-locscale', factorySteps=builderFactory),
+                         factory=pluginFactory(groupId, 'scipion-em-locscale', factorySteps=builderFactory),
                          workerbuilddir=groupId,
                          properties={'slackChannel': locscalePluginData.get('slackChannel', "")},
                          env=locscaleEnv)
@@ -739,7 +760,7 @@ def getScipionBuilders(groupId):
                 BuilderConfig(name="%s_%s" % (moduleName, groupId),
                               tags=tags,
                               workernames=[settings.WORKER],
-                              factory=pluginFactory(plugin, shortname=moduleName, doTest=hastests),
+                              factory=pluginFactory(groupId, plugin, shortname=moduleName, doTest=hastests),
                               workerbuilddir=groupId,
                               properties={'slackChannel': scipionPlugins[plugin].get('slackChannel', "")},
                               env=env)
@@ -767,6 +788,16 @@ def getScipionBuilders(groupId):
                           properties={
                               "slackChannel": settings.SCIPION_SLACK_CHANNEL},
                           env=env))
+        scipionBuilders.append(
+            BuilderConfig(name=settings.SCIPION_TESTS_PREFIX + groupId,
+                          tags=[groupId],
+                          workernames=[settings.WORKER],
+                          factory=scipionTestFactory(groupId),
+                          workerbuilddir=groupId,
+                          properties={
+                              'slackChannel': settings.SCIPION_SLACK_CHANNEL},
+                          env=env)
+        )
         env['SCIPION_PLUGIN_JSON'] = 'plugins.json'
         scipionBuilders.append(
             BuilderConfig(name=settings.CLEANUP_PREFIX + groupId,
@@ -779,6 +810,20 @@ def getScipionBuilders(groupId):
                           env=env)
         )
 
+        # for plugin, pluginDict in scipionSdevelPlugins.items():
+        #     moduleName = str(pluginDict.get("name", plugin.rsplit('-', 1)[-1]))
+        #     tags = [groupId, moduleName]
+        #     hastests = not pluginDict.get("NO_TESTS", False)
+        #     scipionBuilders.append(
+        #         BuilderConfig(name="%s_%s" % (moduleName, groupId),
+        #                       tags=tags,
+        #                       workernames=[settings.WORKER],
+        #                       factory=pluginFactory(groupId, plugin, shortname=moduleName, doTest=hastests),
+        #                       workerbuilddir=groupId,
+        #                       properties={'slackChannel': scipionPlugins[plugin].get('slackChannel', "")},
+        #                       env=env)
+        #     )
+
 
     return scipionBuilders
 
@@ -789,6 +834,7 @@ def getScipionBuilders(groupId):
 def getScipionSchedulers(groupId):
     if groupId == settings.SDEVEL_GROUP_ID:
         scipionSchedulerNames = [settings.SCIPION_INSTALL_PREFIX + groupId,
+                                 settings.SCIPION_TESTS_PREFIX + groupId,
                                  settings.CLEANUP_PREFIX + groupId]
         schedulers = []
         for name in scipionSchedulerNames:

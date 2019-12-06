@@ -5,5 +5,12 @@
         "name": "appion",
         "pluginSourceUrl": "https://github.com/scipion-em/scipion-em-appion.git",
         "slackChannel":"eman"
-    }
+    },
+  "scipion-em-locscale": {
+        "pipName": "scipion-em-locscale",
+        "id": 2,
+        "name": "locscale",
+        "pluginSourceUrl": "https://github.com/scipion-em/scipion-em-locscale.git",
+        "slackChannel":"eman"
+    },
 }
