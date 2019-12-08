@@ -175,7 +175,7 @@
         "id": 32,
         "name": "xmipp",
         "pluginSourceUrl": "https://github.com/I2PC/xmipp.git@devel",
-        "slackChannel": "locscale"
+        "slackChannel": "xmipp"
     }
 }
 

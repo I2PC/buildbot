@@ -27,6 +27,7 @@ with open(settings.SDEVELPLUGINS_JSON_FILE) as f:
     # read in order, since we have taken into account dependencies in
     # between plugins when completing the json file
     scipionSdevelPlugins = json.load(f, object_pairs_hook=OrderedDict)
+    xmippSdevelPluginData = scipionSdevelPlugins.pop('scipion-em-xmipp')
     locscaleSdevelPluginData = scipionSdevelPlugins.pop("scipion-em-locscale")
 
 
@@ -276,8 +277,7 @@ def addSDevelScipionGitAndConfigSteps(factorySteps, groupId):
     """ The initial steps to sdevel builders.
          1. Remove scipion-em, scipion-app and scipion-pyworkflow to get the last version
          2. git pull scipion-app, scipion-pyworkflow, scipion-em.
-         3. remove scipion.config files.
-         4. set notify at False
+         3. Create the software/em dolder
     """
     factorySteps.addStep(removeScipionModules)
 
@@ -335,6 +335,7 @@ setScipionEnv = ShellCommand(command=settings.SCIPION_ENV_ACTIVATION.split(),
 installSdevelScipionPyworkflow = 'cd scipion-pyworkflow ; python -m pip install -e .'
 installSdevelScipionEM = 'cd scipion-em ; python -m pip install -e .'
 installSdevelScipionApp = 'cd scipion-app ; python -m pip install -e .'
+createSoftwareEM = 'mkdir -p software/em'
 
 removeScipionModules = ShellCommand(
     command=['bash', '-c',
@@ -347,6 +348,7 @@ removeScipionModules = ShellCommand(
     haltOnFailure=False)
 
 sdevelScipionConfig = 'python -m scipion config --notify --overwrite'
+
 
 class ScipionCommandStep(ShellCommand):
     def __init__(self, command='', name='', description='',
@@ -443,6 +445,18 @@ def installSDevelScipionFactory(groupId):
                            descriptionDone='Install Scipion-pyworkflow',
                            ))
 
+    installScipionFactorySteps.addStep(
+        ShellCommand(command=["bash", "-c", createSoftwareEM],
+                           name='Creating software/em folder...',
+                           description='Creating software/em folder in SCIPION_HOME',
+                           descriptionDone='Creating software/em folder',
+                           ))
+
+
+    installScipionFactorySteps.addStep(
+        steps.JSONStringDownload(dict(scipionSdevelPlugins, **{"scipion-em-locscale": locscaleSdevelPluginData}),
+            workerdest="plugins.json"))
+
     installScipionFactorySteps.addStep(removeScipionConf)
     installScipionFactorySteps.addStep(removeHomeConfig)
     installScipionFactorySteps.addStep(ScipionCommandStep(command=sdevelScipionConfig,
@@ -450,8 +464,6 @@ def installSDevelScipionFactory(groupId):
                                                           description='Create installation configuration files',
                                                           descriptionDone='Scipion config',
                                                           haltOnFailure=True))
-
-
 
     installScipionFactorySteps.addStep(setScipionUserData)
     installScipionFactorySteps.addStep(setNotifyAtFalse)
@@ -562,16 +574,40 @@ def pluginFactory(groupId, pluginName, factorySteps=None, shortname=None,
                                       haltOnFailure=False,
                                       targetTestSet=shortName))
     else:
-        installCmd = (settings.SCIPION_CMD + ' installp -p ' + pluginName +
-                      ' -j ' + '8')
-        factorySteps.addStep(ScipionCommandStep(
-            command=installCmd,
-            name='Install plugin %s' % shortName,
-            description='Install plugin %s' % shortName,
-            descriptionDone='Installed plugin %s' % shortName,
-            timeout=settings.timeOutInstall,
-            haltOnFailure=True))
 
+        if doInstall:
+            installCmd = (settings.SCIPION_CMD + ' installp -p ' + pluginName +
+                          ' -j ' + '8')
+
+            factorySteps.addStep(ScipionCommandStep(
+                command=installCmd,
+                name='Install plugin %s' % shortName,
+                description='Install plugin %s' % shortName,
+                descriptionDone='Installed plugin %s' % shortName,
+                timeout=settings.timeOutInstall,
+                haltOnFailure=True))
+
+        if extraBinaries:
+            extraBinaries = [extraBinaries] if isinstance(extraBinaries, str) else extraBinaries
+            for binary in extraBinaries:
+                factorySteps.addStep(ScipionCommandStep(command=('%s installb %s -j 8') %(settings.SCIPION_CMD, binary),
+                                                  name='Install extra package %s' % binary,
+                                                  description='Install extra package  %s' % binary,
+                                                  descriptionDone='Installed extra package  %s' % binary,
+                                                  timeout=settings.timeOutInstall,
+                                                  haltOnFailure=True))
+        if doTest:
+            pluginsTestShowcmd = ["bash", "-c", settings.SCIPION_ENV_ACTIVATION +
+                                " ; " + "python -m scipion test --show --grep " + shortName + " --mode onlyclasses"]
+
+            factorySteps.addStep(
+                GenerateStagesCommand(command=pluginsTestShowcmd,
+                                      name="Generate Scipion test stages for %s" % shortName,
+                                      description="Generating Scipion test stages for %s" % shortName,
+                                      descriptionDone="Generate Scipion test stages for %s" % shortName,
+                                      stagePrefix=[settings.SCIPION_CMD, "test"],
+                                      haltOnFailure=False,
+                                      targetTestSet=shortName))
 
     return factorySteps
 
@@ -810,20 +846,20 @@ def getScipionBuilders(groupId):
                           env=env)
         )
 
-        # for plugin, pluginDict in scipionSdevelPlugins.items():
-        #     moduleName = str(pluginDict.get("name", plugin.rsplit('-', 1)[-1]))
-        #     tags = [groupId, moduleName]
-        #     hastests = not pluginDict.get("NO_TESTS", False)
-        #     scipionBuilders.append(
-        #         BuilderConfig(name="%s_%s" % (moduleName, groupId),
-        #                       tags=tags,
-        #                       workernames=[settings.WORKER],
-        #                       factory=pluginFactory(groupId, plugin, shortname=moduleName, doTest=hastests),
-        #                       workerbuilddir=groupId,
-        #                       properties={'slackChannel': scipionPlugins[plugin].get('slackChannel', "")},
-        #                       env=env)
-        #     )
-
+        for plugin, pluginDict in scipionSdevelPlugins.items():
+            moduleName = str(pluginDict.get("name", plugin.rsplit('-', 1)[-1]))
+            tags = [groupId, moduleName]
+            hastests = not pluginDict.get("NO_TESTS", False)
+            scipionBuilders.append(
+                BuilderConfig(name="%s_%s" % (moduleName, groupId),
+                              tags=tags,
+                              workernames=[settings.WORKER],
+                              factory=pluginFactory(groupId, plugin, shortname=moduleName, doTest=hastests),
+                              workerbuilddir=groupId,
+                              properties={'slackChannel': scipionSdevelPlugins[plugin].get('slackChannel', "")},
+                              env=env)
+            )
+        scipionBuilders.append(getLocscaleBuilder(groupId, env))
 
     return scipionBuilders
 
@@ -843,6 +879,22 @@ def getScipionSchedulers(groupId):
             schedulers.append(
                 ForceScheduler(name='%s%s' % (settings.FORCE_BUILDER_PREFIX, name),
                                builderNames=[name]))
+
+        plugins = {}
+        plugins.update(scipionSdevelPlugins)
+        plugins.update({"scipion-em-locscale": locscaleSdevelPluginData})
+        for plugin, pluginDict in plugins.items():
+            moduleName = str(pluginDict.get("name", plugin.rsplit('-', 1)[-1]))
+            schedulers.append(
+                triggerable.Triggerable(name="%s_%s" % (moduleName, groupId),
+                                        builderNames=[
+                                            "%s_%s" % (moduleName, groupId)]))
+
+            forceSchedulerName = '%s%s_%s' % (
+            settings.FORCE_BUILDER_PREFIX, moduleName, groupId)
+            schedulers.append(
+                ForceScheduler(name=forceSchedulerName,
+                               builderNames=["%s_%s" % (moduleName, groupId)]))
 
     else:
         scipionSchedulerNames = [settings.SCIPION_INSTALL_PREFIX + groupId,

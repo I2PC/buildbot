@@ -467,7 +467,7 @@ def getXmippBuilders(groupId):
                 BuilderConfig(name=XMIPP_INSTALL_PREFIX + groupId,
                               workernames=[WORKER],
                               tags=[groupId],
-                              factory=pluginFactory('scipion-em-xmipp', shortname='xmipp3', doTest=False,
+                              factory=pluginFactory(groupId, 'scipion-em-xmipp', shortname='xmipp3', doTest=False,
                                                     extraBinaries=['xmippSrc', 'deepLearningToolkit', 'nma']),
                               workerbuilddir=groupId,
                               env=env,
@@ -478,7 +478,7 @@ def getXmippBuilders(groupId):
                 BuilderConfig(name="%s%s" % (XMIPP_TESTS, groupId),
                               tags=[groupId, XMIPP_TESTS],
                               workernames=[WORKER],
-                              factory=pluginFactory('scipion-em-xmipp', shortname='xmipp3', doInstall=False),
+                              factory=pluginFactory(groupId,'scipion-em-xmipp', shortname='xmipp3', doInstall=False),
                               workerbuilddir=groupId,
                               properties={'slackChannel': xmippPluginData.get('slackChannel', "")},
                               env=env)
