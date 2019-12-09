@@ -176,5 +176,19 @@
         "name": "xmipp",
         "pluginSourceUrl": "https://github.com/I2PC/xmipp.git@python3_migration",
         "slackChannel": "xmipp"
+    },
+  "scipion-pyworkflow": {
+        "pipName": "scipion-pyworkflow",
+        "id": 32,
+        "name": "pyworkflow",
+        "pluginSourceUrl": "https://github.com/scipion-em/scipion-pyworkflow.git@python3_migration",
+        "slackChannel": "pyworkflow"
+    },
+  "scipion-em": {
+        "pipName": "scipion-em",
+        "id": 32,
+        "name": "em",
+        "pluginSourceUrl": "https://github.com/scipion-em/scipion-em.git@python3_migration",
+        "slackChannel": "xmipp"
     }
 }

@@ -29,6 +29,8 @@ with open(settings.SDEVELPLUGINS_JSON_FILE) as f:
     scipionSdevelPlugins = json.load(f, object_pairs_hook=OrderedDict)
     xmippSdevelPluginData = scipionSdevelPlugins.pop('scipion-em-xmipp')
     locscaleSdevelPluginData = scipionSdevelPlugins.pop("scipion-em-locscale")
+    pyworkflowPlugin = scipionSdevelPlugins.pop("scipion-pyworkflow")
+    pwemPlugin = scipionSdevelPlugins.pop("scipion-em")
 
 
 
@@ -526,6 +528,24 @@ def scipionTestFactory(groupId):
             description='Echo scipion home',
             descriptionDone='Echo scipion home',
             timeout=settings.timeOutExecute))
+
+        shortNames = ["pwem", "pyworkflow"]
+
+        for shortName in shortNames:
+
+            pluginsTestShowcmd = ["bash", "-c", settings.SCIPION_ENV_ACTIVATION +
+                                " ; " + "python -m scipion test --show --grep " + shortName + " --mode onlyclasses"]
+
+            scipionTestSteps.addStep(
+                GenerateStagesCommand(command=pluginsTestShowcmd,
+                                      name="Generate Scipion test stages for %s" % shortName,
+                                      description="Generating Scipion test stages for %s" % shortName,
+                                      descriptionDone="Generate Scipion test stages for %s" % shortName,
+                                      stagePrefix=[settings.SCIPION_CMD, "test"],
+                                      haltOnFailure=False,
+                                      targetTestSet=shortName))
+
+
 
     return scipionTestSteps
 
