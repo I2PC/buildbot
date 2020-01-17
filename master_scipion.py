@@ -609,6 +609,17 @@ def pluginFactory(groupId, pluginName, factorySteps=None, shortname=None,
                 timeout=settings.timeOutInstall,
                 haltOnFailure=True))
 
+            inspectCmd = ('python ' + settings.SDEVEL_SCIPION_HOME + '/' +
+                          settings.SCIPION_APP_BUILD_ID +
+                          '/scipion/install/inspect-plugins.py ' + shortName)
+
+            factorySteps.addStep(ScipionCommandStep(command=inspectCmd,
+                                              name='Inspect plugin %s' % shortName,
+                                              description='Inspect plugin %s' % shortName,
+                                              descriptionDone='Inspected plugin %s' % shortName,
+                                              timeout=settings.timeOutInstall,
+                                              haltOnFailure=False))
+
         if extraBinaries:
             extraBinaries = [extraBinaries] if isinstance(extraBinaries, str) else extraBinaries
             for binary in extraBinaries:

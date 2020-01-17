@@ -112,13 +112,6 @@
           "pluginSourceUrl": "https://github.com/scipion-em/scipion-em-simple.git@python3_migration",
           "slackChannel":"simple"
       },
-  "scipion-em-powerfit": {
-          "pipName": "scipion-em-powerfit",
-          "id": 31,
-          "name": "powerfit_scipion",
-          "pluginSourceUrl": "https://github.com/scipion-em/scipion-em-powerfit.git@devel",
-          "slackChannel": "powerfit"
-      },
   "scipion-em-nysbc": {
           "pipName": "scipion-em-nysbc",
           "id": 31,
