@@ -50,9 +50,9 @@ except ImportError:
                        SCIPION_BUILD_ID: 'master'
                    },
                    SDEVEL_GROUP_ID: {
-                       SCIPION_APP_BUILD_ID: 'devel',
-                       SCIPION_EM_BUILD_ID: 'devel',
-                       SCIPION_PYWORKFLOW_BUILD_ID: 'devel',
+                       SCIPION_APP_BUILD_ID: 'devel-fixes',
+                       SCIPION_EM_BUILD_ID: 'devel-fixes',
+                       SCIPION_PYWORKFLOW_BUILD_ID: 'devel-fixes',
                        XMIPP_BUILD_ID: 'python3_migration'
 
                    }}
