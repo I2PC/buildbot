@@ -73,7 +73,7 @@ class GenerateStagesCommand(buildstep.ShellMixin, steps.BuildStep):
                     if len(steps) == 3 or importErrorTxt in stage:
                         if steps[-1].split('.', 1)[0] == self.targetTestSet:
                             if steps[0] == mainProgram:
-                                if (steps[1]) and (steps[1] == "test"):
+                                if (steps[1]) and (steps[1] == "tests"):
                                     if steps[-1] and steps[-1] not in self.blacklist:
                                         stages.append(steps[-1])
         return stages

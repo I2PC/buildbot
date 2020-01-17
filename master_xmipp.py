@@ -278,6 +278,18 @@ def installXmippFactory(groupId):
             steps.SetPropertyFromCommand(command='echo $PWD',
                                          property='XMIPP_HOME'))
 
+        linkToSoftwareEm = ['ln', '-fs',
+                            util.Interpolate("%(prop:XMIPP_HOME)s/build"),
+                            util.Interpolate(
+                                '%(prop:SCIPION_HOME)s/software/em/xmipp')]
+        installXmippSteps.addStep(
+            ShellCommand(command=linkToSoftwareEm,
+                         name='Link Xmipp build on software/em',
+                         description='Make a link to xmipp/build on software/em',
+                         descriptionDone='Xmipp build linked to Scipion',
+                         timeout=timeOutShort)
+        )
+
         # Install xmipp plugin
         installXmippPluginCmd = (settings.SCIPION_CMD + ' installp -p ' +
                                  settings.SDEVEL_XMIPP_HOME +
@@ -293,17 +305,6 @@ def installXmippFactory(groupId):
                          workdir=SCIPION_BUILD_ID)
         )
 
-        linkToSoftwareEm = ['ln', '-fs',
-                            util.Interpolate("%(prop:XMIPP_HOME)s/build"),
-                            util.Interpolate(
-                                '%(prop:SCIPION_HOME)s/software/em/xmipp')]
-        installXmippSteps.addStep(
-            ShellCommand(command=linkToSoftwareEm,
-                         name='Link Xmipp build on software/em',
-                         description='Make a link to xmipp/build on software/em',
-                         descriptionDone='Xmipp build linked to Scipion',
-                         timeout=timeOutShort)
-        )
 
         # installDeepLearning = (settings.SCIPION_CMD + ' installb deepLearningToolkit')
         # installXmippSteps.addStep(

@@ -277,7 +277,7 @@ def addScipionGitAndConfigSteps(factorySteps, groupId):
 
 def addSDevelScipionGitAndConfigSteps(factorySteps, groupId):
     """ The initial steps to sdevel builders.
-         1. Remove scipion-em, scipion-app and scipion-pyworkflow to get the last version
+         1. Remove scipion-em, scipion-app and scipion-pyworkflow, software-em to get the last version
          2. git pull scipion-app, scipion-pyworkflow, scipion-em.
          3. Create the software/em dolder
     """
@@ -343,7 +343,9 @@ removeScipionModules = ShellCommand(
     command=['bash', '-c',
              'rm -rf scipion-em ; '
              'rm -rf scipion-pyworkflow ; '
-             'rm -rf scipion-app'],
+             'rm -rf scipion-app ; '
+             'rm -rf software ; '
+             ],
     name='Clean scipion modules',
     description='Delete the scipion modules to get the last versions',
     descriptionDone='Remove EM scipion modules',
@@ -617,8 +619,9 @@ def pluginFactory(groupId, pluginName, factorySteps=None, shortname=None,
                                                   timeout=settings.timeOutInstall,
                                                   haltOnFailure=True))
         if doTest:
-            pluginsTestShowcmd = ["bash", "-c", settings.SCIPION_ENV_ACTIVATION +
-                                " ; " + "python -m scipion test --show --grep " + shortName + " --mode onlyclasses"]
+            pluginsTestShowcmd = ['bash', '-c', settings.SCIPION_ENV_ACTIVATION +
+                                  ' ; ' + 'python -m scipion test --show --grep ' +
+                                  shortName + ' --mode onlyclasses']
 
             factorySteps.addStep(
                 GenerateStagesCommand(command=pluginsTestShowcmd,
@@ -859,7 +862,7 @@ def getScipionBuilders(groupId):
             BuilderConfig(name=settings.CLEANUP_PREFIX + groupId,
                           tags=[groupId],
                           workernames=[settings.WORKER],
-                          factory=cleanUpFactory(),
+                          factory=cleanUpFactory(rmXmipp=True),
                           workerbuilddir=groupId,
                           properties={
                               'slackChannel': settings.SCIPION_SLACK_CHANNEL},
