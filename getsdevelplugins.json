@@ -155,7 +155,7 @@
     "pipName": "scipion-em-localrec",
           "id": 30,
           "name": "localrec",
-          "pluginSourceUrl": "https://github.com/scipion-em/scipion-em-localrec.git@python3_migration"
+          "pluginSourceUrl": "https://github.com/scipion-em/scipion-em-localrec.git@python3-migration"
   },
   "scipion-em-sphire": {
     "pipName": "scipion-em-sphire",
