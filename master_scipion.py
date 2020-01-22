@@ -318,7 +318,7 @@ installScipion = ShellCommand(command=['./scipion', 'install', '-j', '8'],
                               haltOnFailure=True)
 
 
-# Command to activate the Snaconda virtual environment
+# Command to activate the Anaconda virtual environment
 EnvActivation = ShellCommand(command=settings.CONDA_ACTIVATION_CMD.split(),
                               name='Conda activation command',
                               description='Conda activation command',
@@ -353,6 +353,8 @@ removeScipionModules = ShellCommand(
 
 sdevelScipionConfig = 'python -m scipion config --notify --overwrite'
 
+# Update the Scipion web site
+updateWebSiteCmd = 'python ' + settings.BUILDBOT_HOME + 'updateScipionSite.py'
 
 class ScipionCommandStep(ShellCommand):
     def __init__(self, command='', name='', description='',
@@ -895,17 +897,45 @@ def getScipionBuilders(groupId):
             )
         scipionBuilders.append(getLocscaleBuilder(groupId, env))
 
+        scipionBuilders.append(
+            BuilderConfig(name="%s%s" % (settings.WEBSITE_PREFIX, groupId),
+                          tags=["web", groupId],
+                          workernames=[settings.WORKER],
+                          factory=updateWebSite(groupId),
+                          workerbuilddir=groupId,
+                          properties={
+                              'slackChannel': "buildbot"},
+                          env=env))
+
     return scipionBuilders
 
 
 # #############################################################################
 # ############################## SCHEDULERS ###################################
 # #############################################################################
+
+def updateWebSite(groupId):
+    updateWebFactorySteps = util.BuildFactory()
+    updateWebFactorySteps.workdir = settings.SCIPION_BUILD_ID
+
+    updateWebFactorySteps.addStep(
+        ScipionCommandStep(command=updateWebSiteCmd,
+                           name='Update the Scipion web site',
+                           description='Update the Scipion web site',
+                           descriptionDone='Update the Scipion web site',
+                           timeout=settings.timeOutInstall,
+                           haltOnFailure=True))
+    return updateWebFactorySteps
+
+
 def getScipionSchedulers(groupId):
     if groupId == settings.SDEVEL_GROUP_ID:
         scipionSchedulerNames = [settings.SCIPION_INSTALL_PREFIX + groupId,
                                  settings.SCIPION_TESTS_PREFIX + groupId,
                                  settings.CLEANUP_PREFIX + groupId]
+
+        scipionSchedulerNames.append("%s%s" % (settings.WEBSITE_PREFIX, groupId))
+
         schedulers = []
         for name in scipionSchedulerNames:
             schedulers.append(triggerable.Triggerable(name=name,

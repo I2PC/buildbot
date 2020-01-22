@@ -6,7 +6,7 @@ import os
 try:
     from localsettings import *
 except ImportError:
-    print ("WARNING: local settings not found, using default values.")
+    print("WARNING: local settings not found, using default values.")
     ################## buildbot ##################
     #  worker credentials
     WORKER = os.environ.get('BUILDBOT_WORKER', 'worker')
@@ -50,9 +50,9 @@ except ImportError:
                        SCIPION_BUILD_ID: 'master'
                    },
                    SDEVEL_GROUP_ID: {
-                       SCIPION_APP_BUILD_ID: 'devel',
+                       SCIPION_APP_BUILD_ID: 'devel-fixes',
                        SCIPION_EM_BUILD_ID: 'devel',
-                       SCIPION_PYWORKFLOW_BUILD_ID: 'devel',
+                       SCIPION_PYWORKFLOW_BUILD_ID: 'devel-fixes',
                        XMIPP_BUILD_ID: 'python3_migration'
 
                    }}
@@ -72,6 +72,7 @@ except ImportError:
     CONDA_ACTIVATION_CMD = ". /home/buildbot/miniconda3/etc/profile.d/conda.sh;"
     SDEVEL_SCIPION_HOME = '/home/buildbot/sdevel/scipion'
     SDEVEL_XMIPP_HOME = '/home/buildbot/sdevel/xmipp'
+    BUILDBOT_HOME = '/home/buildbot/'
 
     # Cryosparc variables
     # The root directory where cryoSPARC code and dependencies is installed.
@@ -116,6 +117,7 @@ except ImportError:
     SCIPION_TESTS_PREFIX = 'Test_Scipion_'
     CLEANUP_PREFIX = 'CleanUp_'
     DOCS_PREFIX = "docs_"
+    WEBSITE_PREFIX = "Update_scipion_web_site_"
 
     # slack channel
     SCIPION_SLACK_CHANNEL = "buildbot"
