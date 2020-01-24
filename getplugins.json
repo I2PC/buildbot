@@ -55,13 +55,6 @@
         "pluginSourceUrl": "https://github.com/scipion-em/scipion-em-bsoft.git@devel",
         "slackChannel":"bsoft"
     },
-    "scipion-em-chimera": {
-        "pipName": "scipion-em-chimera",
-        "id": 27,
-        "name": "chimera",
-        "pluginSourceUrl": "https://github.com/scipion-em/scipion-em-chimera.git@devel",
-        "slackChannel" : "chimera"
-    },
     "scipion-em-appion": {
         "pipName": "scipion-em-appion",
         "id": 14,
@@ -112,31 +105,11 @@
           "pluginSourceUrl": "https://github.com/scipion-em/scipion-em-simple.git@devel",
           "slackChannel":"simple"
       },
-  "scipion-em-powerfit": {
-          "pipName": "scipion-em-powerfit",
-          "id": 31,
-          "name": "powerfit_scipion",
-          "pluginSourceUrl": "https://github.com/scipion-em/scipion-em-powerfit.git@devel",
-          "slackChannel": "powerfit"
-      },
   "scipion-em-nysbc": {
           "pipName": "scipion-em-nysbc",
           "id": 31,
           "name": "nysbc",
           "pluginSourceUrl": "https://github.com/scipion-em/scipion-em-nysbc.git@devel"
-      },
-  "scipion-em-ccp4": {
-          "pipName": "scipion-em-ccp4",
-          "id": 31,
-          "name": "ccp4",
-          "pluginSourceUrl": "https://github.com/scipion-em/scipion-em-ccp4.git@devel"
-      },
-  "scipion-em-phenix": {
-          "pipName": "scipion-em-phenix",
-          "id": 31,
-          "name": "phenix",
-          "pluginSourceUrl": "https://github.com/scipion-em/scipion-em-phenix.git@devel",
-          "slackChannel":"phenix"
       },
   "scipion-em-gautomatch": {
           "pipName": "scipion-em-gautomatch",
@@ -152,12 +125,6 @@
           "pluginSourceUrl": "https://github.com/scipion-em/scipion-em-motioncorr.git@devel",
           "slackChannel":"motioncorr"
       },
-  "scipion-em-atomstructutils": {
-    "pipName": "scipion-em-atomstructutils",
-          "id": 31,
-          "name": "atomstructutils",
-          "pluginSourceUrl": "https://github.com/scipion-em/scipion-em-atomstructutils@devel"
-  },
   "scipion-em-localrec": {
     "pipName": "scipion-em-localrec",
           "id": 30,
