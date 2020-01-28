@@ -478,6 +478,9 @@ def installSDevelScipionFactory(groupId):
     installScipionFactorySteps.addStep(setMpiBinPath)
     installScipionFactorySteps.addStep(setMpiIncludePath)
     installScipionFactorySteps.addStep(setDataTestsDir)
+    installScipionFactorySteps.addStep(setCcp4Home)
+    installScipionFactorySteps.addStep(setCryoloModel)
+    installScipionFactorySteps.addStep(setCryoloEnvActivation)
 
     return installScipionFactorySteps
 
