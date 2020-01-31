@@ -20,14 +20,7 @@
           "pluginSourceUrl": "https://github.com/scipion-em/scipion-em-gctf.git@python3_migration",
           "slackChannel":"gctf"
       },
-  "scipion-em-grigoriefflab": {
-        "pipName": "scipion-em-grigoriefflab",
-        "id": 11,
-        "name": "grigoriefflab",
-        "pluginSourceUrl": "https://github.com/scipion-em/scipion-em-grigoriefflab.git@python3_migration",
-        "slackChannel":"grigoriefflab"
-    },
-  "scipion-em-relion": {
+    "scipion-em-relion": {
           "pipName": "scipion-em-relion",
           "id": 31,
           "name": "relion",
