@@ -147,8 +147,15 @@ setCcp4Home = ShellCommand(
     descriptionDone='Set CCP4_HOME in scipion conf',
     haltOnFailure=True)
 
+setNYSBC_3DFSC_HOME = ShellCommand(
+    command=util.Interpolate('sed -ie "\$aNYSBC_3DFSC_HOME = {}" %(prop:SCIPION_LOCAL_CONFIG)s'.format(settings.NYSBC_3DFSC_HOME)),
+    name='Set NYSBC_3DFSC_HOME in scipion conf',
+    description='Set NYSBC_3DFSC_HOME in scipion conf',
+    descriptionDone='Set NYSBC_3DFSC_HOME in scipion conf',
+    haltOnFailure=True)
+
 setCryoloModel = ShellCommand(
-    command=util.Interpolate('sed -ie "\$aCRYOLO_GENERIC_MODEL = {}" %(prop:SCIPION_LOCAL_CONFIG)s'.format(settings.CRYOLO_GENERIC_MODEL)),
+    command=util.Interpolate('sed -ie "\$aCRYOLO_NS_GENERIC_MODEL = {}" %(prop:SCIPION_LOCAL_CONFIG)s'.format(settings.CRYOLO_NS_GENERIC_MODEL)),
     name='Set CRYOLO_GENERIC_MODEL in scipion conf',
     description='Set CRYOLO_GENERIC_MODEL in scipion conf',
     descriptionDone='Set CRYOLO_GENERIC_MODEL in scipion conf',
@@ -406,6 +413,7 @@ def installScipionFactory(groupId):
     installScipionFactorySteps.addStep(setCryosparcHome)
     installScipionFactorySteps.addStep(setCryosparcUser)
     installScipionFactorySteps.addStep(setCcp4Home)
+    installScipionFactorySteps.addStep(setNYSBC_3DFSC_HOME)
     installScipionFactorySteps.addStep(setCryoloModel)
     installScipionFactorySteps.addStep(setCryoloEnvActivation)
     installScipionFactorySteps.addStep(setCondaActivation)
@@ -425,10 +433,6 @@ def installSDevelScipionFactory(groupId):
                                                     descriptionDone='Echo SCIPION_LOCAL_CONFIG',
                                                     timeout=settings.timeOutShort
                                                     ))
-    # Activating the Anaconda environment
-    # Set the anaconda environment
-    installScipionFactorySteps.addStep(setCondaActivation)
-    installScipionFactorySteps.addStep(setScipionEnvActivation)
     # Install scipion-pyworkflow
     installScipionFactorySteps.addStep(ScipionCommandStep(command=installSdevelScipionPyworkflow,
                                                           name='Installing scipion-pyworkflow...',
@@ -478,7 +482,12 @@ def installSDevelScipionFactory(groupId):
     installScipionFactorySteps.addStep(setMpiBinPath)
     installScipionFactorySteps.addStep(setMpiIncludePath)
     installScipionFactorySteps.addStep(setDataTestsDir)
+    # Activating the Anaconda environment
+    # Set the anaconda environment
+    installScipionFactorySteps.addStep(setCondaActivation)
+    installScipionFactorySteps.addStep(setScipionEnvActivation)
     installScipionFactorySteps.addStep(setCcp4Home)
+    installScipionFactorySteps.addStep(setNYSBC_3DFSC_HOME)
     installScipionFactorySteps.addStep(setCryoloModel)
     installScipionFactorySteps.addStep(setCryoloEnvActivation)
 

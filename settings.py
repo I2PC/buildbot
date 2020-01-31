@@ -67,12 +67,13 @@ except ImportError:
     CUDA_LIB = "/usr/local/cuda-8.0/lib64"
     CCP4_HOME = "/opt/ccp4-7.0"
     PHENIX_HOME = "/usr/local/phenix-1.13-2998"
-    CRYOLO_GENERIC_MODEL = "/home/buildbot/cryolo/gmodel_phosnet_20190314.h5"
-    CRYOLO_ENV_ACTIVATION = ". /home/buildbot/miniconda3/etc/profile.d/conda.sh; conda activate cryolo"
     CONDA_ACTIVATION_CMD = ". /home/buildbot/miniconda3/etc/profile.d/conda.sh;"
     SDEVEL_SCIPION_HOME = '/home/buildbot/sdevel/scipion'
     SDEVEL_XMIPP_HOME = '/home/buildbot/sdevel/xmipp'
     BUILDBOT_HOME = '/home/buildbot/'
+    NYSBC_3DFSC_HOME = SDEVEL_SCIPION_HOME + "/software/em/nysbc3DFSC-2.5"
+    CRYOLO_NS_GENERIC_MODEL = SDEVEL_SCIPION_HOME + "/software/em/cryolo_model-201910/gmodel_phosnet_201910.h5"
+    CRYOLO_ENV_ACTIVATION = ". /home/buildbot/miniconda3/etc/profile.d/conda.sh; conda activate cryolo-1.5.4"
 
     # Cryosparc variables
     # The root directory where cryoSPARC code and dependencies is installed.
