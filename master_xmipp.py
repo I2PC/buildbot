@@ -1,7 +1,7 @@
 import re
 
 from buildbot.plugins import util, steps
-from buildbot.steps.shell import ShellCommand, SetProperty, SetPropertyFromCommand
+from buildbot.steps.shell import ShellCommand, SetProperty
 from buildbot.config import BuilderConfig
 from buildbot.schedulers import triggerable
 from buildbot.schedulers.forcesched import ForceScheduler

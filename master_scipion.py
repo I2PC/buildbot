@@ -245,77 +245,6 @@ removeCryosParcProjectTest = ShellCommand(
     descriptionDone='Delete CryosPARC projects',
     haltOnFailure=False)
 
-
-def addScipionGitAndConfigSteps(factorySteps, groupId):
-    """ The initial steps are common in all builders.
-         1. git pull in a certain branch.
-         2. remove scipion.config files.
-         3. regenerate scipion.config files
-         4. set notify at False
-         5. set dataTests folder to a common dir (to save space)
-         6. set ScipionUserData to an internal folder (to allow branch-dependent project inspection)
-    """
-    if groupId != settings.SDEVEL_GROUP_ID:
-        factorySteps.addStep(Git(repourl=settings.gitRepoURL,
-                                 branch=settings.branchsDict[groupId].get(settings.SCIPION_BUILD_ID, None),
-                                 mode='incremental',
-                                 name='Scipion Git Repository Pull',
-                                 haltOnFailure=True))
-
-    factorySteps.addStep(removeScipionConf)
-    factorySteps.addStep(removeHomeConfig)
-
-    if groupId == settings.SDEVEL_GROUP_ID:
-        factorySteps.addStep(sdevelScipionConfig)
-    else:
-        factorySteps.addStep(configScipion)
-
-    factorySteps.addStep(setNotifyAtFalse)
-    factorySteps.addStep(setGeneralCuda)
-    factorySteps.addStep(setMpiLibPath)
-    factorySteps.addStep(setMpiBinPath)
-    factorySteps.addStep(setMpiIncludePath)
-    factorySteps.addStep(setDataTestsDir)
-    # factorySteps.addStep(removeScipionUserData)  # to avoid old tests when are renamed
-    factorySteps.addStep(setScipionUserData)
-
-    return factorySteps
-
-
-def addSDevelScipionGitAndConfigSteps(factorySteps, groupId):
-    """ The initial steps to sdevel builders.
-         1. Remove scipion-em, scipion-app and scipion-pyworkflow, software-em to get the last version
-         2. git pull scipion-app, scipion-pyworkflow, scipion-em.
-         3. Create the software/em dolder
-    """
-    factorySteps.addStep(removeScipionModules)
-
-    factorySteps.addStep(
-        ShellCommand(command=['git', 'clone'] + settings.sdevel_gitRepoURL.split(),
-                     name='Clone scipion-app repository',
-                     description='Getting scipion-app repository',
-                     descriptionDone='scipion-app repo downloaded',
-                     timeout=settings.timeOutShort,
-                     haltOnFailure=True))
-
-    factorySteps.addStep(
-        ShellCommand(command=['git', 'clone'] + settings.sdevel_pw_gitRepoURL.split(),
-                     name='Clone scipion-pyworkflow repository',
-                     description='Getting scipion-pyworkflow repository',
-                     descriptionDone='scipion-pyworkflow repo downloaded',
-                     timeout=settings.timeOutShort,
-                     haltOnFailure=True))
-
-    factorySteps.addStep(
-        ShellCommand(command=['git', 'clone'] + settings.sdevel_pyem_gitRepoURL.split(),
-                     name='Clone scipion-em repository',
-                     description='Getting scipion-em repository',
-                     descriptionDone='scipion-em repo downloaded',
-                     timeout=settings.timeOutShort,
-                     haltOnFailure=True))
-
-    return factorySteps
-
 # Command to install Scipion and/or recompile Xmipp
 installScipion = ShellCommand(command=['./scipion', 'install', '-j', '8'],
                               name='Scipion Install',
@@ -362,6 +291,72 @@ sdevelScipionConfig = 'python -m scipion config --notify --overwrite'
 
 # Update the Scipion web site
 updateWebSiteCmd = 'python ' + settings.BUILDBOT_HOME + 'updateScipionSite.py'
+
+
+def addScipionGitAndConfigSteps(factorySteps, groupId):
+    """ The initial steps are common in all builders.
+         1. git pull in a certain branch.
+         2. remove scipion.config files.
+         3. regenerate scipion.config files
+         4. set notify at False
+         5. set dataTests folder to a common dir (to save space)
+         6. set ScipionUserData to an internal folder (to allow branch-dependent project inspection)
+    """
+    factorySteps.addStep(Git(repourl=settings.gitRepoURL,
+                             branch=settings.branchsDict[groupId].get(settings.SCIPION_BUILD_ID, None),
+                             mode='incremental',
+                             name='Scipion Git Repository Pull',
+                             haltOnFailure=True))
+
+    factorySteps.addStep(removeScipionConf)
+    factorySteps.addStep(removeHomeConfig)
+    factorySteps.addStep(configScipion)
+    factorySteps.addStep(setNotifyAtFalse)
+    factorySteps.addStep(setGeneralCuda)
+    factorySteps.addStep(setMpiLibPath)
+    factorySteps.addStep(setMpiBinPath)
+    factorySteps.addStep(setMpiIncludePath)
+    factorySteps.addStep(setDataTestsDir)
+    # factorySteps.addStep(removeScipionUserData)  # to avoid old tests when are renamed
+    factorySteps.addStep(setScipionUserData)
+
+    return factorySteps
+
+
+def addSDevelScipionGitAndConfigSteps(factorySteps, groupId):
+    """ The initial steps to sdevel builders.
+         1. Remove scipion-em, scipion-app and scipion-pyworkflow, software-em to get the last version
+         2. git pull scipion-app, scipion-pyworkflow, scipion-em.
+         3. Create the software/em folder
+    """
+    factorySteps.addStep(removeScipionModules)
+
+    factorySteps.addStep(
+        ShellCommand(command=['git', 'clone'] + settings.sdevel_gitRepoURL.split(),
+                     name='Clone scipion-app repository',
+                     description='Getting scipion-app repository',
+                     descriptionDone='scipion-app repo downloaded',
+                     timeout=settings.timeOutShort,
+                     haltOnFailure=True))
+
+    factorySteps.addStep(
+        ShellCommand(command=['git', 'clone'] + settings.sdevel_pw_gitRepoURL.split(),
+                     name='Clone scipion-pyworkflow repository',
+                     description='Getting scipion-pyworkflow repository',
+                     descriptionDone='scipion-pyworkflow repo downloaded',
+                     timeout=settings.timeOutShort,
+                     haltOnFailure=True))
+
+    factorySteps.addStep(
+        ShellCommand(command=['git', 'clone'] + settings.sdevel_pyem_gitRepoURL.split(),
+                     name='Clone scipion-em repository',
+                     description='Getting scipion-em repository',
+                     descriptionDone='scipion-em repo downloaded',
+                     timeout=settings.timeOutShort,
+                     haltOnFailure=True))
+
+    return factorySteps
+
 
 class ScipionCommandStep(ShellCommand):
     def __init__(self, command='', name='', description='',
