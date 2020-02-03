@@ -490,6 +490,8 @@ def installSDevelScipionFactory(groupId):
     installScipionFactorySteps.addStep(setNYSBC_3DFSC_HOME)
     installScipionFactorySteps.addStep(setCryoloModel)
     installScipionFactorySteps.addStep(setCryoloEnvActivation)
+    installScipionFactorySteps.addStep(setCryosparcHome)
+    installScipionFactorySteps.addStep(setCryosparcUser)
 
     return installScipionFactorySteps
 
