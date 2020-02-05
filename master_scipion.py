@@ -487,6 +487,7 @@ def installSDevelScipionFactory(groupId):
     installScipionFactorySteps.addStep(setCryoloEnvActivation)
     installScipionFactorySteps.addStep(setCryosparcHome)
     installScipionFactorySteps.addStep(setCryosparcUser)
+    installScipionFactorySteps.addStep(setPhenixHome)
 
     return installScipionFactorySteps
 
