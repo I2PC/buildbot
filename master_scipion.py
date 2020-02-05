@@ -237,9 +237,10 @@ removeEMtgz = ShellCommand(
     haltOnFailure=False)
 
 # Clean the Cryosparc projects
+removeCryosParcProjectCmd = ('rm -rf ' + settings.CRYOSPARC_DIR +
+                             '/scipion_projects/* ; ')
 removeCryosParcProjectTest = ShellCommand(
-    command=['bash', '-c',
-             'rm -rf /home/buildbot/cryosparc/scipion_projects/* ; '],
+    command=['bash', '-c', removeCryosParcProjectCmd],
     name='Clean CryosPARC projects',
     description='Delete CryosPARC projects',
     descriptionDone='Delete CryosPARC projects',
@@ -330,6 +331,7 @@ def addSDevelScipionGitAndConfigSteps(factorySteps, groupId):
          3. Create the software/em folder
     """
     factorySteps.addStep(removeScipionModules)
+    factorySteps.addStep(removeCryosParcProjectTest)
 
     factorySteps.addStep(
         ShellCommand(command=['git', 'clone'] + settings.sdevel_gitRepoURL.split(),
