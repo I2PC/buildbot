@@ -98,13 +98,6 @@
           "pluginSourceUrl": "https://github.com/scipion-em/scipion-em-bamfordlab.git@python3_migration",
           "slackChannel":"bamfordlab"
       },
-  "scipion-em-simple": {
-          "pipName": "scipion-em-simple",
-          "id": 31,
-          "name": "simple",
-          "pluginSourceUrl": "https://github.com/scipion-em/scipion-em-simple.git@python3_migration",
-          "slackChannel":"simple"
-      },
   "scipion-em-nysbc": {
           "pipName": "scipion-em-nysbc",
           "id": 31,
