@@ -66,7 +66,7 @@ except ImportError:
     CUDA = "True"
     CUDA_LIB = "/usr/local/cuda-8.0/lib64"
     CCP4_HOME = "/opt/ccp4-7.0"
-    PHENIX_HOME = "/home/buildbot/phenix-1.17.1"
+    PHENIX_HOME = "/home/buildbot/phenix-1.17.1/phenix-1.17.1-3660"
     CONDA_ACTIVATION_CMD = ". /home/buildbot/miniconda3/etc/profile.d/conda.sh;"
     SDEVEL_SCIPION_HOME = '/home/buildbot/sdevel/scipion'
     SDEVEL_XMIPP_HOME = '/home/buildbot/sdevel/xmipp'
