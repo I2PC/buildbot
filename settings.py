@@ -71,7 +71,7 @@ except ImportError:
     SDEVEL_SCIPION_HOME = '/home/buildbot/sdevel/scipion'
     SDEVEL_XMIPP_HOME = '/home/buildbot/sdevel/xmipp'
     BUILDBOT_HOME = '/home/buildbot/'
-    NYSBC_3DFSC_HOME = SDEVEL_SCIPION_HOME + "/software/em/nysbc3DFSC-2.5"
+    NYSBC_3DFSC_HOME = SDEVEL_SCIPION_HOME + "/software/em/nysbc3DFSC-3.0"
     CRYOLO_NS_GENERIC_MODEL = SDEVEL_SCIPION_HOME + "/software/em/cryolo_model-201910/gmodel_phosnet_201910.h5"
     CRYOLO_ENV_ACTIVATION = ". /home/buildbot/miniconda3/etc/profile.d/conda.sh; conda activate cryolo-1.5.4"
 
