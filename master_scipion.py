@@ -363,7 +363,7 @@ def addSDevelScipionGitAndConfigSteps(factorySteps, groupId):
 class ScipionCommandStep(ShellCommand):
     def __init__(self, command='', name='', description='',
                  descriptionDone='', timeout=settings.timeOutInstall,
-                 haltOnFailure=True, **kwargs):
+                 haltOnFailure=True, env=None, **kwargs):
         kwargs['command'] = [
             'bash', '-c', '%s; %s' % (settings.SCIPION_ENV_ACTIVATION, command)
         ]
@@ -372,6 +372,7 @@ class ScipionCommandStep(ShellCommand):
         kwargs['descriptionDone'] = descriptionDone
         kwargs['timeout'] = timeout
         kwargs['haltOnFailure'] = haltOnFailure
+        kwargs['env'] = env
 
         ShellCommand.__init__(self, **kwargs)
 
