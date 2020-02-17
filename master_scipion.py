@@ -774,6 +774,12 @@ def docsFactory(groupId, env):
                                       timeout=settings.timeOutInstall))
     if groupId == settings.SDEVEL_GROUP_ID:
 
+        factorySteps.addStep(steps.SetProperty(property='SCIPION_LOCAL_CONFIG',
+                                               value="~/.config/scipion/scipion_%s.conf" % groupId,
+                                               name="Set SCIPION_LOCAL_CONFIG",
+                                               description="Set SCIPION_LOCAL_CONFIG",
+                                               descriptionDone="SCIPION_LOCAL_CONFIG set"))
+
         factorySteps.addStep(
             ShellCommand(command=['echo', 'SCIPION_LOCAL_CONFIG',
                                   util.Property('SCIPION_LOCAL_CONFIG')],
