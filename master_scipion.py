@@ -768,7 +768,7 @@ def docsFactory(groupId):
     if groupId == settings.SDEVEL_GROUP_ID:
 
         command = (settings.SCIPION_CMD + " run /usr/local/bin/sphinx-versioning push -r " + docsBranch +
-                   " " + util.Property('DOCS_HOME') + " " +
+                   " " + str(util.Property('DOCS_HOME')) + " " +
                    settings.DOCS_HTML_BRANCH + " . ")
 
     factorySteps.addStep(ScipionCommandStep(command=command,
