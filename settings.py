@@ -96,6 +96,7 @@ except ImportError:
     gitRepoURL = 'https://github.com/I2PC/scipion.git'
     DOCS_REPO = "git@github.com:scipion-em/docs.git"
     DOCS_HTML_BRANCH = 'gh-pages'
+    SDEVEL_DOCS_PATH = "/home/buildbot/scipionBot/sdevel/docs"
 
     #New verion of Scipion
     sdevel_gitRepoURL = ("-b %s https://github.com/scipion-em/scipion-app.git"

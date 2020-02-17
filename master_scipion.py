@@ -791,7 +791,7 @@ def docsFactory(groupId, env):
 
         command = (settings.SCIPION_CMD +
                    " run /usr/local/bin/sphinx-versioning push -r " +
-                   docsBranch + " " + "/home/buildbot/scipionBot/sdevel/docs"
+                   docsBranch + " " + settings.SDEVEL_DOCS_PATH
                    + " " + settings.DOCS_HTML_BRANCH + " . ")
 
         factorySteps.addStep(ScipionCommandStep(command=command,
