@@ -718,13 +718,13 @@ def docsFactory(groupId):
                          timeout=settings.timeOutInstall))
 
         command = ['sphinx-apidoc', '-f', '-e', '-o', 'api/',
-                   settings.SDEVEL_SCIPION_HOME + "/scipion-pwem"]
+                   settings.SDEVEL_SCIPION_HOME + "/scipion-em"]
 
         factorySteps.addStep(
             ShellCommand(command=command,
-                         name='Generate scipion-pwem docs',
-                         description='Generate scipion-pyworkflow docs',
-                         descriptionDone='Generated scipion-pyworkflow docs',
+                         name='Generate scipion-em docs',
+                         description='Generate scipion-em docs',
+                         descriptionDone='Generated scipion-em docs',
                          timeout=settings.timeOutInstall))
 
     else:
@@ -771,22 +771,32 @@ def docsFactory(groupId):
                                       description='Git push docs to repo',
                                       descriptionDone='Git push docs to repo',
                                       timeout=settings.timeOutInstall))
-
-    command = [util.Interpolate("%(prop:SCIPION_HOME)s/scipion"),
-                                               "run", util.Property('sphinx-versioning'), 'push', '-r', docsBranch,
-                                               util.Property('DOCS_HOME'), settings.DOCS_HTML_BRANCH, "."]
-
     if groupId == settings.SDEVEL_GROUP_ID:
 
-        command = (settings.SCIPION_CMD + " run /usr/local/bin/sphinx-versioning push -r " + docsBranch +
-                   " " + "/home/buildbot/scipionBot/sdevel/docs" + " " +
-                   settings.DOCS_HTML_BRANCH + " . ")
+        env = {"SCIPION_IGNORE_PYTHONPATH": "True",
+               "SCIPION_LOCAL_CONFIG": util.Property('SCIPION_LOCAL_CONFIG')}
+        command = (settings.SCIPION_CMD +
+                   " run /usr/local/bin/sphinx-versioning push -r " +
+                   docsBranch + " " + "/home/buildbot/scipionBot/sdevel/docs"
+                   + " " + settings.DOCS_HTML_BRANCH + " . ")
 
-    factorySteps.addStep(ScipionCommandStep(command=command,
-                                      name='Push built docs',
-                                      description='Pushing built docs',
-                                      descriptionDone='Pushed built docs',
-                                      timeout=settings.timeOutInstall))
+        factorySteps.addStep(ScipionCommandStep(command=command,
+                                          name='Push built docs',
+                                          description='Pushing built docs',
+                                          descriptionDone='Pushed built docs',
+                                          timeout=settings.timeOutInstall,
+                                          env=env))
+    else:
+        factorySteps.addStep(ShellCommand(
+            command=[util.Interpolate("%(prop:SCIPION_HOME)s/scipion"),
+                     "run", util.Property('sphinx-versioning'), 'push', '-r',
+                     docsBranch,
+                     util.Property('DOCS_HOME'), settings.DOCS_HTML_BRANCH,
+                     "."],
+            name='Push built docs',
+            description='Pushing built docs',
+            descriptionDone='Pushed built docs',
+            timeout=settings.timeOutInstall))
 
     return factorySteps
 
@@ -895,6 +905,7 @@ def getScipionBuilders(groupId):
                                                  env=env))
     else:
         env['SCIPION_HOME'] = settings.SDEVEL_SCIPION_HOME
+
         scipionBuilders.append(
             BuilderConfig(name=settings.SCIPION_INSTALL_PREFIX + groupId,
                           tags=[groupId],
