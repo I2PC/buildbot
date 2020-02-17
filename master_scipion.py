@@ -697,7 +697,7 @@ def doCommit(step):
         return True
 
 
-def docsFactory(groupId):
+def docsFactory(groupId, env):
     factorySteps = util.BuildFactory()
     factorySteps.workdir = settings.DOCS_BUILD_ID
     docsBranch = settings.branchsDict[groupId].get(settings.DOCS_BUILD_ID, None)
@@ -774,8 +774,15 @@ def docsFactory(groupId):
                                       timeout=settings.timeOutInstall))
     if groupId == settings.SDEVEL_GROUP_ID:
 
-        env = {"SCIPION_IGNORE_PYTHONPATH": "True",
-               "SCIPION_LOCAL_CONFIG": util.Property('SCIPION_LOCAL_CONFIG')}
+        factorySteps.addStep(
+            ShellCommand(command=['echo', 'SCIPION_LOCAL_CONFIG',
+                                  util.Property('SCIPION_LOCAL_CONFIG')],
+                         name='Echo SCIPION_LOCAL_CONFIG',
+                         description='Echo SCIPION_LOCAL_CONFIG',
+                         descriptionDone='Echo SCIPION_LOCAL_CONFIG',
+                         timeout=settings.timeOutShort
+                         ))
+
         command = (settings.SCIPION_CMD +
                    " run /usr/local/bin/sphinx-versioning push -r " +
                    docsBranch + " " + "/home/buildbot/scipionBot/sdevel/docs"
@@ -899,7 +906,7 @@ def getScipionBuilders(groupId):
             scipionBuilders.append(BuilderConfig(name="%s%s" % (settings.DOCS_PREFIX, groupId),
                                                  tags=["docs", groupId],
                                                  workernames=[settings.WORKER],
-                                                 factory=docsFactory(groupId),
+                                                 factory=docsFactory(groupId, env),
                                                  workerbuilddir=groupId,
                                                  properties={
                                                      'slackChannel': "buildbot"},
@@ -957,7 +964,7 @@ def getScipionBuilders(groupId):
             scipionBuilders.append(BuilderConfig(name="%s%s" % (settings.DOCS_PREFIX, groupId),
                                                  tags=["docs", groupId],
                                                  workernames=[settings.WORKER],
-                                                 factory=docsFactory(groupId),
+                                                 factory=docsFactory(groupId, env),
                                                  workerbuilddir=groupId,
                                                  properties={
                                                      'slackChannel': "buildbot"},
