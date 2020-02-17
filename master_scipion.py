@@ -713,13 +713,13 @@ def docsFactory(groupId):
     if groupId == settings.SDEVEL_GROUP_ID:
         command = ['sphinx-apidoc', '-f', '-e', '-o', 'api/',
                   util.Interpolate(
-                      "%(prop:SCIPION_HOME)s/scipion-pyworkflow/pyworkflowtests"),
+                      "%(prop:SCIPION_HOME)s/scipion/scipion-pyworkflow/pyworkflowtests"),
                   util.Interpolate(
-                      "%(prop:SCIPION_HOME)s/scipion-pyworkflow/pyworkflowtests/tests/*"),
+                      "%(prop:SCIPION_HOME)s/scipion/scipion-pyworkflow/pyworkflowtests/tests/*"),
                   util.Interpolate(
-                      "%(prop:SCIPION_HOME)s/scipion-em/pwem"),
+                      "%(prop:SCIPION_HOME)s/scipion/scipion-em/pwem"),
                   util.Interpolate(
-                      "%(prop:SCIPION_HOME)s/scipion-em/pwem/tests/*")]
+                      "%(prop:SCIPION_HOME)s/scipion/scipion-em/pwem/tests/*")]
 
     factorySteps.addStep(
         ShellCommand(command=command,
@@ -768,7 +768,7 @@ def docsFactory(groupId):
     if groupId == settings.SDEVEL_GROUP_ID:
 
         command = (settings.SCIPION_CMD + " run /usr/local/bin/sphinx-versioning push -r " + docsBranch +
-                   " " + str(util.Property('DOCS_HOME')) + " " +
+                   " " + "/home/buildbot/scipionBot/sdevel/docs" + " " +
                    settings.DOCS_HTML_BRANCH + " . ")
 
     factorySteps.addStep(ScipionCommandStep(command=command,
