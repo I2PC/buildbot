@@ -53,7 +53,8 @@ except ImportError:
                        SCIPION_APP_BUILD_ID: 'devel',
                        SCIPION_EM_BUILD_ID: 'devel',
                        SCIPION_PYWORKFLOW_BUILD_ID: 'devel',
-                       XMIPP_BUILD_ID: 'python3_migration'
+                       XMIPP_BUILD_ID: 'python3_migration',
+                       DOCS_BUILD_ID: 'release-3.0.0'
 
                    }}
 

@@ -706,10 +706,23 @@ def docsFactory(groupId):
                              name='Scipion docs repository pull',
                              haltOnFailure=True))
 
+    command = ['sphinx-apidoc', '-f', '-e', '-o', 'api/',
+               util.Interpolate("%(prop:SCIPION_HOME)s/pyworkflow"),
+               util.Interpolate("%(prop:SCIPION_HOME)s/pyworkflow/tests/*")]
+
+    if groupId == settings.SDEVEL_GROUP_ID:
+        command = ['sphinx-apidoc', '-f', '-e', '-o', 'api/',
+                  util.Interpolate(
+                      "%(prop:SCIPION_HOME)s/scipion-pyworkflow/pyworkflowtests"),
+                  util.Interpolate(
+                      "%(prop:SCIPION_HOME)s/scipion-pyworkflow/pyworkflowtests/tests/*"),
+                  util.Interpolate(
+                      "%(prop:SCIPION_HOME)s/scipion-em/pwem"),
+                  util.Interpolate(
+                      "%(prop:SCIPION_HOME)s/scipion-em/pwem/tests/*")]
+
     factorySteps.addStep(
-        ShellCommand(command=['sphinx-apidoc', '-f', '-e', '-o', 'api/',
-                              util.Interpolate("%(prop:SCIPION_HOME)s/pyworkflow"),
-                              util.Interpolate("%(prop:SCIPION_HOME)s/pyworkflow/tests/*")],
+        ShellCommand(command=command,
                      name='Generate API docs',
                      description='Generate API docs',
                      descriptionDone='Generated API docs',
@@ -748,9 +761,17 @@ def docsFactory(groupId):
                                       descriptionDone='Git push docs to repo',
                                       timeout=settings.timeOutInstall))
 
-    factorySteps.addStep(ShellCommand(command=[util.Interpolate("%(prop:SCIPION_HOME)s/scipion"),
+    command = [util.Interpolate("%(prop:SCIPION_HOME)s/scipion"),
                                                "run", util.Property('sphinx-versioning'), 'push', '-r', docsBranch,
-                                               util.Property('DOCS_HOME'), settings.DOCS_HTML_BRANCH, "."],
+                                               util.Property('DOCS_HOME'), settings.DOCS_HTML_BRANCH, "."]
+
+    if groupId == settings.SDEVEL_GROUP_ID:
+
+        command = (settings.SCIPION_CMD + " run /usr/local/bin/sphinx-versioning push -r " + docsBranch +
+                   " " + util.Property('DOCS_HOME') + " " +
+                   settings.DOCS_HTML_BRANCH + " . ")
+
+    factorySteps.addStep(ScipionCommandStep(command=command,
                                       name='Push built docs',
                                       description='Pushing built docs',
                                       descriptionDone='Pushed built docs',
@@ -909,6 +930,15 @@ def getScipionBuilders(groupId):
             )
         scipionBuilders.append(getLocscaleBuilder(groupId, env))
 
+        if settings.branchsDict[groupId].get(settings.DOCS_BUILD_ID, None) is not None:
+            scipionBuilders.append(BuilderConfig(name="%s%s" % (settings.DOCS_PREFIX, groupId),
+                                                 tags=["docs", groupId],
+                                                 workernames=[settings.WORKER],
+                                                 factory=docsFactory(groupId),
+                                                 workerbuilddir=groupId,
+                                                 properties={
+                                                     'slackChannel': "buildbot"},
+                                                 env=env))
         scipionBuilders.append(
             BuilderConfig(name="%s%s" % (settings.WEBSITE_PREFIX, groupId),
                           tags=["web", groupId],
@@ -945,6 +975,9 @@ def getScipionSchedulers(groupId):
         scipionSchedulerNames = [settings.SCIPION_INSTALL_PREFIX + groupId,
                                  settings.SCIPION_TESTS_PREFIX + groupId,
                                  settings.CLEANUP_PREFIX + groupId]
+
+        if settings.branchsDict[groupId].get(settings.DOCS_BUILD_ID, None) is not None:
+            scipionSchedulerNames.append("%s%s" % (settings.DOCS_PREFIX, groupId))
 
         scipionSchedulerNames.append("%s%s" % (settings.WEBSITE_PREFIX, groupId))
 
