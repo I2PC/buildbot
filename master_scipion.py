@@ -706,27 +706,38 @@ def docsFactory(groupId):
                              name='Scipion docs repository pull',
                              haltOnFailure=True))
 
-    command = ['sphinx-apidoc', '-f', '-e', '-o', 'api/',
-               util.Interpolate("%(prop:SCIPION_HOME)s/pyworkflow"),
-               util.Interpolate("%(prop:SCIPION_HOME)s/pyworkflow/tests/*")]
-
     if groupId == settings.SDEVEL_GROUP_ID:
         command = ['sphinx-apidoc', '-f', '-e', '-o', 'api/',
-                  util.Interpolate(
-                      "%(prop:SCIPION_HOME)s/scipion/scipion-pyworkflow/pyworkflowtests"),
-                  util.Interpolate(
-                      "%(prop:SCIPION_HOME)s/scipion/scipion-pyworkflow/pyworkflowtests/tests/*"),
-                  util.Interpolate(
-                      "%(prop:SCIPION_HOME)s/scipion/scipion-em/pwem"),
-                  util.Interpolate(
-                      "%(prop:SCIPION_HOME)s/scipion/scipion-em/pwem/tests/*")]
+                   settings.SDEVEL_SCIPION_HOME + "/scipion-pyworkflow"]
 
-    factorySteps.addStep(
-        ShellCommand(command=command,
-                     name='Generate API docs',
-                     description='Generate API docs',
-                     descriptionDone='Generated API docs',
-                     timeout=settings.timeOutInstall))
+        factorySteps.addStep(
+            ShellCommand(command=command,
+                         name='Generate scipion-pyworkflow docs',
+                         description='Generate scipion-pyworkflow docs',
+                         descriptionDone='Generated scipion-pyworkflow docs',
+                         timeout=settings.timeOutInstall))
+
+        command = ['sphinx-apidoc', '-f', '-e', '-o', 'api/',
+                   settings.SDEVEL_SCIPION_HOME + "/scipion-pwem"]
+
+        factorySteps.addStep(
+            ShellCommand(command=command,
+                         name='Generate scipion-pwem docs',
+                         description='Generate scipion-pyworkflow docs',
+                         descriptionDone='Generated scipion-pyworkflow docs',
+                         timeout=settings.timeOutInstall))
+
+    else:
+        command = ['sphinx-apidoc', '-f', '-e', '-o', 'api/',
+                   util.Interpolate("%(prop:SCIPION_HOME)s/pyworkflow"),
+                   util.Interpolate("%(prop:SCIPION_HOME)s/pyworkflow/tests/*")]
+
+        factorySteps.addStep(
+            ShellCommand(command=command,
+                         name='Generate API docs',
+                         description='Generate API docs',
+                         descriptionDone='Generated API docs',
+                         timeout=settings.timeOutInstall))
     factorySteps.addStep(
         SetPropertyFromCommand(command='which sphinx-versioning',
                                property='sphinx-versioning',
