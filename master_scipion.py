@@ -363,7 +363,7 @@ def addSDevelScipionGitAndConfigSteps(factorySteps, groupId):
 class ScipionCommandStep(ShellCommand):
     def __init__(self, command='', name='', description='',
                  descriptionDone='', timeout=settings.timeOutInstall,
-                 haltOnFailure=True, env=None, **kwargs):
+                 haltOnFailure=True, **kwargs):
         kwargs['command'] = [
             'bash', '-c', '%s; %s' % (settings.SCIPION_ENV_ACTIVATION, command)
         ]
@@ -372,7 +372,6 @@ class ScipionCommandStep(ShellCommand):
         kwargs['descriptionDone'] = descriptionDone
         kwargs['timeout'] = timeout
         kwargs['haltOnFailure'] = haltOnFailure
-        kwargs['env'] = env
 
         ShellCommand.__init__(self, **kwargs)
 
@@ -697,7 +696,7 @@ def doCommit(step):
         return True
 
 
-def docsFactory(groupId, env):
+def docsFactory(groupId):
     factorySteps = util.BuildFactory()
     factorySteps.workdir = settings.DOCS_BUILD_ID
     docsBranch = settings.branchsDict[groupId].get(settings.DOCS_BUILD_ID, None)
@@ -708,11 +707,11 @@ def docsFactory(groupId, env):
                              haltOnFailure=True))
 
     if groupId == settings.SDEVEL_GROUP_ID:
-        command = ['sphinx-apidoc', '-f', '-e', '-o', 'api/',
-                   settings.SDEVEL_SCIPION_HOME + "/scipion-pyworkflow"]
+        command = ('sphinx-apidoc -f -e -o api/ ' +
+                   settings.SDEVEL_SCIPION_HOME + "/scipion-pyworkflow")
 
         factorySteps.addStep(
-            ShellCommand(command=command,
+            ScipionCommandStep(command=command,
                          name='Generate scipion-pyworkflow docs',
                          description='Generate scipion-pyworkflow docs',
                          descriptionDone='Generated scipion-pyworkflow docs',
@@ -790,7 +789,7 @@ def docsFactory(groupId, env):
                          ))
 
         command = (settings.SCIPION_CMD +
-                   " run /usr/local/bin/sphinx-versioning push -r " +
+                   " run sphinx-versioning push -r " +
                    docsBranch + " " + settings.SDEVEL_DOCS_PATH
                    + " " + settings.DOCS_HTML_BRANCH + " . ")
 
@@ -798,8 +797,7 @@ def docsFactory(groupId, env):
                                           name='Push built docs',
                                           description='Pushing built docs',
                                           descriptionDone='Pushed built docs',
-                                          timeout=settings.timeOutInstall,
-                                          env=env))
+                                          timeout=settings.timeOutInstall))
     else:
         factorySteps.addStep(ShellCommand(
             command=[util.Interpolate("%(prop:SCIPION_HOME)s/scipion"),
@@ -912,7 +910,7 @@ def getScipionBuilders(groupId):
             scipionBuilders.append(BuilderConfig(name="%s%s" % (settings.DOCS_PREFIX, groupId),
                                                  tags=["docs", groupId],
                                                  workernames=[settings.WORKER],
-                                                 factory=docsFactory(groupId, env),
+                                                 factory=docsFactory(groupId),
                                                  workerbuilddir=groupId,
                                                  properties={
                                                      'slackChannel': "buildbot"},
@@ -970,7 +968,7 @@ def getScipionBuilders(groupId):
             scipionBuilders.append(BuilderConfig(name="%s%s" % (settings.DOCS_PREFIX, groupId),
                                                  tags=["docs", groupId],
                                                  workernames=[settings.WORKER],
-                                                 factory=docsFactory(groupId, env),
+                                                 factory=docsFactory(groupId),
                                                  workerbuilddir=groupId,
                                                  properties={
                                                      'slackChannel': "buildbot"},
