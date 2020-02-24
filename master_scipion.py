@@ -707,8 +707,9 @@ def docsFactory(groupId):
                              haltOnFailure=True))
 
     if groupId == settings.SDEVEL_GROUP_ID:
-        command = ('sphinx-apidoc -f -e -o api/ ' +
-                   settings.SDEVEL_SCIPION_HOME + "/scipion-pyworkflow")
+        command = ('sphinx-apidoc -f -e -o api/pyworkflow ' +
+                   settings.SDEVEL_SCIPION_HOME + "/scipion-pyworkflow" +
+                   " " + settings.SDEVEL_SCIPION_HOME + "/scipion-pyworkflow/pyworkflowtests")
 
         factorySteps.addStep(
             ScipionCommandStep(command=command,
@@ -717,8 +718,9 @@ def docsFactory(groupId):
                          descriptionDone='Generated scipion-pyworkflow docs',
                          timeout=settings.timeOutInstall))
 
-        command = ('sphinx-apidoc -f -e -o api/ ' +
-                   settings.SDEVEL_SCIPION_HOME + "/scipion-em")
+        command = ('sphinx-apidoc -f -e -o api/pwem ' +
+                   settings.SDEVEL_SCIPION_HOME + "/scipion-em" +
+                   " " + settings.SDEVEL_SCIPION_HOME + "/scipion-em/pwem/tests")
 
         factorySteps.addStep(
             ScipionCommandStep(command=command,
