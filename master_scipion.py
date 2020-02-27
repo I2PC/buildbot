@@ -760,27 +760,6 @@ def docsFactory(groupId):
                                descriptionDone='Generated scipion-em docs',
                                timeout=settings.timeOutInstall))
 
-        factorySteps.addStep(ShellCommand(command=["git", "add", "."],
-                                          name='Git add API docs',
-                                          description='Git add docs',
-                                          descriptionDone='Git added docs',
-                                          timeout=settings.timeOutInstall))
-
-        factorySteps.addStep(
-            SetPropertyFromCommand(
-                command="[[ -n $(git status -s) ]] || echo 'clean'",
-                property='DOCS_REPO_STATUS_RELEASE-3.0.0',
-                name='Set property DOCS_REPO_STATUS',
-                description='Check repo status'))
-
-        factorySteps.addStep(ShellCommand(
-            command=["git", "commit", "-m", "buildbot automated-update"],
-            name='Git commit docs',
-            description='Git commit docs',
-            descriptionDone='Git commit docs',
-            doStepIf=doCommit,
-            timeout=settings.timeOutInstall))
-
         factorySteps.addStep(
             ShellCommand(command='git checkout gh-pages',
                          name='Checkout to gh_pages branch in order to copy the builded documentation',
