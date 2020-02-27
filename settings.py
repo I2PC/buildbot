@@ -114,6 +114,7 @@ except ImportError:
 
     SCIPION_ENV_ACTIVATION = "source /home/buildbot/miniconda3/etc/profile.d/conda.sh ; conda activate scipion_python3"
     SCIPION_CMD = "python -m scipion"
+    SCIPION_ENV_PATH = "/home/buildbot/.conda/envs/scipion_python3/lib/python3.5/site-packages/"
 
     # builder prefixes
     SCIPION_INSTALL_PREFIX = 'Install_Scipion_'

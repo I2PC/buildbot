@@ -1,4 +1,5 @@
 import json
+import os
 from collections import OrderedDict
 
 from buildbot.steps.shell import ShellCommand, SetPropertyFromCommand
@@ -700,7 +701,7 @@ def docsFactory(groupId):
     factorySteps = util.BuildFactory()
     factorySteps.workdir = settings.DOCS_BUILD_ID
     factorySteps.addStep(
-        ShellCommand(command='rm -rf docs/',
+        ShellCommand(command='rm -rf ' + settings.SDEVEL_DOCS_PATH,
                      name='Remove the docs folder',
                      description='Remove the docs folder',
                      descriptionDone='Remove the docs folder',
@@ -713,23 +714,24 @@ def docsFactory(groupId):
                              name='Scipion docs repository pull',
                              haltOnFailure=True))
 
+    factorySteps.addStep(steps.SetProperty(property='SCIPION_LOCAL_CONFIG',
+                                           value="~/.config/scipion/scipion_%s.conf" % groupId,
+                                           name="Set SCIPION_LOCAL_CONFIG",
+                                           description="Set SCIPION_LOCAL_CONFIG",
+                                           descriptionDone="SCIPION_LOCAL_CONFIG set"))
+
+    factorySteps.addStep(
+        ShellCommand(command=['echo', 'SCIPION_LOCAL_CONFIG',
+                              util.Property('SCIPION_LOCAL_CONFIG')],
+                     name='Echo SCIPION_LOCAL_CONFIG',
+                     description='Echo SCIPION_LOCAL_CONFIG',
+                     descriptionDone='Echo SCIPION_LOCAL_CONFIG',
+                     timeout=settings.timeOutShort
+                     ))
+
     if groupId == settings.SDEVEL_GROUP_ID:
 
-        factorySteps.addStep(steps.SetProperty(property='SCIPION_LOCAL_CONFIG',
-                                               value="~/.config/scipion/scipion_%s.conf" % groupId,
-                                               name="Set SCIPION_LOCAL_CONFIG",
-                                               description="Set SCIPION_LOCAL_CONFIG",
-                                               descriptionDone="SCIPION_LOCAL_CONFIG set"))
-
-        factorySteps.addStep(
-            ShellCommand(command=['echo', 'SCIPION_LOCAL_CONFIG',
-                                  util.Property('SCIPION_LOCAL_CONFIG')],
-                         name='Echo SCIPION_LOCAL_CONFIG',
-                         description='Echo SCIPION_LOCAL_CONFIG',
-                         descriptionDone='Echo SCIPION_LOCAL_CONFIG',
-                         timeout=settings.timeOutShort
-                         ))
-
+        # Create the pyworkflow, pwem and xmipp documentation as special cases
         command = ('sphinx-apidoc -f -e -o api/pyworkflow ' +
                    settings.SDEVEL_SCIPION_HOME + "/scipion-pyworkflow" +
                    " " + settings.SDEVEL_SCIPION_HOME + "/scipion-pyworkflow/pyworkflowtests")
@@ -752,13 +754,65 @@ def docsFactory(groupId):
                          descriptionDone='Generated scipion-em docs',
                          timeout=settings.timeOutInstall))
 
-        cmd = 'sphinx-build . ' + settings.SDEVEL_SCIPION_HOME +'/tmp/release-3.0.0'
+        command = ('sphinx-apidoc -f -e -o api/xmipp3 ' +
+                   settings.SDEVEL_XMIPP_HOME + "/src/scipion-em-xmipp" +
+                   " " + settings.SDEVEL_XMIPP_HOME + "/src/scipion-em-xmipp/xmipp3/tests")
+
+        factorySteps.addStep(
+            ScipionCommandStep(command=command,
+                               name='Generate scipion-em-xmipp docs',
+                               description='Generate scipion-em-xmipp docs',
+                               descriptionDone='Generated scipion-em-xmipp docs',
+                               timeout=settings.timeOutInstall))
+
+        # Generate the plugins documentation
+        plugins = {}
+        plugins.update(scipionSdevelPlugins)
+        plugins['scipion-em-locscale'] = {"pipName": "scipion-em-locscale",
+                                          "name": "locscale",
+                                          }
+        for plugin, pluginDict in plugins.items():
+            moduleName = str(pluginDict.get("name", plugin.rsplit('-', 1)[-1]))
+            modulePath = os.path.join(settings.SCIPION_ENV_PATH, moduleName)
+            if os.path.exists(modulePath):
+                command = ('sphinx-apidoc -f -e -o api/' + moduleName + ' ' +
+                            modulePath + " " + modulePath + '/tests')
+
+                factorySteps.addStep(
+                    ScipionCommandStep(command=command,
+                                       name='Generate ' + moduleName + ' docs',
+                                       description='Generate ' + moduleName + ' docs',
+                                       descriptionDone='Generate ' + moduleName + ' docs',
+                                       timeout=settings.timeOutInstall))
+
+        cmd = 'sphinx-build . ' + settings.SDEVEL_SCIPION_HOME +'/tmp/' + docsBranch
         factorySteps.addStep(
             ScipionCommandStep(command=cmd,
                                description='Build the documentation using sphinx-build',
                                name='Build the documentation using sphinx-build in the tmp folder',
                                descriptionDone='Generated scipion-em docs',
                                timeout=settings.timeOutInstall))
+
+        factorySteps.addStep(ShellCommand(command=["git", "add", "."],
+                                          name='Git add docs',
+                                          description='Git add docs',
+                                          descriptionDone='Git added docs',
+                                          timeout=settings.timeOutInstall))
+
+        factorySteps.addStep(
+            SetPropertyFromCommand(
+                command="[[ -n $(git status -s) ]] || echo 'clean'",
+                property='DOCS_REPO_STATUS_SCIPION_DOCUMENTATION',
+                name='Set property DOCS_REPO_STATUS',
+                description='Check repo status'))
+
+        factorySteps.addStep(ShellCommand(
+            command=["git", "commit", "-m", "buildbot automated-update"],
+            name='Git commit the builded docs',
+            description='Git commit the builded docs',
+            descriptionDone='Git commit the builded docs',
+            doStepIf=doCommit,
+            timeout=settings.timeOutInstall))
 
         factorySteps.addStep(
             ShellCommand(command='git checkout gh-pages',
@@ -775,7 +829,7 @@ def docsFactory(groupId):
 
         factorySteps.addStep(
             ShellCommand(command='cp -r ' + settings.SDEVEL_SCIPION_HOME +
-                                 '/tmp/release-3.0.0/ .',
+                                 '/tmp/' + docsBranch + ' .',
                          name='Update the API documentation',
                          description='Update the API documentation',
                          descriptionDone='Update the API documentation',
@@ -816,10 +870,10 @@ def docsFactory(groupId):
                                           descriptionDone='Git push the builded docs to repo',
                                           timeout=settings.timeOutInstall))
         factorySteps.addStep(
-            ShellCommand(command='git checkout release-3.0.0',
-                         name='Checkout to release-3.0.0 branch',
-                         description='Checkout to release-3.0.0 branch',
-                         descriptionDone='Checkout to release-3.0.0 branch',
+            ShellCommand(command='git checkout ' + docsBranch,
+                         name='Checkout to ' + docsBranch + ' branch',
+                         description='Checkout to ' + docsBranch + ' branch',
+                         descriptionDone='Checkout to ' + docsBranch + ' branch',
                          timeout=settings.timeOutInstall))
 
     else:
