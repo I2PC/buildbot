@@ -290,6 +290,43 @@ def installXmippFactory(groupId):
                          timeout=timeOutShort)
         )
 
+        linkToSoftwareEmLib = ['ln', '-fs',
+                            util.Interpolate("%(prop:XMIPP_HOME)s/build/bindings/python/xmippLib.so"),
+                            util.Interpolate(
+                                '%(prop:SCIPION_HOME)s/software/bindings')]
+        installXmippSteps.addStep(
+            ShellCommand(command=linkToSoftwareEmLib,
+                         name='Link xmippLib.so on software/bindings',
+                         description='Make a link to xmippLib.so on software/bindings',
+                         descriptionDone='Xmipp bindings linked to Scipion',
+                         timeout=timeOutShort)
+        )
+
+        linkToSoftwareEmLib = ['ln', '-fs',
+                               util.Interpolate(
+                                   "%(prop:XMIPP_HOME)s/build/lib/libXmippCore.so"),
+                               util.Interpolate(
+                                   '%(prop:SCIPION_HOME)s/software/lib')]
+        installXmippSteps.addStep(
+            ShellCommand(command=linkToSoftwareEmLib,
+                         name='Link libXmippCore.so on software/lib',
+                         description='Make a link to XmippCore.so on software/lib',
+                         descriptionDone='XmippCore.so linked to Scipion',
+                         timeout=timeOutShort)
+        )
+
+        linkToSoftwareEmLib = ['ln', '-fs',
+                               util.Interpolate(
+                                   "%(prop:XMIPP_HOME)s/build/lib/libXmipp.so"),
+                               util.Interpolate(
+                                   '%(prop:SCIPION_HOME)s/software/lib')]
+        installXmippSteps.addStep(
+            ShellCommand(command=linkToSoftwareEmLib,
+                         name='Link libXmipp.so on software/lib',
+                         description='Make a link to libXmipp.so on software/lib',
+                         descriptionDone='Xmipp XibXmipp.so linked to Scipion',
+                         timeout=timeOutShort)
+        )
         # Install xmipp plugin
         installXmippPluginCmd = (settings.SCIPION_CMD + ' installp -p ' +
                                  settings.SDEVEL_XMIPP_HOME +

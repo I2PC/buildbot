@@ -275,7 +275,7 @@ setScipionEnv = ShellCommand(command=settings.SCIPION_ENV_ACTIVATION.split(),
 installSdevelScipionPyworkflow = 'cd scipion-pyworkflow ; python -m pip install -e .'
 installSdevelScipionEM = 'cd scipion-em ; python -m pip install -e .'
 installSdevelScipionApp = 'cd scipion-app ; python -m pip install -e .'
-createSoftwareEM = 'mkdir -p software/em'
+createSoftwareEM = 'mkdir -p software/em && mkdir -p software/lib && mkdir -p software/bindings'
 
 removeScipionModules = ShellCommand(
     command=['bash', '-c',
@@ -289,7 +289,10 @@ removeScipionModules = ShellCommand(
     descriptionDone='Remove EM scipion modules',
     haltOnFailure=False)
 
-sdevelScipionConfig = 'python -m scipion config --notify --overwrite'
+sdevelScipionConfig = ('python -m scipion config --notify --overwrite && cp ' +
+                      settings.SDEVEL_SCIPION_HOME +
+                       '/config/scipion.conf' + ' ' +
+                       settings.SDEVEL_SCIPION_CONFIG_PATH)
 
 # Update the Scipion web site
 updateWebSiteCmd = 'python ' + settings.BUILDBOT_HOME + 'updateScipionSite.py'
@@ -484,13 +487,13 @@ def installSDevelScipionFactory(groupId):
     # Set the anaconda environment
     installScipionFactorySteps.addStep(setCondaActivation)
     installScipionFactorySteps.addStep(setScipionEnvActivation)
-    installScipionFactorySteps.addStep(setCcp4Home)
-    installScipionFactorySteps.addStep(setNYSBC_3DFSC_HOME)
-    installScipionFactorySteps.addStep(setCryoloModel)
-    installScipionFactorySteps.addStep(setCryoloEnvActivation)
+    # installScipionFactorySteps.addStep(setCcp4Home)
+    # installScipionFactorySteps.addStep(setNYSBC_3DFSC_HOME)
+    # installScipionFactorySteps.addStep(setCryoloModel)
+    # installScipionFactorySteps.addStep(setCryoloEnvActivation)
     installScipionFactorySteps.addStep(setCryosparcHome)
     installScipionFactorySteps.addStep(setCryosparcUser)
-    installScipionFactorySteps.addStep(setPhenixHome)
+    # installScipionFactorySteps.addStep(setPhenixHome)
 
     return installScipionFactorySteps
 
