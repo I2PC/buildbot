@@ -936,17 +936,6 @@ def docsFactory(groupId):
             descriptionDone='Pushed built docs',
             timeout=settings.timeOutInstall))
     else:
-        factorySteps.addStep(ShellCommand(
-            command=[util.Interpolate("%(prop:SCIPION_HOME)s/scipion"),
-                     "run", util.Property('sphinx-versioning'), 'push', '-r',
-                     docsBranch,
-                     util.Property('DOCS_HOME'), settings.DOCS_HTML_BRANCH,
-                     "."],
-            name='Push built docs',
-            description='Pushing built docs',
-            descriptionDone='Pushed built docs',
-            timeout=settings.timeOutInstall))
-
         cmd = ('sphinx-versioning push -r ' + docsBranch + " " +
                settings.SDEVEL_DOCS_PATH + " " + settings.DOCS_HTML_BRANCH +
                " .")
