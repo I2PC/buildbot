@@ -924,16 +924,39 @@ def docsFactory(groupId):
                                       description='Git push docs to repo',
                                       descriptionDone='Git push docs to repo',
                                       timeout=settings.timeOutInstall))
-    factorySteps.addStep(ShellCommand(
-        command=[util.Interpolate("%(prop:SCIPION_HOME)s/scipion"),
-                 "run", util.Property('sphinx-versioning'), 'push', '-r',
-                 docsBranch,
-                 util.Property('DOCS_HOME'), settings.DOCS_HTML_BRANCH,
-                 "."],
-        name='Push built docs',
-        description='Pushing built docs',
-        descriptionDone='Pushed built docs',
-        timeout=settings.timeOutInstall))
+    if groupId != settings.SDEVEL_GROUP_ID:
+        factorySteps.addStep(ShellCommand(
+            command=[util.Interpolate("%(prop:SCIPION_HOME)s/scipion"),
+                     "run", util.Property('sphinx-versioning'), 'push', '-r',
+                     docsBranch,
+                     util.Property('DOCS_HOME'), settings.DOCS_HTML_BRANCH,
+                     "."],
+            name='Push built docs',
+            description='Pushing built docs',
+            descriptionDone='Pushed built docs',
+            timeout=settings.timeOutInstall))
+    else:
+        factorySteps.addStep(ShellCommand(
+            command=[util.Interpolate("%(prop:SCIPION_HOME)s/scipion"),
+                     "run", util.Property('sphinx-versioning'), 'push', '-r',
+                     docsBranch,
+                     util.Property('DOCS_HOME'), settings.DOCS_HTML_BRANCH,
+                     "."],
+            name='Push built docs',
+            description='Pushing built docs',
+            descriptionDone='Pushed built docs',
+            timeout=settings.timeOutInstall))
+
+        cmd = ('sphinx-versioning push -r ' + docsBranch + " " +
+               settings.SDEVEL_DOCS_PATH + " " + settings.DOCS_HTML_BRANCH +
+               " .")
+        factorySteps.addStep(
+            ScipionCommandStep(command=cmd,
+                               description='Build the documentation using sphinx-build',
+                               name='Build the documentation using sphinx-build in the tmp folder',
+                               descriptionDone='Generated scipion-em docs',
+                               timeout=settings.timeOutInstall))
+
 
     return factorySteps
 
