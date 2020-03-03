@@ -33,8 +33,6 @@ with open(settings.SDEVELPLUGINS_JSON_FILE) as f:
     pyworkflowPlugin = scipionSdevelPlugins.pop("scipion-pyworkflow")
     pwemPlugin = scipionSdevelPlugins.pop("scipion-em")
 
-
-
 # Remove config/scipion.conf
 removeScipionConf = ShellCommand(
     command=['rm', '-f', 'config/scipion.conf'],
@@ -176,7 +174,6 @@ setScipionEnvActivation = ShellCommand(
     descriptionDone='Set SCIPION_ENV_ACTIVATION in scipion conf',
     haltOnFailure=True)
 
-
 setPhenixHome = ShellCommand(
     command=util.Interpolate(
         'sed -ie "\$aPHENIX_HOME = {}" %(prop:SCIPION_LOCAL_CONFIG)s'.format(settings.PHENIX_HOME)),
@@ -184,7 +181,6 @@ setPhenixHome = ShellCommand(
     description='Set PHENIX_HOME in scipion conf',
     descriptionDone='Set PHENIX_HOME in scipion conf',
     haltOnFailure=True)
-
 
 setCryosparcHome = ShellCommand(
     command=util.Interpolate(
@@ -565,8 +561,6 @@ def scipionTestFactory(groupId):
                                       haltOnFailure=False,
                                       targetTestSet=shortName))
 
-
-
     return scipionTestSteps
 
 
@@ -670,7 +664,6 @@ def pluginFactory(groupId, pluginName, factorySteps=None, shortname=None,
 def cleanUpFactory(rmXmipp=False):
     cleanUpSteps = util.BuildFactory()
 
-
     cleanUpSteps.workdir = util.Property('BUILD_GROUP_HOME')
     cleanUpSteps.addStep(ShellCommand(command=['rm', '-rf', 'scipion'],
                                       name='Removing Scipion',
@@ -684,8 +677,6 @@ def cleanUpFactory(rmXmipp=False):
                                           description='Removing Xmipp',
                                           descriptionDone='Xmipp removed',
                                           timeout=settings.timeOutInstall))
-
-
 
     return cleanUpSteps
 
@@ -941,11 +932,10 @@ def docsFactory(groupId):
                " .")
         factorySteps.addStep(
             ScipionCommandStep(command=cmd,
-                               description='Build the documentation using sphinx-build',
-                               name='Build the documentation using sphinx-build in the tmp folder',
-                               descriptionDone='Generated scipion-em docs',
+                               description='Push built docs',
+                               name='Push built docs',
+                               descriptionDone='Push built docs',
                                timeout=settings.timeOutInstall))
-
 
     return factorySteps
 
@@ -979,7 +969,8 @@ def getLocscaleBuilder(groupId, env):
 def getScipionBuilders(groupId):
     scipionBuilders = []
     env = {"SCIPION_IGNORE_PYTHONPATH": "True",
-           "SCIPION_LOCAL_CONFIG": util.Property('SCIPION_LOCAL_CONFIG')}
+           "SCIPION_LOCAL_CONFIG": util.Property('SCIPION_LOCAL_CONFIG'),
+           "LD_LIBRARY_PATH": settings.LD_LIBRARY_PATH}
 
     if groupId != settings.SDEVEL_GROUP_ID:
 
