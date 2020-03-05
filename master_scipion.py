@@ -163,7 +163,7 @@ setNYSBC_3DFSC_HOME = ShellCommand(
     haltOnFailure=True)
 
 setNYSBC_3DFSC_HOMESdevel = ShellCommand(
-    command=changeConfVar('NYSBC_3DFSC_HOME', settings.NYSBC_3DFSC_HOME,
+    command=changeConfVar('FSC3D_HOME', settings.NYSBC_3DFSC_HOME,
                           file=settings.SDEVEL_SCIPION_CONFIG_PATH,
                           escapeSlash=True),
     name='Change NYSBC_3DFSC_HOME',
