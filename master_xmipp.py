@@ -566,7 +566,8 @@ def getXmippBuilders(groupId):
         env = {
             "SCIPION_IGNORE_PYTHONPATH": "True",
             "SCIPION_LOCAL_CONFIG": util.Property("SCIPION_LOCAL_CONFIG"),
-            "SCIPION_HOME": util.Property('SCIPION_HOME')
+            "SCIPION_HOME": util.Property('SCIPION_HOME'),
+            "LD_LIBRARY_PATH": LD_LIBRARY_PATH
         }
         builders.append(
             BuilderConfig(name=XMIPP_TESTS + groupId,
