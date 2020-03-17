@@ -405,7 +405,8 @@ def xmippBundleFactory(groupId):
             extract_fn=glob2list,
             env={"SCIPION_HOME": util.Property("SCIPION_HOME"),
                  "SCIPION_LOCAL_CONFIG": util.Property("SCIPION_LOCAL_CONFIG"),
-                 "LD_LIBRARY_PATH": LD_LIBRARY_PATH}))
+                 "LD_LIBRARY_PATH": LD_LIBRARY_PATH,
+                 "EM_ROOT": settings.EM_ROOT}))
 
         xmippTestShowcmd = ["bash", "-c", settings.SCIPION_ENV_ACTIVATION +
                             " ; " + "./xmipp test --show"]
@@ -554,6 +555,7 @@ def getXmippBuilders(groupId):
             )
 
     else:
+        installEnv['EM_ROOT'] = settings.EM_ROOT
         builders.append(
             BuilderConfig(name=XMIPP_INSTALL_PREFIX + groupId,
                           workernames=[WORKER],
@@ -567,7 +569,8 @@ def getXmippBuilders(groupId):
             "SCIPION_IGNORE_PYTHONPATH": "True",
             "SCIPION_LOCAL_CONFIG": util.Property("SCIPION_LOCAL_CONFIG"),
             "SCIPION_HOME": util.Property('SCIPION_HOME'),
-            "LD_LIBRARY_PATH": LD_LIBRARY_PATH
+            "LD_LIBRARY_PATH": LD_LIBRARY_PATH,
+            "EM_ROOT": settings.EM_ROOT
         }
         builders.append(
             BuilderConfig(name=XMIPP_TESTS + groupId,

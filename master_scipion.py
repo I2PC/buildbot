@@ -146,6 +146,16 @@ setCcp4Home = ShellCommand(
     descriptionDone='Set CCP4_HOME in scipion conf',
     haltOnFailure=True)
 
+
+setEM_ROOTSdevel = ShellCommand(
+    command=changeConfVar('EM_ROOT', settings.EM_ROOT,
+                          file=settings.SDEVEL_SCIPION_CONFIG_PATH,
+                          escapeSlash=True),
+    name='Change EM_ROOT',
+    description='Add the right EM_ROOT path',
+    descriptionDone='Added EM_ROOT',
+    haltOnFailure=True)
+
 setCcp4HomeSdevel = ShellCommand(
     command=changeConfVar('CCP4_HOME', settings.CCP4_HOME,
                           file=settings.SDEVEL_SCIPION_CONFIG_PATH,
@@ -357,6 +367,9 @@ sdevelScipionConfig = ('python -m scipion config --notify --overwrite && cp ' +
                        '/config/scipion.conf' + ' ' +
                        settings.SDEVEL_SCIPION_CONFIG_PATH)
 
+sdevelMoveScipionConfig = ('cp ' + settings.SDEVEL_SCIPION_CONFIG_PATH + ' ' +
+                            settings.SDEVEL_SCIPION_HOME + '/config/scipion.conf')
+
 # Update the Scipion web site
 updateWebSiteCmd = 'python ' + settings.BUILDBOT_HOME + 'updateScipionSite.py'
 
@@ -539,6 +552,7 @@ def installSDevelScipionFactory(groupId):
                                                           descriptionDone='Scipion config',
                                                           haltOnFailure=True))
 
+    installScipionFactorySteps.addStep(setEM_ROOTSdevel)
     installScipionFactorySteps.addStep(setScipionUserData)
     installScipionFactorySteps.addStep(setNotifyAtFalse)
     installScipionFactorySteps.addStep(setGeneralCuda)
@@ -559,6 +573,13 @@ def installSDevelScipionFactory(groupId):
     installScipionFactorySteps.addStep(setCryosparcHomeSdevel)
     installScipionFactorySteps.addStep(setCryosparcUser)
     installScipionFactorySteps.addStep(setPhenixHomeSdevel)
+    installScipionFactorySteps.addStep(
+    ScipionCommandStep(command=sdevelMoveScipionConfig,
+                       name='Move Scipion Config file',
+                       description='Move Scipion Config file',
+                       descriptionDone='Move Scipion Config file',
+                       haltOnFailure=True))
+
 
     return installScipionFactorySteps
 
@@ -1124,6 +1145,7 @@ def getScipionBuilders(groupId):
                                                  env=env))
     else:
         env['SCIPION_HOME'] = settings.SDEVEL_SCIPION_HOME
+        env['EM_ROOT'] = settings.EM_ROOT
 
         scipionBuilders.append(
             BuilderConfig(name=settings.SCIPION_INSTALL_PREFIX + groupId,

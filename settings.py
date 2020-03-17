@@ -61,6 +61,7 @@ except ImportError:
     ################## Scipion settings ##################
 
     # vars in scipion.conf
+    EM_ROOT = "/home/buildbot/sdevel/scipion/software/em"
     MPI_LIBDIR = "/usr/lib/x86_64-linux-gnu/openmpi/lib"
     MPI_INCLUDE = "/usr/lib/x86_64-linux-gnu/openmpi/include"
     MPI_BINDIR = "/usr/bin"
