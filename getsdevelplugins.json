@@ -98,11 +98,11 @@
           "pluginSourceUrl": "https://github.com/scipion-em/scipion-em-bamfordlab.git@python3_migration",
           "slackChannel":"bamfordlab"
       },
-  "scipion-em-nysbc": {
-          "pipName": "scipion-em-nysbc",
+  "scipion-em-fsc3d": {
+          "pipName": "scipion-em-fsc3d",
           "id": 31,
-          "name": "nysbc",
-          "pluginSourceUrl": "https://github.com/scipion-em/scipion-em-nysbc.git@python3_migration"
+          "name": "fsc3d",
+          "pluginSourceUrl": "https://github.com/scipion-em/scipion-em-fsc3d.git@python3_migration"
       },
   "scipion-em-ccp4": {
           "pipName": "scipion-em-ccp4",
