@@ -133,7 +133,7 @@ setScipionUserData = ShellCommand(
 
 setMotioncorrCuda = ShellCommand(
     command=util.Interpolate(
-        'sed -ie "\$aMOTIONCORR_CUDA_LIB = {}" %(prop:SCIPION_LOCAL_CONFIG)s'.format(settings.CUDA_LIB)),
+        'sed -ie "\$aMOTIONCORR_CUDA_LIB = {}" %(prop:SCIPION_LOCAL_CONFIG)s'.format(settings.MOTIONCOR2_CUDA_LIB)),
     name='Set MOTIONCORR_CUDA_LIB in scipion conf',
     description='Set MOTIONCORR_CUDA_LIB in scipion conf',
     descriptionDone='Set MOTIONCORR_CUDA_LIB in scipion conf',
@@ -562,6 +562,7 @@ def installSDevelScipionFactory(groupId):
     installScipionFactorySteps.addStep(setDataTestsDir)
     # Activating the Anaconda environment
     # Set the anaconda environment
+    installScipionFactorySteps.addStep(setMotioncorrCuda)
     installScipionFactorySteps.addStep(setCondaActivation)
     installScipionFactorySteps.addStep(setScipionEnvActivation)
     installScipionFactorySteps.addStep(setCcp4HomeSdevel)
