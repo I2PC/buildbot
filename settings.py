@@ -93,7 +93,7 @@ except ImportError:
     #So far, what is in prod has to work with EMAN2.12
     EMAN212 = {"EMAN2DIR": util.Interpolate("%(prop:SCIPION_HOME)s/software/em/eman-2.12")}
     # Eman plugin in devel installs 2.3 ans is compatible with locscale
-    EMAN23 = {"EMAN2DIR": util.Interpolate("%(prop:SCIPION_HOME)s/software/em/eman-23")}
+    EMAN23 = {"EMAN2DIR": util.Interpolate("%(prop:SCIPION_HOME)s/software/em/eman-2.3")}
     gitRepoURL = 'https://github.com/I2PC/scipion.git'
     DOCS_REPO = "git@github.com:scipion-em/docs.git"
     DOCS_HTML_BRANCH = 'gh-pages'
