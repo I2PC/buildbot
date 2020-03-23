@@ -4,7 +4,8 @@
         "id": 4,
         "name": "eman2",
         "pluginSourceUrl": "https://github.com/scipion-em/scipion-em-eman2.git@python3_migration",
-        "slackChannel":"eman"
+        "slackChannel":"eman",
+        "NO_TESTS": true
     },
    "scipion-em-spider": {
           "pipName": "scipion-em-spider",
