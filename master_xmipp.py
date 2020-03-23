@@ -69,12 +69,6 @@ def installXmippFactory(groupId):
                      descriptionDone='Xmipp repo downloaded',
                      timeout=timeOutShort,
                      haltOnFailure=True))
-    # installXmippSteps.addStep(
-    #     ShellCommand(command=['chmod', 'a+x', 'xmipp'],
-    #                  name='Make Xmipp script executable',
-    #                  description='Making Xmipp script executable',
-    #                  descriptionDone='Xmipp script made executable',
-    #                  timeout=timeOutShort))
 
     xmippBranch = branchsDict[groupId].get(XMIPP_BUILD_ID, "")
 
@@ -147,16 +141,6 @@ def installXmippFactory(groupId):
         installXmippSteps.addStep(
             steps.SetPropertyFromCommand(command='echo $PWD', property='XMIPP_HOME'))
 
-        # linkToSitePkgs = ['ln', '-fs', util.Interpolate('%(prop:XMIPP_HOME)s/src/scipion-em-xmipp/xmipp3'),
-        #                   util.Interpolate('%(prop:SCIPION_HOME)s/software/lib/python2.7/site-packages/')]
-        #
-        # installXmippSteps.addStep(
-        #     ShellCommand(command=linkToSitePkgs,
-        #                  name='Link Xmipp on site-packages',
-        #                  description='Make a link to xmipp on Scipions site-packages',
-        #                  descriptionDone='Xmipp linked to site packages',
-        #                  timeout=timeOutShort))
-
         installXmippSteps.addStep(
             ShellCommand(command=['./scipion', 'installp', '-p', util.Interpolate('%(prop:XMIPP_HOME)s/src/scipion-em-xmipp'), '--devel'],
                          name='Install scipion-em-xmipp in devel mode',
@@ -217,116 +201,17 @@ def installXmippFactory(groupId):
                          timeout=timeOutShort)
         )
         installXmippSteps.addStep(
-            ScipionCommandStep(command='./xmipp config',
-                         name='./xmipp config',
-                         description='Generate xmipp config',
-                         descriptionDone='Generate xmipp config',
-                         timeout=timeOutShort)
-        )
-        installXmippSteps.addStep(
-            ShellCommand(command=changeConfVar('CUDA', CUDA, file='xmipp.conf'),
-                         name='Set CUDA = True',
-                         description='Set CUDA = True',
-                         descriptionDone='Set CUDA = True',
-                         timeout=timeOutShort)
-        )
-        installXmippSteps.addStep(
-            ShellCommand(command=changeConfVar('NVCC', NVCC, file='xmipp.conf'),
-                         name='Set NVCC',
-                         description='Set NVCC',
-                         descriptionDone='Set NVCC',
-                         timeout=timeOutShort)
-        )
-        installXmippSteps.addStep(
-            ShellCommand(command=changeConfVar('NVCC_CXXFLAGS', NVCC_CXXFLAGS,
-                                               file='xmipp.conf'),
-                         name='Set NVCC_CXXFLAGS',
-                         description='Set NVCC_CXXFLAGS',
-                         descriptionDone='Set NVCC_CXXFLAGS',
-                         timeout=timeOutShort)
-        )
-        installXmippSteps.addStep(
-            ShellCommand(command=changeConfVar('NVCC_LINKFLAGS', NVCC_LINKFLAGS,
-                                               file='xmipp.conf',
-                                               escapeSlash=True),
-                         name='Set NVCC_LINKFLAGS',
-                         description='Set NVCC_LINKFLAGS',
-                         descriptionDone='Set NVCC_LINKFLAGS',
-                         timeout=timeOutShort)
-        )
-        installXmippSteps.addStep(
             ScipionCommandStep(command='./xmipp get_dependencies %s' % (xmippBranch),
                          name='./xmipp get_dependencies',
                          description='Get Xmipp dependencies',
                          descriptionDone='Get Xmipp dependencies',
                          timeout=timeOutShort)
         )
-        installXmippSteps.addStep(
-            ScipionCommandStep(command='./xmipp compile 8',
-                         name='./xmipp compile',
-                         description='Compile Xmipp',
-                         descriptionDone='Compiled Xmipp',
-                         timeout=timeOutInstall)
-        )
-        installXmippSteps.addStep(ScipionCommandStep(command='./xmipp install',
-                         name='./xmipp install',
-                         description='Install Xmipp',
-                         descriptionDone='Installed Xmipp',
-                         timeout=timeOutShort))
 
         installXmippSteps.addStep(
             steps.SetPropertyFromCommand(command='echo $PWD',
                                          property='XMIPP_HOME'))
 
-        linkToSoftwareEm = ['ln', '-fs',
-                            util.Interpolate("%(prop:XMIPP_HOME)s/build"),
-                            util.Interpolate(
-                                '%(prop:SCIPION_HOME)s/software/em/xmipp')]
-        installXmippSteps.addStep(
-            ShellCommand(command=linkToSoftwareEm,
-                         name='Link Xmipp build on software/em',
-                         description='Make a link to xmipp/build on software/em',
-                         descriptionDone='Xmipp build linked to Scipion',
-                         timeout=timeOutShort)
-        )
-
-        linkToSoftwareEmLib = ['ln', '-fs',
-                            util.Interpolate("%(prop:XMIPP_HOME)s/build/bindings/python/xmippLib.so"),
-                            util.Interpolate(
-                                '%(prop:SCIPION_HOME)s/software/bindings')]
-        installXmippSteps.addStep(
-            ShellCommand(command=linkToSoftwareEmLib,
-                         name='Link xmippLib.so on software/bindings',
-                         description='Make a link to xmippLib.so on software/bindings',
-                         descriptionDone='Xmipp bindings linked to Scipion',
-                         timeout=timeOutShort)
-        )
-
-        linkToSoftwareEmLib = ['ln', '-fs',
-                               util.Interpolate(
-                                   "%(prop:XMIPP_HOME)s/build/lib/libXmippCore.so"),
-                               util.Interpolate(
-                                   '%(prop:SCIPION_HOME)s/software/lib')]
-        installXmippSteps.addStep(
-            ShellCommand(command=linkToSoftwareEmLib,
-                         name='Link libXmippCore.so on software/lib',
-                         description='Make a link to XmippCore.so on software/lib',
-                         descriptionDone='XmippCore.so linked to Scipion',
-                         timeout=timeOutShort)
-        )
-
-        linkToSoftwareEmLib = ['ln', '-fs',
-                               util.Interpolate(
-                                   "%(prop:XMIPP_HOME)s/build/lib/libXmipp.so"),
-                               util.Interpolate(
-                                   '%(prop:SCIPION_HOME)s/software/lib')]
-        installXmippSteps.addStep(
-            ShellCommand(command=linkToSoftwareEmLib,
-                         name='Link libXmipp.so on software/lib',
-                         description='Make a link to libXmipp.so on software/lib',
-                         descriptionDone='Xmipp XibXmipp.so linked to Scipion',
-                         timeout=timeOutShort)
-        )
         # Install xmipp plugin
         installXmippPluginCmd = (settings.SCIPION_CMD + ' installp -p ' +
                                  settings.SDEVEL_XMIPP_HOME +
@@ -342,29 +227,18 @@ def installXmippFactory(groupId):
                          workdir=SCIPION_BUILD_ID)
         )
 
+        # Install xmipp binary
+        installXmippBinaryCmd = (settings.SCIPION_CMD + ' installb xmippDev -j 8')
 
-        # installDeepLearning = (settings.SCIPION_CMD + ' installb deepLearningToolkit')
-        # installXmippSteps.addStep(
-        #     ScipionCommandStep(
-        #         command=installDeepLearning,
-        #         name='Install deepLearningToolkit',
-        #         description='Install deepLearningToolkit',
-        #         descriptionDone='Installed deepLearningToolkit',
-        #         timeout=timeOutInstall,
-        #         haltOnFailure=True,
-        #         workdir=SCIPION_BUILD_ID)
-        # )
-
-        # installXmippSteps.addStep(
-        #     ScipionCommandStep(
-        #         command='python -m pip install scikit-learn==0.19.1',
-        #         name='Install scikit-learn',
-        #         description='Install scikit-learn',
-        #         descriptionDone='Installed scikit-learn',
-        #         timeout=timeOutInstall,
-        #         haltOnFailure=True,
-        #         workdir=SCIPION_BUILD_ID)
-        # )
+        installXmippSteps.addStep(
+            ScipionCommandStep(command=installXmippBinaryCmd,
+                               name='Install xmippDev binary',
+                               description='xmippDev binary',
+                               descriptionDone='xmippDev binary',
+                               timeout=timeOutInstall,
+                               haltOnFailure=True,
+                               workdir=SCIPION_BUILD_ID)
+        )
 
     return installXmippSteps
 
