@@ -200,13 +200,6 @@ def installXmippFactory(groupId):
                          descriptionDone='Get Xmipp devel sources',
                          timeout=timeOutShort)
         )
-        installXmippSteps.addStep(
-            ScipionCommandStep(command='./xmipp get_dependencies %s' % (xmippBranch),
-                         name='./xmipp get_dependencies',
-                         description='Get Xmipp dependencies',
-                         descriptionDone='Get Xmipp dependencies',
-                         timeout=timeOutShort)
-        )
 
         installXmippSteps.addStep(
             steps.SetPropertyFromCommand(command='echo $PWD',
@@ -275,7 +268,8 @@ def xmippBundleFactory(groupId):
                                   env=util.Property('env')))
     else:
         xmippTestSteps.addStep(SetProperty(
-            command=["bash", "-c", settings.SCIPION_ENV_ACTIVATION + " ; " + "source build/xmipp.bashrc; env"],
+            command=["bash", "-c", settings.SCIPION_ENV_ACTIVATION + " ; " +
+                     "cd " + settings.EM_ROOT + " ; " + "source xmipp/xmipp.bashrc; env"],
             extract_fn=glob2list,
             env={"SCIPION_HOME": util.Property("SCIPION_HOME"),
                  "SCIPION_LOCAL_CONFIG": util.Property("SCIPION_LOCAL_CONFIG"),
@@ -283,7 +277,7 @@ def xmippBundleFactory(groupId):
                  "EM_ROOT": settings.EM_ROOT}))
 
         xmippTestShowcmd = ["bash", "-c", settings.SCIPION_ENV_ACTIVATION +
-                            " ; " + "./xmipp test --show"]
+                            " ; " + "cd " + settings.SDEVEL_XMIPP_HOME + " ; " + "./xmipp test --show"]
         xmippTestSteps.addStep(
             GenerateStagesCommand(command=xmippTestShowcmd,
                                   name="Generate test stages for Xmipp programs",
@@ -431,6 +425,7 @@ def getXmippBuilders(groupId):
     else:
         installEnv['EM_ROOT'] = settings.EM_ROOT
         installEnv['LD_LIBRARY_PATH'] = LD_LIBRARY_PATH
+        installEnv['XMIPP_ALLOW_ANY_CUDA'] = 'True'
         builders.append(
             BuilderConfig(name=XMIPP_INSTALL_PREFIX + groupId,
                           workernames=[WORKER],
