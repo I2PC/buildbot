@@ -430,6 +430,7 @@ def getXmippBuilders(groupId):
 
     else:
         installEnv['EM_ROOT'] = settings.EM_ROOT
+        installEnv['LD_LIBRARY_PATH'] = LD_LIBRARY_PATH
         builders.append(
             BuilderConfig(name=XMIPP_INSTALL_PREFIX + groupId,
                           workernames=[WORKER],
