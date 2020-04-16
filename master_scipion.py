@@ -276,6 +276,15 @@ setCryosparcUser = ShellCommand(
     haltOnFailure=True)
 
 
+setMotincor2Bin = ShellCommand(
+    command=changeConfVar('MOTIONCOR2_BIN', settings.MOTIONCOR2_BIN,
+                          file=settings.SDEVEL_SCIPION_CONFIG_PATH,
+                          escapeSlash=True),
+    name='Change MOTIONCOR2_BIN',
+    description='Add the right MOTIONCOR2_BIN file',
+    descriptionDone='Added MOTIONCOR2_BIN',
+    haltOnFailure=True)
+
 installEman212 = ShellCommand(command=['./scipion', 'installb', 'eman-2.12'],
                               name='Install eman-2.12',
                               description='Install eman-2.12',
@@ -489,6 +498,7 @@ def installScipionFactory(groupId):
     installScipionFactorySteps.addStep(setPhenixHome)
     installScipionFactorySteps.addStep(setCryosparcDir)
     installScipionFactorySteps.addStep(setCryosparcUser)
+    installScipionFactorySteps.addStep(setMotincor2Bin)
     installScipionFactorySteps.addStep(setCcp4Home)
     installScipionFactorySteps.addStep(setNYSBC_3DFSC_HOME)
     installScipionFactorySteps.addStep(setCryoloModel)
@@ -567,12 +577,13 @@ def installSDevelScipionFactory(groupId):
     installScipionFactorySteps.addStep(setScipionEnvActivation)
     installScipionFactorySteps.addStep(setCcp4HomeSdevel)
     installScipionFactorySteps.addStep(setNYSBC_3DFSC_HOMESdevel)
-    installScipionFactorySteps.addStep(setCryoloModelSdevel)
-    installScipionFactorySteps.addStep(setCryoloEnvActivationSdevel)
+    #installScipionFactorySteps.addStep(setCryoloModelSdevel)
+    #installScipionFactorySteps.addStep(setCryoloEnvActivationSdevel)
     installScipionFactorySteps.addStep(setCryosparcDir)
     installScipionFactorySteps.addStep(setCryosparcProjectDir)
     installScipionFactorySteps.addStep(setCryosparcHomeSdevel)
     installScipionFactorySteps.addStep(setCryosparcUser)
+    installScipionFactorySteps.addStep(setMotincor2Bin)
     installScipionFactorySteps.addStep(setPhenixHomeSdevel)
     installScipionFactorySteps.addStep(
     ScipionCommandStep(command=sdevelMoveScipionConfig,
