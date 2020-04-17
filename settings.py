@@ -146,7 +146,8 @@ except ImportError:
                                 "pyworkflow.tests.em.workflows.test_parallel_gpu_queue.TestQueueSmall",
                                 "pyworkflow.tests.em.workflows.test_parallel_gpu_queue.TestQueueALL",
                                 "pyworkflow.tests.em.workflows.test_parallel_gpu_queue.TestQueueSteps",
-                                "pyworkflow.tests.em.workflows.test_workflow_existing.TestXmippWorkflow"])
+                                "pyworkflow.tests.em.workflows.test_workflow_existing.TestXmippWorkflow",
+                                "relion.tests.test_protocols_relion3.Relion3TestMultiBody"])
 
     ################### Xmipp settings ##################
     XMIPP_REPO_URL = ("-b %s https://github.com/I2PC/xmipp.git"

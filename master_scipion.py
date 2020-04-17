@@ -708,6 +708,7 @@ def pluginFactory(groupId, pluginName, factorySteps=None, shortname=None,
                                       descriptionDone="Generate Scipion test stages for %s" % shortName,
                                       stagePrefix=["./scipion", "test"],
                                       haltOnFailure=False,
+                                      blacklist=settings.SCIPION_TESTS_BLACKLIST,
                                       targetTestSet=shortName))
     else:
 
@@ -755,6 +756,7 @@ def pluginFactory(groupId, pluginName, factorySteps=None, shortname=None,
                                       descriptionDone="Generate Scipion test stages for %s" % shortName,
                                       stagePrefix=[settings.SCIPION_CMD, "test"],
                                       haltOnFailure=False,
+                                      blacklist=settings.SCIPION_TESTS_BLACKLIST,
                                       targetTestSet=shortName))
 
     return factorySteps
