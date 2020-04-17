@@ -7,6 +7,13 @@
         "slackChannel":"eman",
         "NO_TESTS": true
     },
+   "scipion-em-cistem": {
+      "pipName": "scipion-em-cistem",
+            "id": 51,
+            "name": "cistem",
+            "pluginSourceUrl": "https://github.com/scipion-em/scipion-em-cistem.git@python3_migration",
+            "no_production": true
+    },
    "scipion-em-spider": {
           "pipName": "scipion-em-spider",
           "id": 31,
@@ -149,13 +156,6 @@
           "id": 51,
           "name": "sphire",
           "pluginSourceUrl": "https://github.com/scipion-em/scipion-em-sphire.git@python3_migration"
-  },
-  "scipion-em-cistem": {
-    "pipName": "scipion-em-cistem",
-          "id": 51,
-          "name": "cistem",
-          "pluginSourceUrl": "https://github.com/scipion-em/scipion-em-cistem.git@python3_migration",
-          "no_production": true
   },
   "scipion-em-xmipp": {
         "pipName": "scipion-em-xmipp",
