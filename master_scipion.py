@@ -213,6 +213,13 @@ setCryoloEnvActivationSdevel = ShellCommand(
     descriptionDone='Added CRYOLO_ENV_ACTIVATION',
     haltOnFailure=True)
 
+setCryoloCuda = ShellCommand(
+    command=util.Interpolate(
+        'sed -ie "\$aCRYOLO_CUDA_LIB = {}" %(prop:SCIPION_LOCAL_CONFIG)s'.format(settings.CRYOLO_CUDA_LIB)),
+    name='Add CRYOLO_CUDA_LIB in scipion conf',
+    description='Add CRYOLO_CUDA_LIB in scipion conf',
+    descriptionDone='Add CRYOLO_CUDA_LIB in scipion conf',
+    haltOnFailure=True)
 
 setScipionEnvActivation = ShellCommand(
     command=util.Interpolate('sed -ie "\$aSCIPION_ENV_ACTIVATION = {}" %(prop:SCIPION_LOCAL_CONFIG)s'.format(settings.SCIPION_ENV_ACTIVATION)),
@@ -495,6 +502,7 @@ def installScipionFactory(groupId):
         steps.JSONStringDownload(dict(scipionPlugins, **{"scipion-em-locscale": locscalePluginData}),
                                  workerdest="plugins.json"))
     installScipionFactorySteps.addStep(setMotioncorrCuda)
+    installScipionFactorySteps.addStep(setCryoloCuda)
     installScipionFactorySteps.addStep(setPhenixHome)
     installScipionFactorySteps.addStep(setCryosparcDir)
     installScipionFactorySteps.addStep(setCryosparcUser)
@@ -573,6 +581,7 @@ def installSDevelScipionFactory(groupId):
     # Activating the Anaconda environment
     # Set the anaconda environment
     installScipionFactorySteps.addStep(setMotioncorrCuda)
+    installScipionFactorySteps.addStep(setCryoloCuda)
     installScipionFactorySteps.addStep(setCondaActivation)
     installScipionFactorySteps.addStep(setScipionEnvActivation)
     installScipionFactorySteps.addStep(setCcp4HomeSdevel)

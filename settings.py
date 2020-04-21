@@ -76,8 +76,9 @@ except ImportError:
     SDEVEL_XMIPP_HOME = '/home/buildbot/sdevel/xmipp'
     BUILDBOT_HOME = '/home/buildbot/'
     NYSBC_3DFSC_HOME = SDEVEL_SCIPION_HOME + "/software/em/nysbc3DFSC-3.0"
-    CRYOLO_NS_GENERIC_MODEL = SDEVEL_SCIPION_HOME + "/software/em/cryolo_model-201910/gmodel_phosnet_201910.h5"
-    CRYOLO_ENV_ACTIVATION = ". /home/buildbot/miniconda3/etc/profile.d/conda.sh; conda activate cryolo-1.5.4"
+    CRYOLO_NS_GENERIC_MODEL = SDEVEL_SCIPION_HOME + "/software/em/cryolo_model-202002_N63/gmodel_phosnet_202002_N63.h5"
+    CRYOLO_ENV_ACTIVATION = ". /home/buildbot/miniconda3/etc/profile.d/conda.sh; conda activate cryolo-1.6.1"
+    CRYOLO_CUDA_LIB = "/usr/local/cuda-8.0/lib64"
 
     # Cryosparc variables
     # The root directory where cryoSPARC code and dependencies is installed.
