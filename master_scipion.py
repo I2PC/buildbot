@@ -679,7 +679,7 @@ def scipionTestFactory(groupId):
 #                         PLUGIN FACTORY
 # *****************************************************************************
 def pluginFactory(groupId, pluginName, factorySteps=None, shortname=None,
-                  doInstall=True, extraBinaries='', doTest=True):
+                  doInstall=True, extraBinaries=[], doTest=True):
     factorySteps = factorySteps or util.BuildFactory()
     factorySteps.workdir = util.Property('SCIPION_HOME')
     shortName = shortname or str(pluginName.rsplit('-', 1)[-1])  # todo: get module names more properly?
@@ -745,7 +745,6 @@ def pluginFactory(groupId, pluginName, factorySteps=None, shortname=None,
                                               haltOnFailure=False))
 
         if extraBinaries:
-            extraBinaries = [extraBinaries] if isinstance(extraBinaries, str) else extraBinaries
             for binary in extraBinaries:
                 factorySteps.addStep(ScipionCommandStep(command=('%s installb %s -j 8') %(settings.SCIPION_CMD, binary),
                                                   name='Install extra package %s' % binary,
@@ -1205,11 +1204,15 @@ def getScipionBuilders(groupId):
             moduleName = str(pluginDict.get("name", plugin.rsplit('-', 1)[-1]))
             tags = [groupId, moduleName]
             hastests = not pluginDict.get("NO_TESTS", False)
+            extraBinaries = pluginDict.get("extraBinaries", [])
             scipionBuilders.append(
                 BuilderConfig(name="%s_%s" % (moduleName, groupId),
                               tags=tags,
                               workernames=[settings.WORKER],
-                              factory=pluginFactory(groupId, plugin, shortname=moduleName, doTest=hastests),
+                              factory=pluginFactory(groupId, plugin,
+                                                    shortname=moduleName,
+                                                    doTest=hastests,
+                                                    extraBinaries=extraBinaries),
                               workerbuilddir=groupId,
                               properties={'slackChannel': scipionSdevelPlugins[plugin].get('slackChannel', "")},
                               env=env)

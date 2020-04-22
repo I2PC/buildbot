@@ -135,7 +135,8 @@
     "pipName": "scipion-em-sphire",
           "id": 51,
           "name": "sphire",
-          "pluginSourceUrl": "https://github.com/scipion-em/scipion-em-sphire.git@devel"
+          "pluginSourceUrl": "https://github.com/scipion-em/scipion-em-sphire.git@devel",
+          "extraBinaries": ["cryolo_negstain_model"]
   },
   "scipion-em-xmipp": {
         "pipName": "scipion-em-xmipp",
