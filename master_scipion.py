@@ -509,7 +509,7 @@ def installScipionFactory(groupId):
     installScipionFactorySteps.addStep(setMotincor2Bin)
     installScipionFactorySteps.addStep(setCcp4Home)
     installScipionFactorySteps.addStep(setNYSBC_3DFSC_HOME)
-    installScipionFactorySteps.addStep(setCryoloModel)
+    # installScipionFactorySteps.addStep(setCryoloModel)
     installScipionFactorySteps.addStep(setCryoloEnvActivation)
     installScipionFactorySteps.addStep(setCondaActivation)
     return installScipionFactorySteps
@@ -585,7 +585,7 @@ def installSDevelScipionFactory(groupId):
     installScipionFactorySteps.addStep(setCondaActivation)
     installScipionFactorySteps.addStep(setScipionEnvActivation)
     installScipionFactorySteps.addStep(setCcp4HomeSdevel)
-    installScipionFactorySteps.addStep(setNYSBC_3DFSC_HOMESdevel)
+    #installScipionFactorySteps.addStep(setNYSBC_3DFSC_HOMESdevel)
     #installScipionFactorySteps.addStep(setCryoloModelSdevel)
     #installScipionFactorySteps.addStep(setCryoloEnvActivationSdevel)
     installScipionFactorySteps.addStep(setCryosparcDir)
