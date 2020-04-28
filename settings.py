@@ -27,6 +27,7 @@ except ImportError:
     DEVEL_GROUP_ID = 'devel'
     PROD_GROUP_ID = 'prod'
     SDEVEL_GROUP_ID = 'sdevel'
+    SPROD_GROUP_ID = 'sprod'
 
     SCIPION_BUILD_ID = 'scipion'  # this will be the name of the builder dir i.e. the scipion home
     XMIPP_BUILD_ID = 'xmipp'  # this will be the dir name of xmipp's home
@@ -43,10 +44,7 @@ except ImportError:
     # plugins are defined in plugins.json (e.g. using a pluginSourceUrl that points to the specific branch).
     # Buildbot will have one "orchestrator" builder for each build group, which will be in charge of
     # triggering the installation and testing stages of scipion, xmipp and each plugin.
-    branchsDict = {DEVEL_GROUP_ID: {SCIPION_BUILD_ID: 'devel',
-                                    XMIPP_BUILD_ID: 'devel',
-                                    DOCS_BUILD_ID: 'release-2.0.0'},
-                   PROD_GROUP_ID: {
+    branchsDict = {PROD_GROUP_ID: {
                        SCIPION_BUILD_ID: 'master'
                    },
                    SDEVEL_GROUP_ID: {
@@ -152,7 +150,7 @@ except ImportError:
 
     ################### Xmipp settings ##################
     XMIPP_REPO_URL = ("-b %s https://github.com/I2PC/xmipp.git"
-                        % branchsDict[DEVEL_GROUP_ID].get(XMIPP_BUILD_ID, "devel"))
+                        % branchsDict[SDEVEL_GROUP_ID].get(XMIPP_BUILD_ID, "devel"))
     # builder prefixes
     XMIPP_INSTALL_PREFIX = 'Install_Xmipp_'
     XMIPP_TESTS = 'xmipp_'

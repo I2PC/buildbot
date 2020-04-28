@@ -616,7 +616,7 @@ def scipionTestFactory(groupId):
 
     emanVar = settings.EMAN212 if groupId == settings.PROD_GROUP_ID else settings.EMAN23
 
-    if groupId != settings.SDEVEL_GROUP_ID:
+    if groupId == settings.PROD_GROUP_ID:
         # add TestRelionExtractStreaming manually because it needs eman 2.12
         wfRelionExtractStreaming = 'pyworkflow.tests.em.workflows.test_workflow_streaming.TestRelionExtractStreaming'
 
@@ -648,7 +648,7 @@ def scipionTestFactory(groupId):
                                                   description='Testing %s' % pwLongTest.split('.')[-1],
                                                   descriptionDone=pwLongTest.split('.')[-1],
                                                   timeout=settings.timeOutExecute))
-    else:
+    elif groupId == settings.SDEVEL_GROUP_ID:
         scipionTestSteps.addStep(ShellCommand(
             command=['echo', 'SCIPION_HOME: ', util.Property('SCIPION_HOME')],
             name='Echo scipion home',
@@ -684,7 +684,7 @@ def pluginFactory(groupId, pluginName, factorySteps=None, shortname=None,
     factorySteps.workdir = util.Property('SCIPION_HOME')
     shortName = shortname or str(pluginName.rsplit('-', 1)[-1])  # todo: get module names more properly?
 
-    if groupId != settings.SDEVEL_GROUP_ID:
+    if groupId == settings.PROD_GROUP_ID:
         if doInstall:
             factorySteps.addStep(ShellCommand(command=['./scipion', 'installp', '-p', pluginName, '-j', '8'],
                                               name='Install plugin %s' % shortName,
@@ -719,7 +719,8 @@ def pluginFactory(groupId, pluginName, factorySteps=None, shortname=None,
                                       haltOnFailure=False,
                                       blacklist=settings.SCIPION_TESTS_BLACKLIST,
                                       targetTestSet=shortName))
-    else:
+
+    elif groupId == settings.SDEVEL_GROUP_ID:
 
         if doInstall:
             installCmd = (settings.SCIPION_CMD + ' installp -p ' + pluginName +
@@ -1094,7 +1095,7 @@ def getScipionBuilders(groupId):
            "SCIPION_LOCAL_CONFIG": util.Property('SCIPION_LOCAL_CONFIG'),
            "LD_LIBRARY_PATH": settings.LD_LIBRARY_PATH}
 
-    if groupId != settings.SDEVEL_GROUP_ID:
+    if groupId == settings.PROD_GROUP_ID:
 
         scipionBuilders.append(
             BuilderConfig(name=settings.SCIPION_INSTALL_PREFIX + groupId,
@@ -1165,7 +1166,7 @@ def getScipionBuilders(groupId):
                                                  properties={
                                                      'slackChannel': "buildbot"},
                                                  env=env))
-    else:
+    elif groupId == settings.SDEVEL_GROUP_ID:
         env['SCIPION_HOME'] = settings.SDEVEL_SCIPION_HOME
         env['EM_ROOT'] = settings.EM_ROOT
 

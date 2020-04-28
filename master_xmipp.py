@@ -72,126 +72,7 @@ def installXmippFactory(groupId):
 
     xmippBranch = branchsDict[groupId].get(XMIPP_BUILD_ID, "")
 
-    if groupId != SDEVEL_GROUP_ID:
-
-        installXmippSteps.addStep(
-            ShellCommand(command=['./xmipp', 'get_devel_sources', xmippBranch],
-                         name='Get Xmipp devel sources',
-                         description='Get Xmipp devel sources',
-                         descriptionDone='Get Xmipp devel sources',
-                         timeout=timeOutShort)
-        )
-        installXmippSteps.addStep(
-            ShellCommand(command=['./xmipp', 'config'],
-                         name='./xmipp config',
-                         description='Generate xmipp config',
-                         descriptionDone='Generate xmipp config',
-                         timeout=timeOutShort)
-        )
-        installXmippSteps.addStep(
-            ShellCommand(command=changeConfVar('CUDA', CUDA, file='xmipp.conf'),
-                         name='Set CUDA = True',
-                         description='Set CUDA = True',
-                         descriptionDone='Set CUDA = True',
-                         timeout=timeOutShort)
-        )
-        installXmippSteps.addStep(
-            ShellCommand(command=changeConfVar('NVCC', NVCC, file='xmipp.conf'),
-                         name='Set NVCC',
-                         description='Set NVCC',
-                         descriptionDone='Set NVCC',
-                         timeout=timeOutShort)
-        )
-        installXmippSteps.addStep(
-            ShellCommand(command=changeConfVar('NVCC_CXXFLAGS', NVCC_CXXFLAGS, file='xmipp.conf'),
-                         name='Set NVCC_CXXFLAGS',
-                         description='Set NVCC_CXXFLAGS',
-                         descriptionDone='Set NVCC_CXXFLAGS',
-                         timeout=timeOutShort)
-        )
-        installXmippSteps.addStep(
-            ShellCommand(command=changeConfVar('NVCC_LINKFLAGS', NVCC_LINKFLAGS, file='xmipp.conf', escapeSlash=True),
-                         name='Set NVCC_LINKFLAGS',
-                         description='Set NVCC_LINKFLAGS',
-                         descriptionDone='Set NVCC_LINKFLAGS',
-                         timeout=timeOutShort)
-        )
-        installXmippSteps.addStep(
-            ShellCommand(command=['./xmipp', 'get_dependencies', xmippBranch],
-                         name='./xmipp get_dependencies',
-                         description='Get Xmipp dependencies',
-                         descriptionDone='Get Xmipp dependencies',
-                         timeout=timeOutShort)
-        )
-        installXmippSteps.addStep(
-            ShellCommand(command=['./xmipp', 'compile', '8'],
-                         name='./xmipp compile',
-                         description='Compile Xmipp',
-                         descriptionDone='Compiled Xmipp',
-                         timeout=timeOutInstall)
-        )
-        installXmippSteps.addStep(
-            ShellCommand(command=['./xmipp', 'install'],
-                         name='./xmipp install',
-                         description='Install Xmipp',
-                         descriptionDone='Installed Xmipp',
-                         timeout=timeOutShort)
-        )
-
-        installXmippSteps.addStep(
-            steps.SetPropertyFromCommand(command='echo $PWD', property='XMIPP_HOME'))
-
-        installXmippSteps.addStep(
-            ShellCommand(command=['./scipion', 'installp', '-p', util.Interpolate('%(prop:XMIPP_HOME)s/src/scipion-em-xmipp'), '--devel'],
-                         name='Install scipion-em-xmipp in devel mode',
-                         description='Install scipion-em-xmipp in devel mode',
-                         descriptionDone='scipion-em-xmipp in devel mode',
-                         timeout=timeOutInstall,
-                         haltOnFailure=True,
-                         workdir=SCIPION_BUILD_ID)
-        )
-
-        linkToSoftwareEm = ['ln', '-fs', util.Interpolate("%(prop:XMIPP_HOME)s/build"),
-                            util.Interpolate('%(prop:SCIPION_HOME)s/software/em/xmipp')]
-        installXmippSteps.addStep(
-            ShellCommand(command=linkToSoftwareEm,
-                         name='Link Xmipp build on software/em',
-                         description='Make a link to xmipp/build on software/em',
-                         descriptionDone='Xmipp build linked to Scipion',
-                         timeout=timeOutShort)
-        )
-
-        installXmippSteps.addStep(
-            ShellCommand(command=['./scipion', 'installb', 'nma'],
-                         name='Install NMA',
-                         description='Install NMA',
-                         descriptionDone='Installed NMA',
-                         timeout=timeOutInstall,
-                         haltOnFailure=True,
-                         workdir=SCIPION_BUILD_ID)
-        )
-
-        installXmippSteps.addStep(
-            ShellCommand(command=['./scipion', 'installb', 'deepLearningToolkit'],
-                         name='Install deepLearningToolkit',
-                         description='Install deepLearningToolkit',
-                         descriptionDone='Installed deepLearningToolkit',
-                         timeout=timeOutInstall,
-                         haltOnFailure=True,
-                         workdir=SCIPION_BUILD_ID)
-        )
-
-        installXmippSteps.addStep(
-            ShellCommand(command=['./scipion', 'python', '-m', 'pip', 'install',
-                                  'scikit-learn==0.19.1'],
-                         name='Install scikit-learn',
-                         description='Install scikit-learn',
-                         descriptionDone='Installed scikit-learn',
-                         timeout=timeOutInstall,
-                         haltOnFailure=True,
-                         workdir=SCIPION_BUILD_ID)
-        )
-    else:
+    if groupId == SDEVEL_GROUP_ID:
 
         installXmippSteps.addStep(
             ScipionCommandStep(command='./xmipp get_devel_sources %s' % (xmippBranch),
@@ -367,62 +248,30 @@ def getXmippBuilders(groupId):
     bundleEnv.update(cudaEnv)
     bundleEnv.update(installEnv)
 
-    if groupId != SDEVEL_GROUP_ID:
+    if groupId == PROD_GROUP_ID:
+        builders.append(
+            BuilderConfig(name=XMIPP_INSTALL_PREFIX + groupId,
+                          workernames=[WORKER],
+                          tags=[groupId],
+                          factory=pluginFactory(groupId, 'scipion-em-xmipp', shortname='xmipp3', doTest=False,
+                                                extraBinaries=['xmippSrc', 'deepLearningToolkit', 'nma']),
+                          workerbuilddir=groupId,
+                          env=env,
+                          properties=props)
+        )
 
-        if groupId == PROD_GROUP_ID:
-            builders.append(
-                BuilderConfig(name=XMIPP_INSTALL_PREFIX + groupId,
-                              workernames=[WORKER],
-                              tags=[groupId],
-                              factory=pluginFactory(groupId, 'scipion-em-xmipp', shortname='xmipp3', doTest=False,
-                                                    extraBinaries=['xmippSrc', 'deepLearningToolkit', 'nma']),
-                              workerbuilddir=groupId,
-                              env=env,
-                              properties=props)
-            )
+        builders.append(
+            BuilderConfig(name="%s%s" % (XMIPP_TESTS, groupId),
+                          tags=[groupId, XMIPP_TESTS],
+                          workernames=[WORKER],
+                          factory=pluginFactory(groupId,'scipion-em-xmipp', shortname='xmipp3', doInstall=False),
+                          workerbuilddir=groupId,
+                          properties={'slackChannel': xmippPluginData.get('slackChannel', "")},
+                          env=env)
+        )
 
-            builders.append(
-                BuilderConfig(name="%s%s" % (XMIPP_TESTS, groupId),
-                              tags=[groupId, XMIPP_TESTS],
-                              workernames=[WORKER],
-                              factory=pluginFactory(groupId,'scipion-em-xmipp', shortname='xmipp3', doInstall=False),
-                              workerbuilddir=groupId,
-                              properties={'slackChannel': xmippPluginData.get('slackChannel', "")},
-                              env=env)
-            )
+    elif groupId == SDEVEL_GROUP_ID:
 
-        else:
-            builders.append(
-                BuilderConfig(name=XMIPP_INSTALL_PREFIX + groupId,
-                              workernames=[WORKER],
-                              tags=[groupId],
-                              factory=installXmippFactory(groupId),
-                              workerbuilddir=groupId,
-                              env=installEnv,
-                              properties=props)
-            )
-
-            builders.append(
-                BuilderConfig(name=XMIPP_TESTS + groupId,
-                              tags=[groupId],
-                              workernames=[WORKER],
-                              factory=xmippTestFactory(groupId),
-                              workerbuilddir=groupId,
-                              properties=props,
-                              env=env)
-            )
-
-            builders.append(
-                BuilderConfig(name=XMIPP_BUNDLE_TESTS + groupId,
-                              tags=[groupId],
-                              workernames=[WORKER],
-                              factory=xmippBundleFactory(groupId),
-                              workerbuilddir=groupId,
-                              env=bundleEnv,
-                              properties=props)
-            )
-
-    else:
         installEnv['EM_ROOT'] = settings.EM_ROOT
         installEnv['LD_LIBRARY_PATH'] = LD_LIBRARY_PATH
         installEnv['XMIPP_ALLOW_ANY_CUDA'] = 'True'
@@ -473,7 +322,7 @@ def getXmippSchedulers(groupId):
 
     xmippSchedulerNames = [XMIPP_TESTS + groupId, XMIPP_INSTALL_PREFIX + groupId]
 
-    if groupId == DEVEL_GROUP_ID or groupId == SDEVEL_GROUP_ID:
+    if groupId == SDEVEL_GROUP_ID:
         xmippSchedulerNames.append(XMIPP_BUNDLE_TESTS + groupId)
     schedulers = []
     for name in xmippSchedulerNames:
