@@ -679,7 +679,8 @@ def scipionTestFactory(groupId):
 #                         PLUGIN FACTORY
 # *****************************************************************************
 def pluginFactory(groupId, pluginName, factorySteps=None, shortname=None,
-                  doInstall=True, extraBinaries=[], doTest=True):
+                  doInstall=True, extraBinaries=[], doTest=True,
+                  deleteVirtualEnv=False, binToRemove=[]):
     factorySteps = factorySteps or util.BuildFactory()
     factorySteps.workdir = util.Property('SCIPION_HOME')
     shortName = shortname or str(pluginName.rsplit('-', 1)[-1])  # todo: get module names more properly?
@@ -721,6 +722,22 @@ def pluginFactory(groupId, pluginName, factorySteps=None, shortname=None,
                                       targetTestSet=shortName))
 
     elif groupId == settings.SDEVEL_GROUP_ID:
+
+        if deleteVirtualEnv:
+            deleteEnv = "conda env remove --name " + deleteVirtualEnv
+            removeBinCmd = " ; "
+            if binToRemove:
+                for binary in binToRemove:
+                   removeBinCmd += "rm -rf software/em/" + binary + "* ; "
+
+            deleteEnv += removeBinCmd
+            factorySteps.addStep(ScipionCommandStep(command=deleteEnv,
+                                              name='Removing the %s virtual environment' % shortName,
+                                              description='Removing %s virtual environment' % shortName,
+                                              descriptionDone='Removing %s virtual environment' % shortName,
+                                              timeout=settings.timeOutInstall,
+                                              haltOnFailure=False))
+
 
         if doInstall:
             installCmd = (settings.SCIPION_CMD + ' installp -p ' + pluginName +
@@ -1206,6 +1223,8 @@ def getScipionBuilders(groupId):
             tags = [groupId, moduleName]
             hastests = not pluginDict.get("NO_TESTS", False)
             extraBinaries = pluginDict.get("extraBinaries", [])
+            deleteVirtualEnv = pluginDict.get("deleteVirtualEnv", False)
+            binToRemove = pluginDict.get("binToRemove", [])
             scipionBuilders.append(
                 BuilderConfig(name="%s_%s" % (moduleName, groupId),
                               tags=tags,
@@ -1213,7 +1232,9 @@ def getScipionBuilders(groupId):
                               factory=pluginFactory(groupId, plugin,
                                                     shortname=moduleName,
                                                     doTest=hastests,
-                                                    extraBinaries=extraBinaries),
+                                                    extraBinaries=extraBinaries,
+                                                    deleteVirtualEnv=deleteVirtualEnv,
+                                                    binToRemove=binToRemove),
                               workerbuilddir=groupId,
                               properties={'slackChannel': scipionSdevelPlugins[plugin].get('slackChannel', "")},
                               env=env)

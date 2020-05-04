@@ -25,8 +25,8 @@ except ImportError:
 
     # builder branches
     DEVEL_GROUP_ID = 'devel'
-    PROD_GROUP_ID = 'prod'
-    SDEVEL_GROUP_ID = 'sdevel'
+    PROD_GROUP_ID = 'support'
+    SDEVEL_GROUP_ID = 'devel'
     SPROD_GROUP_ID = 'sprod'
 
     SCIPION_BUILD_ID = 'scipion'  # this will be the name of the builder dir i.e. the scipion home
@@ -54,12 +54,15 @@ except ImportError:
                        XMIPP_BUILD_ID: 'python3_migration',
                        DOCS_BUILD_ID: 'release-3.0.0'
 
-                   }}
+                   },
+                    SPROD_GROUP_ID: {
+                    SCIPION_BUILD_ID: 'master'
+                    }}
 
     ################## Scipion settings ##################
 
     # vars in scipion.conf
-    EM_ROOT = "/home/buildbot/sdevel/scipion/software/em"
+    EM_ROOT = "/home/buildbot/devel/scipion/software/em"
     MPI_LIBDIR = "/usr/lib/x86_64-linux-gnu/openmpi/lib"
     MPI_INCLUDE = "/usr/lib/x86_64-linux-gnu/openmpi/include"
     MPI_BINDIR = "/usr/bin"
@@ -70,8 +73,8 @@ except ImportError:
     CCP4_HOME = "/opt/ccp4-7.0"
     PHENIX_HOME = "/home/buildbot/phenix-1.17.1/phenix-1.17.1-3660"
     CONDA_ACTIVATION_CMD = ". /home/buildbot/miniconda3/etc/profile.d/conda.sh;"
-    SDEVEL_SCIPION_HOME = '/home/buildbot/sdevel/scipion'
-    SDEVEL_XMIPP_HOME = '/home/buildbot/sdevel/xmipp'
+    SDEVEL_SCIPION_HOME = '/home/buildbot/devel/scipion'
+    SDEVEL_XMIPP_HOME = '/home/buildbot/devel/xmipp'
     BUILDBOT_HOME = '/home/buildbot/'
     NYSBC_3DFSC_HOME = SDEVEL_SCIPION_HOME + "/software/em/fsc3D-3.0"
     CRYOLO_NS_GENERIC_MODEL = SDEVEL_SCIPION_HOME + "/software/em/cryolo_model-202002_N63/gmodel_phosnet_202002_N63.h5"
@@ -98,7 +101,7 @@ except ImportError:
     gitRepoURL = 'https://github.com/I2PC/scipion.git'
     DOCS_REPO = "git@github.com:scipion-em/docs.git"
     DOCS_HTML_BRANCH = 'gh-pages'
-    SDEVEL_DOCS_PATH = "/home/buildbot/scipionBot/sdevel/docs"
+    SDEVEL_DOCS_PATH = "/home/buildbot/scipionBot/devel/docs"
 
     #New verion of Scipion
     sdevel_gitRepoURL = ("-b %s https://github.com/scipion-em/scipion-app.git"
@@ -117,7 +120,7 @@ except ImportError:
     SCIPION_ENV_ACTIVATION = "source /home/buildbot/miniconda3/etc/profile.d/conda.sh ; conda activate scipion_python3"
     SCIPION_CMD = "python -m scipion"
     SCIPION_ENV_PATH = "/home/buildbot/.conda/envs/scipion_python3/lib/python3.5/site-packages/"
-    SDEVEL_SCIPION_CONFIG_PATH = "/home/buildbot/.config/scipion/scipion_sdevel.conf"
+    SDEVEL_SCIPION_CONFIG_PATH = "/home/buildbot/.config/scipion/scipion_devel.conf"
 
     # builder prefixes
     SCIPION_INSTALL_PREFIX = 'Install_Scipion_'
@@ -163,6 +166,6 @@ except ImportError:
     NVCC = 'nvcc'
     NVCC_CXXFLAGS = "--x cu -D_FORCE_INLINES -Xcompiler -fPIC -Wno-deprecated-gpu-targets -ccbin g++-5"
     NVCC_LINKFLAGS = '-L/usr/local/cuda/lib64'
-    LD_LIBRARY_PATH = '/usr/local/cuda-8.0/lib64:/home/buildbot/sdevel/scipion/software/lib'
+    LD_LIBRARY_PATH = '/usr/local/cuda-8.0/lib64:/home/buildbot/devel/scipion/software/lib'
     XMIPP_BUNDLE_VARS = ["LD_LIBRARY_PATH", "PATH", "PYTHONPATH",
                          "XMIPP_HOME", "XMIPP_SRC"]

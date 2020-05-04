@@ -110,7 +110,9 @@
           "pipName": "scipion-em-fsc3d",
           "id": 31,
           "name": "fsc3d",
-          "pluginSourceUrl": "https://github.com/scipion-em/scipion-em-fsc3d.git@python3_migration"
+          "pluginSourceUrl": "https://github.com/scipion-em/scipion-em-fsc3d.git@python3_migration",
+          "deleteVirtualEnv": "3DFSC",
+          "binToRemove": ["fsc3D-3.0"]
       },
   "scipion-em-ccp4": {
           "pipName": "scipion-em-ccp4",
