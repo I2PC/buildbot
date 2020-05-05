@@ -515,6 +515,24 @@ def installScipionFactory(groupId):
     return installScipionFactorySteps
 
 
+def installProdScipionFactory(groupId):
+    installScipionFactorySteps = util.BuildFactory()
+    installScipionFactorySteps.workdir = settings.SCIPION_BUILD_ID
+    installScipionFactorySteps = addSDevelScipionGitAndConfigSteps(
+        installScipionFactorySteps, groupId)
+
+    installScipionFactorySteps.addStep(
+        ShellCommand(command=['echo', 'SCIPION_LOCAL_CONFIG',
+                              util.Property('SCIPION_LOCAL_CONFIG')],
+                     name='Echo SCIPION_LOCAL_CONFIG',
+                     description='Echo SCIPION_LOCAL_CONFIG',
+                     descriptionDone='Echo SCIPION_LOCAL_CONFIG',
+                     timeout=settings.timeOutShort
+                     ))
+
+    return installScipionFactorySteps
+
+
 def installSDevelScipionFactory(groupId):
     installScipionFactorySteps = util.BuildFactory()
     installScipionFactorySteps.workdir = settings.SCIPION_BUILD_ID
@@ -1133,28 +1151,15 @@ def getScipionBuilders(groupId):
                           env=env)
         )
 
-        if groupId == settings.DEVEL_GROUP_ID:
-            env['SCIPION_PLUGIN_JSON'] = 'plugins.json'
-            scipionBuilders.append(
-                BuilderConfig(name=settings.CLEANUP_PREFIX + groupId,
-                              tags=[groupId],
-                              workernames=[settings.WORKER],
-                              factory=cleanUpFactory(rmXmipp=True),
-                              workerbuilddir=groupId,
-                              properties={'slackChannel': settings.SCIPION_SLACK_CHANNEL},
-                              env=env)
-            )
-
-        else:
-            scipionBuilders.append(
-                BuilderConfig(name=settings.CLEANUP_PREFIX + groupId,
-                              tags=[groupId],
-                              workernames=[settings.WORKER],
-                              factory=cleanUpFactory(),
-                              workerbuilddir=groupId,
-                              properties={'slackChannel': settings.SCIPION_SLACK_CHANNEL},
-                              env=env)
-            )
+        scipionBuilders.append(
+            BuilderConfig(name=settings.CLEANUP_PREFIX + groupId,
+                          tags=[groupId],
+                          workernames=[settings.WORKER],
+                          factory=cleanUpFactory(),
+                          workerbuilddir=groupId,
+                          properties={'slackChannel': settings.SCIPION_SLACK_CHANNEL},
+                          env=env)
+        )
 
         # special locscale case, we need to install eman212
 
@@ -1183,19 +1188,30 @@ def getScipionBuilders(groupId):
                                                  properties={
                                                      'slackChannel': "buildbot"},
                                                  env=env))
-    elif groupId == settings.SDEVEL_GROUP_ID:
+    elif groupId == settings.SDEVEL_GROUP_ID or groupId == settings.SPROD_GROUP_ID:
         env['SCIPION_HOME'] = settings.SDEVEL_SCIPION_HOME
         env['EM_ROOT'] = settings.EM_ROOT
 
-        scipionBuilders.append(
-            BuilderConfig(name=settings.SCIPION_INSTALL_PREFIX + groupId,
-                          tags=[groupId],
-                          workernames=[settings.WORKER],
-                          factory=installSDevelScipionFactory(groupId),
-                          workerbuilddir=groupId,
-                          properties={
-                              "slackChannel": settings.SCIPION_SLACK_CHANNEL},
-                          env=env))
+        if groupId == settings.SDEVEL_GROUP_ID:
+            scipionBuilders.append(
+                BuilderConfig(name=settings.SCIPION_INSTALL_PREFIX + groupId,
+                              tags=[groupId],
+                              workernames=[settings.WORKER],
+                              factory=installSDevelScipionFactory(groupId),
+                              workerbuilddir=groupId,
+                              properties={
+                                  "slackChannel": settings.SCIPION_SLACK_CHANNEL},
+                              env=env))
+        else:
+            scipionBuilders.append(
+                BuilderConfig(name=settings.SCIPION_INSTALL_PREFIX + groupId,
+                              tags=[groupId],
+                              workernames=[settings.WORKER],
+                              factory=installProdScipionFactory(groupId),
+                              workerbuilddir=groupId,
+                              properties={
+                                  "slackChannel": settings.SCIPION_SLACK_CHANNEL},
+                              env=env))
         scipionBuilders.append(
             BuilderConfig(name=settings.SCIPION_TESTS_PREFIX + groupId,
                           tags=[groupId],
@@ -1206,17 +1222,29 @@ def getScipionBuilders(groupId):
                               'slackChannel': settings.SCIPION_SLACK_CHANNEL},
                           env=env)
         )
-        env['SCIPION_PLUGIN_JSON'] = 'plugins.json'
-        scipionBuilders.append(
-            BuilderConfig(name=settings.CLEANUP_PREFIX + groupId,
-                          tags=[groupId],
-                          workernames=[settings.WORKER],
-                          factory=cleanUpFactory(rmXmipp=True),
-                          workerbuilddir=groupId,
-                          properties={
-                              'slackChannel': settings.SCIPION_SLACK_CHANNEL},
-                          env=env)
-        )
+        if groupId == settings.SDEVEL_GROUP_ID:
+            env['SCIPION_PLUGIN_JSON'] = 'plugins.json'
+            scipionBuilders.append(
+                BuilderConfig(name=settings.CLEANUP_PREFIX + groupId,
+                              tags=[groupId],
+                              workernames=[settings.WORKER],
+                              factory=cleanUpFactory(rmXmipp=True),
+                              workerbuilddir=groupId,
+                              properties={
+                                  'slackChannel': settings.SCIPION_SLACK_CHANNEL},
+                              env=env)
+            )
+        else:
+            scipionBuilders.append(
+                BuilderConfig(name=settings.CLEANUP_PREFIX + groupId,
+                              tags=[groupId],
+                              workernames=[settings.WORKER],
+                              factory=cleanUpFactory(),
+                              workerbuilddir=groupId,
+                              properties={
+                                  'slackChannel': settings.SCIPION_SLACK_CHANNEL},
+                              env=env)
+            )
 
         for plugin, pluginDict in scipionSdevelPlugins.items():
             moduleName = str(pluginDict.get("name", plugin.rsplit('-', 1)[-1]))
@@ -1282,7 +1310,7 @@ def updateWebSite(groupId):
 
 
 def getScipionSchedulers(groupId):
-    if groupId == settings.SDEVEL_GROUP_ID:
+    if groupId == settings.SDEVEL_GROUP_ID or groupId == settings.SPROD_GROUP_ID:
         scipionSchedulerNames = [settings.SCIPION_INSTALL_PREFIX + groupId,
                                  settings.SCIPION_TESTS_PREFIX + groupId,
                                  settings.CLEANUP_PREFIX + groupId]

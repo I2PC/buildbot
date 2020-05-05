@@ -270,7 +270,7 @@ def getXmippBuilders(groupId):
                           env=env)
         )
 
-    elif groupId == SDEVEL_GROUP_ID:
+    elif groupId == SDEVEL_GROUP_ID or groupId == settings.SPROD_GROUP_ID:
 
         installEnv['EM_ROOT'] = settings.EM_ROOT
         installEnv['LD_LIBRARY_PATH'] = LD_LIBRARY_PATH
@@ -301,15 +301,16 @@ def getXmippBuilders(groupId):
                           env=env)
         )
 
-        builders.append(
-            BuilderConfig(name=XMIPP_BUNDLE_TESTS + groupId,
-                          tags=[groupId],
-                          workernames=[WORKER],
-                          factory=xmippBundleFactory(groupId),
-                          workerbuilddir=groupId,
-                          env=bundleEnv,
-                          properties=props)
-        )
+        if groupId == SDEVEL_GROUP_ID:
+            builders.append(
+                BuilderConfig(name=XMIPP_BUNDLE_TESTS + groupId,
+                              tags=[groupId],
+                              workernames=[WORKER],
+                              factory=xmippBundleFactory(groupId),
+                              workerbuilddir=groupId,
+                              env=bundleEnv,
+                              properties=props)
+            )
 
     return builders
 
