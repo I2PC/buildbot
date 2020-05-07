@@ -170,9 +170,9 @@
   "scipion-em-tomo": {
         "pipName": "scipion-em-tomo",
         "id": 4,
-        "name": "topaz",
+        "name": "tomo",
         "pluginSourceUrl": "https://github.com/scipion-em/scipion-em-tomo.git@python3_migration",
-        "slackChannel":"topaz"
+        "slackChannel":"tomo"
     },
   "scipion-em-xmipp": {
         "pipName": "scipion-em-xmipp",

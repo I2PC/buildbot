@@ -27,7 +27,7 @@ except ImportError:
     DEVEL_GROUP_ID = 'devel'
     PROD_GROUP_ID = 'support'
     SDEVEL_GROUP_ID = 'devel'
-    SPROD_GROUP_ID = 'sprod'
+    SPROD_GROUP_ID = 'prod'
 
     SCIPION_BUILD_ID = 'scipion'  # this will be the name of the builder dir i.e. the scipion home
     XMIPP_BUILD_ID = 'xmipp'  # this will be the dir name of xmipp's home
@@ -56,13 +56,15 @@ except ImportError:
 
                    },
                     SPROD_GROUP_ID: {
-                    SCIPION_BUILD_ID: 'master'
+                    SCIPION_BUILD_ID: 'master',
+                    XMIPP_BUILD_ID: 'python3_migration'
                     }}
 
     ################## Scipion settings ##################
 
     # vars in scipion.conf
     EM_ROOT = "/home/buildbot/devel/scipion/software/em"
+    SPROD_EM_ROOT = "/home/buildbot/prod/scipion/software/em"
     MPI_LIBDIR = "/usr/lib/x86_64-linux-gnu/openmpi/lib"
     MPI_INCLUDE = "/usr/lib/x86_64-linux-gnu/openmpi/include"
     MPI_BINDIR = "/usr/bin"
@@ -74,7 +76,9 @@ except ImportError:
     PHENIX_HOME = "/home/buildbot/phenix-1.17.1/phenix-1.17.1-3660"
     CONDA_ACTIVATION_CMD = ". /home/buildbot/miniconda3/etc/profile.d/conda.sh;"
     SDEVEL_SCIPION_HOME = '/home/buildbot/devel/scipion'
+    SPROD_SCIPION_HOME = '/home/buildbot/prod/scipion'
     SDEVEL_XMIPP_HOME = '/home/buildbot/devel/xmipp'
+    SPROD_XMIPP_HOME = '/home/buildbot/prod/xmipp'
     BUILDBOT_HOME = '/home/buildbot/'
     NYSBC_3DFSC_HOME = SDEVEL_SCIPION_HOME + "/software/em/fsc3D-3.0"
     CRYOLO_NS_GENERIC_MODEL = SDEVEL_SCIPION_HOME + "/software/em/cryolo_model-202002_N63/gmodel_phosnet_202002_N63.h5"
@@ -119,8 +123,10 @@ except ImportError:
 
     SCIPION_ENV_ACTIVATION = "source /home/buildbot/miniconda3/etc/profile.d/conda.sh ; conda activate scipion_python3"
     SCIPION_CMD = "python -m scipion"
+    PROD_SCIPION_CMD = "./scipion3"
     SCIPION_ENV_PATH = "/home/buildbot/.conda/envs/scipion_python3/lib/python3.5/site-packages/"
     SDEVEL_SCIPION_CONFIG_PATH = "/home/buildbot/.config/scipion/scipion_devel.conf"
+    SPROD_SCIPION_CONFIG_PATH = "/home/buildbot/.config/scipion/scipion_prod.conf"
 
     # builder prefixes
     SCIPION_INSTALL_PREFIX = 'Install_Scipion_'
@@ -167,5 +173,6 @@ except ImportError:
     NVCC_CXXFLAGS = "--x cu -D_FORCE_INLINES -Xcompiler -fPIC -Wno-deprecated-gpu-targets -ccbin g++-5"
     NVCC_LINKFLAGS = '-L/usr/local/cuda/lib64'
     LD_LIBRARY_PATH = '/usr/local/cuda-8.0/lib64:/home/buildbot/devel/scipion/software/lib'
+    PROD_LD_LIBRARY_PATH = '/usr/local/cuda-8.0/lib64:/home/buildbot/prod/scipion/software/lib'
     XMIPP_BUNDLE_VARS = ["LD_LIBRARY_PATH", "PATH", "PYTHONPATH",
                          "XMIPP_HOME", "XMIPP_SRC"]

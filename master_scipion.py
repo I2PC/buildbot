@@ -165,6 +165,15 @@ setCcp4HomeSdevel = ShellCommand(
     descriptionDone='Added CCP4_HOME',
     haltOnFailure=True)
 
+setCcp4HomeSProd = ShellCommand(
+    command=changeConfVar('CCP4_HOME', settings.CCP4_HOME,
+                          file=settings.SPROD_SCIPION_CONFIG_PATH,
+                          escapeSlash=True),
+    name='Change CCP4_HOME',
+    description='Add the right CCP4_HOME path',
+    descriptionDone='Added CCP4_HOME',
+    haltOnFailure=True)
+
 setNYSBC_3DFSC_HOME = ShellCommand(
     command=util.Interpolate('sed -ie "\$aNYSBC_3DFSC_HOME = {}" %(prop:SCIPION_LOCAL_CONFIG)s'.format(settings.NYSBC_3DFSC_HOME)),
     name='Set NYSBC_3DFSC_HOME in scipion conf',
@@ -245,6 +254,15 @@ setPhenixHomeSdevel = ShellCommand(
     descriptionDone='Added PHENIX_HOME',
     haltOnFailure=True)
 
+setPhenixHomeSProd = ShellCommand(
+    command=changeConfVar('PHENIX_HOME', settings.PHENIX_HOME,
+                          file=settings.SPROD_SCIPION_CONFIG_PATH,
+                          escapeSlash=True),
+    name='Change PHENIX_HOME',
+    description='Add the right PHENIX_HOME path',
+    descriptionDone='Added PHENIX_HOME',
+    haltOnFailure=True)
+
 
 setCryosparcDir = ShellCommand(
     command=util.Interpolate(
@@ -263,11 +281,29 @@ setCryosparcHomeSdevel = ShellCommand(
     descriptionDone='Added CRYOSPARC_HOME',
     haltOnFailure=True)
 
+setCryosparcHomeSProd = ShellCommand(
+    command=changeConfVar('CRYOSPARC_HOME', settings.CRYOSPARC_DIR,
+                          file=settings.SPROD_SCIPION_CONFIG_PATH,
+                          escapeSlash=True),
+    name='Change CRYOSPARC_HOME',
+    description='Add the right CRYOSPARC_HOME path',
+    descriptionDone='Added CRYOSPARC_HOME',
+    haltOnFailure=True)
 
 setCryosparcProjectDir = ShellCommand(
     command=changeConfVar('CRYO_PROJECTS_DIR', settings.CRYOSPARC_DIR +
                           'scipion_projects',
                           file=settings.SDEVEL_SCIPION_CONFIG_PATH,
+                          escapeSlash=True),
+    name='Change CRYO_PROJECTS_DIR',
+    description='Add the right CRYO_PROJECTS_DIR path',
+    descriptionDone='Added CRYO_PROJECTS_DIR',
+    haltOnFailure=True)
+
+setProdCryosparcProjectDir = ShellCommand(
+    command=changeConfVar('CRYO_PROJECTS_DIR', settings.CRYOSPARC_DIR +
+                          'scipion_projects',
+                          file=settings.SPROD_SCIPION_CONFIG_PATH,
                           escapeSlash=True),
     name='Change CRYO_PROJECTS_DIR',
     description='Add the right CRYO_PROJECTS_DIR path',
@@ -286,6 +322,15 @@ setCryosparcUser = ShellCommand(
 setMotincor2Bin = ShellCommand(
     command=changeConfVar('MOTIONCOR2_BIN', settings.MOTIONCOR2_BIN,
                           file=settings.SDEVEL_SCIPION_CONFIG_PATH,
+                          escapeSlash=True),
+    name='Change MOTIONCOR2_BIN',
+    description='Add the right MOTIONCOR2_BIN file',
+    descriptionDone='Added MOTIONCOR2_BIN',
+    haltOnFailure=True)
+
+setMotincor2BinProd = ShellCommand(
+    command=changeConfVar('MOTIONCOR2_BIN', settings.MOTIONCOR2_BIN,
+                          file=settings.SPROD_SCIPION_CONFIG_PATH,
                           escapeSlash=True),
     name='Change MOTIONCOR2_BIN',
     description='Add the right MOTIONCOR2_BIN file',
@@ -385,6 +430,15 @@ sdevelScipionConfig = ('python -m scipion config --notify --overwrite && cp ' +
 
 sdevelMoveScipionConfig = ('cp ' + settings.SDEVEL_SCIPION_CONFIG_PATH + ' ' +
                             settings.SDEVEL_SCIPION_HOME + '/config/scipion.conf')
+
+sprodScipionConfig = ('./scipion3 config --notify --overwrite && cp ' +
+                      settings.SPROD_SCIPION_HOME +
+                       '/config/scipion.conf' + ' ' +
+                       settings.SPROD_SCIPION_CONFIG_PATH)
+
+sprodMoveScipionConfig = ('cp ' + settings.SPROD_SCIPION_CONFIG_PATH + ' ' +
+                            settings.SPROD_SCIPION_HOME + '/config/scipion.conf')
+
 
 # Update the Scipion web site
 updateWebSiteCmd = 'python ' + settings.BUILDBOT_HOME + 'updateScipionSite.py'
@@ -518,8 +572,6 @@ def installScipionFactory(groupId):
 def installProdScipionFactory(groupId):
     installScipionFactorySteps = util.BuildFactory()
     installScipionFactorySteps.workdir = settings.SCIPION_BUILD_ID
-    installScipionFactorySteps = addSDevelScipionGitAndConfigSteps(
-        installScipionFactorySteps, groupId)
 
     installScipionFactorySteps.addStep(
         ShellCommand(command=['echo', 'SCIPION_LOCAL_CONFIG',
@@ -529,6 +581,72 @@ def installProdScipionFactory(groupId):
                      descriptionDone='Echo SCIPION_LOCAL_CONFIG',
                      timeout=settings.timeOutShort
                      ))
+
+    # Install Scipion by the installer script
+    # Downloading the installer from pypi and install it
+    installScipionFactorySteps.addStep((ShellCommand(command=['pip', 'install', 'scipion-installer==1.0.0b0'],
+                                                    name='Installing scipion-installer from pypi',
+                                                    description='Installing scipion-installer from pypi',
+                                                    descriptionDone='Installing scipion-installer from pypi',
+                                                    timeout=settings.timeOutShort
+                                                    )))
+
+    # Install Scipion
+    scipionHome = settings.SPROD_SCIPION_HOME
+    installScipionFactorySteps.addStep(
+        (ShellCommand(command=['installscipion', scipionHome, '-noAsk', '-n',
+                               'prodEnv', '-conda'],
+                      name='Install Scipion',
+                      description='Install Scipion',
+                      descriptionDone='Install Scipion',
+                      timeout=settings.timeOutShort
+                      )))
+
+    installScipionFactorySteps.addStep(
+        steps.JSONStringDownload(dict(scipionSdevelPlugins, **{
+            "scipion-em-locscale": locscaleSdevelPluginData}),
+                                 workerdest="plugins.json"))
+
+    # Scipion config
+    installScipionFactorySteps.addStep(removeScipionConf)
+    installScipionFactorySteps.addStep(removeHomeConfig)
+    installScipionFactorySteps.addStep(
+        ShellCommand(command=sprodScipionConfig,
+                           name='Scipion Config',
+                           description='Create installation configuration files',
+                           descriptionDone='Scipion config',
+                           haltOnFailure=True))
+
+    installScipionFactorySteps.addStep(setScipionUserData)
+    installScipionFactorySteps.addStep(setNotifyAtFalse)
+    installScipionFactorySteps.addStep(setGeneralCuda)
+    installScipionFactorySteps.addStep(setMpiLibPath)
+    installScipionFactorySteps.addStep(setMpiBinPath)
+    installScipionFactorySteps.addStep(setMpiIncludePath)
+    installScipionFactorySteps.addStep(setDataTestsDir)
+    # Activating the Anaconda environment
+    # Set the anaconda environment
+    installScipionFactorySteps.addStep(setMotioncorrCuda)
+    installScipionFactorySteps.addStep(setCryoloCuda)
+    installScipionFactorySteps.addStep(setCondaActivation)
+
+    installScipionFactorySteps.addStep(setScipionEnvActivation)
+    installScipionFactorySteps.addStep(setCcp4HomeSProd)
+    # installScipionFactorySteps.addStep(setNYSBC_3DFSC_HOMESdevel)
+    # installScipionFactorySteps.addStep(setCryoloModelSdevel)
+    # installScipionFactorySteps.addStep(setCryoloEnvActivationSdevel)
+    installScipionFactorySteps.addStep(setCryosparcDir)
+    installScipionFactorySteps.addStep(setProdCryosparcProjectDir)
+    installScipionFactorySteps.addStep(setCryosparcHomeSProd)
+    installScipionFactorySteps.addStep(setCryosparcUser)
+    installScipionFactorySteps.addStep(setMotincor2BinProd)
+    installScipionFactorySteps.addStep(setPhenixHomeSProd)
+    installScipionFactorySteps.addStep(
+        ScipionCommandStep(command=sprodMoveScipionConfig,
+                           name='Move Scipion Config file',
+                           description='Move Scipion Config file',
+                           descriptionDone='Move Scipion Config file',
+                           haltOnFailure=True))
 
     return installScipionFactorySteps
 
@@ -698,31 +816,43 @@ def scipionTestFactory(groupId):
 # *****************************************************************************
 def pluginFactory(groupId, pluginName, factorySteps=None, shortname=None,
                   doInstall=True, extraBinaries=[], doTest=True,
-                  deleteVirtualEnv=False, binToRemove=[]):
+                  deleteVirtualEnv='', binToRemove=[]):
     factorySteps = factorySteps or util.BuildFactory()
     factorySteps.workdir = util.Property('SCIPION_HOME')
     shortName = shortname or str(pluginName.rsplit('-', 1)[-1])  # todo: get module names more properly?
 
-    if groupId == settings.PROD_GROUP_ID:
+    if groupId == settings.PROD_GROUP_ID or groupId == settings.SPROD_GROUP_ID:
+        scipionCmd = './scipion'
+        if groupId == settings.SPROD_GROUP_ID:
+            scipionCmd = './scipion3'
         if doInstall:
-            factorySteps.addStep(ShellCommand(command=['./scipion', 'installp', '-p', pluginName, '-j', '8'],
+            factorySteps.addStep(ShellCommand(command=[scipionCmd, 'installp', '-p', pluginName, '-j', '8'],
                                               name='Install plugin %s' % shortName,
                                               description='Install plugin %s' % shortName,
                                               descriptionDone='Installed plugin %s' % shortName,
                                               timeout=settings.timeOutInstall,
                                               haltOnFailure=True))
 
-            factorySteps.addStep(ShellCommand(command=['./scipion', 'python', 'pyworkflow/install/inspect-plugins.py',
-                                                       shortName],
-                                              name='Inspect plugin %s' % shortName,
-                                              description='Inspect plugin %s' % shortName,
-                                              descriptionDone='Inspected plugin %s' % shortName,
-                                              timeout=settings.timeOutInstall,
-                                              haltOnFailure=False))
+            if groupId == settings.PROD_GROUP_ID:
+                factorySteps.addStep(ShellCommand(command=[scipionCmd, 'python', 'pyworkflow/install/inspect-plugins.py',
+                                                           shortName],
+                                                  name='Inspect plugin %s' % shortName,
+                                                  description='Inspect plugin %s' % shortName,
+                                                  descriptionDone='Inspected plugin %s' % shortName,
+                                                  timeout=settings.timeOutInstall,
+                                                  haltOnFailure=False))
+            else:
+                factorySteps.addStep(ShellCommand(command=[scipionCmd, 'inspect', shortName],
+                                                 name='Inspect plugin %s' % shortName,
+                                                 description='Inspect plugin %s' % shortName,
+                                                 descriptionDone='Inspected plugin %s' % shortName,
+                                                 timeout=settings.timeOutInstall,
+                                                 haltOnFailure=False))
+
         if extraBinaries:
             extraBinaries = [extraBinaries] if isinstance(extraBinaries, str) else extraBinaries
             for binary in extraBinaries:
-                factorySteps.addStep(ShellCommand(command=['./scipion', 'installb', binary, '-j', '8'],
+                factorySteps.addStep(ShellCommand(command=[scipionCmd, 'installb', binary, '-j', '8'],
                                                   name='Install extra package %s' % binary,
                                                   description='Install extra package  %s' % binary,
                                                   descriptionDone='Installed extra package  %s' % binary,
@@ -730,11 +860,11 @@ def pluginFactory(groupId, pluginName, factorySteps=None, shortname=None,
                                                   haltOnFailure=True))
         if doTest:
             factorySteps.addStep(
-                GenerateStagesCommand(command=["./scipion", "test", "--show", "--grep", shortName, '--mode', 'onlyclasses'],
+                GenerateStagesCommand(command=[scipionCmd, "test", "--show", "--grep", shortName, '--mode', 'onlyclasses'],
                                       name="Generate Scipion test stages for %s" % shortName,
                                       description="Generating Scipion test stages for %s" % shortName,
                                       descriptionDone="Generate Scipion test stages for %s" % shortName,
-                                      stagePrefix=["./scipion", "test"],
+                                      stagePrefix=[scipionCmd, "test"],
                                       haltOnFailure=False,
                                       blacklist=settings.SCIPION_TESTS_BLACKLIST,
                                       targetTestSet=shortName))
@@ -755,7 +885,6 @@ def pluginFactory(groupId, pluginName, factorySteps=None, shortname=None,
                                               descriptionDone='Removing %s virtual environment' % shortName,
                                               timeout=settings.timeOutInstall,
                                               haltOnFailure=False))
-
 
         if doInstall:
             installCmd = (settings.SCIPION_CMD + ' installp -p ' + pluginName +
@@ -1189,10 +1318,10 @@ def getScipionBuilders(groupId):
                                                      'slackChannel': "buildbot"},
                                                  env=env))
     elif groupId == settings.SDEVEL_GROUP_ID or groupId == settings.SPROD_GROUP_ID:
-        env['SCIPION_HOME'] = settings.SDEVEL_SCIPION_HOME
-        env['EM_ROOT'] = settings.EM_ROOT
 
         if groupId == settings.SDEVEL_GROUP_ID:
+            env['SCIPION_HOME'] = settings.SDEVEL_SCIPION_HOME
+            env['EM_ROOT'] = settings.EM_ROOT
             scipionBuilders.append(
                 BuilderConfig(name=settings.SCIPION_INSTALL_PREFIX + groupId,
                               tags=[groupId],
@@ -1203,6 +1332,8 @@ def getScipionBuilders(groupId):
                                   "slackChannel": settings.SCIPION_SLACK_CHANNEL},
                               env=env))
         else:
+            env['SCIPION_HOME'] = settings.SPROD_SCIPION_HOME
+            env['EM_ROOT'] = settings.SPROD_EM_ROOT
             scipionBuilders.append(
                 BuilderConfig(name=settings.SCIPION_INSTALL_PREFIX + groupId,
                               tags=[groupId],
@@ -1251,7 +1382,7 @@ def getScipionBuilders(groupId):
             tags = [groupId, moduleName]
             hastests = not pluginDict.get("NO_TESTS", False)
             extraBinaries = pluginDict.get("extraBinaries", [])
-            deleteVirtualEnv = pluginDict.get("deleteVirtualEnv", False)
+            deleteVirtualEnv = pluginDict.get("deleteVirtualEnv", '')
             binToRemove = pluginDict.get("binToRemove", [])
             scipionBuilders.append(
                 BuilderConfig(name="%s_%s" % (moduleName, groupId),

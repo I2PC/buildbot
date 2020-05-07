@@ -53,7 +53,11 @@ class GenerateStagesCommand(buildstep.ShellMixin, steps.BuildStep):
 
     def extract_stages(self, stdout, rootName=None):
         stages = []
-        mainProgram = 'scipion' if rootName != "Xmipp bundle: " else 'xmipp'
+        mainProgram = 'scipion'
+        if rootName == 'Xmipp bundle:':
+            mainProgram = 'xmipp'
+        else:
+            mainProgram = 'scipion3'
         importErrorTxt = 'Error'
         stages = []
         for line in stdout.split('\n'):
