@@ -603,6 +603,14 @@ def installProdScipionFactory(groupId):
                       )))
 
     installScipionFactorySteps.addStep(
+        (ShellCommand(command=['chmod', '777', '-R', settings.SPROD_ENV_PATH],
+                      name='Change the permission of environment folder',
+                      description='Change the permission of environment folder',
+                      descriptionDone='Change the permission of environment folder',
+                      timeout=settings.timeOutShort
+                      )))
+
+    installScipionFactorySteps.addStep(
         steps.JSONStringDownload(dict(scipionSdevelPlugins, **{
             "scipion-em-locscale": locscaleSdevelPluginData}),
                                  workerdest="plugins.json"))

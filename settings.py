@@ -77,6 +77,7 @@ except ImportError:
     CONDA_ACTIVATION_CMD = ". /home/buildbot/miniconda3/etc/profile.d/conda.sh;"
     SDEVEL_SCIPION_HOME = '/home/buildbot/devel/scipion'
     SPROD_SCIPION_HOME = '/home/buildbot/prod/scipion'
+    SPROD_ENV_PATH = '/home/buildbot/prod/condaenvs/prodEnv'
     SDEVEL_XMIPP_HOME = '/home/buildbot/devel/xmipp'
     SPROD_XMIPP_HOME = '/home/buildbot/prod/xmipp'
     BUILDBOT_HOME = '/home/buildbot/'
