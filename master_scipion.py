@@ -1330,6 +1330,7 @@ def getScipionBuilders(groupId):
         if groupId == settings.SDEVEL_GROUP_ID:
             env['SCIPION_HOME'] = settings.SDEVEL_SCIPION_HOME
             env['EM_ROOT'] = settings.EM_ROOT
+            env['LD_LIBRARY_PATH'] = settings.LD_LIBRARY_PATH
             scipionBuilders.append(
                 BuilderConfig(name=settings.SCIPION_INSTALL_PREFIX + groupId,
                               tags=[groupId],
@@ -1342,6 +1343,7 @@ def getScipionBuilders(groupId):
         else:
             env['SCIPION_HOME'] = settings.SPROD_SCIPION_HOME
             env['EM_ROOT'] = settings.SPROD_EM_ROOT
+            env['LD_LIBRARY_PATH'] = settings.PROD_LD_LIBRARY_PATH
             scipionBuilders.append(
                 BuilderConfig(name=settings.SCIPION_INSTALL_PREFIX + groupId,
                               tags=[groupId],
