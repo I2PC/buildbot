@@ -166,12 +166,10 @@ setCcp4HomeSdevel = ShellCommand(
     haltOnFailure=True)
 
 setCcp4HomeSProd = ShellCommand(
-    command=changeConfVar('CCP4_HOME', settings.CCP4_HOME,
-                          file=settings.SPROD_SCIPION_CONFIG_PATH,
-                          escapeSlash=True),
-    name='Change CCP4_HOME',
-    description='Add the right CCP4_HOME path',
-    descriptionDone='Added CCP4_HOME',
+    command=util.Interpolate('sed -ie "\$aCCP4_HOME = {}" %(prop:SCIPION_LOCAL_CONFIG)s'.format(settings.CCP4_HOME)),
+    name='Add the right CCP4_HOME path',
+    description='Add the CCP4_HOME path',
+    descriptionDone='Add the CCP4_HOME path',
     haltOnFailure=True)
 
 setNYSBC_3DFSC_HOME = ShellCommand(
@@ -204,6 +202,14 @@ setCryoloModelSdevel = ShellCommand(
     name='Change CRYOLO_NS_GENERIC_MODEL',
     description='Add the right CRYOLO_NS_GENERIC_MODEL path',
     descriptionDone='Added CRYOLO_NS_GENERIC_MODEL',
+    haltOnFailure=True)
+
+
+setCryoloProdModelSdevel = ShellCommand(
+    command=util.Interpolate('sed -ie "\$aCRYOLO_NS_GENERIC_MODEL = {}" %(prop:SCIPION_LOCAL_CONFIG)s'.format(settings.CRYOLO_NS_GENERIC_MODEL)),
+    name='Set CRYOLO_NS_GENERIC_MODEL in scipion conf',
+    description='Set CRYOLO_NS_GENERIC_MODEL in scipion conf',
+    descriptionDone='Set CRYOLO_NS_GENERIC_MODEL in scipion conf',
     haltOnFailure=True)
 
 setCryoloEnvActivation = ShellCommand(
@@ -255,12 +261,11 @@ setPhenixHomeSdevel = ShellCommand(
     haltOnFailure=True)
 
 setPhenixHomeSProd = ShellCommand(
-    command=changeConfVar('PHENIX_HOME', settings.PHENIX_HOME,
-                          file=settings.SPROD_SCIPION_CONFIG_PATH,
-                          escapeSlash=True),
-    name='Change PHENIX_HOME',
-    description='Add the right PHENIX_HOME path',
-    descriptionDone='Added PHENIX_HOME',
+    command=util.Interpolate(
+        'sed -ie "\$aPHENIX_HOME = {}" %(prop:SCIPION_LOCAL_CONFIG)s'.format(settings.PHENIX_HOME)),
+    name='Add PHENIX_HOME in scipion conf',
+    description='Add PHENIX_HOME in scipion conf',
+    descriptionDone='Add PHENIX_HOME in scipion conf',
     haltOnFailure=True)
 
 
@@ -329,12 +334,43 @@ setMotincor2Bin = ShellCommand(
     haltOnFailure=True)
 
 setMotincor2BinProd = ShellCommand(
-    command=changeConfVar('MOTIONCOR2_BIN', settings.MOTIONCOR2_BIN,
-                          file=settings.SPROD_SCIPION_CONFIG_PATH,
-                          escapeSlash=True),
-    name='Change MOTIONCOR2_BIN',
+    command=util.Interpolate(
+        'sed -ie "\$aMOTIONCOR2_BIN = {}" %(prop:SCIPION_LOCAL_CONFIG)s'.format(settings.MOTIONCOR2_BIN)),
+    name='Add the right MOTIONCOR2_BIN file',
     description='Add the right MOTIONCOR2_BIN file',
-    descriptionDone='Added MOTIONCOR2_BIN',
+    descriptionDone='Add the right MOTIONCOR2_BIN file',
+    haltOnFailure=True)
+
+setGCTFBinProd = ShellCommand(
+    command=util.Interpolate(
+        'sed -ie "\$aGCTF = {}" %(prop:SCIPION_LOCAL_CONFIG)s'.format(settings.GCTF)),
+    name='Add the right GCTF Bin file',
+    description='Add the right GCTF bin file',
+    descriptionDone='Add the right GCTF bin file',
+    haltOnFailure=True)
+
+setGautomatchBinProd = ShellCommand(
+    command=util.Interpolate(
+        'sed -ie "\$aGAUTOMATCH = {}" %(prop:SCIPION_LOCAL_CONFIG)s'.format(settings.GAUTOMATCH)),
+    name='Add the right GAUTOMATCH Bin file',
+    description='Add the right GAUTOMATCH bin file',
+    descriptionDone='Add the right GAUTOMATCH bin file',
+    haltOnFailure=True)
+
+setSPIDERBinProd = ShellCommand(
+    command=util.Interpolate(
+        'sed -ie "\$aSPIDER = {}" %(prop:SCIPION_LOCAL_CONFIG)s'.format(settings.SPIDER)),
+    name='Add the right SPIDER Bin file',
+    description='Add the right SPIDER bin file',
+    descriptionDone='Add the right SPIDER bin file',
+    haltOnFailure=True)
+
+setSPIDER_MPIProd = ShellCommand(
+    command=util.Interpolate(
+        'sed -ie "\$aSPIDER_MPI = {}" %(prop:SCIPION_LOCAL_CONFIG)s'.format(settings.SPIDER_MPI)),
+    name='Add the right SPIDER_MPI file',
+    description='Add the right SPIDER_MPI file',
+    descriptionDone='Add the right SPIDER_MPI file',
     haltOnFailure=True)
 
 installEman212 = ShellCommand(command=['./scipion', 'installb', 'eman-2.12'],
@@ -648,6 +684,10 @@ def installProdScipionFactory(groupId):
     installScipionFactorySteps.addStep(setCryosparcHomeSProd)
     installScipionFactorySteps.addStep(setCryosparcUser)
     installScipionFactorySteps.addStep(setMotincor2BinProd)
+    installScipionFactorySteps.addStep(setGCTFBinProd)
+    installScipionFactorySteps.addStep(setGautomatchBinProd)
+    installScipionFactorySteps.addStep(setSPIDERBinProd)
+    installScipionFactorySteps.addStep(setSPIDER_MPIProd)
     installScipionFactorySteps.addStep(setPhenixHomeSProd)
     installScipionFactorySteps.addStep(
         ScipionCommandStep(command=sprodMoveScipionConfig,
