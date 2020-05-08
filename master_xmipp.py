@@ -339,9 +339,13 @@ def getXmippBuilders(groupId):
             "SCIPION_IGNORE_PYTHONPATH": "True",
             "SCIPION_LOCAL_CONFIG": util.Property("SCIPION_LOCAL_CONFIG"),
             "SCIPION_HOME": util.Property('SCIPION_HOME'),
-            "LD_LIBRARY_PATH": installEnv['LD_LIBRARY_PATH'],
-            "EM_ROOT": installEnv['EM_ROOT']
+            "LD_LIBRARY_PATH": LD_LIBRARY_PATH,
+            "EM_ROOT": settings.EM_ROOT
         }
+        if groupId == SPROD_GROUP_ID:
+            env['EM_ROOT'] = settings.SPROD_EM_ROOT
+            env['LD_LIBRARY_PATH'] = PROD_LD_LIBRARY_PATH
+
         builders.append(
             BuilderConfig(name=XMIPP_TESTS + groupId,
                           tags=[groupId],
