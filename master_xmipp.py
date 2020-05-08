@@ -319,10 +319,6 @@ def getXmippBuilders(groupId):
 
         installEnv['EM_ROOT'] = settings.EM_ROOT
         installEnv['LD_LIBRARY_PATH'] = LD_LIBRARY_PATH
-        if groupId == SPROD_GROUP_ID:
-            installEnv['EM_ROOT'] = settings.SPROD_EM_ROOT
-            installEnv['LD_LIBRARY_PATH'] = PROD_LD_LIBRARY_PATH
-
         installEnv['XMIPP_ALLOW_ANY_CUDA'] = 'True'
 
         if groupId == SDEVEL_GROUP_ID:
