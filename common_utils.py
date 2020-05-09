@@ -51,13 +51,7 @@ class GenerateStagesCommand(buildstep.ShellMixin, steps.BuildStep):
         self.addLogObserver('stdio', self.observer)
         self.timeout = kwargs.get('timeout', None) or timeOutExecute
 
-    def extract_stages(self, stdout, rootName=None):
-        stages = []
-        mainProgram = 'scipion'
-        if rootName == 'Xmipp bundle:':
-            mainProgram = 'xmipp'
-        else:
-            mainProgram = 'scipion3'
+    def extract_stages(self, stdout, rootName):
         importErrorTxt = 'Error'
         stages = []
         for line in stdout.split('\n'):
@@ -80,7 +74,7 @@ class GenerateStagesCommand(buildstep.ShellMixin, steps.BuildStep):
                                 stages.append(steps[-1])
                     elif len(steps) == 3 or importErrorTxt in stage:
                         if steps[-1].split('.', 1)[0] == self.targetTestSet:
-                            if steps[0] == mainProgram:
+                            if steps[0] == rootName:
                                 if (steps[1]) and ((steps[1] == "tests") or (steps[1] == "test")):
                                     if steps[-1] and steps[-1] not in self.blacklist:
                                         stages.append(steps[-1])
@@ -99,7 +93,8 @@ class GenerateStagesCommand(buildstep.ShellMixin, steps.BuildStep):
             testShellCommands = []
             env = {}
             env.update(self.env)
-            for stage in self.extract_stages(self.observer.getStdout()):
+            for stage in self.extract_stages(self.observer.getStdout(),
+                                             self.rootName):
                 env.update(self.stageEnvs.get(stage, {}))
                 command = self.stagePrefix + stage.strip().split()
 

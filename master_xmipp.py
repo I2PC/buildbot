@@ -176,6 +176,7 @@ def xmippBundleFactory(groupId):
                                   descriptionDone="Generate test stages for Xmipp programs",
                                   haltOnFailure=False,
                                   pattern='./xmipp test (.*)',
+                                  rootName='xmipp',
                                   env=util.Property('env')))
 
         xmippTestSteps.addStep(
@@ -185,6 +186,7 @@ def xmippBundleFactory(groupId):
                                   descriptionDone="Generate test stages for Xmipp functions",
                                   haltOnFailure=False,
                                   pattern='xmipp_test_(.*)',
+                                  rootName='xmipp',
                                   env=util.Property('env')))
     else:
         xmippTestSteps.addStep(SetProperty(

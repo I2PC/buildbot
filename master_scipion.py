@@ -868,11 +868,12 @@ def pluginFactory(groupId, pluginName, factorySteps=None, shortname=None,
     factorySteps = factorySteps or util.BuildFactory()
     factorySteps.workdir = util.Property('SCIPION_HOME')
     shortName = shortname or str(pluginName.rsplit('-', 1)[-1])  # todo: get module names more properly?
-
+    rootName = 'scipion'
     if groupId == settings.PROD_GROUP_ID or groupId == settings.SPROD_GROUP_ID:
         scipionCmd = './scipion'
         if groupId == settings.SPROD_GROUP_ID:
             scipionCmd = './scipion3'
+            rootName = 'scipion3'
         if doInstall:
             factorySteps.addStep(ShellCommand(command=[scipionCmd, 'installp', '-p', pluginName, '-j', '8'],
                                               name='Install plugin %s' % shortName,
@@ -914,6 +915,7 @@ def pluginFactory(groupId, pluginName, factorySteps=None, shortname=None,
                                       descriptionDone="Generate Scipion test stages for %s" % shortName,
                                       stagePrefix=[scipionCmd, "test"],
                                       haltOnFailure=False,
+                                      rootName=rootName,
                                       blacklist=settings.SCIPION_TESTS_BLACKLIST,
                                       targetTestSet=shortName))
 
@@ -977,6 +979,7 @@ def pluginFactory(groupId, pluginName, factorySteps=None, shortname=None,
                                       descriptionDone="Generate Scipion test stages for %s" % shortName,
                                       stagePrefix=[settings.SCIPION_CMD, "test"],
                                       haltOnFailure=False,
+                                      rootName='scipion',
                                       blacklist=settings.SCIPION_TESTS_BLACKLIST,
                                       targetTestSet=shortName))
 
