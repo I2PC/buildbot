@@ -105,12 +105,6 @@
           "pluginSourceUrl": "https://github.com/scipion-em/scipion-em-simple.git@devel",
           "slackChannel":"simple"
       },
-  "scipion-em-fsc3d": {
-          "pipName": "scipion-em-fsc3d",
-          "id": 31,
-          "name": "fsc3d",
-          "pluginSourceUrl": "https://github.com/scipion-em/scipion-em-fsc3d.git@devel"
-      },
   "scipion-em-gautomatch": {
           "pipName": "scipion-em-gautomatch",
           "id": 31,
