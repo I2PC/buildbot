@@ -13,13 +13,6 @@
           "slackChannel": "spider",
           "pluginSourceUrl": "https://github.com/scipion-em/scipion-em-spider.git@devel"
       },
-    "scipion-em-gctf": {
-          "pipName": "scipion-em-gctf",
-          "id": 31,
-          "name": "gctf",
-          "pluginSourceUrl": "https://github.com/scipion-em/scipion-em-gctf.git@devel",
-          "slackChannel":"gctf"
-      },
   "scipion-em-grigoriefflab": {
         "pipName": "scipion-em-grigoriefflab",
         "id": 11,
@@ -33,6 +26,13 @@
           "name": "relion",
           "pluginSourceUrl": "https://github.com/scipion-em/scipion-em-relion.git@devel",
           "slackChannel": "relion"
+      },
+  "scipion-em-gctf": {
+          "pipName": "scipion-em-gctf",
+          "id": 31,
+          "name": "gctf",
+          "pluginSourceUrl": "https://github.com/scipion-em/scipion-em-gctf.git@devel",
+          "slackChannel":"gctf"
       },
   "scipion-em-cryosparc2": {
           "pipName": "scipion-em-cryosparc2",
