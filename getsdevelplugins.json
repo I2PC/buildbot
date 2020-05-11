@@ -39,7 +39,7 @@
           "pipName": "scipion-em-cryosparc2",
           "id": 31,
           "name": "cryosparc2",
-          "pluginSourceUrl": "https://github.com/scipion-em/scipion-em-cryosparc2.git@python3_migration",
+          "pluginSourceUrl": "https://github.com/scipion-em/scipion-em-cryosparc2.git@devel",
           "slackChannel": "cryosparc"
       },
     "scipion-em-resmap": {
