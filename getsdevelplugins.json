@@ -174,13 +174,6 @@
         "pluginSourceUrl": "https://github.com/scipion-em/scipion-em-tomo.git@python3_migration",
         "slackChannel":"tomo"
     },
-    "scipion-em-continuousflex": {
-        "pipName": "scipion-em-continuousflex",
-        "id": 4,
-        "name": "continuousflex",
-        "pluginSourceUrl": "https://github.com/scipion-em/scipion-em-continuousflex.git@python3_migration",
-        "slackChannel":"continuousflex"
-    },
   "scipion-em-xmipp": {
         "pipName": "scipion-em-xmipp",
         "id": 32,
