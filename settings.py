@@ -72,7 +72,8 @@ except ImportError:
     CUDA_LIB = "/usr/local/cuda-8.0/lib64"
     MOTIONCOR2_CUDA_LIB = "/usr/local/cuda-10.2/lib64"
     MOTIONCOR2_BIN = 'MotionCor2_v1.3.1-Cuda102'
-    GCTF = 'Gctf_v1.18_b2_sm61_cu8.0'
+    GCTF = 'Gctf_v1.18_b2_sm60_cu8.0'
+    GCTF_CUDA_LIB = '/usr/local/cuda-8.0/lib64'
     GAUTOMATCH = 'Gautomatch_v0.56_sm60_cu8.0'
     SPIDER = 'spider_linux_mp_intel64'
     SPIDER_MPI = 'spider_linux_mpi_opt64'

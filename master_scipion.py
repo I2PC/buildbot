@@ -333,6 +333,15 @@ setMotincor2Bin = ShellCommand(
     descriptionDone='Added MOTIONCOR2_BIN',
     haltOnFailure=True)
 
+setGctfBin = ShellCommand(
+    command=changeConfVar('GCTF', settings.GCTF,
+                          file=settings.SDEVEL_SCIPION_CONFIG_PATH,
+                          escapeSlash=True),
+    name='Change GCTF binary',
+    description='Add the right GCTF binary',
+    descriptionDone='Added GCTF binary',
+    haltOnFailure=True)
+
 setMotincor2BinProd = ShellCommand(
     command=util.Interpolate(
         'sed -ie "\$aMOTIONCOR2_BIN = {}" %(prop:SCIPION_LOCAL_CONFIG)s'.format(settings.MOTIONCOR2_BIN)),
@@ -347,6 +356,14 @@ setGCTFBinProd = ShellCommand(
     name='Add the right GCTF Bin file',
     description='Add the right GCTF bin file',
     descriptionDone='Add the right GCTF bin file',
+    haltOnFailure=True)
+
+setGCTFCuda = ShellCommand(
+    command=util.Interpolate(
+        'sed -ie "\$aGCTF_CUDA_LIB = {}" %(prop:SCIPION_LOCAL_CONFIG)s'.format(settings.GCTF_CUDA_LIB)),
+    name='Add the GCTF_CUDA_LIB',
+    description='Add the GCTF_CUDA_LIB',
+    descriptionDone='Add the GCTF_CUDA_LIB',
     haltOnFailure=True)
 
 setGautomatchBinProd = ShellCommand(
@@ -685,6 +702,7 @@ def installProdScipionFactory(groupId):
     installScipionFactorySteps.addStep(setCryosparcUser)
     installScipionFactorySteps.addStep(setMotincor2BinProd)
     installScipionFactorySteps.addStep(setGCTFBinProd)
+    installScipionFactorySteps.addStep(setGCTFCuda)
     installScipionFactorySteps.addStep(setGautomatchBinProd)
     installScipionFactorySteps.addStep(setSPIDERBinProd)
     installScipionFactorySteps.addStep(setSPIDER_MPIProd)
@@ -775,6 +793,8 @@ def installSDevelScipionFactory(groupId):
     installScipionFactorySteps.addStep(setCryosparcDir)
     installScipionFactorySteps.addStep(setCryosparcProjectDir)
     installScipionFactorySteps.addStep(setCryosparcHomeSdevel)
+    installScipionFactorySteps.addStep(setGctfBin)
+    installScipionFactorySteps.addStep(setGCTFCuda)
     installScipionFactorySteps.addStep(setCryosparcUser)
     installScipionFactorySteps.addStep(setMotincor2Bin)
     installScipionFactorySteps.addStep(setPhenixHomeSdevel)
