@@ -99,7 +99,7 @@ def installXmippFactory(groupId):
                          descriptionDone='scipion-em-xmipp in devel mode',
                          timeout=timeOutInstall,
                          haltOnFailure=True,
-                         workdir=SCIPION_BUILD_ID)
+                         workdir=XMIPP_BUILD_ID)
         )
         # Install xmipp binary
         installXmippBinaryCmd = (
@@ -112,7 +112,7 @@ def installXmippFactory(groupId):
                                descriptionDone='xmippDev binary',
                                timeout=timeOutInstall,
                                haltOnFailure=True,
-                               workdir=SCIPION_BUILD_ID)
+                               workdir=XMIPP_BUILD_ID)
         )
 
     # elif groupId == SPROD_GROUP_ID:
