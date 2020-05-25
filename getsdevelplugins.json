@@ -46,14 +46,14 @@
         "pipName": "scipion-em-resmap",
         "id": 20,
         "name": "resmap",
-        "pluginSourceUrl": "https://github.com/scipion-em/scipion-em-resmap.git@python3_migration",
+        "pluginSourceUrl": "https://github.com/scipion-em/scipion-em-resmap.git@devel",
         "slackChannel": "resmap"
     },
     "scipion-em-bsoft": {
         "pipName": "scipion-em-bsoft",
         "id": 13,
         "name": "bsoft",
-        "pluginSourceUrl": "https://github.com/scipion-em/scipion-em-bsoft.git@python3_migration",
+        "pluginSourceUrl": "https://github.com/scipion-em/scipion-em-bsoft.git@devel",
         "slackChannel":"bsoft"
     },
     "scipion-em-chimera": {
@@ -67,7 +67,7 @@
         "pipName": "scipion-em-appion",
         "id": 14,
         "name": "appion",
-        "pluginSourceUrl": "https://github.com/scipion-em/scipion-em-appion.git@python3_migration",
+        "pluginSourceUrl": "https://github.com/scipion-em/scipion-em-appion.git@devel",
         "slackChannel":"appion",
         "NO_TESTS": true
     },
@@ -75,20 +75,20 @@
         "pipName": "scipion-em-emxlib",
         "id": 15,
         "name": "emxlib",
-        "pluginSourceUrl": "https://github.com/scipion-em/scipion-em-emxlib.git@python3_migration"
+        "pluginSourceUrl": "https://github.com/scipion-em/scipion-em-emxlib.git@devel"
     },
     "scipion-em-locscale": {
         "pipName": "scipion-em-locscale",
         "id": 32,
         "name": "locscale",
-        "pluginSourceUrl": "https://github.com/scipion-em/scipion-em-locscale.git@python3_migration",
+        "pluginSourceUrl": "https://github.com/scipion-em/scipion-em-locscale.git@devel",
         "slackChannel": "locscale"
     },
     "scipion-em-atsas": {
         "pipName": "scipion-em-atsas",
         "id": 31,
         "name": "atsas",
-        "pluginSourceUrl": "https://github.com/scipion-em/scipion-em-atsas.git@python3_migration",
+        "pluginSourceUrl": "https://github.com/scipion-em/scipion-em-atsas.git@devel",
         "slackChannel":"atsas",
         "NO_TESTS": true
     },
