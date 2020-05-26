@@ -11,7 +11,7 @@
       "pipName": "scipion-em-cistem",
             "id": 51,
             "name": "cistem",
-            "pluginSourceUrl": "https://github.com/scipion-em/scipion-em-cistem.git@python3_migration",
+            "pluginSourceUrl": "https://github.com/scipion-em/scipion-em-cistem.git@devel",
             "no_production": true
     },
    "scipion-em-spider": {
@@ -19,13 +19,13 @@
           "id": 31,
           "name": "spider",
           "slackChannel": "spider",
-          "pluginSourceUrl": "https://github.com/scipion-em/scipion-em-spider.git@python3_migration"
+          "pluginSourceUrl": "https://github.com/scipion-em/scipion-em-spider.git@devel"
       },
      "scipion-em-gctf": {
           "pipName": "scipion-em-gctf",
           "id": 31,
           "name": "gctf",
-          "pluginSourceUrl": "https://github.com/scipion-em/scipion-em-gctf.git@python3_migration",
+          "pluginSourceUrl": "https://github.com/scipion-em/scipion-em-gctf.git@devel",
           "slackChannel":"gctf"
       },
     "scipion-em-relion": {
@@ -96,7 +96,7 @@
           "pipName": "scipion-em-cryoef",
           "id": 31,
           "name": "cryoef",
-          "pluginSourceUrl": "https://github.com/scipion-em/scipion-em-cryoef.git@python3_migration",
+          "pluginSourceUrl": "https://github.com/scipion-em/scipion-em-cryoef.git@devel",
           "slackChannel":"cryoef"
       },
   "scipion-em-bamfordlab": {
@@ -110,7 +110,7 @@
           "pipName": "scipion-em-fsc3d",
           "id": 31,
           "name": "fsc3d",
-          "pluginSourceUrl": "https://github.com/scipion-em/scipion-em-fsc3d.git@python3_migration",
+          "pluginSourceUrl": "https://github.com/scipion-em/scipion-em-fsc3d.git@devel",
           "deleteVirtualEnv": "3DFSC",
           "binToRemove": ["fsc3D-3.0"]
       },
@@ -131,7 +131,7 @@
           "pipName": "scipion-em-gautomatch",
           "id": 31,
           "name": "gautomatch",
-          "pluginSourceUrl": "https://github.com/scipion-em/scipion-em-gautomatch.git@python3_migration",
+          "pluginSourceUrl": "https://github.com/scipion-em/scipion-em-gautomatch.git@devel",
           "slackChannel":"gautomatch"
       },
   "scipion-em-motioncorr": {
