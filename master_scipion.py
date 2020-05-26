@@ -860,12 +860,13 @@ def scipionTestFactory(groupId):
             descriptionDone='Echo scipion home',
             timeout=settings.timeOutExecute))
 
-        shortNames = ["pwem", "pyworkflow"]
+        shortNames = ["pyworkflowtests", "pwem"]
 
         for shortName in shortNames:
 
             pluginsTestShowcmd = ["bash", "-c", settings.SCIPION_ENV_ACTIVATION +
-                                " ; " + "python -m scipion test --show --grep " + shortName + " --mode onlyclasses"]
+                                 " ; " + "python -m scipion test --show --grep "
+                                  + shortName + " --mode onlyclasses"]
 
             scipionTestSteps.addStep(
                 GenerateStagesCommand(command=pluginsTestShowcmd,
