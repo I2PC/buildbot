@@ -178,7 +178,7 @@ except ImportError:
     NVCC = 'nvcc'
     NVCC_CXXFLAGS = "--x cu -D_FORCE_INLINES -Xcompiler -fPIC -Wno-deprecated-gpu-targets -ccbin g++-5"
     NVCC_LINKFLAGS = '-L/usr/local/cuda/lib64'
-    LD_LIBRARY_PATH = '/usr/local/cuda-8.0/lib64:/home/buildbot/devel/scipion/software/lib:/home/buildbot/devel/scipions/software/lib'
-    PROD_LD_LIBRARY_PATH = '/usr/local/cuda-8.0/lib64:/home/buildbot/prod/scipion/software/lib:/home/buildbot/prod/scipions/software/lib'
+    LD_LIBRARY_PATH = '/usr/local/cuda-8.0/lib64:/home/buildbot/devel/scipion/software/lib'
+    PROD_LD_LIBRARY_PATH = '/usr/local/cuda-8.0/lib64:/home/buildbot/prod/scipion/software/lib'
     XMIPP_BUNDLE_VARS = ["LD_LIBRARY_PATH", "PATH", "PYTHONPATH",
                          "XMIPP_HOME", "XMIPP_SRC"]
