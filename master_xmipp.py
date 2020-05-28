@@ -7,14 +7,14 @@ from buildbot.schedulers import triggerable
 from buildbot.schedulers.forcesched import ForceScheduler
 
 import settings
-from settings import (XMIPP_REPO_URL, XMIPP_BUILD_ID, XMIPP_INSTALL_PREFIX,
-                      timeOutInstall, WORKER,  XMIPP_SLACK_CHANNEL,
+from settings import (WORKER,  XMIPP_SLACK_CHANNEL,
                       XMIPP_TESTS, XMIPP_BUNDLE_TESTS, EMAN212,
-                      FORCE_BUILDER_PREFIX, branchsDict, PROD_GROUP_ID,
+                      FORCE_BUILDER_PREFIX, PROD_GROUP_ID,
                       LD_LIBRARY_PATH, timeOutShort, SDEVEL_GROUP_ID,
-                      SPROD_GROUP_ID, PROD_LD_LIBRARY_PATH, PROD_SCIPION_CMD)
-from common_utils import  GenerateStagesCommand
-from master_scipion import pluginFactory, xmippPluginData, ScipionCommandStep
+                      SPROD_GROUP_ID, PROD_LD_LIBRARY_PATH, PROD_SCIPION_CMD,
+                      XMIPP_INSTALL_PREFIX)
+from common_utils import GenerateStagesCommand
+from master_scipion import pluginFactory, xmippPluginData
 
 
 # #############################################################################

@@ -147,6 +147,7 @@ except ImportError:
 
     ################### Xmipp settings ##################
     # builder prefixes
+    XMIPP_INSTALL_PREFIX = 'Install_Xmipp_'
     XMIPP_TESTS = 'xmipp_'
     XMIPP_BUNDLE_TESTS = 'xmipp_bundle_'
     # slack channel
