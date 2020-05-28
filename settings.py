@@ -74,7 +74,6 @@ except ImportError:
     SPIDER_MPI = 'spider_linux_mpi_opt64'
     CCP4_HOME = "/opt/ccp4-7.0"
     PHENIX_HOME = "/home/buildbot/phenix-1.17.1/phenix-1.17.1-3660"
-    CONDA_ACTIVATION_CMD = ". /home/buildbot/miniconda3/etc/profile.d/conda.sh;"
     SDEVEL_SCIPION_HOME = '/home/buildbot/devel/scipion'
     SPROD_SCIPION_HOME = '/home/buildbot/prod/scipion'
     SPROD_ENV_PATH = '/home/buildbot/prod/condaenvs/prodEnv'
@@ -109,21 +108,6 @@ except ImportError:
     DOCS_HTML_BRANCH = 'gh-pages'
     SDEVEL_DOCS_PATH = "/home/buildbot/scipionBot/devel/docs"
 
-    #New verion of Scipion
-    sdevel_gitRepoURL = ("-b %s https://github.com/scipion-em/scipion-app.git"
-                        % branchsDict[SDEVEL_GROUP_ID].get(SCIPION_APP_BUILD_ID, "devel"))
-
-    sdevel_pw_gitRepoURL = ("-b %s https://github.com/scipion-em/scipion-pyworkflow.git"
-                        % branchsDict[SDEVEL_GROUP_ID].get(SCIPION_PYWORKFLOW_BUILD_ID, "devel"))
-
-    sdevel_pyem_gitRepoURL = ("-b %s https://github.com/scipion-em/scipion-em.git"
-                        % branchsDict[SDEVEL_GROUP_ID].get(SCIPION_EM_BUILD_ID, "devel"))
-
-    sdevelXmipp_gitRepoURL = ("-b %s https://github.com/I2PC/scipion-em-xmipp.git"
-                         % branchsDict[SDEVEL_GROUP_ID].get(XMIPP_BUILD_ID, "devel"))
-
-
-    SCIPION_ENV_ACTIVATION = "source /home/buildbot/miniconda3/etc/profile.d/conda.sh ; conda activate scipion_python3"
     SCIPION_CMD = "./scipion3"
     PROD_SCIPION_CMD = "./scipion3"
     XMIPP_CMD = "./xmipp"
@@ -162,10 +146,7 @@ except ImportError:
                                 "emxlib.tests.test_workflow_emx.TestEmxWeb"])
 
     ################### Xmipp settings ##################
-    XMIPP_REPO_URL = ("-b %s https://github.com/I2PC/xmipp.git"
-                        % branchsDict[SDEVEL_GROUP_ID].get(XMIPP_BUILD_ID, "devel"))
     # builder prefixes
-    XMIPP_INSTALL_PREFIX = 'Install_Xmipp_'
     XMIPP_TESTS = 'xmipp_'
     XMIPP_BUNDLE_TESTS = 'xmipp_bundle_'
     # slack channel

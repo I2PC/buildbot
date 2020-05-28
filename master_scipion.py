@@ -120,9 +120,7 @@ def renderScipionUserDataCmd(props):
                        '"s/SCIPION_USER_DATA = ~\/ScipionUserData/'
                        'SCIPION_USER_DATA = %s\/ScipionUserData/g" '
                        '%s' % (userDataHome.replace('/', '\/'), userConfig))
-
     return command
-
 
 setScipionUserData = ShellCommand(
     command=renderScipionUserDataCmd,
@@ -233,13 +231,6 @@ setCryoloCuda = ShellCommand(
     name='Add CRYOLO_CUDA_LIB in scipion conf',
     description='Add CRYOLO_CUDA_LIB in scipion conf',
     descriptionDone='Add CRYOLO_CUDA_LIB in scipion conf',
-    haltOnFailure=True)
-
-setScipionEnvActivation = ShellCommand(
-    command=util.Interpolate('sed -ie "\$aSCIPION_ENV_ACTIVATION = {}" %(prop:SCIPION_LOCAL_CONFIG)s'.format(settings.SCIPION_ENV_ACTIVATION)),
-    name='Set SCIPION_ENV_ACTIVATION in scipion conf',
-    description='Set SCIPION_ENV_ACTIVATION in scipion conf',
-    descriptionDone='Set SCIPION_ENV_ACTIVATION in scipion conf',
     haltOnFailure=True)
 
 setPhenixHome = ShellCommand(
@@ -396,14 +387,6 @@ installEman212 = ShellCommand(command=['./scipion', 'installb', 'eman-2.12'],
                               timeout=settings.timeOutInstall,
                               haltOnFailure=True)
 
-setCondaActivation = ShellCommand(
-    command=util.Interpolate('sed -ie "\$aCONDA_ACTIVATION_CMD = {}" %(prop:SCIPION_LOCAL_CONFIG)s'.format(settings.CONDA_ACTIVATION_CMD)),
-    name='Set CONDA_ACTIVATION_CMD in scipion conf',
-    description='Set CONDA_ACTIVATION_CMD in scipion conf',
-    descriptionDone='CONDA_ACTIVATION_CMD set in scipion conf',
-    haltOnFailure=True)
-
-
 # Command to clean software/EM packages
 removeEMPackages = ShellCommand(
     command=['bash', '-c', 'ls software/em/ -1 -I xmipp | '
@@ -441,27 +424,6 @@ installScipion = ShellCommand(command=['./scipion', 'install', '-j', '8'],
                               timeout=settings.timeOutInstall,
                               haltOnFailure=True)
 
-
-# Command to activate the Anaconda virtual environment
-EnvActivation = ShellCommand(command=settings.CONDA_ACTIVATION_CMD.split(),
-                              name='Conda activation command',
-                              description='Conda activation command',
-                              descriptionDone='Conda activation command',
-                              timeout=settings.timeOutInstall,
-                              haltOnFailure=True)
-
-# Command to change the virtual environment to install the new version of Scipion
-setScipionEnv = ShellCommand(command=settings.SCIPION_ENV_ACTIVATION.split(),
-                              name='Setting Scipion Environ',
-                              description='Setting Scipion Environ',
-                              descriptionDone='Setting Scipion Environ',
-                              timeout=settings.timeOutInstall,
-                              haltOnFailure=True)
-
-installSdevelScipionPyworkflow = 'cd scipion-pyworkflow ; python -m pip install -e .'
-installSdevelScipionEM = 'cd scipion-em ; python -m pip install -e .'
-installSdevelScipionApp = 'cd scipion-app ; python -m pip install -e .'
-createSoftwareEM = 'mkdir -p software/em && mkdir -p software/lib && mkdir -p software/bindings'
 
 removeScipionModules = ShellCommand(
     command=['bash', '-c',
@@ -581,7 +543,6 @@ def installScipionFactory(groupId):
     installScipionFactorySteps.addStep(setNYSBC_3DFSC_HOME)
     # installScipionFactorySteps.addStep(setCryoloModel)
     installScipionFactorySteps.addStep(setCryoloEnvActivation)
-    installScipionFactorySteps.addStep(setCondaActivation)
     return installScipionFactorySteps
 
 
@@ -652,9 +613,7 @@ def installProdScipionFactory(groupId):
     # Set the anaconda environment
     installScipionFactorySteps.addStep(setMotioncorrCuda)
     installScipionFactorySteps.addStep(setCryoloCuda)
-    installScipionFactorySteps.addStep(setCondaActivation)
 
-    installScipionFactorySteps.addStep(setScipionEnvActivation)
     installScipionFactorySteps.addStep(setCcp4HomeSProd)
     # installScipionFactorySteps.addStep(setNYSBC_3DFSC_HOMESdevel)
     # installScipionFactorySteps.addStep(setCryoloModelSdevel)
@@ -747,8 +706,6 @@ def installSDevelScipionFactory(groupId):
     # Set the anaconda environment
     installScipionFactorySteps.addStep(setMotioncorrCuda)
     installScipionFactorySteps.addStep(setCryoloCuda)
-    installScipionFactorySteps.addStep(setCondaActivation)
-    installScipionFactorySteps.addStep(setScipionEnvActivation)
     installScipionFactorySteps.addStep(setCcp4HomeSdevel)
     #installScipionFactorySteps.addStep(setNYSBC_3DFSC_HOMESdevel)
     #installScipionFactorySteps.addStep(setCryoloModelSdevel)
@@ -776,7 +733,6 @@ def installSDevelScipionFactory(groupId):
 #                         SCIPION TEST FACTORY
 # *****************************************************************************
 def scipionTestFactory(groupId):
-
 
     scipionTestSteps = util.BuildFactory()
     scipionTestSteps.workdir = util.Property('SCIPION_HOME')
