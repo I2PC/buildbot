@@ -13,6 +13,8 @@ master.py
 *.pyc
 venv
 localsettings.py
+otherFiles/secrets.cfg
+
 
 #### Eclipse and so on
 .project
@@ -21,3 +23,4 @@ localsettings.py
 .classpath
 .idea
 worker/
+otherFiles/

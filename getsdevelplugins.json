@@ -138,7 +138,7 @@
           "pipName": "scipion-em-motioncorr",
           "id": 31,
           "name": "motioncorr",
-          "pluginSourceUrl": "https://github.com/scipion-em/scipion-em-motioncorr.git@python3_migration",
+          "pluginSourceUrl": "https://github.com/scipion-em/scipion-em-motioncorr.git@devel",
           "slackChannel":"motioncorr"
       },
   "scipion-em-atomstructutils": {
@@ -187,6 +187,14 @@
         "name": "imod",
         "pluginSourceUrl": "https://github.com/scipion-em/scipion-em-imod.git@python3_migration",
         "slackChannel":"novactf"
+    },
+  "scipion-em-facilities": {
+        "pipName": "scipion-em-facilities",
+        "id": 4,
+        "name": "facilities",
+        "pluginSourceUrl": "https://github.com/scipion-em/scipion-em-facilities.git@devel",
+        "slackChannel":"facilities",
+        "moveFiles": ["secrets.cfg"]
     },
   "scipion-em-xmipp": {
         "pipName": "scipion-em-xmipp",
