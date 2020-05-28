@@ -146,7 +146,6 @@ setCcp4Home = ShellCommand(
     descriptionDone='Set CCP4_HOME in scipion conf',
     haltOnFailure=True)
 
-
 setEM_ROOTSdevel = ShellCommand(
     command=changeConfVar('EM_ROOT', settings.EM_ROOT,
                           file=settings.SDEVEL_SCIPION_CONFIG_PATH,
@@ -476,7 +475,7 @@ removeScipionModules = ShellCommand(
     descriptionDone='Remove EM scipion modules',
     haltOnFailure=False)
 
-sdevelScipionConfig = ('python -m scipion config --notify --overwrite && cp ' +
+sdevelScipionConfig = ('./scipion3 config --notify --overwrite && cp ' +
                       settings.SDEVEL_SCIPION_HOME +
                        '/config/scipion.conf' + ' ' +
                        settings.SDEVEL_SCIPION_CONFIG_PATH)
@@ -527,48 +526,12 @@ def addScipionGitAndConfigSteps(factorySteps, groupId):
     return factorySteps
 
 
-def addSDevelScipionGitAndConfigSteps(factorySteps, groupId):
-    """ The initial steps to sdevel builders.
-         1. Remove scipion-em, scipion-app and scipion-pyworkflow, software-em to get the last version
-         2. git pull scipion-app, scipion-pyworkflow, scipion-em.
-         3. Create the software/em folder
-    """
-    factorySteps.addStep(removeScipionModules)
-    factorySteps.addStep(removeCryosParcProjectTest)
-
-    factorySteps.addStep(
-        ShellCommand(command=['git', 'clone'] + settings.sdevel_gitRepoURL.split(),
-                     name='Clone scipion-app repository',
-                     description='Getting scipion-app repository',
-                     descriptionDone='scipion-app repo downloaded',
-                     timeout=settings.timeOutShort,
-                     haltOnFailure=True))
-
-    factorySteps.addStep(
-        ShellCommand(command=['git', 'clone'] + settings.sdevel_pw_gitRepoURL.split(),
-                     name='Clone scipion-pyworkflow repository',
-                     description='Getting scipion-pyworkflow repository',
-                     descriptionDone='scipion-pyworkflow repo downloaded',
-                     timeout=settings.timeOutShort,
-                     haltOnFailure=True))
-
-    factorySteps.addStep(
-        ShellCommand(command=['git', 'clone'] + settings.sdevel_pyem_gitRepoURL.split(),
-                     name='Clone scipion-em repository',
-                     description='Getting scipion-em repository',
-                     descriptionDone='scipion-em repo downloaded',
-                     timeout=settings.timeOutShort,
-                     haltOnFailure=True))
-
-    return factorySteps
-
-
 class ScipionCommandStep(ShellCommand):
     def __init__(self, command='', name='', description='',
                  descriptionDone='', timeout=settings.timeOutInstall,
                  haltOnFailure=True, **kwargs):
         kwargs['command'] = [
-            'bash', '-c', '%s; %s' % (settings.SCIPION_ENV_ACTIVATION, command)
+            'bash', '-c', '%s' % (command)
         ]
         kwargs['name'] = name
         kwargs['description'] = description
@@ -720,53 +683,53 @@ def installProdScipionFactory(groupId):
 def installSDevelScipionFactory(groupId):
     installScipionFactorySteps = util.BuildFactory()
     installScipionFactorySteps.workdir = settings.SCIPION_BUILD_ID
-    installScipionFactorySteps = addSDevelScipionGitAndConfigSteps(installScipionFactorySteps,
-                                                             groupId)
-
-    installScipionFactorySteps.addStep(ShellCommand(command=['echo', 'SCIPION_LOCAL_CONFIG',
-                                                             util.Property('SCIPION_LOCAL_CONFIG')],
-                                                    name='Echo SCIPION_LOCAL_CONFIG',
-                                                    description='Echo SCIPION_LOCAL_CONFIG',
-                                                    descriptionDone='Echo SCIPION_LOCAL_CONFIG',
-                                                    timeout=settings.timeOutShort
-                                                    ))
-    # Install scipion-pyworkflow
-    installScipionFactorySteps.addStep(ScipionCommandStep(command=installSdevelScipionPyworkflow,
-                                                          name='Installing scipion-pyworkflow...',
-                                                          description='Install Scipion-pyworkflow as devel mode',
-                                                          descriptionDone='Install Scipion-pyworkflow',
-                                                          ))
-
-    # # Install scipion-em
-    installScipionFactorySteps.addStep(
-        ScipionCommandStep(command=installSdevelScipionEM,
-                           name='Installing scipion-em...',
-                           description='Install Scipion-em as devel mode',
-                           descriptionDone='Install Scipion-pyworkflow',
-                           ))
-    #Install scipion-app
-    installScipionFactorySteps.addStep(
-        ScipionCommandStep(command=installSdevelScipionApp,
-                           name='Installing scipion-app...',
-                           description='Install Scipion-pyworkflow as devel mode',
-                           descriptionDone='Install Scipion-pyworkflow',
-                           ))
 
     installScipionFactorySteps.addStep(
-        ShellCommand(command=["bash", "-c", createSoftwareEM],
-                           name='Creating software/em folder...',
-                           description='Creating software/em folder in SCIPION_HOME',
-                           descriptionDone='Creating software/em folder',
-                           ))
+        ShellCommand(command=['echo', 'SCIPION_LOCAL_CONFIG',
+                              util.Property('SCIPION_LOCAL_CONFIG')],
+                     name='Echo SCIPION_LOCAL_CONFIG',
+                     description='Echo SCIPION_LOCAL_CONFIG',
+                     descriptionDone='Echo SCIPION_LOCAL_CONFIG',
+                     timeout=settings.timeOutShort
+                     ))
 
+    # Install Scipion by the installer script
+    # Downloading the installer from pypi and install it
+    installScipionFactorySteps.addStep(
+        (ShellCommand(command=['pip', 'install', 'scipion-installer==1.0.0b0'],
+                      name='Installing scipion-installer from pypi',
+                      description='Installing scipion-installer from pypi',
+                      descriptionDone='Installing scipion-installer from pypi',
+                      timeout=settings.timeOutShort
+                      )))
+
+    # Install Scipion
+    scipionHome = settings.SDEVEL_SCIPION_HOME
+    installScipionFactorySteps.addStep(
+        (ShellCommand(command=['installscipion', scipionHome, '-noAsk', '-dev', '-n',
+                               'develEnv', '-conda'],
+                      name='Install Scipion',
+                      description='Install Scipion',
+                      descriptionDone='Install Scipion',
+                      timeout=settings.timeOutShort
+                      )))
 
     installScipionFactorySteps.addStep(
-        steps.JSONStringDownload(dict(scipionSdevelPlugins, **{"scipion-em-locscale": locscaleSdevelPluginData}),
-            workerdest="plugins.json"))
+        (ShellCommand(command=['chmod', '777', '-R', settings.SDEVEL_ENV_PATH],
+                      name='Change the permission of environment folder',
+                      description='Change the permission of environment folder',
+                      descriptionDone='Change the permission of environment folder',
+                      timeout=settings.timeOutShort
+                      )))
+
+    installScipionFactorySteps.addStep(
+        steps.JSONStringDownload(dict(scipionSdevelPlugins, **{
+            "scipion-em-locscale": locscaleSdevelPluginData}),
+                                 workerdest="plugins.json"))
 
     installScipionFactorySteps.addStep(removeScipionConf)
     installScipionFactorySteps.addStep(removeHomeConfig)
-    installScipionFactorySteps.addStep(ScipionCommandStep(command=sdevelScipionConfig,
+    installScipionFactorySteps.addStep(ShellCommand(command=sdevelScipionConfig,
                                                           name='Scipion Config',
                                                           description='Create installation configuration files',
                                                           descriptionDone='Scipion config',
@@ -864,8 +827,7 @@ def scipionTestFactory(groupId):
 
         for shortName in shortNames:
 
-            pluginsTestShowcmd = ["bash", "-c", settings.SCIPION_ENV_ACTIVATION +
-                                 " ; " + "python -m scipion test --show --grep "
+            pluginsTestShowcmd = ["bash", "-c", "./scipion3 test --show --grep "
                                   + shortName + " --mode onlyclasses"]
 
             scipionTestSteps.addStep(
@@ -874,6 +836,7 @@ def scipionTestFactory(groupId):
                                       description="Generating Scipion test stages for %s" % shortName,
                                       descriptionDone="Generate Scipion test stages for %s" % shortName,
                                       stagePrefix=[settings.SCIPION_CMD, "test"],
+                                      rootName='scipion3',
                                       haltOnFailure=False,
                                       targetTestSet=shortName))
 
@@ -889,12 +852,11 @@ def pluginFactory(groupId, pluginName, factorySteps=None, shortname=None,
     factorySteps = factorySteps or util.BuildFactory()
     factorySteps.workdir = util.Property('SCIPION_HOME')
     shortName = shortname or str(pluginName.rsplit('-', 1)[-1])  # todo: get module names more properly?
-    rootName = 'scipion'
+    rootName = 'scipion3'
     if groupId == settings.PROD_GROUP_ID or groupId == settings.SPROD_GROUP_ID:
         scipionCmd = './scipion'
         if groupId == settings.SPROD_GROUP_ID:
             scipionCmd = './scipion3'
-            rootName = 'scipion3'
         if doInstall:
             factorySteps.addStep(ShellCommand(command=[scipionCmd, 'installp', '-p', pluginName, '-j', '8'],
                                               name='Install plugin %s' % shortName,
@@ -969,7 +931,7 @@ def pluginFactory(groupId, pluginName, factorySteps=None, shortname=None,
                 timeout=settings.timeOutInstall,
                 haltOnFailure=True))
 
-            inspectCmd = ('python -m scipion inspect ' + shortName)
+            inspectCmd = (settings.SCIPION_CMD + ' inspect ' + shortName)
 
             factorySteps.addStep(ScipionCommandStep(command=inspectCmd,
                                               name='Inspect plugin %s' % shortName,
@@ -987,8 +949,7 @@ def pluginFactory(groupId, pluginName, factorySteps=None, shortname=None,
                                                   timeout=settings.timeOutInstall,
                                                   haltOnFailure=True))
         if doTest:
-            pluginsTestShowcmd = ['bash', '-c', settings.SCIPION_ENV_ACTIVATION +
-                                  ' ; ' + 'python -m scipion test --show --grep ' +
+            pluginsTestShowcmd = ['bash', '-c', './scipion3 test --show --grep ' +
                                   shortName + ' --mode onlyclasses']
 
             factorySteps.addStep(
@@ -998,7 +959,7 @@ def pluginFactory(groupId, pluginName, factorySteps=None, shortname=None,
                                       descriptionDone="Generate Scipion test stages for %s" % shortName,
                                       stagePrefix=[settings.SCIPION_CMD, "test"],
                                       haltOnFailure=False,
-                                      rootName='scipion',
+                                      rootName='scipion3',
                                       blacklist=settings.SCIPION_TESTS_BLACKLIST,
                                       targetTestSet=shortName))
 
@@ -1393,6 +1354,7 @@ def getScipionBuilders(groupId):
             env['SCIPION_HOME'] = settings.SDEVEL_SCIPION_HOME
             env['EM_ROOT'] = settings.EM_ROOT
             env['LD_LIBRARY_PATH'] = settings.LD_LIBRARY_PATH
+            env['PATH'] = ["/usr/local/cuda/bin", "${PATH}"]
             scipionBuilders.append(
                 BuilderConfig(name=settings.SCIPION_INSTALL_PREFIX + groupId,
                               tags=[groupId],

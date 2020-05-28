@@ -161,7 +161,7 @@ def installXmippFactory(groupId):
 # *****************************************************************************
 def xmippBundleFactory(groupId):
     xmippTestSteps = util.BuildFactory()
-    xmippTestSteps.workdir = XMIPP_BUILD_ID
+    xmippTestSteps.workdir = util.Property('SCIPION_HOME')
     if groupId != SDEVEL_GROUP_ID:
         xmippTestSteps.addStep(SetProperty(command=["bash", "-c", "source build/xmipp.bashrc; env"],
                                            extract_fn=glob2list,
@@ -190,22 +190,21 @@ def xmippBundleFactory(groupId):
                                   env=util.Property('env')))
     else:
         xmippTestSteps.addStep(SetProperty(
-            command=["bash", "-c", settings.SCIPION_ENV_ACTIVATION + " ; " +
-                     "cd " + settings.EM_ROOT + " ; " + "source xmipp/xmipp.bashrc; env"],
+            command=["bash", "-c", "cd " + settings.EM_ROOT + " ; " + "source xmipp/xmipp.bashrc; env"],
             extract_fn=glob2list,
             env={"SCIPION_HOME": util.Property("SCIPION_HOME"),
                  "SCIPION_LOCAL_CONFIG": util.Property("SCIPION_LOCAL_CONFIG"),
                  "LD_LIBRARY_PATH": LD_LIBRARY_PATH,
                  "EM_ROOT": settings.EM_ROOT}))
 
-        xmippTestShowcmd = ["bash", "-c", settings.SCIPION_ENV_ACTIVATION +
-                            " ; " + "cd " + settings.SDEVEL_XMIPP_HOME + " ; " + "./xmipp test --show"]
+        xmippTestShowcmd = ["bash", "-c", "cd " + settings.SDEVEL_XMIPP_HOME + " ; " + "./xmipp test --show"]
         xmippTestSteps.addStep(
             GenerateStagesCommand(command=xmippTestShowcmd,
                                   name="Generate test stages for Xmipp programs",
                                   description="Generating test stages for Xmipp programs",
                                   descriptionDone="Generate test stages for Xmipp programs",
                                   haltOnFailure=False,
+                                  rootName=settings.XMIPP_CMD,
                                   pattern='./xmipp test (.*)',
                                   env=util.Property('env')))
 
@@ -240,7 +239,7 @@ def xmippTestFactory(groupId):
     envs = {gpucorrcls: EMAN212 for gpucorrcls in gpucorrclassifiers}
 
     if groupId != SDEVEL_GROUP_ID:
-        scipionCmd = "./scipion"
+        scipionCmd = "./scipion3"
         if groupId == SPROD_GROUP_ID:
             scipionCmd = PROD_SCIPION_CMD
         xmippTestSteps.addStep(
@@ -255,8 +254,7 @@ def xmippTestFactory(groupId):
 
     else:
 
-        xmippTestShowcmd = ["bash", "-c", settings.SCIPION_ENV_ACTIVATION +
-                            " ; " + "python -m scipion test --show --grep xmipp3 --mode onlyclasses"]
+        xmippTestShowcmd = ["bash", "-c", "./scipion3 test --show --grep xmipp3 --mode onlyclasses"]
 
         xmippTestSteps.addStep(
             GenerateStagesCommand(
@@ -267,6 +265,7 @@ def xmippTestFactory(groupId):
                 haltOnFailure=False,
                 stagePrefix=[settings.SCIPION_CMD, "test"],
                 targetTestSet='xmipp3',
+                rootName='scipion3',
                 stageEnvs=envs))
 
     return xmippTestSteps
@@ -319,20 +318,6 @@ def getXmippBuilders(groupId):
 
     elif groupId == SDEVEL_GROUP_ID or groupId == SPROD_GROUP_ID:
 
-        installEnv['EM_ROOT'] = settings.EM_ROOT
-        installEnv['LD_LIBRARY_PATH'] = LD_LIBRARY_PATH
-        installEnv['XMIPP_ALLOW_ANY_CUDA'] = 'True'
-
-        if groupId == SDEVEL_GROUP_ID:
-            builders.append(
-                BuilderConfig(name=XMIPP_INSTALL_PREFIX + groupId,
-                              workernames=[WORKER],
-                              tags=[groupId],
-                              factory=installXmippFactory(groupId),
-                              workerbuilddir=groupId,
-                              env=installEnv,
-                              properties=props)
-            )
         env = {
             "SCIPION_IGNORE_PYTHONPATH": "True",
             "SCIPION_LOCAL_CONFIG": util.Property("SCIPION_LOCAL_CONFIG"),
@@ -355,6 +340,7 @@ def getXmippBuilders(groupId):
         )
 
         if groupId == SDEVEL_GROUP_ID:
+            bundleEnv.update(env)
             builders.append(
                 BuilderConfig(name=XMIPP_BUNDLE_TESTS + groupId,
                               tags=[groupId],
@@ -375,7 +361,7 @@ def getXmippBuilders(groupId):
 def getXmippSchedulers(groupId):
 
     xmippSchedulerNames = [XMIPP_TESTS + groupId]
-    if groupId != SPROD_GROUP_ID:
+    if groupId == PROD_GROUP_ID:
         xmippSchedulerNames += [XMIPP_INSTALL_PREFIX + groupId]
 
     if groupId == SDEVEL_GROUP_ID:

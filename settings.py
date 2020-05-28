@@ -48,16 +48,12 @@ except ImportError:
                        SCIPION_BUILD_ID: 'master'
                    },
                    SDEVEL_GROUP_ID: {
-                       SCIPION_APP_BUILD_ID: 'devel',
-                       SCIPION_EM_BUILD_ID: 'devel',
-                       SCIPION_PYWORKFLOW_BUILD_ID: 'devel',
-                       XMIPP_BUILD_ID: 'python3_migration',
+                       SCIPION_BUILD_ID: 'devel',
                        DOCS_BUILD_ID: 'release-3.0.0'
 
                    },
                     SPROD_GROUP_ID: {
-                    SCIPION_BUILD_ID: 'master',
-                    XMIPP_BUILD_ID: 'python3_migration'
+                        SCIPION_BUILD_ID: 'master',
                     }}
 
     ################## Scipion settings ##################
@@ -82,8 +78,9 @@ except ImportError:
     SDEVEL_SCIPION_HOME = '/home/buildbot/devel/scipion'
     SPROD_SCIPION_HOME = '/home/buildbot/prod/scipion'
     SPROD_ENV_PATH = '/home/buildbot/prod/condaenvs/prodEnv'
-    SDEVEL_XMIPP_HOME = '/home/buildbot/devel/xmipp'
-    SPROD_XMIPP_HOME = '/home/buildbot/prod/xmipp'
+    SDEVEL_ENV_PATH = '/home/buildbot/prod/condaenvs/develEnv'
+    SDEVEL_XMIPP_HOME = '/home/buildbot/devel/scipion/xmipp-bundle'
+    SPROD_XMIPP_HOME = '/home/buildbot/prod/scipion/xmipp-bundle'
     BUILDBOT_HOME = '/home/buildbot/'
     NYSBC_3DFSC_HOME = SDEVEL_SCIPION_HOME + "/software/em/fsc3D-3.0"
     CRYOLO_NS_GENERIC_MODEL = SDEVEL_SCIPION_HOME + "/software/em/cryolo_model-202002_N63/gmodel_phosnet_202002_N63.h5"
@@ -127,8 +124,9 @@ except ImportError:
 
 
     SCIPION_ENV_ACTIVATION = "source /home/buildbot/miniconda3/etc/profile.d/conda.sh ; conda activate scipion_python3"
-    SCIPION_CMD = "python -m scipion"
+    SCIPION_CMD = "./scipion3"
     PROD_SCIPION_CMD = "./scipion3"
+    XMIPP_CMD = "./xmipp"
     SCIPION_ENV_PATH = "/home/buildbot/.conda/envs/scipion_python3/lib/python3.5/site-packages/"
     SDEVEL_SCIPION_CONFIG_PATH = "/home/buildbot/.config/scipion/scipion_devel.conf"
     SPROD_SCIPION_CONFIG_PATH = "/home/buildbot/.config/scipion/scipion_prod.conf"
