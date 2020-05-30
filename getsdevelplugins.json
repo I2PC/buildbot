@@ -185,7 +185,7 @@
         "pipName": "scipion-em-imod",
         "id": 4,
         "name": "imod",
-        "pluginSourceUrl": "https://github.com/scipion-em/scipion-em-imod.git@python3_migration",
+        "pluginSourceUrl": "https://github.com/scipion-em/scipion-em-imod.git@devel",
         "slackChannel":"novactf"
     },
   "scipion-em-facilities": {

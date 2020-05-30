@@ -75,6 +75,8 @@ except ImportError:
     CCP4_HOME = "/opt/ccp4-7.0"
     PHENIX_HOME = "/home/buildbot/phenix-1.17.1/phenix-1.17.1-3660"
     CONDA_ACTIVATION_CMD = "source /home/buildbot/miniconda3/etc/profile.d/conda.sh"
+    CONDA_REMOVE_DEVEL_ENV = "conda env remove -n develEnv"
+    CONDA_REMOVE_PROD_ENV = "conda env remove -n prodEnv"
     SDEVEL_SCIPION_HOME = '/home/buildbot/devel/scipion'
     SPROD_SCIPION_HOME = '/home/buildbot/prod/scipion'
     SPROD_ENV_PATH = '/home/buildbot/prod/condaenvs/prodEnv'
