@@ -692,8 +692,10 @@ def pluginFactory(groupId, pluginName, factorySteps=None, shortname=None,
     rootName = 'scipion3'
     if groupId == settings.PROD_GROUP_ID or groupId == settings.SPROD_GROUP_ID:
         scipionCmd = './scipion'
+        rootName = 'scipion'
         if groupId == settings.SPROD_GROUP_ID:
             scipionCmd = './scipion3'
+            rootName = 'scipion3'
         if doInstall:
             factorySteps.addStep(ShellCommand(command=[scipionCmd, 'installp', '-p', pluginName, '-j', '8'],
                                               name='Install plugin %s' % shortName,
