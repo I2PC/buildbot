@@ -256,6 +256,14 @@ setGautomatchBin = ShellCommand(
     descriptionDone='Add the right GAUTOMATCH bin file',
     haltOnFailure=True)
 
+setGautomatchCudaBin = ShellCommand(
+    command=util.Interpolate(
+        'sed -ie "\$aGAUTOMATCH_CUDA_LIB = {}" %(prop:SCIPION_LOCAL_CONFIG)s'.format(settings.GAUTOMATCH_CUDA_LIB)),
+    name='Add the right GAUTOMATCH_CUDA_LIB Bin file',
+    description='Add the right GAUTOMATCH_CUDA_LIB bin file',
+    descriptionDone='Add the right GAUTOMATCH_CUDA_LIB bin file',
+    haltOnFailure=True)
+
 setSPIDERBin = ShellCommand(
     command=util.Interpolate(
         'sed -ie "\$aSPIDER = {}" %(prop:SCIPION_LOCAL_CONFIG)s'.format(settings.SPIDER)),
@@ -505,6 +513,7 @@ def installProdScipionFactory(groupId):
     installScipionFactorySteps.addStep(setGctfBin)
     installScipionFactorySteps.addStep(setGCTFCuda)
     installScipionFactorySteps.addStep(setGautomatchBin)
+    installScipionFactorySteps.addStep(setGautomatchCudaBin)
     installScipionFactorySteps.addStep(setSPIDERBin)
     installScipionFactorySteps.addStep(setSPIDER_MPI)
     installScipionFactorySteps.addStep(setPhenixHome)
@@ -596,6 +605,8 @@ def installSDevelScipionFactory(groupId):
     installScipionFactorySteps.addStep(setGCTFCuda)
     installScipionFactorySteps.addStep(setCryosparcUser)
     installScipionFactorySteps.addStep(setMotincor2Bin)
+    installScipionFactorySteps.addStep(setGautomatchBin)
+    installScipionFactorySteps.addStep(setGautomatchCudaBin)
     installScipionFactorySteps.addStep(setPhenixHome)
     installScipionFactorySteps.addStep(setSPIDERBin)
     installScipionFactorySteps.addStep(setSPIDER_MPI)
@@ -811,7 +822,7 @@ def pluginFactory(groupId, pluginName, factorySteps=None, shortname=None,
                                       descriptionDone="Generate Scipion test stages for %s" % shortName,
                                       stagePrefix=[settings.SCIPION_CMD, "test"],
                                       haltOnFailure=False,
-                                      rootName='scipion3',
+                                      rootName=rootName,
                                       blacklist=settings.SCIPION_TESTS_BLACKLIST,
                                       targetTestSet=shortName))
 
