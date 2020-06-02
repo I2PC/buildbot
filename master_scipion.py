@@ -41,6 +41,21 @@ removeScipionConf = ShellCommand(
     descriptionDone='Remove config/scipion.conf',
     haltOnFailure=False)
 
+removeScipionDevelConf = ShellCommand(
+    command=['rm', '-f', 'config/scipion_devel.conf'],
+    name='Clean Scipion Config',
+    description='Delete existing conf file at scipion HOME',
+    descriptionDone='Remove config/scipion.conf',
+    haltOnFailure=False)
+
+
+removeScipionProdConf = ShellCommand(
+    command=['rm', '-f', 'config/scipion_prod.conf'],
+    name='Clean Scipion Config',
+    description='Delete existing conf file at scipion HOME',
+    descriptionDone='Remove config/scipion.conf',
+    haltOnFailure=False)
+
 # Remove HOME/.config/scipion/scipion.conf
 removeHomeConfig = ShellCommand(command=['bash', '-c',
                                          util.Interpolate("rm %(prop:SCIPION_LOCAL_CONFIG)s")],
@@ -480,7 +495,7 @@ def installProdScipionFactory(groupId):
                                  workerdest="plugins.json"))
 
     # Scipion config
-    installScipionFactorySteps.addStep(removeScipionConf)
+    installScipionFactorySteps.addStep(removeScipionProdConf)
     installScipionFactorySteps.addStep(removeHomeConfig)
     installScipionFactorySteps.addStep(
         ShellCommand(command=sprodScipionConfig,
@@ -574,7 +589,7 @@ def installSDevelScipionFactory(groupId):
             "scipion-em-locscale": locscaleSdevelPluginData}),
                                  workerdest="plugins.json"))
 
-    installScipionFactorySteps.addStep(removeScipionConf)
+    installScipionFactorySteps.addStep(removeScipionDevelConf)
     installScipionFactorySteps.addStep(removeHomeConfig)
     installScipionFactorySteps.addStep(ShellCommand(command=sdevelScipionConfig,
                                                           name='Scipion Config',
@@ -671,7 +686,7 @@ def scipionTestFactory(groupId):
             descriptionDone='Echo scipion home',
             timeout=settings.timeOutExecute))
 
-        shortNames = ["pyworkflowtests", "pwem"]
+        shortNames = ["pwem"]
 
         for shortName in shortNames:
 
@@ -686,7 +701,8 @@ def scipionTestFactory(groupId):
                                       stagePrefix=[settings.SCIPION_CMD, "test"],
                                       rootName='scipion3',
                                       haltOnFailure=False,
-                                      targetTestSet=shortName))
+                                      targetTestSet=shortName,
+                                      blacklist=settings.SCIPION_TESTS_BLACKLIST))
 
     return scipionTestSteps
 

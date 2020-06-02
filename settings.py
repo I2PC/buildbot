@@ -147,7 +147,8 @@ except ImportError:
                                 "pyworkflow.tests.em.workflows.test_parallel_gpu_queue.TestQueueSteps",
                                 "pyworkflow.tests.em.workflows.test_workflow_existing.TestXmippWorkflow",
                                 "relion.tests.test_protocols_relion3.Relion3TestMultiBody",
-                                "emxlib.tests.test_workflow_emx.TestEmxWeb"])
+                                "emxlib.tests.test_workflow_emx.TestEmxWeb",
+                                "pwem.tests.workflows.test_workflow_xmipp_ctf_consensus.TestCtfConsensus"])
 
     ################### Xmipp settings ##################
     # builder prefixes

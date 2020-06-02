@@ -33,7 +33,8 @@
           "id": 31,
           "name": "relion",
           "pluginSourceUrl": "https://github.com/scipion-em/scipion-em-relion.git@python3_migration",
-          "slackChannel": "relion"
+          "slackChannel": "relion",
+          "NO_TESTS": true
       },
   "scipion-em-cryosparc2": {
           "pipName": "scipion-em-cryosparc2",
