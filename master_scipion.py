@@ -175,11 +175,11 @@ setNYSBC_3DFSC_HOME = ShellCommand(
     descriptionDone='Set NYSBC_3DFSC_HOME in scipion conf',
     haltOnFailure=True)
 
-setCryoloEnvActivation = ShellCommand(
-    command=util.Interpolate('sed -ie "\$aCRYOLO_ENV_ACTIVATION = {}" %(prop:SCIPION_LOCAL_CONFIG)s'.format(settings.CRYOLO_ENV_ACTIVATION)),
-    name='Set CRYOLO_ENV_ACTIVATION in scipion conf',
-    description='Set CRYOLO_ENV_ACTIVATION in scipion conf',
-    descriptionDone='Set CRYOLO_ENV_ACTIVATION in scipion conf',
+setEnvActivationCMD = ShellCommand(
+    command=util.Interpolate('sed -ie "\$aCONDA_ACTIVATION_CMD = {}" %(prop:SCIPION_LOCAL_CONFIG)s'.format(settings.CONDA_ACTIVATION_CMD)),
+    name='Set CONDA_ACTIVATION_CMD in scipion conf',
+    description='Set CONDA_ACTIVATION_CMD in scipion conf',
+    descriptionDone='Set CONDA_ACTIVATION_CMD in scipion conf',
     haltOnFailure=True)
 
 setCryoloCuda = ShellCommand(
@@ -463,7 +463,7 @@ def installScipionFactory(groupId):
     installScipionFactorySteps.addStep(setCcp4Home)
     installScipionFactorySteps.addStep(setNYSBC_3DFSC_HOME)
     # installScipionFactorySteps.addStep(setCryoloModel)
-    installScipionFactorySteps.addStep(setCryoloEnvActivation)
+    #installScipionFactorySteps.addStep(setCryoloEnvActivation)
     return installScipionFactorySteps
 
 
@@ -553,6 +553,7 @@ def installProdScipionFactory(groupId):
     installScipionFactorySteps.addStep(setSPIDERBin)
     installScipionFactorySteps.addStep(setSPIDER_MPI)
     installScipionFactorySteps.addStep(setPhenixHome)
+    installScipionFactorySteps.addStep(setEnvActivationCMD)
     installScipionFactorySteps.addStep(
         ScipionCommandStep(command=sprodMoveScipionConfig,
                            name='Move Scipion Config file',
@@ -648,6 +649,7 @@ def installSDevelScipionFactory(groupId):
     installScipionFactorySteps.addStep(setPhenixHome)
     installScipionFactorySteps.addStep(setSPIDERBin)
     installScipionFactorySteps.addStep(setSPIDER_MPI)
+    installScipionFactorySteps.addStep(setEnvActivationCMD)
     installScipionFactorySteps.addStep(
     ScipionCommandStep(command=sdevelMoveScipionConfig,
                        name='Move Scipion Config file',
