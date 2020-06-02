@@ -279,6 +279,17 @@ setGautomatchCudaBin = ShellCommand(
     descriptionDone='Add the right GAUTOMATCH_CUDA_LIB bin file',
     haltOnFailure=True)
 
+
+setRelionCudaBin = ShellCommand(
+    command=util.Interpolate(
+        'sed -ie "\$aRELION_CUDA_LIB = {}" %(prop:SCIPION_LOCAL_CONFIG)s'.format(settings.RELION_CUDA_LIB)),
+    name='Add the right RELION_CUDA_LIB Bin file',
+    description='Add the right RELION_CUDA_LIB bin file',
+    descriptionDone='Add the right RELION_CUDA_LIB bin file',
+    haltOnFailure=True)
+
+
+
 setSPIDERBin = ShellCommand(
     command=util.Interpolate(
         'sed -ie "\$aSPIDER = {}" %(prop:SCIPION_LOCAL_CONFIG)s'.format(settings.SPIDER)),
@@ -529,6 +540,7 @@ def installProdScipionFactory(groupId):
     installScipionFactorySteps.addStep(setGCTFCuda)
     installScipionFactorySteps.addStep(setGautomatchBin)
     installScipionFactorySteps.addStep(setGautomatchCudaBin)
+    installScipionFactorySteps.addStep(setRelionCudaBin)
     installScipionFactorySteps.addStep(setSPIDERBin)
     installScipionFactorySteps.addStep(setSPIDER_MPI)
     installScipionFactorySteps.addStep(setPhenixHome)
@@ -622,6 +634,7 @@ def installSDevelScipionFactory(groupId):
     installScipionFactorySteps.addStep(setMotincor2Bin)
     installScipionFactorySteps.addStep(setGautomatchBin)
     installScipionFactorySteps.addStep(setGautomatchCudaBin)
+    installScipionFactorySteps.addStep(setRelionCudaBin)
     installScipionFactorySteps.addStep(setPhenixHome)
     installScipionFactorySteps.addStep(setSPIDERBin)
     installScipionFactorySteps.addStep(setSPIDER_MPI)
