@@ -711,7 +711,7 @@ def scipionTestFactory(groupId):
             descriptionDone='Echo scipion home',
             timeout=settings.timeOutExecute))
 
-        shortNames = ["pwem", "pyworkflow"]
+        shortNames = ["pwem", "pyworkflowtests"]
 
         for shortName in shortNames:
 

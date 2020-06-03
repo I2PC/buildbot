@@ -105,8 +105,12 @@ class GenerateStagesCommand(buildstep.ShellMixin, steps.BuildStep):
                 #                stage.strip()]
 
                 if self.rootName == settings.XMIPP_CMD:
-                    command = ["bash", "-c", "cd " +
-                               settings.SDEVEL_XMIPP_HOME + ' ; ' + stage.strip()]
+                    command = ["bash", "-c", "source build/xmipp.bashrc ; " +
+                               stage.strip()]
+
+                if self.targetTestSet == 'xmipp3':
+                    command = ["bash", "-c", "source /build/xmipp.bashrc ; " +
+                               settings.SCIPION_CMD + " test " + stage.strip()]
 
                 testShellCommands.append(steps.ShellCommand(
                     command=command,
