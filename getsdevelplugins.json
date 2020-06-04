@@ -160,6 +160,13 @@
           "pluginSourceUrl": "https://github.com/scipion-em/scipion-em-sphire.git@python3_migration",
           "extraBinaries": ["cryolo_negstain_model"]
   },
+  "scipion-em-continuousflex": {
+          "pipName": "scipion-em-continuousflex",
+          "id": 31,
+          "name": "continuousflex",
+          "pluginSourceUrl": "https://github.com/scipion-em/scipion-em-continuousflex.git@devel",
+          "slackChannel":"continuousflex"
+      },
   "scipion-em-tomo": {
         "pipName": "scipion-em-tomo",
         "id": 4,
