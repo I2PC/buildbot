@@ -47,51 +47,35 @@ def glob2list(rc, stdout, stderr):
 def xmippBundleFactory(groupId):
     xmippTestSteps = util.BuildFactory()
     xmippTestSteps.workdir = settings.SDEVEL_XMIPP_HOME
-    if groupId != SDEVEL_GROUP_ID:
-        xmippTestSteps.addStep(SetProperty(command=["bash", "-c", "source build/xmipp.bashrc; env"],
-                                           extract_fn=glob2list,
-                                           env={"SCIPION_HOME": util.Property("SCIPION_HOME"),
-                                                "SCIPION_LOCAL_CONFIG": util.Property("SCIPION_LOCAL_CONFIG"),
-                                                "LD_LIBRARY_PATH": LD_LIBRARY_PATH}))
 
-        xmippTestSteps.addStep(
-            GenerateStagesCommand(command=["./xmipp", "test", "--show"],
-                                  name="Generate test stages for Xmipp programs",
-                                  description="Generating test stages for Xmipp programs",
-                                  descriptionDone="Generate test stages for Xmipp programs",
-                                  haltOnFailure=False,
-                                  pattern='./xmipp test (.*)',
-                                  rootName='xmipp',
-                                  env=util.Property('env')))
+    env = {"SCIPION_HOME": util.Property("SCIPION_HOME"),
+           "SCIPION_LOCAL_CONFIG": util.Property("SCIPION_LOCAL_CONFIG"),
+           "LD_LIBRARY_PATH": LD_LIBRARY_PATH,
+           "EM_ROOT": settings.EM_ROOT}
 
-        xmippTestSteps.addStep(
-            GenerateStagesCommand(command=["./xmipp", "test", "--show"],
-                                  name="Generate test stages for Xmipp functions",
-                                  description="Generating test stages for Xmipp functions",
-                                  descriptionDone="Generate test stages for Xmipp functions",
-                                  haltOnFailure=False,
-                                  pattern='xmipp_test_(.*)',
-                                  rootName='xmipp',
-                                  env=util.Property('env')))
-    else:
-        xmippTestSteps.addStep(SetProperty(
-            command=["bash", "-c", "cd " + settings.EM_ROOT + " ; " + "source xmipp/xmipp.bashrc; env"],
-            extract_fn=glob2list,
-            env={"SCIPION_HOME": util.Property("SCIPION_HOME"),
-                 "SCIPION_LOCAL_CONFIG": util.Property("SCIPION_LOCAL_CONFIG"),
-                 "LD_LIBRARY_PATH": LD_LIBRARY_PATH,
-                 "EM_ROOT": settings.EM_ROOT}))
+    xmippTestSteps.addStep(SetProperty(command=["bash", "-c", "source build/xmipp.bashrc; env"],
+                                       extract_fn=glob2list,
+                                       env=env))
 
-        xmippTestShowcmd = ["bash", "-c", "cd " + settings.SDEVEL_XMIPP_HOME + " ; " + "./xmipp test --show"]
-        xmippTestSteps.addStep(
-            GenerateStagesCommand(command=xmippTestShowcmd,
-                                  name="Generate test stages for Xmipp programs",
-                                  description="Generating test stages for Xmipp programs",
-                                  descriptionDone="Generate test stages for Xmipp programs",
-                                  haltOnFailure=False,
-                                  rootName=settings.XMIPP_CMD,
-                                  pattern='./xmipp test (.*)',
-                                  env=util.Property('env')))
+    xmippTestSteps.addStep(
+        GenerateStagesCommand(command=["./xmipp", "test", "--show"],
+                              name="Generate test stages for Xmipp programs",
+                              description="Generating test stages for Xmipp programs",
+                              descriptionDone="Generate test stages for Xmipp programs",
+                              haltOnFailure=False,
+                              pattern='./xmipp test (.*)',
+                              rootName=settings.XMIPP_CMD,
+                              env=util.Property('env')))
+
+    xmippTestSteps.addStep(
+        GenerateStagesCommand(command=["./xmipp", "test", "--show"],
+                              name="Generate test stages for Xmipp functions",
+                              description="Generating test stages for Xmipp functions",
+                              descriptionDone="Generate test stages for Xmipp functions",
+                              haltOnFailure=False,
+                              pattern='xmipp_test_(.*)',
+                              rootName=settings.XMIPP_CMD,
+                              env=util.Property('env')))
 
     return xmippTestSteps
 
@@ -159,7 +143,7 @@ def getXmippBuilders(groupId):
         "SCIPION_LOCAL_CONFIG": util.Property("SCIPION_LOCAL_CONFIG"),
         "SCIPION_HOME": util.Property('SCIPION_HOME')
     }
-    cudaEnv = {'PATH': ["/usr/local/cuda/bin", "${PATH}"]}
+    cudaEnv = {'PATH': [settings.CUDA_BIN, "${PATH}"]}
     cudaEnv.update(env)
     installEnv = {'SCIPION_HOME': util.Property('SCIPION_HOME')}
     installEnv.update(cudaEnv)

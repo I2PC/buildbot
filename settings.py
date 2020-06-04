@@ -77,6 +77,10 @@ except ImportError:
     PHENIX_HOME = "/home/buildbot/phenix-1.17.1/phenix-1.17.1-3660"
     CONDA_ACTIVATION_CMD = "source /home/buildbot/miniconda3/etc/profile.d/conda.sh"
     CONDA_REMOVE_DEVEL_ENV = "conda env remove -n develEnv"
+    DEVEL_ENV = "develEnv"
+    PROD_ENV = "prodEnv"
+    DEVEL_ENV_ACTIVATION = CONDA_ACTIVATION_CMD + " ; conda activate " + DEVEL_ENV
+    PROD_ENV_ACTIVATION = CONDA_ACTIVATION_CMD + " ; conda activate " + PROD_ENV
     CONDA_REMOVE_PROD_ENV = "conda env remove -n prodEnv"
     SDEVEL_SCIPION_HOME = '/home/buildbot/devel/scipion'
     SPROD_SCIPION_HOME = '/home/buildbot/prod/scipion'
@@ -165,7 +169,8 @@ except ImportError:
     NVCC = 'nvcc'
     NVCC_CXXFLAGS = "--x cu -D_FORCE_INLINES -Xcompiler -fPIC -Wno-deprecated-gpu-targets -ccbin g++-5"
     NVCC_LINKFLAGS = '-L/usr/local/cuda/lib64'
-    LD_LIBRARY_PATH = '/usr/local/cuda-8.0/lib64:/home/buildbot/devel/scipion/software/lib'
-    PROD_LD_LIBRARY_PATH = '/usr/local/cuda-8.0/lib64:/home/buildbot/prod/scipion/software/lib'
+    LD_LIBRARY_PATH = '/usr/local/cuda-10.2/lib64:/home/buildbot/devel/scipion/software/lib'
+    CUDA_BIN = '/usr/local/cuda-10.2/bin'
+    PROD_LD_LIBRARY_PATH = '/usr/local/cuda-10.2/lib64:/home/buildbot/prod/scipion/software/lib'
     XMIPP_BUNDLE_VARS = ["LD_LIBRARY_PATH", "PATH", "PYTHONPATH",
                          "XMIPP_HOME", "XMIPP_SRC"]
