@@ -114,8 +114,21 @@ def xmippTestFactory(groupId):
 
     else:
 
-        xmippTestShowcmd = ["bash", "-c", "./scipion3 test --show --grep xmipp3 --mode onlyclasses"]
+        deepLearningToolkitCmd = ["bash", "-c", "./scipion3 installb deepLearningToolkit"]
+        xmippTestSteps.addStep(ShellCommand(command=deepLearningToolkitCmd,
+                                            name='Installing deepLearningToolkit',
+                                            description='Installing deepLearningToolkit',
+                                            descriptionDone='Installing deepLearningToolkit',
+                                            timeout=timeOutShort))
 
+        nmaCmd = ["bash", "-c", "./scipion3 installb nma"]
+        xmippTestSteps.addStep(ShellCommand(command=nmaCmd,
+                                            name='Installing nma',
+                                            description='Installing nma',
+                                            descriptionDone='Installing nma',
+                                            timeout=timeOutShort))
+
+        xmippTestShowcmd = ["bash", "-c", "./scipion3 test --show --grep xmipp3 --mode onlyclasses"]
         xmippTestSteps.addStep(
             GenerateStagesCommand(
                 command=xmippTestShowcmd,
