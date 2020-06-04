@@ -98,11 +98,19 @@ class GenerateStagesCommand(buildstep.ShellMixin, steps.BuildStep):
                 env.update(self.stageEnvs.get(stage, {}))
                 command = self.stagePrefix + stage.strip().split()
 
-                if settings.SCIPION_CMD in self.stagePrefix:
-                    command = ["bash", "-c",
-                               settings.SCIPION_ENV_ACTIVATION +
-                               " ; " + "python -m scipion test" + " " +
+                # if settings.SCIPION_CMD in self.stagePrefix:
+                #     command = ["bash", "-c",
+                #                settings.CONDA_ACTIVATION_CMD +
+                #                " ; " + "./scipion3 test" + " " +
+                #                stage.strip()]
+
+                if self.rootName == settings.XMIPP_CMD:
+                    command = ["bash", "-c", "source build/xmipp.bashrc ; " +
                                stage.strip()]
+
+                if self.targetTestSet == 'xmipp3':
+                    command = ["bash", "-c", "source /build/xmipp.bashrc ; " +
+                               settings.SCIPION_CMD + " test " + stage.strip()]
 
                 testShellCommands.append(steps.ShellCommand(
                     command=command,

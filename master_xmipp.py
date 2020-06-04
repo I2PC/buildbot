@@ -7,18 +7,14 @@ from buildbot.schedulers import triggerable
 from buildbot.schedulers.forcesched import ForceScheduler
 
 import settings
-from settings import (XMIPP_REPO_URL, XMIPP_BUILD_ID, SCIPION_BUILD_ID,
-                      XMIPP_INSTALL_PREFIX, timeOutInstall, WORKER,
-                      XMIPP_SLACK_CHANNEL,
-                      XMIPP_TESTS, XMIPP_BUNDLE_TESTS, NVCC_LINKFLAGS,
-                      NVCC_CXXFLAGS,
-                      NVCC, CUDA, EMAN212, FORCE_BUILDER_PREFIX, branchsDict,
-                      PROD_GROUP_ID,
-                      XMIPP_BUNDLE_VARS, DEVEL_GROUP_ID, LD_LIBRARY_PATH,
-                      timeOutShort, SDEVEL_GROUP_ID, SPROD_GROUP_ID,
-                      PROD_LD_LIBRARY_PATH, PROD_SCIPION_CMD)
-from common_utils import changeConfVar, GenerateStagesCommand
-from master_scipion import pluginFactory, xmippPluginData, ScipionCommandStep
+from settings import (WORKER,  XMIPP_SLACK_CHANNEL,
+                      XMIPP_TESTS, XMIPP_BUNDLE_TESTS, EMAN212,
+                      FORCE_BUILDER_PREFIX, PROD_GROUP_ID,
+                      LD_LIBRARY_PATH, timeOutShort, SDEVEL_GROUP_ID,
+                      SPROD_GROUP_ID, PROD_LD_LIBRARY_PATH, PROD_SCIPION_CMD,
+                      XMIPP_INSTALL_PREFIX)
+from common_utils import GenerateStagesCommand
+from master_scipion import pluginFactory, xmippPluginData
 
 
 # #############################################################################
@@ -46,122 +42,11 @@ def glob2list(rc, stdout, stderr):
 
 
 # *****************************************************************************
-#                         INSTALL XMIPP FACTORY
-# *****************************************************************************
-def installXmippFactory(groupId):
-    installXmippSteps = util.BuildFactory()
-    installXmippSteps.workdir = XMIPP_BUILD_ID
-    installXmippSteps.addStep(
-        ShellCommand(command=['find', '.', '-mindepth', '1', '-delete'],
-                     name='Remove Xmipp directory',
-                     description='Delete existing Xmipp dir content',
-                     descriptionDone='Remove Xmipp'))
-    installXmippSteps.addStep(
-        ShellCommand(command=['echo', 'SCIPION_HOME: ',
-                              util.Property('SCIPION_HOME')],
-                     name='Echo scipion home',
-                     description='Echo scipion home',
-                     descriptionDone='Echo scipion home',
-                     timeout=timeOutShort))
-    installXmippSteps.addStep(
-        ShellCommand(command=['git', 'clone'] + XMIPP_REPO_URL.split() + ['.'],
-                     name='Clone Xmipp repository',
-                     description='Getting Xmipp repository',
-                     descriptionDone='Xmipp repo downloaded',
-                     timeout=timeOutShort,
-                     haltOnFailure=True))
-
-    installXmippSteps.addStep(
-        steps.SetPropertyFromCommand(command='echo $PWD',
-                                     property='XMIPP_HOME'))
-
-    xmippBranch = branchsDict[groupId].get(XMIPP_BUILD_ID, "")
-
-    # Install xmipp plugin
-    if groupId == SDEVEL_GROUP_ID:
-
-        installXmippSteps.addStep(
-            ScipionCommandStep(command='./xmipp get_devel_sources %s' % (xmippBranch),
-                         name='Get Xmipp devel sources',
-                         description='Get Xmipp devel sources',
-                         descriptionDone='Get Xmipp devel sources',
-                         timeout=timeOutShort)
-        )
-
-        installXmippPluginCmd = (settings.SCIPION_CMD + ' installp -p ' +
-                                 settings.SDEVEL_XMIPP_HOME +
-                                 '/src/scipion-em-xmipp --devel')
-
-        installXmippSteps.addStep(
-            ScipionCommandStep(command=installXmippPluginCmd,
-                         name='Install scipion-em-xmipp in devel mode',
-                         description='Install scipion-em-xmipp in devel mode',
-                         descriptionDone='scipion-em-xmipp in devel mode',
-                         timeout=timeOutInstall,
-                         haltOnFailure=True,
-                         workdir=XMIPP_BUILD_ID)
-        )
-        # Install xmipp binary
-        installXmippBinaryCmd = (
-                    settings.SCIPION_CMD + ' installb xmippDev -j 8')
-
-        installXmippSteps.addStep(
-            ScipionCommandStep(command=installXmippBinaryCmd,
-                               name='Install xmippDev binary',
-                               description='xmippDev binary',
-                               descriptionDone='xmippDev binary',
-                               timeout=timeOutInstall,
-                               haltOnFailure=True,
-                               workdir=XMIPP_BUILD_ID)
-        )
-
-    # elif groupId == SPROD_GROUP_ID:
-    #
-    #     installXmippSteps.addStep(
-    #         ShellCommand(
-    #             command='./xmipp get_devel_sources %s' % (xmippBranch),
-    #             name='Get Xmipp devel sources',
-    #             description='Get Xmipp devel sources',
-    #             descriptionDone='Get Xmipp devel sources',
-    #             timeout=timeOutShort)
-    #     )
-    #     installXmippPluginCmd = (settings.PROD_SCIPION_CMD + ' installp -p ' +
-    #                              settings.SPROD_XMIPP_HOME +
-    #                              '/src/scipion-em-xmipp --devel')
-    #
-    #     installXmippSteps.addStep(
-    #         ShellCommand(command=installXmippPluginCmd,
-    #                            name='Install scipion-em-xmipp in devel mode',
-    #                            description='Install scipion-em-xmipp in devel mode',
-    #                            descriptionDone='scipion-em-xmipp in devel mode',
-    #                            timeout=timeOutInstall,
-    #                            haltOnFailure=True,
-    #                            workdir=SCIPION_BUILD_ID)
-    #     )
-    #
-    #     # Install xmipp binary
-    #     installXmippBinaryCmd = (
-    #                 settings.PROD_SCIPION_CMD + ' installb xmippDev -j 8')
-    #
-    #     installXmippSteps.addStep(
-    #         ShellCommand(command=installXmippBinaryCmd,
-    #                            name='Install xmippDev binary',
-    #                            description='xmippDev binary',
-    #                            descriptionDone='xmippDev binary',
-    #                            timeout=timeOutInstall,
-    #                            haltOnFailure=True,
-    #                            workdir=SCIPION_BUILD_ID)
-    #     )
-
-    return installXmippSteps
-
-
-# *****************************************************************************
 #                         XMIPP BUNDLE FACTORY
 # *****************************************************************************
 def xmippBundleFactory(groupId):
     xmippTestSteps = util.BuildFactory()
-    xmippTestSteps.workdir = XMIPP_BUILD_ID
+    xmippTestSteps.workdir = settings.SDEVEL_XMIPP_HOME
     if groupId != SDEVEL_GROUP_ID:
         xmippTestSteps.addStep(SetProperty(command=["bash", "-c", "source build/xmipp.bashrc; env"],
                                            extract_fn=glob2list,
@@ -190,33 +75,23 @@ def xmippBundleFactory(groupId):
                                   env=util.Property('env')))
     else:
         xmippTestSteps.addStep(SetProperty(
-            command=["bash", "-c", settings.SCIPION_ENV_ACTIVATION + " ; " +
-                     "cd " + settings.EM_ROOT + " ; " + "source xmipp/xmipp.bashrc; env"],
+            command=["bash", "-c", "cd " + settings.EM_ROOT + " ; " + "source xmipp/xmipp.bashrc; env"],
             extract_fn=glob2list,
             env={"SCIPION_HOME": util.Property("SCIPION_HOME"),
                  "SCIPION_LOCAL_CONFIG": util.Property("SCIPION_LOCAL_CONFIG"),
                  "LD_LIBRARY_PATH": LD_LIBRARY_PATH,
                  "EM_ROOT": settings.EM_ROOT}))
 
-        xmippTestShowcmd = ["bash", "-c", settings.SCIPION_ENV_ACTIVATION +
-                            " ; " + "cd " + settings.SDEVEL_XMIPP_HOME + " ; " + "./xmipp test --show"]
+        xmippTestShowcmd = ["bash", "-c", "cd " + settings.SDEVEL_XMIPP_HOME + " ; " + "./xmipp test --show"]
         xmippTestSteps.addStep(
             GenerateStagesCommand(command=xmippTestShowcmd,
                                   name="Generate test stages for Xmipp programs",
                                   description="Generating test stages for Xmipp programs",
                                   descriptionDone="Generate test stages for Xmipp programs",
                                   haltOnFailure=False,
+                                  rootName=settings.XMIPP_CMD,
                                   pattern='./xmipp test (.*)',
                                   env=util.Property('env')))
-
-        # xmippTestSteps.addStep(
-        #     GenerateStagesCommand(command=xmippTestShowcmd,
-        #                           name="Generate test stages for Xmipp functions",
-        #                           description="Generating test stages for Xmipp functions",
-        #                           descriptionDone="Generate test stages for Xmipp functions",
-        #                           haltOnFailure=False,
-        #                           pattern='xmipp_test_(.*)',
-        #                           env=util.Property('env')))
 
     return xmippTestSteps
 
@@ -240,7 +115,7 @@ def xmippTestFactory(groupId):
     envs = {gpucorrcls: EMAN212 for gpucorrcls in gpucorrclassifiers}
 
     if groupId != SDEVEL_GROUP_ID:
-        scipionCmd = "./scipion"
+        scipionCmd = "./scipion3"
         if groupId == SPROD_GROUP_ID:
             scipionCmd = PROD_SCIPION_CMD
         xmippTestSteps.addStep(
@@ -255,8 +130,7 @@ def xmippTestFactory(groupId):
 
     else:
 
-        xmippTestShowcmd = ["bash", "-c", settings.SCIPION_ENV_ACTIVATION +
-                            " ; " + "python -m scipion test --show --grep xmipp3 --mode onlyclasses"]
+        xmippTestShowcmd = ["bash", "-c", "./scipion3 test --show --grep xmipp3 --mode onlyclasses"]
 
         xmippTestSteps.addStep(
             GenerateStagesCommand(
@@ -267,6 +141,7 @@ def xmippTestFactory(groupId):
                 haltOnFailure=False,
                 stagePrefix=[settings.SCIPION_CMD, "test"],
                 targetTestSet='xmipp3',
+                rootName='scipion3',
                 stageEnvs=envs))
 
     return xmippTestSteps
@@ -319,20 +194,6 @@ def getXmippBuilders(groupId):
 
     elif groupId == SDEVEL_GROUP_ID or groupId == SPROD_GROUP_ID:
 
-        installEnv['EM_ROOT'] = settings.EM_ROOT
-        installEnv['LD_LIBRARY_PATH'] = LD_LIBRARY_PATH
-        installEnv['XMIPP_ALLOW_ANY_CUDA'] = 'True'
-
-        if groupId == SDEVEL_GROUP_ID:
-            builders.append(
-                BuilderConfig(name=XMIPP_INSTALL_PREFIX + groupId,
-                              workernames=[WORKER],
-                              tags=[groupId],
-                              factory=installXmippFactory(groupId),
-                              workerbuilddir=groupId,
-                              env=installEnv,
-                              properties=props)
-            )
         env = {
             "SCIPION_IGNORE_PYTHONPATH": "True",
             "SCIPION_LOCAL_CONFIG": util.Property("SCIPION_LOCAL_CONFIG"),
@@ -355,6 +216,7 @@ def getXmippBuilders(groupId):
         )
 
         if groupId == SDEVEL_GROUP_ID:
+            bundleEnv.update(env)
             builders.append(
                 BuilderConfig(name=XMIPP_BUNDLE_TESTS + groupId,
                               tags=[groupId],
@@ -375,7 +237,7 @@ def getXmippBuilders(groupId):
 def getXmippSchedulers(groupId):
 
     xmippSchedulerNames = [XMIPP_TESTS + groupId]
-    if groupId != SPROD_GROUP_ID:
+    if groupId == PROD_GROUP_ID:
         xmippSchedulerNames += [XMIPP_INSTALL_PREFIX + groupId]
 
     if groupId == SDEVEL_GROUP_ID:

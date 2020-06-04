@@ -48,16 +48,12 @@ except ImportError:
                        SCIPION_BUILD_ID: 'master'
                    },
                    SDEVEL_GROUP_ID: {
-                       SCIPION_APP_BUILD_ID: 'devel',
-                       SCIPION_EM_BUILD_ID: 'devel',
-                       SCIPION_PYWORKFLOW_BUILD_ID: 'devel',
-                       XMIPP_BUILD_ID: 'python3_migration',
+                       SCIPION_BUILD_ID: 'devel',
                        DOCS_BUILD_ID: 'release-3.0.0'
 
                    },
                     SPROD_GROUP_ID: {
-                    SCIPION_BUILD_ID: 'master',
-                    XMIPP_BUILD_ID: 'python3_migration'
+                        SCIPION_BUILD_ID: 'master',
                     }}
 
     ################## Scipion settings ##################
@@ -68,27 +64,33 @@ except ImportError:
     MPI_LIBDIR = "/usr/lib/x86_64-linux-gnu/openmpi/lib"
     MPI_INCLUDE = "/usr/lib/x86_64-linux-gnu/openmpi/include"
     MPI_BINDIR = "/usr/bin"
-    CUDA_LIB = "/usr/local/cuda-8.0/lib64"
+    CUDA_LIB = "/usr/local/cuda-10.2/lib64"
     MOTIONCOR2_CUDA_LIB = "/usr/local/cuda-10.2/lib64"
     MOTIONCOR2_BIN = 'MotionCor2_v1.3.1-Cuda102'
     GCTF = 'Gctf_v1.18_b2_sm60_cu8.0'
     GCTF_CUDA_LIB = '/usr/local/cuda-8.0/lib64'
     GAUTOMATCH = 'Gautomatch_v0.56_sm60_cu8.0'
+    GAUTOMATCH_CUDA_LIB = "/usr/local/cuda-8.0/lib64"
     SPIDER = 'spider_linux_mp_intel64'
     SPIDER_MPI = 'spider_linux_mpi_opt64'
     CCP4_HOME = "/opt/ccp4-7.0"
     PHENIX_HOME = "/home/buildbot/phenix-1.17.1/phenix-1.17.1-3660"
-    CONDA_ACTIVATION_CMD = ". /home/buildbot/miniconda3/etc/profile.d/conda.sh;"
+    CONDA_ACTIVATION_CMD = "source /home/buildbot/miniconda3/etc/profile.d/conda.sh"
+    CONDA_REMOVE_DEVEL_ENV = "conda env remove -n develEnv"
+    CONDA_REMOVE_PROD_ENV = "conda env remove -n prodEnv"
     SDEVEL_SCIPION_HOME = '/home/buildbot/devel/scipion'
     SPROD_SCIPION_HOME = '/home/buildbot/prod/scipion'
     SPROD_ENV_PATH = '/home/buildbot/prod/condaenvs/prodEnv'
-    SDEVEL_XMIPP_HOME = '/home/buildbot/devel/xmipp'
-    SPROD_XMIPP_HOME = '/home/buildbot/prod/xmipp'
+    SDEVEL_ENV_PATH = '/home/buildbot/prod/condaenvs/develEnv'
+    SDEVEL_XMIPP_HOME = '/home/buildbot/devel/scipion/xmipp-bundle'
+    SPROD_XMIPP_HOME = '/home/buildbot/prod/scipion/xmipp-bundle'
     BUILDBOT_HOME = '/home/buildbot/'
     NYSBC_3DFSC_HOME = SDEVEL_SCIPION_HOME + "/software/em/fsc3D-3.0"
     CRYOLO_NS_GENERIC_MODEL = SDEVEL_SCIPION_HOME + "/software/em/cryolo_model-202002_N63/gmodel_phosnet_202002_N63.h5"
     CRYOLO_ENV_ACTIVATION = ". /home/buildbot/miniconda3/etc/profile.d/conda.sh; conda activate cryolo-1.6.1"
     CRYOLO_CUDA_LIB = "/usr/local/cuda-8.0/lib64"
+    RELION_CUDA_LIB = "/usr/local/cuda-10.2/lib64"
+    RELION_CUDA_BIN = "/usr/local/cuda-10.2/bin"
 
     # Cryosparc variables
     # The root directory where cryoSPARC code and dependencies is installed.
@@ -112,23 +114,9 @@ except ImportError:
     DOCS_HTML_BRANCH = 'gh-pages'
     SDEVEL_DOCS_PATH = "/home/buildbot/scipionBot/devel/docs"
 
-    #New verion of Scipion
-    sdevel_gitRepoURL = ("-b %s https://github.com/scipion-em/scipion-app.git"
-                        % branchsDict[SDEVEL_GROUP_ID].get(SCIPION_APP_BUILD_ID, "devel"))
-
-    sdevel_pw_gitRepoURL = ("-b %s https://github.com/scipion-em/scipion-pyworkflow.git"
-                        % branchsDict[SDEVEL_GROUP_ID].get(SCIPION_PYWORKFLOW_BUILD_ID, "devel"))
-
-    sdevel_pyem_gitRepoURL = ("-b %s https://github.com/scipion-em/scipion-em.git"
-                        % branchsDict[SDEVEL_GROUP_ID].get(SCIPION_EM_BUILD_ID, "devel"))
-
-    sdevelXmipp_gitRepoURL = ("-b %s https://github.com/I2PC/scipion-em-xmipp.git"
-                         % branchsDict[SDEVEL_GROUP_ID].get(XMIPP_BUILD_ID, "devel"))
-
-
-    SCIPION_ENV_ACTIVATION = "source /home/buildbot/miniconda3/etc/profile.d/conda.sh ; conda activate scipion_python3"
-    SCIPION_CMD = "python -m scipion"
+    SCIPION_CMD = "./scipion3"
     PROD_SCIPION_CMD = "./scipion3"
+    XMIPP_CMD = "./xmipp"
     SCIPION_ENV_PATH = "/home/buildbot/.conda/envs/scipion_python3/lib/python3.5/site-packages/"
     SDEVEL_SCIPION_CONFIG_PATH = "/home/buildbot/.config/scipion/scipion_devel.conf"
     SPROD_SCIPION_CONFIG_PATH = "/home/buildbot/.config/scipion/scipion_prod.conf"
@@ -161,11 +149,10 @@ except ImportError:
                                 "pyworkflow.tests.em.workflows.test_parallel_gpu_queue.TestQueueSteps",
                                 "pyworkflow.tests.em.workflows.test_workflow_existing.TestXmippWorkflow",
                                 "relion.tests.test_protocols_relion3.Relion3TestMultiBody",
-                                "emxlib.tests.test_workflow_emx.TestEmxWeb"])
+                                "emxlib.tests.test_workflow_emx.TestEmxWeb",
+                                "pwem.tests.workflows.test_workflow_xmipp_ctf_consensus.TestCtfConsensus"])
 
     ################### Xmipp settings ##################
-    XMIPP_REPO_URL = ("-b %s https://github.com/I2PC/xmipp.git"
-                        % branchsDict[SDEVEL_GROUP_ID].get(XMIPP_BUILD_ID, "devel"))
     # builder prefixes
     XMIPP_INSTALL_PREFIX = 'Install_Xmipp_'
     XMIPP_TESTS = 'xmipp_'
