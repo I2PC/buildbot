@@ -171,14 +171,14 @@
         "pipName": "scipion-em-tomo",
         "id": 4,
         "name": "tomo",
-        "pluginSourceUrl": "https://github.com/scipion-em/scipion-em-tomo.git@python3_migration",
+        "pluginSourceUrl": "https://github.com/scipion-em/scipion-em-tomo.git@devel",
         "slackChannel":"tomo"
     },
   "scipion-em-dynamo": {
         "pipName": "scipion-em-dynamo",
         "id": 4,
         "name": "dynamo",
-        "pluginSourceUrl": "https://github.com/scipion-em/scipion-em-dynamo.git@python3_migration",
+        "pluginSourceUrl": "https://github.com/scipion-em/scipion-em-dynamo.git@devel",
         "slackChannel":"dynamo"
     },
   "scipion-em-novactf": {
