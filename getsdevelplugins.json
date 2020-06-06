@@ -3,7 +3,7 @@
         "pipName": "scipion-em-eman2",
         "id": 4,
         "name": "eman2",
-        "pluginSourceUrl": "https://github.com/scipion-em/scipion-em-eman2.git@python3_migration",
+        "pluginSourceUrl": "https://github.com/scipion-em/scipion-em-eman2.git@devel",
         "slackChannel":"eman",
         "NO_TESTS": true
     },
@@ -32,7 +32,7 @@
           "pipName": "scipion-em-relion",
           "id": 31,
           "name": "relion",
-          "pluginSourceUrl": "https://github.com/scipion-em/scipion-em-relion.git@python3_migration",
+          "pluginSourceUrl": "https://github.com/scipion-em/scipion-em-relion.git@devel",
           "slackChannel": "relion"
       },
   "scipion-em-cryosparc2": {
