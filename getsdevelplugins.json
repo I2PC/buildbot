@@ -103,7 +103,7 @@
           "pipName": "scipion-em-bamfordlab",
           "id": 31,
           "name": "bamfordlab",
-          "pluginSourceUrl": "https://github.com/scipion-em/scipion-em-bamfordlab.git@python3_migration",
+          "pluginSourceUrl": "https://github.com/scipion-em/scipion-em-bamfordlab.git@devel",
           "slackChannel":"bamfordlab"
       },
   "scipion-em-fsc3d": {
