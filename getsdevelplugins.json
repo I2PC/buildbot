@@ -160,6 +160,13 @@
           "pluginSourceUrl": "https://github.com/scipion-em/scipion-em-sphire.git@python3_migration",
           "extraBinaries": ["cryolo_negstain_model"]
   },
+  "scipion-em-topaz": {
+        "pipName": "scipion-em-topaz",
+        "id": 27,
+        "name": "topaz",
+        "pluginSourceUrl": "https://github.com/scipion-em/scipion-em-topaz.git@devel",
+        "slackChannel" : "chimera"
+    },
   "scipion-em-continuousflex": {
           "pipName": "scipion-em-continuousflex",
           "id": 31,
