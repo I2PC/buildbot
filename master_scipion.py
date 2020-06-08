@@ -376,7 +376,8 @@ sprodMoveScipionConfig = ('cp ' + settings.SPROD_SCIPION_CONFIG_PATH + ' ' +
 
 
 # Update the Scipion web site
-updateWebSiteCmd = 'python ' + settings.BUILDBOT_HOME + 'updateScipionSite.py'
+updateWebSiteCmd = (settings.DEVEL_ENV_ACTIVATION + ' && python ' +
+                   settings.BUILDBOT_HOME + 'updateScipionSite.py')
 
 
 def addScipionGitAndConfigSteps(factorySteps, groupId):
