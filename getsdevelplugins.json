@@ -157,7 +157,7 @@
     "pipName": "scipion-em-sphire",
           "id": 51,
           "name": "sphire",
-          "pluginSourceUrl": "https://github.com/scipion-em/scipion-em-sphire.git@python3_migration",
+          "pluginSourceUrl": "https://github.com/scipion-em/scipion-em-sphire.git@devel",
           "extraBinaries": ["cryolo_negstain_model"]
   },
   "scipion-em-topaz": {
@@ -221,14 +221,14 @@
         "pipName": "scipion-pyworkflow",
         "id": 32,
         "name": "pyworkflow",
-        "pluginSourceUrl": "https://github.com/scipion-em/scipion-pyworkflow.git@python3_migration",
+        "pluginSourceUrl": "https://github.com/scipion-em/scipion-pyworkflow.git@devel",
         "slackChannel": "pyworkflow"
     },
   "scipion-em": {
         "pipName": "scipion-em",
         "id": 32,
         "name": "em",
-        "pluginSourceUrl": "https://github.com/scipion-em/scipion-em.git@python3_migration",
+        "pluginSourceUrl": "https://github.com/scipion-em/scipion-em.git@devel",
         "slackChannel": "xmipp"
     }
 }
