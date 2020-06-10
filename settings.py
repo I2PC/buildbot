@@ -75,7 +75,7 @@ except ImportError:
     SPIDER_MPI = 'spider_linux_mpi_opt64'
     CCP4_HOME = "/opt/ccp4-7.0"
     PHENIX_HOME = "/home/buildbot/phenix-1.17.1/phenix-1.17.1-3660"
-    CONDA_ACTIVATION_CMD = "source /home/buildbot/miniconda3/etc/profile.d/conda.sh"
+    CONDA_ACTIVATION_CMD = ". /home/buildbot/miniconda3/etc/profile.d/conda.sh"
     CONDA_REMOVE_DEVEL_ENV = "conda env remove -n develEnv"
     DEVEL_ENV = "develEnv"
     PROD_ENV = "prodEnv"
