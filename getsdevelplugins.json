@@ -171,7 +171,7 @@
           "pipName": "scipion-em-continuousflex",
           "id": 31,
           "name": "continuousflex",
-          "pluginSourceUrl": "https://github.com/scipion-em/scipion-em-continuousflex.git@devel",
+          "pluginSourceUrl": "https://github.com/slajo/scipion-em-continuousflex.git@master",
           "slackChannel":"continuousflex"
       },
   "scipion-em-tomo": {
