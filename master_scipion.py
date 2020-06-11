@@ -561,6 +561,16 @@ def installProdScipionFactory(groupId):
                            description='Move Scipion Config file',
                            descriptionDone='Move Scipion Config file',
                            haltOnFailure=True))
+    installCmd = (settings.SCIPION_CMD + ' installp -p scipion-em-tomo' +
+                  ' -j ' + '8')
+
+    installScipionFactorySteps.addStep(ScipionCommandStep(
+        command=installCmd,
+        name='Install plugin scipion-em-tomo',
+        description='Install plugin scipion-em-tomo',
+        descriptionDone='Installed plugin scipion-em-tomo',
+        timeout=settings.timeOutInstall,
+        haltOnFailure=True))
 
     return installScipionFactorySteps
 
@@ -658,6 +668,16 @@ def installSDevelScipionFactory(groupId):
                        descriptionDone='Move Scipion Config file',
                        haltOnFailure=True))
 
+    installCmd = (settings.SCIPION_CMD + ' installp -p scipion-em-tomo' +
+                  ' -j ' + '8')
+
+    installScipionFactorySteps.addStep(ScipionCommandStep(
+        command=installCmd,
+        name='Install plugin scipion-em-tomo',
+        description='Install plugin scipion-em-tomo',
+        descriptionDone='Installed plugin scipion-em-tomo',
+        timeout=settings.timeOutInstall,
+        haltOnFailure=True))
 
     return installScipionFactorySteps
 

@@ -174,13 +174,6 @@
           "pluginSourceUrl": "https://github.com/slajo/scipion-em-continuousflex.git@master",
           "slackChannel":"continuousflex"
       },
-  "scipion-em-tomo": {
-        "pipName": "scipion-em-tomo",
-        "id": 4,
-        "name": "tomo",
-        "pluginSourceUrl": "https://github.com/scipion-em/scipion-em-tomo.git@devel",
-        "slackChannel":"tomo"
-    },
   "scipion-em-dynamo": {
         "pipName": "scipion-em-dynamo",
         "id": 4,
@@ -188,12 +181,20 @@
         "pluginSourceUrl": "https://github.com/scipion-em/scipion-em-dynamo.git@devel",
         "slackChannel":"dynamo"
     },
+  "scipion-em-tomo": {
+        "pipName": "scipion-em-tomo",
+        "id": 4,
+        "name": "tomo",
+        "pluginSourceUrl": "https://github.com/scipion-em/scipion-em-tomo.git@devel",
+        "slackChannel":"tomo"
+    },
   "scipion-em-novactf": {
         "pipName": "scipion-em-novactf",
         "id": 4,
         "name": "novactf",
         "pluginSourceUrl": "https://github.com/scipion-em/scipion-em-novactf.git@master",
-        "slackChannel":"novactf"
+        "slackChannel":"novactf",
+        "NO_TESTS": true
     },
 "scipion-em-imod": {
         "pipName": "scipion-em-imod",
@@ -205,7 +206,7 @@
   "scipion-em-facilities": {
         "pipName": "scipion-em-facilities",
         "id": 4,
-        "name": "facilities",
+        "name": "emfacilities",
         "pluginSourceUrl": "https://github.com/scipion-em/scipion-em-facilities.git@devel",
         "slackChannel":"facilities",
         "moveFiles": ["secrets.cfg"]
