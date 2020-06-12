@@ -157,7 +157,8 @@ except ImportError:
                                 "pwem.tests.workflows.test_workflow_xmipp_ctf_consensus.TestCtfConsensus",
                                 "pwem.tests.workflows.test_parallel_gpu_queue.TestQueueSteps",
                                 "pwem.tests.workflows.test_parallel_gpu_queue.TestQueueSmall",
-                                "pwem.tests.workflows.test_parallel_gpu_queue.TestQueueALL"])
+                                "pwem.tests.workflows.test_parallel_gpu_queue.TestQueueALL",
+                                "tomo.tests.test_tomo_base.TestTomoAssignAlignment"])
 
     ################### Xmipp settings ##################
     # builder prefixes

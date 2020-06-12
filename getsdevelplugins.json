@@ -181,13 +181,6 @@
         "pluginSourceUrl": "https://github.com/scipion-em/scipion-em-dynamo.git@devel",
         "slackChannel":"dynamo"
     },
-  "scipion-em-tomo": {
-        "pipName": "scipion-em-tomo",
-        "id": 4,
-        "name": "tomo",
-        "pluginSourceUrl": "https://github.com/scipion-em/scipion-em-tomo.git@devel",
-        "slackChannel":"tomo"
-    },
   "scipion-em-novactf": {
         "pipName": "scipion-em-novactf",
         "id": 4,
@@ -202,6 +195,13 @@
         "name": "imod",
         "pluginSourceUrl": "https://github.com/scipion-em/scipion-em-imod.git@devel",
         "slackChannel":"novactf"
+    },
+  "scipion-em-tomo": {
+        "pipName": "scipion-em-tomo",
+        "id": 4,
+        "name": "tomo",
+        "pluginSourceUrl": "https://github.com/scipion-em/scipion-em-tomo.git@devel",
+        "slackChannel":"tomo"
     },
   "scipion-em-facilities": {
         "pipName": "scipion-em-facilities",
