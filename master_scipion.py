@@ -769,6 +769,23 @@ def pluginFactory(groupId, pluginName, factorySteps=None, shortname=None,
         if groupId == settings.SPROD_GROUP_ID:
             scipionCmd = './scipion3'
             rootName = 'scipion3'
+
+        if deleteVirtualEnv:
+            deleteEnv = (settings.CONDA_ACTIVATION_CMD +
+                        "; conda env remove --name " + deleteVirtualEnv)
+            removeBinCmd = " ; "
+            if binToRemove:
+                for binary in binToRemove:
+                   removeBinCmd += "rm -rf software/em/" + binary + "* ; "
+
+            deleteEnv += removeBinCmd
+            factorySteps.addStep(ShellCommand(command=['bash', '-c', deleteEnv],
+                                              name='Removing the %s virtual environment' % shortName,
+                                              description='Removing %s virtual environment' % shortName,
+                                              descriptionDone='Removing %s virtual environment' % shortName,
+                                              timeout=settings.timeOutInstall,
+                                              haltOnFailure=False))
+
         if doInstall:
             factorySteps.addStep(ShellCommand(command=[scipionCmd, 'installp', '-p', pluginName, '-j', '8'],
                                               name='Install plugin %s' % shortName,
