@@ -144,12 +144,20 @@ setScipionUserData = ShellCommand(
     descriptionDone='Change ScipionUserData dir',
     haltOnFailure=True)
 
+setMotioncorrCudaSupport = ShellCommand(
+    command=util.Interpolate(
+        'sed -ie "\$aMOTIONCOR2_CUDA_LIB = {}" %(prop:SCIPION_LOCAL_CONFIG)s'.format(settings.MOTIONCOR2_CUDA_LIB_SUPPORT)),
+    name='Set MOTIONCOR2_CUDA_LIB in scipion conf',
+    description='Set MOTIONCOR2_CUDA_LIB in scipion conf',
+    descriptionDone='Set MOTIONCOR2_CUDA_LIB in scipion conf',
+    haltOnFailure=True)
+
 setMotioncorrCuda = ShellCommand(
     command=util.Interpolate(
-        'sed -ie "\$aMOTIONCORR_CUDA_LIB = {}" %(prop:SCIPION_LOCAL_CONFIG)s'.format(settings.MOTIONCOR2_CUDA_LIB)),
-    name='Set MOTIONCORR_CUDA_LIB in scipion conf',
-    description='Set MOTIONCORR_CUDA_LIB in scipion conf',
-    descriptionDone='Set MOTIONCORR_CUDA_LIB in scipion conf',
+        'sed -ie "\$aMOTIONCOR2_CUDA_LIB = {}" %(prop:SCIPION_LOCAL_CONFIG)s'.format(settings.MOTIONCOR2_CUDA_LIB)),
+    name='Set MOTIONCOR2_CUDA_LIB in scipion conf',
+    description='Set MOTIONCOR2_CUDA_LIB in scipion conf',
+    descriptionDone='Set MOTIONCOR2_CUDA_LIB in scipion conf',
     haltOnFailure=True)
 
 setCcp4Home = ShellCommand(
@@ -242,6 +250,14 @@ setCryosparcUser = ShellCommand(
 setMotincor2Bin = ShellCommand(
     command=util.Interpolate(
         'sed -ie "\$aMOTIONCOR2_BIN = {}" %(prop:SCIPION_LOCAL_CONFIG)s'.format(settings.MOTIONCOR2_BIN)),
+    name='Add the right MOTIONCOR2_BIN file',
+    description='Add the right MOTIONCOR2_BIN file',
+    descriptionDone='Add the right MOTIONCOR2_BIN file',
+    haltOnFailure=True)
+
+setMotincor2BinSupport = ShellCommand(
+    command=util.Interpolate(
+        'sed -ie "\$aMOTIONCOR2_BIN = {}" %(prop:SCIPION_LOCAL_CONFIG)s'.format(settings.MOTIONCOR2_BIN_SUPPORT)),
     name='Add the right MOTIONCOR2_BIN file',
     description='Add the right MOTIONCOR2_BIN file',
     descriptionDone='Add the right MOTIONCOR2_BIN file',
@@ -455,12 +471,12 @@ def installScipionFactory(groupId):
     installScipionFactorySteps.addStep(
         steps.JSONStringDownload(dict(scipionPlugins, **{"scipion-em-locscale": locscalePluginData}),
                                  workerdest="plugins.json"))
-    installScipionFactorySteps.addStep(setMotioncorrCuda)
+    installScipionFactorySteps.addStep(setMotioncorrCudaSupport)
     installScipionFactorySteps.addStep(setCryoloCuda)
     installScipionFactorySteps.addStep(setPhenixHome)
     installScipionFactorySteps.addStep(setCryosparcDir)
     installScipionFactorySteps.addStep(setCryosparcUser)
-    installScipionFactorySteps.addStep(setMotincor2Bin)
+    installScipionFactorySteps.addStep(setMotincor2BinSupport)
     installScipionFactorySteps.addStep(setCcp4Home)
     installScipionFactorySteps.addStep(setNYSBC_3DFSC_HOME)
     # installScipionFactorySteps.addStep(setCryoloModel)

@@ -65,6 +65,8 @@ except ImportError:
     MPI_INCLUDE = "/usr/lib/x86_64-linux-gnu/openmpi/include"
     MPI_BINDIR = "/usr/bin"
     CUDA_LIB = "/usr/local/cuda-10.2/lib64"
+    MOTIONCOR2_CUDA_LIB_SUPPORT = "/usr/local/cuda-8.0/lib64"
+    MOTIONCOR2_BIN_SUPPORT = 'MotionCor2_1.3.0-Cuda80'
     MOTIONCOR2_CUDA_LIB = "/usr/local/cuda-10.2/lib64"
     MOTIONCOR2_BIN = 'MotionCor2_v1.3.1-Cuda102'
     GCTF = 'Gctf_v1.18_sm30-75_cu10.1'
