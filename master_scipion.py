@@ -479,6 +479,7 @@ def installScipionFactory(groupId):
     installScipionFactorySteps.addStep(setMotincor2BinSupport)
     installScipionFactorySteps.addStep(setCcp4Home)
     installScipionFactorySteps.addStep(setNYSBC_3DFSC_HOME)
+    installScipionFactorySteps.addStep(setEnvActivationCMD)
     # installScipionFactorySteps.addStep(setCryoloModel)
     #installScipionFactorySteps.addStep(setCryoloEnvActivation)
     return installScipionFactorySteps
