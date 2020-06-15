@@ -160,7 +160,8 @@ except ImportError:
                                 "pwem.tests.workflows.test_parallel_gpu_queue.TestQueueSteps",
                                 "pwem.tests.workflows.test_parallel_gpu_queue.TestQueueSmall",
                                 "pwem.tests.workflows.test_parallel_gpu_queue.TestQueueALL",
-                                "tomo.tests.test_tomo_base.TestTomoAssignAlignment"])
+                                "tomo.tests.test_tomo_base.TestTomoAssignAlignment",
+                                "spider.tests.test_protocols_spider_align.TestSpiderAlign"])
 
     ################### Xmipp settings ##################
     # builder prefixes
