@@ -172,7 +172,8 @@
           "id": 31,
           "name": "continuousflex",
           "pluginSourceUrl": "https://github.com/slajo/scipion-em-continuousflex.git@master",
-          "slackChannel":"continuousflex"
+          "slackChannel":"continuousflex",
+          "NO_TESTS": true
       },
   "scipion-em-dynamo": {
         "pipName": "scipion-em-dynamo",
