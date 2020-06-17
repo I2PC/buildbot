@@ -741,7 +741,7 @@ def scipionTestFactory(groupId):
                                                   description='Testing %s' % pwLongTest.split('.')[-1],
                                                   descriptionDone=pwLongTest.split('.')[-1],
                                                   timeout=settings.timeOutExecute))
-    elif groupId == settings.SDEVEL_GROUP_ID:
+    else:
         scipionTestSteps.addStep(ShellCommand(
             command=['echo', 'SCIPION_HOME: ', util.Property('SCIPION_HOME')],
             name='Echo scipion home',
@@ -1417,15 +1417,16 @@ def getScipionBuilders(groupId):
                                                  properties={
                                                      'slackChannel': "buildbot"},
                                                  env=env))
-        scipionBuilders.append(
-            BuilderConfig(name="%s%s" % (settings.WEBSITE_PREFIX, groupId),
-                          tags=["web", groupId],
-                          workernames=[settings.WORKER],
-                          factory=updateWebSite(groupId),
-                          workerbuilddir=groupId,
-                          properties={
-                              'slackChannel': "buildbot"},
-                          env=env))
+        if groupId == settings.SDEVEL_GROUP_ID:
+            scipionBuilders.append(
+                BuilderConfig(name="%s%s" % (settings.WEBSITE_PREFIX, groupId),
+                              tags=["web", groupId],
+                              workernames=[settings.WORKER],
+                              factory=updateWebSite(groupId),
+                              workerbuilddir=groupId,
+                              properties={
+                                  'slackChannel': "buildbot"},
+                              env=env))
 
     return scipionBuilders
 
@@ -1457,7 +1458,8 @@ def getScipionSchedulers(groupId):
         if settings.branchsDict[groupId].get(settings.DOCS_BUILD_ID, None) is not None:
             scipionSchedulerNames.append("%s%s" % (settings.DOCS_PREFIX, groupId))
 
-        scipionSchedulerNames.append("%s%s" % (settings.WEBSITE_PREFIX, groupId))
+        if groupId == settings.SDEVEL_GROUP_ID:
+            scipionSchedulerNames.append("%s%s" % (settings.WEBSITE_PREFIX, groupId))
 
         schedulers = []
         for name in scipionSchedulerNames:

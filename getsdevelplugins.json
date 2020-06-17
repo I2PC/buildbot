@@ -216,7 +216,7 @@
         "pipName": "scipion-em-xmipp",
         "id": 32,
         "name": "xmipp",
-        "pluginSourceUrl": "https://github.com/I2PC/xmipp.git@python3_migration",
+        "pluginSourceUrl": "https://github.com/I2PC/xmipp.git@devel",
         "slackChannel": "xmipp"
     },
   "scipion-pyworkflow": {
