@@ -204,11 +204,11 @@
         "slackChannel":"tomo"
     },
   "scipion-em-pyseg": {
-        "pipName": "scipion-em-tomo",
+        "pipName": "scipion-em-pyseg",
         "id": 4,
-        "name": "tomo",
+        "name": "pyseg",
         "pluginSourceUrl": "https://github.com/scipion-em/scipion-em-pyseg.git@master",
-        "slackChannel":"tomo"
+        "slackChannel":"pyseg"
     },
   "scipion-em-facilities": {
         "pipName": "scipion-em-facilities",
