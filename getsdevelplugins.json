@@ -4,8 +4,7 @@
         "id": 4,
         "name": "eman2",
         "pluginSourceUrl": "https://github.com/scipion-em/scipion-em-eman2.git@devel",
-        "slackChannel":"eman",
-        "NO_TESTS": true
+        "slackChannel":"eman"
     },
    "scipion-em-cistem": {
       "pipName": "scipion-em-cistem",
@@ -202,6 +201,13 @@
         "id": 4,
         "name": "tomo",
         "pluginSourceUrl": "https://github.com/scipion-em/scipion-em-tomo.git@devel",
+        "slackChannel":"tomo"
+    },
+  "scipion-em-pyseg": {
+        "pipName": "scipion-em-tomo",
+        "id": 4,
+        "name": "tomo",
+        "pluginSourceUrl": "https://github.com/scipion-em/scipion-em-pyseg.git@master",
         "slackChannel":"tomo"
     },
   "scipion-em-facilities": {
