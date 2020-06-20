@@ -330,6 +330,24 @@ setSPIDER_MPI = ShellCommand(
     descriptionDone='Add the right SPIDER_MPI file',
     haltOnFailure=True)
 
+setCUDA_LIB = ShellCommand(
+    command=util.Interpolate(
+        'sed -ie "\$aCUDA_LIB = {}" %(prop:SCIPION_LOCAL_CONFIG)s'.format(settings.CUDA_LIB)),
+    name='Add the right CUDA_LIB file',
+    description='Add the right CUDA_LIB file',
+    descriptionDone='Add the right CUDA_LIB file',
+    haltOnFailure=True)
+
+setCUDA_BIN = ShellCommand(
+    command=util.Interpolate(
+        'sed -ie "\$aCUDA_BIN = {}" %(prop:SCIPION_LOCAL_CONFIG)s'.format(settings.CUDA_BIN)),
+    name='Add the right CUDA_BIN file',
+    description='Add the right CUDA_BIN file',
+    descriptionDone='Add the right CUDA_BIN file',
+    haltOnFailure=True)
+
+
+
 installEman212 = ShellCommand(command=['./scipion', 'installb', 'eman-2.12'],
                               name='Install eman-2.12',
                               description='Install eman-2.12',
@@ -570,6 +588,8 @@ def installProdScipionFactory(groupId):
     installScipionFactorySteps.addStep(setRelionCudaLib)
     installScipionFactorySteps.addStep(setSPIDERBin)
     installScipionFactorySteps.addStep(setSPIDER_MPI)
+    installScipionFactorySteps.addStep(setCUDA_BIN)
+    installScipionFactorySteps.addStep(setCUDA_LIB)
     installScipionFactorySteps.addStep(setPhenixHome)
     installScipionFactorySteps.addStep(setEnvActivationCMD)
     installScipionFactorySteps.addStep(
@@ -677,6 +697,8 @@ def installSDevelScipionFactory(groupId):
     installScipionFactorySteps.addStep(setPhenixHome)
     installScipionFactorySteps.addStep(setSPIDERBin)
     installScipionFactorySteps.addStep(setSPIDER_MPI)
+    installScipionFactorySteps.addStep(setCUDA_BIN)
+    installScipionFactorySteps.addStep(setCUDA_LIB)
     installScipionFactorySteps.addStep(setEnvActivationCMD)
     installScipionFactorySteps.addStep(
     ScipionCommandStep(command=sdevelMoveScipionConfig,

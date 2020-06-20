@@ -94,7 +94,7 @@ except ImportError:
     NYSBC_3DFSC_HOME = SDEVEL_SCIPION_HOME + "/software/em/fsc3D-3.0"
     CRYOLO_NS_GENERIC_MODEL = SDEVEL_SCIPION_HOME + "/software/em/cryolo_model-202002_N63/gmodel_phosnet_202002_N63.h5"
     CRYOLO_ENV_ACTIVATION = ". /home/buildbot/miniconda3/etc/profile.d/conda.sh; conda activate cryolo-1.6.1"
-    CRYOLO_CUDA_LIB = "/usr/local/cuda-8.0/lib64"
+    CRYOLO_CUDA_LIB = "/usr/local/cuda-10.2/lib64"
     RELION_CUDA_LIB = "/usr/local/cuda-10.2/lib64"
     RELION_CUDA_BIN = "/usr/local/cuda-10.2/bin"
 
