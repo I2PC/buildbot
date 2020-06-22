@@ -4,7 +4,8 @@
         "id": 4,
         "name": "eman2",
         "pluginSourceUrl": "https://github.com/scipion-em/scipion-em-eman2.git@devel",
-        "slackChannel":"eman"
+        "slackChannel":"eman",
+        "NO_TESTS": true
     },
    "scipion-em-cistem": {
       "pipName": "scipion-em-cistem",
@@ -32,14 +33,16 @@
           "id": 31,
           "name": "relion",
           "pluginSourceUrl": "https://github.com/scipion-em/scipion-em-relion.git@devel",
-          "slackChannel": "relion"
+          "slackChannel": "relion",
+          "NO_TESTS": true
       },
   "scipion-em-cryosparc2": {
           "pipName": "scipion-em-cryosparc2",
           "id": 31,
           "name": "cryosparc2",
           "pluginSourceUrl": "https://github.com/scipion-em/scipion-em-cryosparc2.git@devel",
-          "slackChannel": "cryosparc"
+          "slackChannel": "cryosparc",
+          "NO_TESTS": true
       },
     "scipion-em-resmap": {
         "pipName": "scipion-em-resmap",

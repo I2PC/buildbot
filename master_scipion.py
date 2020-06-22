@@ -84,10 +84,11 @@ setNotifyAtFalse = ShellCommand(
     haltOnFailure=True)
 
 setGeneralCuda = ShellCommand(
-    command=changeConfVar("CUDA", settings.CUDA),
-    name='Set CUDA equals True',
-    description='Set CUDA equals True',
-    descriptionDone='Set CUDA equals True',
+    command=util.Interpolate(
+        'sed -ie "\$aCUDA = {}" %(prop:SCIPION_LOCAL_CONFIG)s'.format(settings.CUDA)),
+    name='Set CUDA in scipion conf',
+    description='Set CUDA in scipion conf',
+    descriptionDone='Set CUDA in scipion conf',
     haltOnFailure=True)
 
 setMpiLibPath = ShellCommand(
@@ -518,7 +519,7 @@ def installProdScipionFactory(groupId):
 
     # Install Scipion by the installer script
     # Downloading the installer from pypi and install it
-    installScipionFactorySteps.addStep((ShellCommand(command=['pip', 'install', 'scipion-installer==1.0.0b0'],
+    installScipionFactorySteps.addStep((ShellCommand(command=['pip', 'install', 'scipion-installer'],
                                                     name='Installing scipion-installer from pypi',
                                                     description='Installing scipion-installer from pypi',
                                                     descriptionDone='Installing scipion-installer from pypi',
@@ -628,7 +629,7 @@ def installSDevelScipionFactory(groupId):
     # Install Scipion by the installer script
     # Downloading the installer from pypi and install it
     installScipionFactorySteps.addStep(
-        (ShellCommand(command=['pip', 'install', 'scipion-installer==1.0.0b0'],
+        (ShellCommand(command=['pip', 'install', 'scipion-installer'],
                       name='Installing scipion-installer from pypi',
                       description='Installing scipion-installer from pypi',
                       descriptionDone='Installing scipion-installer from pypi',
