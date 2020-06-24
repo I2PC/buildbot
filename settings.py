@@ -78,6 +78,7 @@ except ImportError:
     CCP4_HOME = "/opt/xtal/ccp4-7.1"
     PHENIX_HOME = "/home/buildbot/phenix-1.17.1/phenix-1.17.1-3660"
     CONDA_ACTIVATION_CMD = ". /home/buildbot/miniconda3/etc/profile.d/conda.sh"
+    aphinxENV_ACTIVATE = CONDA_ACTIVATION_CMD + " && . ~/.sphinxVenv/bin/activate"
     CONDA_REMOVE_DEVEL_ENV = "conda env remove -n develEnv"
     DEVEL_ENV = "develEnv"
     PROD_ENV = "prodEnv"
@@ -118,12 +119,15 @@ except ImportError:
     gitRepoURL = 'https://github.com/I2PC/scipion.git'
     DOCS_REPO = "git@github.com:scipion-em/docs.git"
     DOCS_HTML_BRANCH = 'gh-pages'
+    DOCS_HOME = "/home/buildbot/scipionBot/devel/docs"
     SDEVEL_DOCS_PATH = "/home/buildbot/scipionBot/devel/docs"
 
     SCIPION_CMD = "./scipion3"
     PROD_SCIPION_CMD = "./scipion3"
     XMIPP_CMD = "./xmipp"
     SCIPION_ENV_PATH = "/home/buildbot/.conda/envs/scipion_python3/lib/python3.5/site-packages/"
+    SCIPION_SDEVEL_ENV_PATH = SDEVEL_ENV_PATH + "/lib/python3.8/site-packages/"
+
     SDEVEL_SCIPION_CONFIG_PATH = "/home/buildbot/.config/scipion/scipion_devel.conf"
     SPROD_SCIPION_CONFIG_PATH = "/home/buildbot/.config/scipion/scipion_prod.conf"
 
