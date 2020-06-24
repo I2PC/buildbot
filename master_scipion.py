@@ -930,20 +930,20 @@ def pluginFactory(groupId, pluginName, factorySteps=None, shortname=None,
                                                   descriptionDone='Installed extra package  %s' % binary,
                                                   timeout=settings.timeOutInstall,
                                                   haltOnFailure=True))
-        # if doTest:
-        #     pluginsTestShowcmd = ['bash', '-c', './scipion3 test --show --grep ' +
-        #                           shortName + ' --mode onlyclasses']
-        #
-        #     factorySteps.addStep(
-        #         GenerateStagesCommand(command=pluginsTestShowcmd,
-        #                               name="Generate Scipion test stages for %s" % shortName,
-        #                               description="Generating Scipion test stages for %s" % shortName,
-        #                               descriptionDone="Generate Scipion test stages for %s" % shortName,
-        #                               stagePrefix=[settings.SCIPION_CMD, "test"],
-        #                               haltOnFailure=False,
-        #                               rootName=rootName,
-        #                               blacklist=settings.SCIPION_TESTS_BLACKLIST,
-        #                               targetTestSet=shortName))
+        if doTest:
+            pluginsTestShowcmd = ['bash', '-c', './scipion3 test --show --grep ' +
+                                  shortName + ' --mode onlyclasses']
+
+            factorySteps.addStep(
+                GenerateStagesCommand(command=pluginsTestShowcmd,
+                                      name="Generate Scipion test stages for %s" % shortName,
+                                      description="Generating Scipion test stages for %s" % shortName,
+                                      descriptionDone="Generate Scipion test stages for %s" % shortName,
+                                      stagePrefix=[settings.SCIPION_CMD, "test"],
+                                      haltOnFailure=False,
+                                      rootName=rootName,
+                                      blacklist=settings.SCIPION_TESTS_BLACKLIST,
+                                      targetTestSet=shortName))
 
     return factorySteps
 
