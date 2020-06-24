@@ -121,6 +121,7 @@ except ImportError:
     DOCS_HTML_BRANCH = 'gh-pages'
     DOCS_HOME = "/home/buildbot/scipionBot/devel/docs"
     SDEVEL_DOCS_PATH = "/home/buildbot/scipionBot/devel/docs"
+    SDEVEL_DOCS_API_PATH = SDEVEL_DOCS_PATH + "/api"
 
     SCIPION_CMD = "./scipion3"
     PROD_SCIPION_CMD = "./scipion3"

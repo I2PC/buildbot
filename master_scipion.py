@@ -1027,6 +1027,13 @@ def docsFactory(groupId):
 
     if groupId == settings.SDEVEL_GROUP_ID:
 
+        factorySteps.addStep(
+            ShellCommand(command='rm -rf ' + settings.SDEVEL_DOCS_API_PATH,
+                         name='Remove the API folder',
+                         description='Remove the API folder',
+                         descriptionDone='Remove the API folder',
+                         timeout=settings.timeOutInstall))
+
         installDependenciesCmd = (settings.DEVEL_ENV_ACTIVATION +
                                    " && pip install -r requirements.txt")
 
@@ -1045,9 +1052,9 @@ def docsFactory(groupId):
 
         factorySteps.addStep(
             ScipionCommandStep(command=command,
-                         name='Generate scipion-pyworkflow docs',
-                         description='Generate scipion-pyworkflow docs',
-                         descriptionDone='Generated scipion-pyworkflow docs',
+                         name='Generate scipion-pyworkflow doc',
+                         description='Generate scipion-pyworkflow doc',
+                         descriptionDone='Generated scipion-pyworkflow doc',
                          timeout=settings.timeOutInstall))
 
         command = (settings.DEVEL_ENV_ACTIVATION + '&& sphinx-apidoc -f -e -o api/pwem ' +
@@ -1056,9 +1063,9 @@ def docsFactory(groupId):
 
         factorySteps.addStep(
             ScipionCommandStep(command=command,
-                         name='Generate scipion-em docs',
-                         description='Generate scipion-em docs',
-                         descriptionDone='Generated scipion-em docs',
+                         name='Generate scipion-em API doc',
+                         description='Generate scipion-em doc',
+                         descriptionDone='Generated scipion-em doc',
                          timeout=settings.timeOutInstall))
 
         command = (settings.DEVEL_ENV_ACTIVATION + '&& sphinx-apidoc -f -e -o api/xmipp3 ' +
@@ -1067,9 +1074,9 @@ def docsFactory(groupId):
 
         factorySteps.addStep(
             ScipionCommandStep(command=command,
-                               name='Generate scipion-em-xmipp docs',
-                               description='Generate scipion-em-xmipp docs',
-                               descriptionDone='Generated scipion-em-xmipp docs',
+                               name='Generate scipion-em-xmipp doc',
+                               description='Generate scipion-em-xmipp doc',
+                               descriptionDone='Generated scipion-em-xmipp doc',
                                timeout=settings.timeOutInstall))
 
         # Generate the plugins documentation
@@ -1087,9 +1094,9 @@ def docsFactory(groupId):
 
                 factorySteps.addStep(
                     ScipionCommandStep(command=command,
-                                       name='Generate ' + moduleName + ' docs',
-                                       description='Generate ' + moduleName + ' docs',
-                                       descriptionDone='Generate ' + moduleName + ' docs',
+                                       name='Generate ' + moduleName + ' doc',
+                                       description='Generate ' + moduleName + ' doc',
+                                       descriptionDone='Generate ' + moduleName + ' doc',
                                        timeout=settings.timeOutInstall))
 
         factorySteps.addStep(
