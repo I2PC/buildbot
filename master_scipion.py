@@ -1068,18 +1068,6 @@ def docsFactory(groupId):
                          descriptionDone='Generated scipion-em doc',
                          timeout=settings.timeOutInstall))
 
-        command = (
-                    settings.DEVEL_ENV_ACTIVATION + '&& sphinx-apidoc -f -e -o api/scipion-app ' +
-                    settings.SDEVEL_SCIPION_HOME + "/scipion-app" +
-                    " " + settings.SDEVEL_SCIPION_HOME + "/scipion-app/pwem/tests")
-
-        factorySteps.addStep(
-            ScipionCommandStep(command=command,
-                               name='Generate scipion-app doc',
-                               description='Generate scipion-app doc',
-                               descriptionDone='Generated scipion-app doc',
-                               timeout=settings.timeOutInstall))
-
         command = (settings.DEVEL_ENV_ACTIVATION + '&& sphinx-apidoc -f -e -o api/xmipp3 ' +
                    settings.SDEVEL_XMIPP_HOME + "/src/scipion-em-xmipp" +
                    " " + settings.SDEVEL_XMIPP_HOME + "/src/scipion-em-xmipp/xmipp3/tests")
@@ -1089,6 +1077,18 @@ def docsFactory(groupId):
                                name='Generate scipion-em-xmipp doc',
                                description='Generate scipion-em-xmipp doc',
                                descriptionDone='Generated scipion-em-xmipp doc',
+                               timeout=settings.timeOutInstall))
+
+        command = (
+                settings.DEVEL_ENV_ACTIVATION + '&& sphinx-apidoc -f -e -o api/scipion ' +
+                settings.SDEVEL_SCIPION_HOME + "/scipion-app" +
+                " " + settings.SDEVEL_SCIPION_HOME + "/scipion-app/scipion/tests")
+
+        factorySteps.addStep(
+            ScipionCommandStep(command=command,
+                               name='Generate scipion-app doc',
+                               description='Generate scipion-app doc',
+                               descriptionDone='Generated scipion-app doc',
                                timeout=settings.timeOutInstall))
 
         # Generate the plugins documentation
