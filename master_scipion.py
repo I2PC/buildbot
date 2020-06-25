@@ -1063,10 +1063,22 @@ def docsFactory(groupId):
 
         factorySteps.addStep(
             ScipionCommandStep(command=command,
-                         name='Generate scipion-em API doc',
+                         name='Generate scipion-em doc',
                          description='Generate scipion-em doc',
                          descriptionDone='Generated scipion-em doc',
                          timeout=settings.timeOutInstall))
+
+        command = (
+                    settings.DEVEL_ENV_ACTIVATION + '&& sphinx-apidoc -f -e -o api/scipion-app ' +
+                    settings.SDEVEL_SCIPION_HOME + "/scipion-app" +
+                    " " + settings.SDEVEL_SCIPION_HOME + "/scipion-app/pwem/tests")
+
+        factorySteps.addStep(
+            ScipionCommandStep(command=command,
+                               name='Generate scipion-app doc',
+                               description='Generate scipion-app doc',
+                               descriptionDone='Generated scipion-app doc',
+                               timeout=settings.timeOutInstall))
 
         command = (settings.DEVEL_ENV_ACTIVATION + '&& sphinx-apidoc -f -e -o api/xmipp3 ' +
                    settings.SDEVEL_XMIPP_HOME + "/src/scipion-em-xmipp" +
