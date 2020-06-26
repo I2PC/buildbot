@@ -1027,8 +1027,37 @@ def docsFactory(groupId):
 
     if groupId == settings.SDEVEL_GROUP_ID:
 
+        factorySteps.addStep(
+            ShellCommand(command='rm -rf ' + settings.SDEVEL_DOCS_API_PATH,
+                         name='Remove the API folder',
+                         description='Remove the API folder',
+                         descriptionDone='Remove the API folder',
+                         timeout=settings.timeOutInstall))
+
+        factorySteps.addStep(ShellCommand(command=["bash", "-c", "git add ."],
+                                          name='Git deleted docs',
+                                          description='Git deleted docs',
+                                          descriptionDone='Git deleted docs',
+                                          timeout=settings.timeOutInstall))
+
+        factorySteps.addStep(ShellCommand(
+            command=["bash", "-c",
+                     "git commit -m \'buildbot automated-update\'"],
+            name='Git commit docs',
+            description='Git commit docs',
+            descriptionDone='Git commit docs',
+            timeout=settings.timeOutInstall,
+            haltOnFailure=False))
+
+        factorySteps.addStep(ShellCommand(command=["bash", "-c", "git push"],
+                                          name='Git push docs to repo',
+                                          description='Git push docs to repo',
+                                          descriptionDone='Git push docs to repo',
+                                          timeout=settings.timeOutInstall,
+                                          haltOnFailure=False))
+
         installDependenciesCmd = (settings.DEVEL_ENV_ACTIVATION +
-                                  " && pip install -r requirements.txt")
+                                   " && pip install -r requirements.txt")
 
         # install all dependencies in the environment
         factorySteps.addStep(
