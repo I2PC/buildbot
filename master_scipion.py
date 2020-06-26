@@ -1092,12 +1092,10 @@ def docsFactory(groupId):
                                timeout=settings.timeOutInstall))
 
         # Generate the plugins documentation
-        plugins = {}
-        plugins.update(scipionSdevelPlugins)
-        plugins['scipion-em-locscale'] = {"pipName": "scipion-em-locscale",
+        scipionSdevelPlugins['scipion-em-locscale'] = {"pipName": "scipion-em-locscale",
                                           "name": "locscale",
                                           }
-        for plugin, pluginDict in plugins.items():
+        for plugin, pluginDict in scipionSdevelPlugins.items():
             moduleName = str(pluginDict.get("name", plugin.rsplit('-', 1)[-1]))
             modulePath = os.path.join(settings.SCIPION_SDEVEL_ENV_PATH, moduleName)
             if os.path.exists(modulePath):
