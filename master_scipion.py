@@ -1138,23 +1138,23 @@ def docsFactory(groupId):
                                    name='Set property DOCS_HOME'))
 
         factorySteps.addStep(ShellCommand(command=["bash", "-c", "git add ."],
-                                          name='Git add docs',
-                                          description='Git add docs',
-                                          descriptionDone='Git added docs',
+                                          name='Git add generated doc',
+                                          description='Git add generated doc',
+                                          descriptionDone='Git add generated doc',
                                           timeout=settings.timeOutInstall))
 
         factorySteps.addStep(ShellCommand(
             command=["bash", "-c", "git commit -m \'buildbot automated-update\'"],
-            name='Git commit docs',
-            description='Git commit docs',
-            descriptionDone='Git commit docs',
+            name='Git commit generated doc',
+            description='Git commit generated doc',
+            descriptionDone='Git commit generated doc',
             timeout=settings.timeOutInstall,
             haltOnFailure=False))
 
         factorySteps.addStep(ShellCommand(command=["bash", "-c", "git push"],
-                                          name='Git push docs to repo',
-                                          description='Git push docs to repo',
-                                          descriptionDone='Git push docs to repo',
+                                          name='Git push generated doc to repo',
+                                          description='Git push generated doc to repo',
+                                          descriptionDone='Git push generated doc to repo',
                                           timeout=settings.timeOutInstall,
                                           haltOnFailure=False))
 
