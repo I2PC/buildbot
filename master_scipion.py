@@ -1092,12 +1092,13 @@ def docsFactory(groupId):
                                timeout=settings.timeOutInstall))
 
         # Generate the plugins documentation
-        scipionSdevelPlugins['scipion-em-locscale'] = {"pipName": "scipion-em-locscale",
-                                          "name": "locscale",
-                                          }
+        # scipionSdevelPlugins['scipion-em-locscale'] = {"pipName": "scipion-em-locscale",
+        #                                   "name": "locscale",
+        #                                   }
         for plugin, pluginDict in scipionSdevelPlugins.items():
             moduleName = str(pluginDict.get("name", plugin.rsplit('-', 1)[-1]))
             modulePath = os.path.join(settings.SCIPION_SDEVEL_ENV_PATH, moduleName)
+            print(modulePath)
             if os.path.exists(modulePath):
                 command = (settings.DEVEL_ENV_ACTIVATION + '&& sphinx-apidoc -f -e -o api/' + moduleName + ' ' +
                             modulePath + ' ' + modulePath + '/tests')
