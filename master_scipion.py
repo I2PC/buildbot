@@ -1027,15 +1027,8 @@ def docsFactory(groupId):
 
     if groupId == settings.SDEVEL_GROUP_ID:
 
-        factorySteps.addStep(
-            ShellCommand(command='rm -rf ' + settings.SDEVEL_DOCS_API_PATH,
-                         name='Remove the API folder',
-                         description='Remove the API folder',
-                         descriptionDone='Remove the API folder',
-                         timeout=settings.timeOutInstall))
-
         installDependenciesCmd = (settings.DEVEL_ENV_ACTIVATION +
-                                   " && pip install -r requirements.txt")
+                                  " && pip install -r requirements.txt")
 
         # install all dependencies in the environment
         factorySteps.addStep(
@@ -1052,9 +1045,9 @@ def docsFactory(groupId):
 
         factorySteps.addStep(
             ScipionCommandStep(command=command,
-                         name='Generate scipion-pyworkflow doc',
-                         description='Generate scipion-pyworkflow doc',
-                         descriptionDone='Generated scipion-pyworkflow doc',
+                         name='Generating scipion-pyworkflow .rst files',
+                         description='Generating scipion-pyworkflow .rst files',
+                         descriptionDone='Generating scipion-pyworkflow .rst files',
                          timeout=settings.timeOutInstall))
 
         command = (settings.DEVEL_ENV_ACTIVATION + '&& sphinx-apidoc -f -e -o api/pwem ' +
@@ -1063,9 +1056,9 @@ def docsFactory(groupId):
 
         factorySteps.addStep(
             ScipionCommandStep(command=command,
-                         name='Generate scipion-em doc',
-                         description='Generate scipion-em doc',
-                         descriptionDone='Generated scipion-em doc',
+                         name='Generating scipion-em .rst files',
+                         description='Generating scipion-em .rst files',
+                         descriptionDone='Generating scipion-em .rst files',
                          timeout=settings.timeOutInstall))
 
         command = (settings.DEVEL_ENV_ACTIVATION + '&& sphinx-apidoc -f -e -o api/xmipp3 ' +
@@ -1074,9 +1067,9 @@ def docsFactory(groupId):
 
         factorySteps.addStep(
             ScipionCommandStep(command=command,
-                               name='Generate scipion-em-xmipp doc',
-                               description='Generate scipion-em-xmipp doc',
-                               descriptionDone='Generated scipion-em-xmipp doc',
+                               name='Generating scipion-em-xmipp .rst files',
+                               description='Generating scipion-em-xmipp .rst files',
+                               descriptionDone='Generating scipion-em-xmipp .rst files',
                                timeout=settings.timeOutInstall))
 
         command = (
@@ -1086,29 +1079,30 @@ def docsFactory(groupId):
 
         factorySteps.addStep(
             ScipionCommandStep(command=command,
-                               name='Generate scipion-app doc',
-                               description='Generate scipion-app doc',
-                               descriptionDone='Generated scipion-app doc',
+                               name='Generating scipion-app .rst files',
+                               description='Generating scipion-app .rst files',
+                               descriptionDone='Generating scipion-app .rst files',
                                timeout=settings.timeOutInstall))
 
         # Generate the plugins documentation
-        # scipionSdevelPlugins['scipion-em-locscale'] = {"pipName": "scipion-em-locscale",
-        #                                   "name": "locscale",
-        #                                   }
-        for plugin, pluginDict in scipionSdevelPlugins.items():
+        plugins = {}
+        plugins.update(scipionSdevelPlugins)
+        plugins.update({"scipion-em-locscale": locscaleSdevelPluginData})
+
+        for plugin, pluginDict in plugins.items():
             moduleName = str(pluginDict.get("name", plugin.rsplit('-', 1)[-1]))
             modulePath = os.path.join(settings.SCIPION_SDEVEL_ENV_PATH, moduleName)
-            print(modulePath)
-            if os.path.exists(modulePath):
-                command = (settings.DEVEL_ENV_ACTIVATION + '&& sphinx-apidoc -f -e -o api/' + moduleName + ' ' +
-                            modulePath + ' ' + modulePath + '/tests')
 
-                factorySteps.addStep(
-                    ScipionCommandStep(command=command,
-                                       name='Generate ' + moduleName + ' doc',
-                                       description='Generate ' + moduleName + ' doc',
-                                       descriptionDone='Generate ' + moduleName + ' doc',
-                                       timeout=settings.timeOutInstall))
+            command = (settings.DEVEL_ENV_ACTIVATION + '&& sphinx-apidoc -f -e -o api/' + moduleName + ' ' +
+                        modulePath + ' ' + modulePath + '/tests')
+
+            factorySteps.addStep(
+                ScipionCommandStep(command=command,
+                                   name='Generating ' + moduleName + ' .rst files',
+                                   description='Generating ' + moduleName + ' .rst files',
+                                   descriptionDone='Generating ' + moduleName + ' .rst files',
+                                   timeout=settings.timeOutInstall,
+                                   haltOnFailure=False))
 
         factorySteps.addStep(
             SetPropertyFromCommand(command='echo $PWD', property='DOCS_HOME',
@@ -1125,14 +1119,15 @@ def docsFactory(groupId):
             name='Git commit docs',
             description='Git commit docs',
             descriptionDone='Git commit docs',
-            doStepIf=doCommit,
-            timeout=settings.timeOutInstall))
+            timeout=settings.timeOutInstall,
+            haltOnFailure=False))
 
         factorySteps.addStep(ShellCommand(command=["bash", "-c", "git push"],
                                           name='Git push docs to repo',
                                           description='Git push docs to repo',
                                           descriptionDone='Git push docs to repo',
-                                          timeout=settings.timeOutInstall))
+                                          timeout=settings.timeOutInstall,
+                                          haltOnFailure=False))
 
         cmd = (settings.DEVEL_ENV_ACTIVATION + " && sphinx-versioning push -r " + docsBranch + " " +
                settings.SDEVEL_DOCS_PATH + " " + settings.DOCS_HTML_BRANCH +
@@ -1140,9 +1135,9 @@ def docsFactory(groupId):
 
         factorySteps.addStep(
             ShellCommand(command=["bash", "-c", cmd],
-                         name='Pushing builded docs',
-                         description='Pushing builded docs',
-                         descriptionDone='Pushing Built docs',
+                         name='Building and pushing the documentation',
+                         description='Building and pushing the documentation',
+                         descriptionDone='Building and pushing the documentation',
                          timeout=settings.timeOutInstall))
 
     return factorySteps
