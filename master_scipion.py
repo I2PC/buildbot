@@ -629,7 +629,7 @@ def installSDevelScipionFactory(groupId):
     # Install Scipion by the installer script
     # Downloading the installer from pypi and install it
     installScipionFactorySteps.addStep(
-        (ShellCommand(command=['pip', 'install', 'scipion-installer==1.0.5b0'],
+        (ShellCommand(command=['pip', 'install', 'scipion-installer==1.0.6b1'],
                       name='Installing scipion-installer from pypi',
                       description='Installing scipion-installer from pypi',
                       descriptionDone='Installing scipion-installer from pypi',
@@ -640,7 +640,7 @@ def installSDevelScipionFactory(groupId):
     scipionHome = settings.SDEVEL_SCIPION_HOME
     installScipionFactorySteps.addStep(
         (ShellCommand(command=['installscipion', scipionHome, '-noAsk', '-dev', '-n',
-                               'develEnv', '-conda'],
+                               'develEnv', '-conda', '-xmippBranch', 'release-20.07'],
                       name='Install Scipion',
                       description='Install Scipion',
                       descriptionDone='Install Scipion',
