@@ -1035,9 +1035,9 @@ def docsFactory(groupId):
                          timeout=settings.timeOutInstall))
 
         factorySteps.addStep(ShellCommand(command=["bash", "-c", "git add ."],
-                                          name='Git deleted docs',
-                                          description='Git deleted docs',
-                                          descriptionDone='Git deleted docs',
+                                          name='Git add deleted docs',
+                                          description='Git add deleted docs',
+                                          descriptionDone='Git add deleted docs',
                                           timeout=settings.timeOutInstall))
 
         factorySteps.addStep(ShellCommand(
@@ -1269,6 +1269,7 @@ def getScipionBuilders(groupId):
             env['EM_ROOT'] = settings.EM_ROOT
             env['LD_LIBRARY_PATH'] = settings.LD_LIBRARY_PATH
             env['PATH'] = ["/usr/local/cuda/bin", "${PATH}"]
+            env['PYTHONPATH'] = [settings.DOCS_HOME, "${PYTHONPATH}"]
             scipionBuilders.append(
                 BuilderConfig(name=settings.SCIPION_INSTALL_PREFIX + groupId,
                               tags=[groupId],
