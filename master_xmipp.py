@@ -160,6 +160,7 @@ def docsFactory(groupId):
                      settings.XMIPP_SDEVEL_PY_DOCS_REPO,
                      settings.XMIPP_SDEVEL_JAR_DOCS_REPO]
 
+
         for i in range(3):
             # Remove all API documentation
             factorySteps.addStep(
@@ -178,6 +179,37 @@ def docsFactory(groupId):
                     description=folderNames[i] + 'API repository pull',
                     descriptionDone=folderNames[i] + ' API repository pull',
                     timeout=settings.timeOutInstall))
+
+            factorySteps.addStep(
+                ShellCommand(command='rm -rf ' + folderNames[i] + '/html',
+                             name='Remove the API folder',
+                             description='Remove the API folder',
+                             descriptionDone='Remove the API folder',
+                             timeout=settings.timeOutInstall))
+
+            factorySteps.addStep(
+                ShellCommand(command=["bash", "-c", "cd " + folderNames[i] + "&& git add ."],
+                             name='Git add deleted API docs',
+                             description='Git add deleted API docs',
+                             descriptionDone='Git add deleted API docs',
+                             timeout=settings.timeOutInstall))
+
+            factorySteps.addStep(ShellCommand(
+                command=["bash", "-c",
+                         "cd " + folderNames[i] + " && git commit -m \'buildbot automated-update\'"],
+                name='Git commit API docs',
+                description='Git commit API docs',
+                descriptionDone='Git commit API docs',
+                timeout=settings.timeOutInstall,
+                haltOnFailure=False))
+
+            factorySteps.addStep(
+                ShellCommand(command=["bash", "-c", "cd " + folderNames[i] + " && git push"],
+                             name='Git push docs to repo',
+                             description='Git push API docs to repo',
+                             descriptionDone='Git push API docs to repo',
+                             timeout=settings.timeOutInstall,
+                             haltOnFailure=False))
 
             # Generate API documentation
             updatingDocCmd = "cd " + folderNames[i] + " && doxygen Doxyfile"

@@ -183,9 +183,9 @@ except ImportError:
     XMIPP_SLACK_CHANNEL = "xmipp"
 
     XMIPP_SDEVEL_DOCS_ROOT = "/home/buildbot/scipionBot/devel"
-    XMIPP_SDEVEL_C_DOCS_PATH = "/home/buildbot/scipionBot/devel/xmippDoc"
-    XMIPP_SDEVEL_PY_DOCS_PATH = "/home/buildbot/scipionBot/devel/xmippPythonDoc"
-    XMIPP_SDEVEL_JAR_DOCS_PATH = "/home/buildbot/scipionBot/devel/xmippJavaDoc"
+    XMIPP_SDEVEL_C_DOCS_PATH = "/home/buildbot/scipionBot/devel/xmippDoc/html"
+    XMIPP_SDEVEL_PY_DOCS_PATH = "/home/buildbot/scipionBot/devel/xmippPythonDoc/html"
+    XMIPP_SDEVEL_JAR_DOCS_PATH = "/home/buildbot/scipionBot/devel/xmippJavaDoc/html"
 
     XMIPP_SDEVEL_C_DOCS_REPO = "https://github.com/I2PC/xmippDoc.git"
     XMIPP_SDEVEL_PY_DOCS_REPO = "https://github.com/I2PC/xmippPythonDoc.git"
