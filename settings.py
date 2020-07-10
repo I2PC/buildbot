@@ -32,6 +32,9 @@ except ImportError:
     SCIPION_BUILD_ID = 'scipion'  # this will be the name of the builder dir i.e. the scipion home
     XMIPP_BUILD_ID = 'xmipp'  # this will be the dir name of xmipp's home
     DOCS_BUILD_ID = 'docs'
+    XMIPP_DOCS_BUILD_ID = 'xmippDoc'
+    XMIPP_JAR_DOCS_BUILD_ID = 'xmippJavaDoc'
+    XMIPP_PY_DOCS_BUILD_ID = 'xmippPythonDoc'
     NYSBC_BUILD_ID = 'nysbc'
     FORCE_BUILDER_PREFIX = 'Force_'
 
@@ -49,7 +52,8 @@ except ImportError:
                    },
                    SDEVEL_GROUP_ID: {
                        SCIPION_BUILD_ID: 'devel',
-                       DOCS_BUILD_ID: 'release-3.0.0'
+                       DOCS_BUILD_ID: 'release-3.0.0',
+                       XMIPP_DOCS_BUILD_ID: 'gh-pages'
 
                    },
                     SPROD_GROUP_ID: {
@@ -174,8 +178,19 @@ except ImportError:
     XMIPP_INSTALL_PREFIX = 'Install_Xmipp_'
     XMIPP_TESTS = 'xmipp_'
     XMIPP_BUNDLE_TESTS = 'xmipp_bundle_'
+    XMIPP_DOCS_PREFIX = 'xmipp_docs_'
     # slack channel
     XMIPP_SLACK_CHANNEL = "xmipp"
+
+    XMIPP_SDEVEL_DOCS_ROOT = "/home/buildbot/scipionBot/devel"
+    XMIPP_SDEVEL_C_DOCS_PATH = "/home/buildbot/scipionBot/devel/xmippDoc"
+    XMIPP_SDEVEL_PY_DOCS_PATH = "/home/buildbot/scipionBot/devel/xmippPythonDoc"
+    XMIPP_SDEVEL_JAR_DOCS_PATH = "/home/buildbot/scipionBot/devel/xmippJavaDoc"
+
+    XMIPP_SDEVEL_C_DOCS_REPO = "https://github.com/I2PC/xmippDoc.git"
+    XMIPP_SDEVEL_PY_DOCS_REPO = "https://github.com/I2PC/xmippPythonDoc.git"
+    XMIPP_SDEVEL_JAR_DOCS_REPO = "https://github.com/I2PC/xmippJavaDoc.git"
+
 
     # xmipp.conf variables
     CUDA = 'True'

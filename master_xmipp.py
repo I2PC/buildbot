@@ -1,3 +1,4 @@
+import os
 import re
 
 from buildbot.plugins import util, steps
@@ -5,16 +6,17 @@ from buildbot.steps.shell import ShellCommand, SetProperty
 from buildbot.config import BuilderConfig
 from buildbot.schedulers import triggerable
 from buildbot.schedulers.forcesched import ForceScheduler
+from buildbot.steps.source.git import Git
 
 import settings
-from settings import (WORKER,  XMIPP_SLACK_CHANNEL,
+from settings import (WORKER, XMIPP_SLACK_CHANNEL,
                       XMIPP_TESTS, XMIPP_BUNDLE_TESTS, EMAN212,
                       FORCE_BUILDER_PREFIX, PROD_GROUP_ID,
                       LD_LIBRARY_PATH, timeOutShort, SDEVEL_GROUP_ID,
                       SPROD_GROUP_ID, PROD_LD_LIBRARY_PATH, PROD_SCIPION_CMD,
-                      XMIPP_INSTALL_PREFIX)
-from common_utils import GenerateStagesCommand
-from master_scipion import pluginFactory, xmippPluginData
+                      XMIPP_INSTALL_PREFIX, XMIPP_DOCS_PREFIX)
+from common_utils import GenerateStagesCommand, changeConfVar
+from master_scipion import pluginFactory, xmippPluginData, ScipionCommandStep
 
 
 # #############################################################################
@@ -143,6 +145,64 @@ def xmippTestFactory(groupId):
 
     return xmippTestSteps
 
+# *****************************************************************************
+#                         DOCS FACTORY
+# *****************************************************************************
+
+
+def docsFactory(groupId):
+    factorySteps = util.BuildFactory()
+    factorySteps.workdir = settings.XMIPP_SDEVEL_DOCS_ROOT
+
+    if groupId == settings.SDEVEL_GROUP_ID:
+        folderNames = ['xmippDoc', 'xmippPythonDoc', 'xmippJavaDoc']
+        docsRepos = [settings.XMIPP_SDEVEL_C_DOCS_REPO,
+                     settings.XMIPP_SDEVEL_PY_DOCS_REPO,
+                     settings.XMIPP_SDEVEL_JAR_DOCS_REPO]
+
+        for i in range(3):
+            # Remove all API documentation
+            factorySteps.addStep(
+                ShellCommand(command='rm -rf ' + folderNames[i],
+                             name='Remove ' + folderNames[i],
+                             description='Remove ' + folderNames[i],
+                             descriptionDone='Remove ' + folderNames[i],
+                             timeout=settings.timeOutInstall))
+
+            # Select gh-pages branch for the three repositories
+            # Clone the documentation repositories
+            factorySteps.addStep(
+                ShellCommand(
+                    command='git clone --branch gh-pages ' + docsRepos[i],
+                    name=folderNames[i] + 'API repository pull',
+                    description=folderNames[i] + 'API repository pull',
+                    descriptionDone=folderNames[i] + ' API repository pull',
+                    timeout=settings.timeOutInstall))
+
+            # Generate API documentation
+            updatingDocCmd = "cd " + folderNames[i] + " && doxygen Doxyfile"
+
+            factorySteps.addStep(
+                ScipionCommandStep(command=updatingDocCmd,
+                             name='Updating the ' + folderNames[i] + ' API documentation',
+                             description='Updating the ' + folderNames[i] + ' API documentation',
+                             descriptionDone='Updating the ' + folderNames[i] + ' API documentation',
+                             timeout=settings.timeOutInstall))
+
+            # Upload the repositories
+            uploadDocCmd = ('cd ' + folderNames[i] +
+                            ' ; git add .  ; '
+                            'git commit -m "buildbot automated-update" ; '
+                            'git push')
+
+            factorySteps.addStep(
+                ScipionCommandStep(command=uploadDocCmd,
+                                   name='Uploading the ' + folderNames[i] + ' API documentation',
+                                   description='Uploading the ' + folderNames[i] + ' API documentation',
+                                   descriptionDone='Uploading the ' + folderNames[i] + ' API documentation',
+                                   timeout=settings.timeOutInstall))
+
+    return factorySteps
 
 # #############################################################################
 # ############################## BUILDERS #####################################
@@ -213,6 +273,20 @@ def getXmippBuilders(groupId):
         )
 
         if groupId == SDEVEL_GROUP_ID:
+            if settings.branchsDict[groupId].get(settings.XMIPP_DOCS_BUILD_ID,
+                                                 None) is not None:
+                builders.append(
+                    BuilderConfig(name="%s%s" % (settings.XMIPP_DOCS_PREFIX, groupId),
+                                  tags=["xmippDocs", groupId],
+                                  workernames=[settings.WORKER],
+                                  factory=docsFactory(groupId),
+                                  workerbuilddir=groupId,
+                                  properties={
+                                      'slackChannel': "buildbot"},
+                                  env=env))
+
+
+
             bundleEnv.update(env)
             builders.append(
                 BuilderConfig(name=XMIPP_BUNDLE_TESTS + groupId,
@@ -239,6 +313,7 @@ def getXmippSchedulers(groupId):
 
     if groupId == SDEVEL_GROUP_ID:
         xmippSchedulerNames.append(XMIPP_BUNDLE_TESTS + groupId)
+        xmippSchedulerNames.append(XMIPP_DOCS_PREFIX + groupId)
     schedulers = []
     for name in xmippSchedulerNames:
         schedulers.append(
