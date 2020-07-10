@@ -205,9 +205,9 @@ def docsFactory(groupId):
 
             factorySteps.addStep(
                 ShellCommand(command=["bash", "-c", "cd " + folderNames[i] + " && git push"],
-                             name='Git push docs to repo',
-                             description='Git push API docs to repo',
-                             descriptionDone='Git push API docs to repo',
+                             name='Git push ' + folderNames[i] + ' API docs to repo',
+                             description='Git push  ' + folderNames[i] + ' API docs to repo',
+                             descriptionDone='Git push  ' + folderNames[i] + ' API docs to repo',
                              timeout=settings.timeOutInstall,
                              haltOnFailure=False))
 
