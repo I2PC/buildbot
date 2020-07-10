@@ -175,31 +175,31 @@ def docsFactory(groupId):
             factorySteps.addStep(
                 ShellCommand(
                     command='git clone --branch gh-pages ' + docsRepos[i],
-                    name=folderNames[i] + 'API repository pull',
+                    name= folderNames[i] + 'API repository pull',
                     description=folderNames[i] + 'API repository pull',
                     descriptionDone=folderNames[i] + ' API repository pull',
                     timeout=settings.timeOutInstall))
 
             factorySteps.addStep(
                 ShellCommand(command='rm -rf ' + folderNames[i] + '/html',
-                             name='Remove the API folder',
-                             description='Remove the API folder',
-                             descriptionDone='Remove the API folder',
+                             name='Remove the ' + folderNames[i] + ' API folder',
+                             description='Remove the ' + folderNames[i] + ' API folder',
+                             descriptionDone='Remove the ' + folderNames[i] + ' API folder',
                              timeout=settings.timeOutInstall))
 
             factorySteps.addStep(
                 ShellCommand(command=["bash", "-c", "cd " + folderNames[i] + "&& git add ."],
-                             name='Git add deleted API docs',
-                             description='Git add deleted API docs',
-                             descriptionDone='Git add deleted API docs',
+                             name='Git add deleted ' + folderNames[i] + ' API docs',
+                             description='Git add deleted ' + folderNames[i] + ' API docs',
+                             descriptionDone='Git add deleted ' + folderNames[i] + ' API docs',
                              timeout=settings.timeOutInstall))
 
             factorySteps.addStep(ShellCommand(
                 command=["bash", "-c",
                          "cd " + folderNames[i] + " && git commit -m \'buildbot automated-update\'"],
-                name='Git commit API docs',
-                description='Git commit API docs',
-                descriptionDone='Git commit API docs',
+                name='Git commit ' + folderNames[i] + ' API docs',
+                description='Git commit  ' + folderNames[i] + ' API docs',
+                descriptionDone='Git commit ' + folderNames[i] + ' API docs',
                 timeout=settings.timeOutInstall,
                 haltOnFailure=False))
 
