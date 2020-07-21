@@ -102,7 +102,7 @@ except ImportError:
     CRYOLO_CUDA_LIB = "/usr/local/cuda-10.2/lib64"
     RELION_CUDA_LIB = "/usr/local/cuda-10.2/lib64"
     RELION_CUDA_BIN = "/usr/local/cuda-10.2/bin"
-
+    CHIMERA_HOME = "/home/buildbot/chimerax-1.0"
     # Cryosparc variables
     # The root directory where cryoSPARC code and dependencies is installed.
     CRYOSPARC_DIR = "/home/buildbot/cryosparc/"
