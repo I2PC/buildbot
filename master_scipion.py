@@ -153,6 +153,14 @@ setMotioncorrCudaSupport = ShellCommand(
     descriptionDone='Set MOTIONCOR2_CUDA_LIB in scipion conf',
     haltOnFailure=True)
 
+setEman2Home = ShellCommand(
+    command=util.Interpolate(
+        'sed -ie "\$aEMAN2_HOME = {}" %(prop:SCIPION_LOCAL_CONFIG)s'.format(settings.EMAN2_HOME)),
+    name='Set EMAN2_HOME in scipion conf',
+    description='Set EMAN2_HOME in scipion conf',
+    descriptionDone='Set EMAN2_HOME in scipion conf',
+    haltOnFailure=True)
+
 setMotioncorrCuda = ShellCommand(
     command=util.Interpolate(
         'sed -ie "\$aMOTIONCOR2_CUDA_LIB = {}" %(prop:SCIPION_LOCAL_CONFIG)s'.format(settings.MOTIONCOR2_CUDA_LIB)),
@@ -592,6 +600,7 @@ def installProdScipionFactory(groupId):
     installScipionFactorySteps.addStep(setCUDA_BIN)
     installScipionFactorySteps.addStep(setCUDA_LIB)
     installScipionFactorySteps.addStep(setPhenixHome)
+    installScipionFactorySteps.addStep(setEman2Home)
     installScipionFactorySteps.addStep(setEnvActivationCMD)
     installScipionFactorySteps.addStep(
         ScipionCommandStep(command=sprodMoveScipionConfig,
@@ -700,6 +709,7 @@ def installSDevelScipionFactory(groupId):
     installScipionFactorySteps.addStep(setSPIDER_MPI)
     installScipionFactorySteps.addStep(setCUDA_BIN)
     installScipionFactorySteps.addStep(setCUDA_LIB)
+    installScipionFactorySteps.addStep(setEman2Home)
     installScipionFactorySteps.addStep(setEnvActivationCMD)
     installScipionFactorySteps.addStep(
     ScipionCommandStep(command=sdevelMoveScipionConfig,

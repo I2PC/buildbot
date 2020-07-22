@@ -4,7 +4,8 @@
         "id": 4,
         "name": "eman2",
         "pluginSourceUrl": "https://github.com/scipion-em/scipion-em-eman2.git@devel",
-        "slackChannel":"eman"
+        "slackChannel":"eman",
+        "extraBinaries": ["eman-3.0.0-alpha"]
     },
    "scipion-em-cistem": {
       "pipName": "scipion-em-cistem",
@@ -170,7 +171,7 @@
           "pipName": "scipion-em-continuousflex",
           "id": 31,
           "name": "continuousflex",
-          "pluginSourceUrl": "https://github.com/slajo/scipion-em-continuousflex.git@master",
+          "pluginSourceUrl": "https://github.com/scipion-em/scipion-em-continuousflex.git@devel",
           "slackChannel":"continuousflex",
           "NO_TESTS": true
       },
