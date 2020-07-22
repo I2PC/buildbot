@@ -207,12 +207,12 @@ setCryoloCuda = ShellCommand(
     descriptionDone='Add CRYOLO_CUDA_LIB in scipion conf',
     haltOnFailure=True)
 
-setPhenixHome = ShellCommand(
+setChimeraHome = ShellCommand(
     command=util.Interpolate(
-        'sed -ie "\$aPHENIX_HOME = {}" %(prop:SCIPION_LOCAL_CONFIG)s'.format(settings.PHENIX_HOME)),
-    name='Set PHENIX_HOME in scipion conf',
-    description='Set PHENIX_HOME in scipion conf',
-    descriptionDone='Set PHENIX_HOME in scipion conf',
+        'sed -ie "\$aCHIMERA_HOME = {}" %(prop:SCIPION_LOCAL_CONFIG)s'.format(settings.CHIMERA_HOME)),
+    name='Set CHIMERA_HOME in scipion conf',
+    description='Set CHIMERA_HOME in scipion conf',
+    descriptionDone='Set CHIMERA_HOME in scipion conf',
     haltOnFailure=True)
 
 setPhenixHome = ShellCommand(
@@ -599,6 +599,7 @@ def installProdScipionFactory(groupId):
     installScipionFactorySteps.addStep(setSPIDER_MPI)
     installScipionFactorySteps.addStep(setCUDA_BIN)
     installScipionFactorySteps.addStep(setCUDA_LIB)
+    installScipionFactorySteps.addStep(setChimeraHome)
     installScipionFactorySteps.addStep(setPhenixHome)
     installScipionFactorySteps.addStep(setEman2Home)
     installScipionFactorySteps.addStep(setEnvActivationCMD)
@@ -704,6 +705,7 @@ def installSDevelScipionFactory(groupId):
     installScipionFactorySteps.addStep(setGautomatchCudaBin)
     installScipionFactorySteps.addStep(setRelionCudaBin)
     installScipionFactorySteps.addStep(setRelionCudaLib)
+    installScipionFactorySteps.addStep(setChimeraHome)
     installScipionFactorySteps.addStep(setPhenixHome)
     installScipionFactorySteps.addStep(setSPIDERBin)
     installScipionFactorySteps.addStep(setSPIDER_MPI)
@@ -808,7 +810,7 @@ def scipionTestFactory(groupId):
 # *****************************************************************************
 def pluginFactory(groupId, pluginName, factorySteps=None, shortname=None,
                   doInstall=True, extraBinaries=[], doTest=True,
-                  deleteVirtualEnv='', binToRemove=[], moveFiles=[]):
+                  deleteVirtualEnv='', binToRemove=[], moveFiles=[], bins=True):
     factorySteps = factorySteps or util.BuildFactory()
     factorySteps.workdir = util.Property('SCIPION_HOME')
     shortName = shortname or str(pluginName.rsplit('-', 1)[-1])  # todo: get module names more properly?
@@ -837,7 +839,7 @@ def pluginFactory(groupId, pluginName, factorySteps=None, shortname=None,
                                               haltOnFailure=False))
 
         if doInstall:
-            factorySteps.addStep(ShellCommand(command=[scipionCmd, 'installp', '-p', pluginName, '-j', '8'],
+            factorySteps.addStep(ShellCommand(command=[scipionCmd, 'installp', '-p', pluginName, '-j', '8', '' if bins else '--noBin'],
                                               name='Install plugin %s' % shortName,
                                               description='Install plugin %s' % shortName,
                                               descriptionDone='Installed plugin %s' % shortName,
@@ -1345,6 +1347,7 @@ def getScipionBuilders(groupId):
             deleteVirtualEnv = pluginDict.get("deleteVirtualEnv", '')
             binToRemove = pluginDict.get("binToRemove", [])
             moveFiles = pluginDict.get("moveFiles", [])
+            bins = pluginDict.get("bins", True)
             scipionBuilders.append(
                 BuilderConfig(name="%s_%s" % (moduleName, groupId),
                               tags=tags,
@@ -1355,7 +1358,8 @@ def getScipionBuilders(groupId):
                                                     extraBinaries=extraBinaries,
                                                     deleteVirtualEnv=deleteVirtualEnv,
                                                     binToRemove=binToRemove,
-                                                    moveFiles=moveFiles),
+                                                    moveFiles=moveFiles,
+                                                    bins=bins),
                               workerbuilddir=groupId,
                               properties={'slackChannel': scipionSdevelPlugins[plugin].get('slackChannel', "")},
                               env=env)
