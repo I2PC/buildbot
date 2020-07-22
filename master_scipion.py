@@ -914,8 +914,9 @@ def pluginFactory(groupId, pluginName, factorySteps=None, shortname=None,
                                               haltOnFailure=False))
 
         if doInstall:
+            noBin = '' if bins else '--noBin'
             installCmd = (settings.SCIPION_CMD + ' installp -p ' + pluginName +
-                          ' -j ' + '8')
+                          ' -j ' + '8 ' + noBin)
 
             factorySteps.addStep(ScipionCommandStep(
                 command=installCmd,

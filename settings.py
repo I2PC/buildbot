@@ -42,6 +42,9 @@ except ImportError:
     SCIPION_PYWORKFLOW_BUILD_ID = 'scipion-pyworkflow'
     SCIPION_EM_BUILD_ID = 'scipion-em'
 
+    # Number of lines to show in the log file
+    PROT_LOGS_LAST_LINES = 100
+
     # Here we define the structure of the builders. For each build group (prod and devel up to now)
     # we can define the branches of scipion and xmipp that we want to test. The branches of the
     # plugins are defined in plugins.json (e.g. using a pluginSourceUrl that points to the specific branch).
