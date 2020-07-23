@@ -4,8 +4,7 @@
         "id": 4,
         "name": "eman2",
         "pluginSourceUrl": "https://github.com/scipion-em/scipion-em-eman2.git@devel",
-        "slackChannel":"eman",
-        "extraBinaries": ["eman-3.0.0-alpha"]
+        "slackChannel":"eman"
     },
    "scipion-em-cistem": {
       "pipName": "scipion-em-cistem",
