@@ -1217,7 +1217,8 @@ def getScipionBuilders(groupId):
     scipionBuilders = []
     env = {"SCIPION_IGNORE_PYTHONPATH": "True",
            "SCIPION_LOCAL_CONFIG": util.Property('SCIPION_LOCAL_CONFIG'),
-           "LD_LIBRARY_PATH": settings.LD_LIBRARY_PATH}
+           "LD_LIBRARY_PATH": settings.LD_LIBRARY_PATH,
+           "PROT_LOGS_LAST_LINES": settings.PROT_LOGS_LAST_LINES}
 
     if groupId == settings.PROD_GROUP_ID:
 

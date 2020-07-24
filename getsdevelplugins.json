@@ -61,7 +61,9 @@
         "name": "chimera",
         "pluginSourceUrl": "https://github.com/scipion-em/scipion-em-chimera.git@devel",
         "slackChannel" : "chimera",
-        "bins": false
+        "bins": false,
+        "extraBinaries": ["scipionchimera"]
+
     },
     "scipion-em-appion": {
         "pipName": "scipion-em-appion",
