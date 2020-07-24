@@ -643,7 +643,8 @@ def installSDevelScipionFactory(groupId):
                       name='Installing scipion-installer from pypi',
                       description='Installing scipion-installer from pypi',
                       descriptionDone='Installing scipion-installer from pypi',
-                      timeout=settings.timeOutShort
+                      timeout=settings.timeOutShort,
+                      haltOnFailure=False
                       )))
 
     # Install Scipion
@@ -654,7 +655,8 @@ def installSDevelScipionFactory(groupId):
                       name='Install Scipion',
                       description='Install Scipion',
                       descriptionDone='Install Scipion',
-                      timeout=settings.timeOutShort
+                      timeout=settings.timeOutShort,
+                      haltOnFailure=False
                       )))
 
     installScipionFactorySteps.addStep(
@@ -942,7 +944,7 @@ def pluginFactory(groupId, pluginName, factorySteps=None, shortname=None,
                                                   description='Install extra package  %s' % binary,
                                                   descriptionDone='Installed extra package  %s' % binary,
                                                   timeout=settings.timeOutInstall,
-                                                  haltOnFailure=True))
+                                                  haltOnFailure=False))
         if doTest:
             pluginsTestShowcmd = ['bash', '-c', './scipion3 test --show --grep ' +
                                   shortName + ' --mode onlyclasses']
