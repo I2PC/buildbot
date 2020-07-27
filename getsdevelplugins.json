@@ -237,7 +237,7 @@
         "pipName": "scipion-em-deepfinder",
         "id": 4,
         "name": "deepfinder",
-        "pluginSourceUrl": "https://github.com/scipion-em/scipion-em-deepfinder.git@devel"
+        "pluginSourceUrl": "https://github.com/scipion-em/scipion-em-deepfinder.git@master"
     },
   "scipion-em-tomoj": {
         "pipName": "scipion-em-tomoj",
