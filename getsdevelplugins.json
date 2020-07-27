@@ -243,7 +243,8 @@
         "pipName": "scipion-em-tomoj",
         "id": 4,
         "name": "tomoj",
-        "pluginSourceUrl": "https://github.com/scipion-em/scipion-em-tomoj.git@devel"
+        "pluginSourceUrl": "https://github.com/scipion-em/scipion-em-tomoj.git@devel",
+        "NO_TESTS": true
     },
   "scipion-em-xmipp": {
         "pipName": "scipion-em-xmipp",
