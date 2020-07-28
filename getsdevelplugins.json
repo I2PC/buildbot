@@ -221,17 +221,17 @@
         "slackChannel":"facilities",
         "moveFiles": ["secrets.cfg"]
     },
-  "scipion-em-xmipptomo": {
-        "pipName": "scipion-em-xmipptomo",
-        "id": 4,
-        "name": "xmipptomo",
-        "pluginSourceUrl": "https://github.com/I2PC/scipion-em-xmipptomo.git@devel"
-    },
   "scipion-em-xmipp2": {
         "pipName": "scipion-em-xmipp2",
         "id": 4,
         "name": "xmipp2",
         "pluginSourceUrl": "https://github.com/I2PC/scipion-em-xmipp2.git@devel"
+    },
+  "scipion-em-xmipptomo": {
+        "pipName": "scipion-em-xmipptomo",
+        "id": 4,
+        "name": "xmipptomo",
+        "pluginSourceUrl": "https://github.com/I2PC/scipion-em-xmipptomo.git@devel"
     },
   "scipion-em-deepfinder": {
         "pipName": "scipion-em-deepfinder",
