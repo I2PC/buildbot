@@ -246,7 +246,8 @@ def getXmippBuilders(groupId):
     env = {
         "SCIPION_IGNORE_PYTHONPATH": "True",
         "SCIPION_LOCAL_CONFIG": util.Property("SCIPION_LOCAL_CONFIG"),
-        "SCIPION_HOME": util.Property('SCIPION_HOME')
+        "SCIPION_HOME": util.Property('SCIPION_HOME'),
+        "PROT_LOGS_LAST_LINES": settings.PROT_LOGS_LAST_LINES
     }
     cudaEnv = {'PATH': [settings.CUDA_BIN, "${PATH}"]}
     cudaEnv.update(env)
@@ -288,7 +289,8 @@ def getXmippBuilders(groupId):
             "SCIPION_LOCAL_CONFIG": util.Property("SCIPION_LOCAL_CONFIG"),
             "SCIPION_HOME": util.Property('SCIPION_HOME'),
             "LD_LIBRARY_PATH": LD_LIBRARY_PATH,
-            "EM_ROOT": settings.EM_ROOT
+            "EM_ROOT": settings.EM_ROOT,
+            "PROT_LOGS_LAST_LINES": settings.PROT_LOGS_LAST_LINES
         }
         if groupId == SPROD_GROUP_ID:
             env['EM_ROOT'] = settings.SPROD_EM_ROOT
