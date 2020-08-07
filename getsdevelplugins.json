@@ -160,7 +160,8 @@
           "id": 51,
           "name": "sphire",
           "pluginSourceUrl": "https://github.com/scipion-em/scipion-em-sphire.git@devel",
-          "extraBinaries": ["cryolo_negstain_model"]
+          "extraBinaries": ["cryolo_negstain_model"],
+          "NO_TESTS": true
   },
   "scipion-em-topaz": {
         "pipName": "scipion-em-topaz",
