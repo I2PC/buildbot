@@ -983,17 +983,18 @@ def cleanUpFactory(groupId, rmXmipp=False):
                                           descriptionDone='Xmipp removed',
                                           timeout=settings.timeOutInstall))
 
-    condaEnv = settings.CONDA_REMOVE_DEVEL_ENV
-    if groupId == settings.SPROD_GROUP_ID:
-        condaEnv = settings.CONDA_REMOVE_PROD_ENV
+    if groupId != settings.PROD_GROUP_ID:
+        condaEnv = settings.CONDA_REMOVE_DEVEL_ENV
+        if groupId == settings.SPROD_GROUP_ID:
+            condaEnv = settings.CONDA_REMOVE_PROD_ENV
 
-    command = (settings.CONDA_ACTIVATION_CMD + ' ; ' +
-               condaEnv)
-    cleanUpSteps.addStep(ScipionCommandStep(command=command,
-                                                          name='Removing virtual enviroment',
-                                                          description='Removing virtual enviroment',
-                                                          descriptionDone='Removing virtual enviroment',
-                                                          timeout=settings.timeOutInstall))
+        command = (settings.CONDA_ACTIVATION_CMD + ' ; ' +
+                   condaEnv)
+        cleanUpSteps.addStep(ScipionCommandStep(command=command,
+                                                              name='Removing virtual enviroment',
+                                                              description='Removing virtual enviroment',
+                                                              descriptionDone='Removing virtual enviroment',
+                                                              timeout=settings.timeOutInstall))
 
     return cleanUpSteps
 
