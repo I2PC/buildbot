@@ -542,7 +542,8 @@ def installProdScipionFactory(groupId):
                       name='Install Scipion',
                       description='Install Scipion',
                       descriptionDone='Install Scipion',
-                      timeout=settings.timeOutShort
+                      timeout=settings.timeOutShort,
+                      haltOnFailure=True
                       )))
 
     installScipionFactorySteps.addStep(
@@ -656,7 +657,7 @@ def installSDevelScipionFactory(groupId):
                       description='Install Scipion',
                       descriptionDone='Install Scipion',
                       timeout=settings.timeOutShort,
-                      haltOnFailure=False
+                      haltOnFailure=True
                       )))
 
     installScipionFactorySteps.addStep(
