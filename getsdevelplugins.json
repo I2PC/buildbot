@@ -248,6 +248,12 @@
         "pluginSourceUrl": "https://github.com/scipion-em/scipion-em-tomoj.git@devel",
         "NO_TESTS": true
     },
+  "scipion-em-sidesplitter": {
+        "pipName": "scipion-em-sidesplitter",
+        "id": 4,
+        "name": "sidesplitter",
+        "pluginSourceUrl": "https://github.com/scipion-em/scipion-em-sidesplitter.git@devel"
+    },
   "scipion-em-xmipp": {
         "pipName": "scipion-em-xmipp",
         "id": 32,
