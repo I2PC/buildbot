@@ -422,6 +422,10 @@ sprodMoveScipionConfig = ('cp ' + settings.SPROD_SCIPION_CONFIG_PATH + ' ' +
 updateWebSiteCmd = (settings.DEVEL_ENV_ACTIVATION + ' && python ' +
                    settings.BUILDBOT_HOME + 'updateScipionSite.py')
 
+# Check the diferences between de devel and master branches
+checkPluginsDiffCmd = (settings.DEVEL_ENV_ACTIVATION + ' && python ' +
+                       settings.BUILDBOT_HOME + 'checkScipionPlugins.py --all')
+
 
 def addScipionGitAndConfigSteps(factorySteps, groupId):
     """ The initial steps are common in all builders.
@@ -1392,6 +1396,16 @@ def getScipionBuilders(groupId):
                                   'slackChannel': "buildbot"},
                               env=env))
 
+            scipionBuilders.append(
+                BuilderConfig(name="%s%s" % (settings.CHECK_PLUGINS_DIFF, groupId),
+                              tags=["plugin_branch_diff", groupId],
+                              workernames=[settings.WORKER],
+                              factory=checkPluginDiff(groupId),
+                              workerbuilddir=groupId,
+                              properties={
+                                  'slackChannel': "buildbot"},
+                              env=env))
+
     return scipionBuilders
 
 
@@ -1413,6 +1427,20 @@ def updateWebSite(groupId):
     return updateWebFactorySteps
 
 
+def checkPluginDiff(groupId):
+    checkPluginsDiffFactorySteps = util.BuildFactory()
+    checkPluginsDiffFactorySteps.workdir = settings.SCIPION_BUILD_ID
+
+    checkPluginsDiffFactorySteps.addStep(
+        ScipionCommandStep(command=checkPluginsDiffCmd,
+                           name='Check the plugins branches differences',
+                           description='Check the plugins branches differences',
+                           descriptionDone='Check the plugins branches differences',
+                           timeout=settings.timeOutInstall,
+                           haltOnFailure=True))
+    return checkPluginsDiffFactorySteps
+
+
 def getScipionSchedulers(groupId):
     if groupId == settings.SDEVEL_GROUP_ID or groupId == settings.SPROD_GROUP_ID:
         scipionSchedulerNames = [settings.SCIPION_INSTALL_PREFIX + groupId,
@@ -1423,7 +1451,10 @@ def getScipionSchedulers(groupId):
             scipionSchedulerNames.append("%s%s" % (settings.DOCS_PREFIX, groupId))
 
         if groupId == settings.SDEVEL_GROUP_ID:
-            scipionSchedulerNames.append("%s%s" % (settings.WEBSITE_PREFIX, groupId))
+            scipionSchedulerNames.append("%s%s" % (settings.WEBSITE_PREFIX,
+                                                   groupId))
+            scipionSchedulerNames.append("%s%s" % (settings.CHECK_PLUGINS_DIFF,
+                                                   groupId))
 
         schedulers = []
         for name in scipionSchedulerNames:

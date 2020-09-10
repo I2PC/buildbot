@@ -133,6 +133,7 @@ except ImportError:
     SDEVEL_DOCS_API_PATH = SDEVEL_DOCS_PATH + "/api"
 
     SCIPION_CMD = "./scipion3"
+    SCIPION_PYTHON_CMD = './scipion3 python'
     PROD_SCIPION_CMD = "./scipion3"
     XMIPP_CMD = "./xmipp"
     SCIPION_ENV_PATH = "/home/buildbot/.conda/envs/scipion_python3/lib/python3.5/site-packages/"
@@ -147,6 +148,7 @@ except ImportError:
     CLEANUP_PREFIX = 'CleanUp_'
     DOCS_PREFIX = "docs_"
     WEBSITE_PREFIX = "Update_scipion_web_site_"
+    CHECK_PLUGINS_DIFF = 'Check_plugins_diff_'
 
     # slack channel
     SCIPION_SLACK_CHANNEL = "buildbot"
