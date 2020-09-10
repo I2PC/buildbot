@@ -32,6 +32,7 @@ with open(settings.SDEVELPLUGINS_JSON_FILE) as f:
     locscaleSdevelPluginData = scipionSdevelPlugins.pop("scipion-em-locscale")
     emSdevelPackageData = scipionSdevelPlugins.pop("scipion-em")
     pyworkflowSdevelPackageData = scipionSdevelPlugins.pop("scipion-pyworkflow")
+    appSdevelPackageData = scipionSdevelPlugins.pop("scipion-app")
 
 # Remove config/scipion.conf
 removeScipionConf = ShellCommand(

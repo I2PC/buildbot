@@ -274,5 +274,12 @@
         "name": "em",
         "pluginSourceUrl": "https://github.com/scipion-em/scipion-em.git@devel",
         "slackChannel": "xmipp"
+    },
+  "scipion-app": {
+        "pipName": "scipion-app",
+        "id": 32,
+        "name": "app",
+        "pluginSourceUrl": "https://github.com/scipion-em/scipion-app.git@devel",
+        "slackChannel": "xmipp"
     }
 }

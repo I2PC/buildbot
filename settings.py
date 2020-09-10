@@ -89,8 +89,8 @@ except ImportError:
     CONDA_REMOVE_DEVEL_ENV = "conda env remove -n develEnv"
     DEVEL_ENV = "develEnv"
     PROD_ENV = "prodEnv"
-    DEVEL_ENV_ACTIVATION = CONDA_ACTIVATION_CMD + " ; conda activate " + DEVEL_ENV
-    PROD_ENV_ACTIVATION = CONDA_ACTIVATION_CMD + " ; conda activate " + PROD_ENV
+    DEVEL_ENV_ACTIVATION = CONDA_ACTIVATION_CMD + " && conda activate " + DEVEL_ENV
+    PROD_ENV_ACTIVATION = CONDA_ACTIVATION_CMD + " && conda activate " + PROD_ENV
     CONDA_REMOVE_PROD_ENV = "conda env remove -n prodEnv"
     SDEVEL_SCIPION_HOME = '/home/buildbot/devel/scipion'
     SPROD_SCIPION_HOME = '/home/buildbot/prod/scipion'
