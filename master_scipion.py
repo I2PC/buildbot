@@ -424,7 +424,7 @@ updateWebSiteCmd = (settings.DEVEL_ENV_ACTIVATION + ' && python ' +
                    settings.BUILDBOT_HOME + 'updateScipionSite.py')
 
 # Check the diferences between de devel and master branches
-checkPluginsDiffCmd = (settings.DEVEL_ENV_ACTIVATION + ' && python ' +
+checkPluginsDiffCmd = ('python ' +
                        settings.BUILDBOT_HOME + 'checkScipionPlugins.py --all')
 
 
