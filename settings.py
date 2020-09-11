@@ -178,7 +178,8 @@ except ImportError:
                                 "tomo.tests.test_tomo_base.TestTomoAssignAlignment",
                                 "spider.tests.test_protocols_spider_align.TestSpiderAlign",
                                 "pwem.tests.workflows.test_workflow_modeling.TestMolprobityValidation",
-                                "pwem.tests.workflows.test_workflow_modeling.TestEMRingerValidation"])
+                                "pwem.tests.workflows.test_workflow_modeling.TestEMRingerValidation",
+                                "CtfEstimateFromMicrograph"])
 
     ################### Xmipp settings ##################
     # builder prefixes

@@ -57,27 +57,28 @@ class GenerateStagesCommand(buildstep.ShellMixin, steps.BuildStep):
         for line in stdout.split('\n'):
             stage = str(line.strip())
             if stage:
-                if self.pattern:
-                    if re.match(self.pattern, stage):
-                        stages.append(stage)
-                else:
-                    steps = stage.split(' ')
-                    if 'Error loading the test' in stage and steps[-1] not in self.blacklist:
-                        # from buildbot.process.buildstep import BuildStepFailed
-                        # raise BuildStepFailed(stage)
-                        # append stage anyway, we'll see a failed step for this stage
-                        stages.append(steps[-1])
+                steps = stage.split(' ')
+                if steps[-1] not in self.blacklist:
+                    if self.pattern:
+                        if re.match(self.pattern, stage):
+                            stages.append(stage)
+                    else:
+                        if 'Error loading the test' in stage:
+                            # from buildbot.process.buildstep import BuildStepFailed
+                            # raise BuildStepFailed(stage)
+                            # append stage anyway, we'll see a failed step for this stage
+                            stages.append(steps[-1])
 
-                    if len(steps) == 2 or importErrorTxt in stage:
-                        if steps[-1].split('.', 1)[0] == self.targetTestSet:
-                            if steps[-1] and steps[-1] not in self.blacklist:
-                                stages.append(steps[-1])
-                    elif len(steps) == 3 or importErrorTxt in stage:
-                        if steps[-1].split('.', 1)[0] == self.targetTestSet:
-                            if steps[0] == rootName:
-                                if (steps[1]) and ((steps[1] == "tests") or (steps[1] == "test")):
-                                    if steps[-1] and steps[-1] not in self.blacklist:
-                                        stages.append(steps[-1])
+                        if len(steps) == 2 or importErrorTxt in stage:
+                            if steps[-1].split('.', 1)[0] == self.targetTestSet:
+                                if steps[-1] and steps[-1] not in self.blacklist:
+                                    stages.append(steps[-1])
+                        elif len(steps) == 3 or importErrorTxt in stage:
+                            if steps[-1].split('.', 1)[0] == self.targetTestSet:
+                                if steps[0] == rootName:
+                                    if (steps[1]) and ((steps[1] == "tests") or (steps[1] == "test")):
+                                        if steps[-1] and steps[-1] not in self.blacklist:
+                                            stages.append(steps[-1])
         return stages
 
     @defer.inlineCallbacks

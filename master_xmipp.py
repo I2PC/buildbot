@@ -67,6 +67,7 @@ def xmippBundleFactory(groupId):
                               haltOnFailure=False,
                               pattern='./xmipp test (.*)',
                               rootName=settings.XMIPP_CMD,
+                              blacklist=settings.SCIPION_TESTS_BLACKLIST,
                               env=util.Property('env')))
 
     xmippTestSteps.addStep(
@@ -77,6 +78,7 @@ def xmippBundleFactory(groupId):
                               haltOnFailure=False,
                               pattern='xmipp_test_(.*)',
                               rootName=settings.XMIPP_CMD,
+                              blacklist=settings.SCIPION_TESTS_BLACKLIST,
                               env=util.Property('env')))
 
     return xmippTestSteps
