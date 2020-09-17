@@ -179,7 +179,9 @@ except ImportError:
                                 "spider.tests.test_protocols_spider_align.TestSpiderAlign",
                                 "pwem.tests.workflows.test_workflow_modeling.TestMolprobityValidation",
                                 "pwem.tests.workflows.test_workflow_modeling.TestEMRingerValidation",
-                                "CtfEstimateFromMicrograph"])
+                                "CtfEstimateFromMicrograph",
+                                "xmipp3.tests.test_protocols_metaprotocol_heterogeneity.TestMetaprotHeterogeneity",
+                                "xmipp3.tests.test_protocols_sph.TestStructureMapSPH"])
 
     ################### Xmipp settings ##################
     # builder prefixes
