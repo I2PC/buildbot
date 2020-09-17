@@ -114,6 +114,7 @@ def xmippTestFactory(groupId):
                                   haltOnFailure=False,
                                   stagePrefix=[scipionCmd, "test"],
                                   targetTestSet='xmipp3',
+                                  blacklist=settings.SCIPION_TESTS_BLACKLIST,
                                   stageEnvs=envs))
 
     else:
@@ -143,6 +144,7 @@ def xmippTestFactory(groupId):
                 stagePrefix=[settings.SCIPION_CMD, "test"],
                 targetTestSet='xmipp3',
                 rootName='scipion3',
+                blacklist=settings.SCIPION_TESTS_BLACKLIST,
                 stageEnvs=envs))
 
     return xmippTestSteps
