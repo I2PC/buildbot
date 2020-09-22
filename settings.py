@@ -181,7 +181,8 @@ except ImportError:
                                 "pwem.tests.workflows.test_workflow_modeling.TestEMRingerValidation",
                                 "CtfEstimateFromMicrograph",
                                 "xmipp3.tests.test_protocols_metaprotocol_heterogeneity.TestMetaprotHeterogeneity",
-                                "xmipp3.tests.test_protocols_sph.TestStructureMapSPH"])
+                                "xmipp3.tests.test_protocols_sph.TestStructureMapSPH",
+                                "cryosparc2.tests.test_protocols_cryosparc2.TestCryosparcGlobalCtfRefinement"])
 
     ################### Xmipp settings ##################
     # builder prefixes
