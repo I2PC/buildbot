@@ -532,7 +532,7 @@ def installProdScipionFactory(groupId):
 
     # Install Scipion by the installer script
     # Downloading the installer from pypi and install it
-    installScipionFactorySteps.addStep((ShellCommand(command=['pip', 'install', 'scipion-installer==1.0.7'],
+    installScipionFactorySteps.addStep((ShellCommand(command=['pip', 'install', 'scipion-installer==1.0.8'],
                                                     name='Installing scipion-installer from pypi',
                                                     description='Installing scipion-installer from pypi',
                                                     descriptionDone='Installing scipion-installer from pypi',
