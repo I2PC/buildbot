@@ -102,10 +102,8 @@ def xmippTestFactory(groupId):
 
     envs = {gpucorrcls: EMAN212 for gpucorrcls in gpucorrclassifiers}
 
-    if groupId != SDEVEL_GROUP_ID:
-        scipionCmd = "./scipion3"
-        if groupId == SPROD_GROUP_ID:
-            scipionCmd = PROD_SCIPION_CMD
+    if groupId == PROD_GROUP_ID:
+        scipionCmd = "./scipion"
         xmippTestSteps.addStep(
             GenerateStagesCommand(command=[scipionCmd, "test", "--show", "--grep", "xmipp3", "--mode", "onlyclasses"],
                                   name="Generate Scipion test stages for Xmipp",
