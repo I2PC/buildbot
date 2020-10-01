@@ -219,8 +219,7 @@
         "id": 4,
         "name": "emfacilities",
         "pluginSourceUrl": "https://github.com/scipion-em/scipion-em-facilities.git@devel",
-        "slackChannel":"facilities",
-        "moveFiles": ["secrets.cfg"]
+        "slackChannel":"facilities"
     },
   "scipion-em-xmipp2": {
         "pipName": "scipion-em-xmipp2",
