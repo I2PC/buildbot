@@ -175,8 +175,7 @@
           "id": 31,
           "name": "continuousflex",
           "pluginSourceUrl": "https://github.com/scipion-em/scipion-em-continuousflex.git@devel",
-          "slackChannel":"continuousflex",
-          "NO_TESTS": true
+          "slackChannel":"continuousflex"
       },
   "scipion-em-dynamo": {
         "pipName": "scipion-em-dynamo",
@@ -190,8 +189,7 @@
         "id": 4,
         "name": "novactf",
         "pluginSourceUrl": "https://github.com/scipion-em/scipion-em-novactf.git@master",
-        "slackChannel":"novactf",
-        "NO_TESTS": true
+        "slackChannel":"novactf"
     },
 "scipion-em-imod": {
         "pipName": "scipion-em-imod",
