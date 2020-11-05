@@ -17,6 +17,8 @@ except ImportError:
     WEB_PORT = 9980
     WEB_URL = 'http://scipion-test.cnb.csic.es:9980/'
 
+    SCIPION_SITE_URL = 'http://scipion.i2pc.es/'
+
     # builder timeouts
     timeOutShort = 5*60  # 5 minutes
     timeOutInstall = 60*60  # 1 hour
