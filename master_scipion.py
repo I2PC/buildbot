@@ -265,6 +265,14 @@ setMotincor2Bin = ShellCommand(
     descriptionDone='Add the right MOTIONCOR2_BIN file',
     haltOnFailure=True)
 
+setMotincor2BinDevel = ShellCommand(
+    command=util.Interpolate(
+        'sed -ie "\$aMOTIONCOR2_BIN = {}" %(prop:SCIPION_LOCAL_CONFIG)s'.format(settings.MOTIONCOR2_BIN_DEVEL)),
+    name='Add the right MOTIONCOR2_BIN file',
+    description='Add the right MOTIONCOR2_BIN file',
+    descriptionDone='Add the right MOTIONCOR2_BIN file',
+    haltOnFailure=True)
+
 setMotincor2BinSupport = ShellCommand(
     command=util.Interpolate(
         'sed -ie "\$aMOTIONCOR2_BIN = {}" %(prop:SCIPION_LOCAL_CONFIG)s'.format(settings.MOTIONCOR2_BIN_SUPPORT)),
@@ -708,7 +716,7 @@ def installSDevelScipionFactory(groupId):
     installScipionFactorySteps.addStep(setGctfBin)
     installScipionFactorySteps.addStep(setGCTFCuda)
     installScipionFactorySteps.addStep(setCryosparcUser)
-    installScipionFactorySteps.addStep(setMotincor2Bin)
+    installScipionFactorySteps.addStep(setMotincor2BinDevel)
     installScipionFactorySteps.addStep(setGautomatchBin)
     installScipionFactorySteps.addStep(setGautomatchCudaBin)
     installScipionFactorySteps.addStep(setRelionCudaBin)
