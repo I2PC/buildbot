@@ -145,6 +145,10 @@ except ImportError:
     SDEVEL_SCIPION_CONFIG_PATH = "/home/buildbot/.config/scipion/scipion_devel.conf"
     SPROD_SCIPION_CONFIG_PATH = "/home/buildbot/.config/scipion/scipion_prod.conf"
 
+    # SCIPION SCRATCH DIR
+    SCIPION_SCRATCH = "/home/buildbot/scratch"
+
+
     # builder prefixes
     SCIPION_INSTALL_PREFIX = 'Install_Scipion_'
     SCIPION_TESTS_PREFIX = 'Test_Scipion_'

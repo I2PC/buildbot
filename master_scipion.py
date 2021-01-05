@@ -256,6 +256,14 @@ setCryosparcUser = ShellCommand(
     descriptionDone='Set CRYOSPARC_USER in scipion conf',
     haltOnFailure=True)
 
+setScipionScratchDir = ShellCommand(
+    command=util.Interpolate(
+        'sed -ie "\$aSCIPION_SCRATCH = {}" %(prop:SCIPION_LOCAL_CONFIG)s'.format(settings.SCIPION_SCRATCH)),
+    name='Set SCIPION_SCRATCH in scipion conf',
+    description='Set SCIPION_SCRATCH in scipion conf',
+    descriptionDone='Set SCIPION_SCRATCH in scipion conf',
+    haltOnFailure=True)
+
 
 setMotincor2Bin = ShellCommand(
     command=util.Interpolate(
@@ -617,6 +625,7 @@ def installProdScipionFactory(groupId):
     installScipionFactorySteps.addStep(setPhenixHome)
     # installScipionFactorySteps.addStep(setEman2Home)
     installScipionFactorySteps.addStep(setEnvActivationCMD)
+    installScipionFactorySteps.addStep(setScipionScratchDir)
     installScipionFactorySteps.addStep(
         ScipionCommandStep(command=sprodMoveScipionConfig,
                            name='Move Scipion Config file',
@@ -729,6 +738,8 @@ def installSDevelScipionFactory(groupId):
     installScipionFactorySteps.addStep(setCUDA_LIB)
     # installScipionFactorySteps.addStep(setEman2Home)
     installScipionFactorySteps.addStep(setEnvActivationCMD)
+    installScipionFactorySteps.addStep(setScipionScratchDir)
+
     installScipionFactorySteps.addStep(
     ScipionCommandStep(command=sdevelMoveScipionConfig,
                        name='Move Scipion Config file',
