@@ -251,6 +251,18 @@
         "name": "sidesplitter",
         "pluginSourceUrl": "https://github.com/scipion-em/scipion-em-sidesplitter.git@devel"
     },
+  "scipion-em-pwperformance": {
+        "pipName": "scipion-em-pwperformance",
+        "id": 4,
+        "name": "pwperformance",
+        "pluginSourceUrl": "https://github.com/scipion-em/scipion-em-pwperformance.git@master"
+    },
+  "scipion-pkpd": {
+        "pipName": "scipion-em-pkpd",
+        "id": 4,
+        "name": "pkpd",
+        "pluginSourceUrl": "https://github.com/cossorzano/scipion-pkpd.git@python3_migration"
+    },
   "scipion-em-xmipp": {
         "pipName": "scipion-em-xmipp",
         "id": 32,

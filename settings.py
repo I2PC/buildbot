@@ -148,6 +148,9 @@ except ImportError:
     # SCIPION SCRATCH DIR
     SCIPION_SCRATCH = "/home/buildbot/scratch"
 
+    # CODESPEED_URL
+    CODESPEED_URL = "http://scipion-test.cnb.csic.es:8000"
+    CODESPEED_ENV = 'einstein'
 
     # builder prefixes
     SCIPION_INSTALL_PREFIX = 'Install_Scipion_'
@@ -189,7 +192,8 @@ except ImportError:
                                 "CtfEstimateFromMicrograph",
                                 "xmipp3.tests.test_protocols_metaprotocol_heterogeneity.TestMetaprotHeterogeneity",
                                 "xmipp3.tests.test_protocols_sph.TestStructureMapSPH",
-                                "cryosparc2.tests.test_protocols_cryosparc2.TestCryosparcGlobalCtfRefinement"])
+                                "cryosparc2.tests.test_protocols_cryosparc2.TestCryosparcGlobalCtfRefinement",
+                                "pwperformance.tests.test_exportsteps.TestExportSteps"])
 
     ################### Xmipp settings ##################
     # builder prefixes

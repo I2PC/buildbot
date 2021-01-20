@@ -240,6 +240,23 @@ setCryosparcHome = ShellCommand(
     descriptionDone='Set CRYOSPARC_HOME in scipion conf',
     haltOnFailure=True)
 
+setCodeSpeedUrl = ShellCommand(
+    command=util.Interpolate(
+        'sed -ie "\$aCODESPEED_URL = {}" %(prop:SCIPION_LOCAL_CONFIG)s'.format(settings.CODESPEED_URL)),
+    name='Add CODESPEED_URL in scipion conf',
+    description='Add CODESPEED_URL in scipion conf',
+    descriptionDone='Add CODESPEED_URL in scipion conf',
+    haltOnFailure=True)
+
+
+setCodeSpeedEnv = ShellCommand(
+    command=util.Interpolate(
+        'sed -ie "\$CODESPEED_ENV = {}" %(prop:SCIPION_LOCAL_CONFIG)s'.format(settings.CODESPEED_ENV)),
+    name='Add CODESPEED_ENV in scipion conf',
+    description='Add CODESPEED_ENV in scipion conf',
+    descriptionDone='Add CODESPEED_ENV in scipion conf',
+    haltOnFailure=True)
+
 setCryosparcProjectDir = ShellCommand(
     command=util.Interpolate(
         'sed -ie "\$aCRYO_PROJECTS_DIR = {}" %(prop:SCIPION_LOCAL_CONFIG)s'.format(settings.CRYOSPARC_DIR +'scipion_projects')),
@@ -609,6 +626,8 @@ def installProdScipionFactory(groupId):
     installScipionFactorySteps.addStep(setCryosparcDir)
     installScipionFactorySteps.addStep(setCryosparcProjectDir)
     installScipionFactorySteps.addStep(setCryosparcHome)
+    installScipionFactorySteps.addStep(setCodeSpeedUrl)
+    installScipionFactorySteps.addStep(setCodeSpeedEnv)
     installScipionFactorySteps.addStep(setCryosparcUser)
     installScipionFactorySteps.addStep(setMotincor2Bin)
     installScipionFactorySteps.addStep(setGctfBin)
@@ -722,6 +741,8 @@ def installSDevelScipionFactory(groupId):
     installScipionFactorySteps.addStep(setCryosparcDir)
     installScipionFactorySteps.addStep(setCryosparcProjectDir)
     installScipionFactorySteps.addStep(setCryosparcHome)
+    installScipionFactorySteps.addStep(setCodeSpeedUrl)
+    installScipionFactorySteps.addStep(setCodeSpeedEnv)
     installScipionFactorySteps.addStep(setGctfBin)
     installScipionFactorySteps.addStep(setGCTFCuda)
     installScipionFactorySteps.addStep(setCryosparcUser)
@@ -1305,7 +1326,7 @@ def getScipionBuilders(groupId):
                                                      'slackChannel': "buildbot"},
                                                  env=env))
     elif groupId == settings.SDEVEL_GROUP_ID or groupId == settings.SPROD_GROUP_ID:
-
+        env['CODESPEED_REVISION'] = groupId
         if groupId == settings.SDEVEL_GROUP_ID:
             env['SCIPION_HOME'] = settings.SDEVEL_SCIPION_HOME
             env['EM_ROOT'] = settings.EM_ROOT
