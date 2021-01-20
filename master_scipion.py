@@ -251,7 +251,7 @@ setCodeSpeedUrl = ShellCommand(
 
 setCodeSpeedEnv = ShellCommand(
     command=util.Interpolate(
-        'sed -ie "\$CODESPEED_ENV = {}" %(prop:SCIPION_LOCAL_CONFIG)s'.format(settings.CODESPEED_ENV)),
+        'sed -ie "\$aCODESPEED_ENV = {}" %(prop:SCIPION_LOCAL_CONFIG)s'.format(settings.CODESPEED_ENV)),
     name='Add CODESPEED_ENV in scipion conf',
     description='Add CODESPEED_ENV in scipion conf',
     descriptionDone='Add CODESPEED_ENV in scipion conf',
