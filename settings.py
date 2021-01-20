@@ -150,7 +150,7 @@ except ImportError:
 
     # CODESPEED_URL
     CODESPEED_URL = "http://scipion-test.cnb.csic.es:8000"
-    CODESPEED_ENV = 'einstein'
+    CODESPEED_ENV = "einstein"
 
     # builder prefixes
     SCIPION_INSTALL_PREFIX = 'Install_Scipion_'
