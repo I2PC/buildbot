@@ -258,7 +258,7 @@
         "pluginSourceUrl": "https://github.com/scipion-em/scipion-em-pwperformance.git@master"
     },
   "scipion-pkpd": {
-        "pipName": "scipion-em-pkpd",
+        "pipName": "scipion-pkpd",
         "id": 4,
         "name": "pkpd",
         "pluginSourceUrl": "https://github.com/cossorzano/scipion-pkpd.git@python3_migration"
