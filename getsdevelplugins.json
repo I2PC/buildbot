@@ -255,7 +255,8 @@
         "pipName": "scipion-em-pwperformance",
         "id": 4,
         "name": "pwperformance",
-        "pluginSourceUrl": "https://github.com/scipion-em/scipion-em-pwperformance.git@master"
+        "pluginSourceUrl": "https://github.com/scipion-em/scipion-em-pwperformance.git@master",
+        "USE_URL_PROD": true
     },
   "scipion-pkpd": {
         "pipName": "scipion-pkpd",

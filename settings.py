@@ -151,6 +151,7 @@ except ImportError:
     # CODESPEED_URL
     CODESPEED_URL = "http://scipion-test.cnb.csic.es:8000"
     CODESPEED_ENV = "einstein"
+    PROFILING_PROJECTS_PATH = "/home/buildbot/scipionBot/profilingProjects/"
 
     # builder prefixes
     SCIPION_INSTALL_PREFIX = 'Install_Scipion_'

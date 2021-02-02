@@ -257,6 +257,14 @@ setCodeSpeedEnv = ShellCommand(
     descriptionDone='Add CODESPEED_ENV in scipion conf',
     haltOnFailure=True)
 
+profilingProjectPath = ShellCommand(
+    command=util.Interpolate(
+        'sed -ie "\$aPROFILING_PROJECTS_PATH = {}" %(prop:SCIPION_LOCAL_CONFIG)s'.format(settings.PROFILING_PROJECTS_PATH)),
+    name='Add PROFILING_PROJECTS_PATH in scipion conf',
+    description='Add PROFILING_PROJECTS_PATH in scipion conf',
+    descriptionDone='Add PROFILING_PROJECTS_PATH in scipion conf',
+    haltOnFailure=True)
+
 setCryosparcProjectDir = ShellCommand(
     command=util.Interpolate(
         'sed -ie "\$aCRYO_PROJECTS_DIR = {}" %(prop:SCIPION_LOCAL_CONFIG)s'.format(settings.CRYOSPARC_DIR +'scipion_projects')),
@@ -628,6 +636,7 @@ def installProdScipionFactory(groupId):
     installScipionFactorySteps.addStep(setCryosparcHome)
     installScipionFactorySteps.addStep(setCodeSpeedUrl)
     installScipionFactorySteps.addStep(setCodeSpeedEnv)
+    installScipionFactorySteps.addStep(profilingProjectPath)
     installScipionFactorySteps.addStep(setCryosparcUser)
     installScipionFactorySteps.addStep(setMotincor2Bin)
     installScipionFactorySteps.addStep(setGctfBin)
@@ -743,6 +752,7 @@ def installSDevelScipionFactory(groupId):
     installScipionFactorySteps.addStep(setCryosparcHome)
     installScipionFactorySteps.addStep(setCodeSpeedUrl)
     installScipionFactorySteps.addStep(setCodeSpeedEnv)
+    installScipionFactorySteps.addStep(profilingProjectPath)
     installScipionFactorySteps.addStep(setGctfBin)
     installScipionFactorySteps.addStep(setGCTFCuda)
     installScipionFactorySteps.addStep(setCryosparcUser)
@@ -858,7 +868,8 @@ def scipionTestFactory(groupId):
 # *****************************************************************************
 def pluginFactory(groupId, pluginName, factorySteps=None, shortname=None,
                   doInstall=True, extraBinaries=[], doTest=True,
-                  deleteVirtualEnv='', binToRemove=[], moveFiles=[], bins=True):
+                  deleteVirtualEnv='', binToRemove=[], moveFiles=[], bins=True,
+                  useUrl=False, url=None):
     factorySteps = factorySteps or util.BuildFactory()
     factorySteps.workdir = util.Property('SCIPION_HOME')
     shortName = shortname or str(pluginName.rsplit('-', 1)[-1])  # todo: get module names more properly?
@@ -887,13 +898,24 @@ def pluginFactory(groupId, pluginName, factorySteps=None, shortname=None,
                                               haltOnFailure=False))
 
         if doInstall:
-            factorySteps.addStep(ShellCommand(command=[scipionCmd, 'installp', '-p', pluginName, '-j', '8', '' if bins else '--noBin'],
-                                              name='Install plugin %s' % shortName,
-                                              description='Install plugin %s' % shortName,
-                                              descriptionDone='Installed plugin %s' % shortName,
-                                              timeout=settings.timeOutInstall,
-                                              haltOnFailure=True))
-
+            if not useUrl:
+                factorySteps.addStep(ShellCommand(command=[scipionCmd, 'installp', '-p', pluginName, '-j', '8', '' if bins else '--noBin'],
+                                                  name='Install plugin %s' % shortName,
+                                                  description='Install plugin %s' % shortName,
+                                                  descriptionDone='Installed plugin %s' % shortName,
+                                                  timeout=settings.timeOutInstall,
+                                                  haltOnFailure=True))
+            else:
+                pluginUrl = pluginName
+                if url is not None:
+                    pluginUrl = "git+"+url
+                factorySteps.addStep(ShellCommand(
+                    command=[scipionCmd, 'python', '-m', 'pip', 'install', pluginUrl],
+                    name='Install plugin %s' % shortName,
+                    description='Install plugin %s' % shortName,
+                    descriptionDone='Installed plugin %s' % shortName,
+                    timeout=settings.timeOutInstall,
+                    haltOnFailure=True))
             if groupId == settings.PROD_GROUP_ID:
                 factorySteps.addStep(ShellCommand(command=[scipionCmd, 'python', 'pyworkflow/install/inspect-plugins.py',
                                                            shortName],
@@ -1399,6 +1421,8 @@ def getScipionBuilders(groupId):
             binToRemove = pluginDict.get("binToRemove", [])
             moveFiles = pluginDict.get("moveFiles", [])
             bins = pluginDict.get("bins", True)
+            useUrl = pluginDict.get("USE_URL_PROD", False)
+            url = pluginDict.get("pluginSourceUrl", None)
             scipionBuilders.append(
                 BuilderConfig(name="%s_%s" % (moduleName, groupId),
                               tags=tags,
@@ -1410,7 +1434,9 @@ def getScipionBuilders(groupId):
                                                     deleteVirtualEnv=deleteVirtualEnv,
                                                     binToRemove=binToRemove,
                                                     moveFiles=moveFiles,
-                                                    bins=bins),
+                                                    bins=bins,
+                                                    useUrl=useUrl,
+                                                    url=url),
                               workerbuilddir=groupId,
                               properties={'slackChannel': scipionSdevelPlugins[plugin].get('slackChannel', "")},
                               env=env)
