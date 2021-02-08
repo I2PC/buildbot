@@ -653,7 +653,7 @@ def installProdScipionFactory(groupId):
     installScipionFactorySteps.addStep(setPhenixHome)
     # installScipionFactorySteps.addStep(setEman2Home)
     installScipionFactorySteps.addStep(setEnvActivationCMD)
-    installScipionFactorySteps.addStep(setScipionScratchDir)
+    #installScipionFactorySteps.addStep(setScipionScratchDir)
     installScipionFactorySteps.addStep(
         ScipionCommandStep(command=sprodMoveScipionConfig,
                            name='Move Scipion Config file',
@@ -769,7 +769,7 @@ def installSDevelScipionFactory(groupId):
     installScipionFactorySteps.addStep(setCUDA_LIB)
     # installScipionFactorySteps.addStep(setEman2Home)
     installScipionFactorySteps.addStep(setEnvActivationCMD)
-    installScipionFactorySteps.addStep(setScipionScratchDir)
+    #installScipionFactorySteps.addStep(setScipionScratchDir)
 
     installScipionFactorySteps.addStep(
     ScipionCommandStep(command=sdevelMoveScipionConfig,
