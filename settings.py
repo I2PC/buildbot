@@ -193,7 +193,7 @@ except ImportError:
                                 "xmipp3.tests.test_protocols_sph.TestStructureMapSPH",
                                 "cryosparc2.tests.test_protocols_cryosparc2.TestCryosparcGlobalCtfRefinement",
                                 "pwperformance.tests.test_exportsteps.TestExportSteps",
-                                "pwperformance.tests.test_profiling_load.TestProfilingLoadGUI"])
+                                "pwperformance.tests.test_profiling_load"])
 
     ################### Xmipp settings ##################
     # builder prefixes
