@@ -251,6 +251,40 @@
         "name": "sidesplitter",
         "pluginSourceUrl": "https://github.com/scipion-em/scipion-em-sidesplitter.git@devel"
     },
+
+  "scipion-em-emantomo": {
+        "pipName": "scipion-em-emantomo",
+        "id": 4,
+        "name": "emantomo",
+        "pluginSourceUrl": "https://github.com/scipion-em/scipion-em-emantomo.git@devel"
+    },
+  "scipion-em-reliontomo": {
+        "pipName": "scipion-em-reliontomo",
+        "id": 4,
+        "name": "reliontomo",
+        "pluginSourceUrl": "https://github.com/scipion-em/scipion-em-reliontomo.git@devel"
+    },
+
+  "scipion-em-jjsoft": {
+        "pipName": "scipion-em-jjsoft",
+        "id": 4,
+        "name": "jjsoft",
+        "pluginSourceUrl": "https://github.com/scipion-em/scipion-em-jjsoft.git@devel"
+    },
+
+  "scipion-em-cryocare": {
+        "pipName": "scipion-em-cryocare",
+        "id": 4,
+        "name": "cryocare",
+        "pluginSourceUrl": "https://github.com/scipion-em/scipion-em-cryocare.git@devel"
+    },
+
+  "scipion-em-tomo3D": {
+        "pipName": "scipion-em-tomo3D",
+        "id": 4,
+        "name": "tomo3D",
+        "pluginSourceUrl": "https://github.com/scipion-em/scipion-em-tomo3D.git@devel"
+    },
   "scipion-em-pwperformance": {
         "pipName": "scipion-em-pwperformance",
         "id": 4,
