@@ -283,7 +283,8 @@
         "pipName": "scipion-em-tomo3D",
         "id": 4,
         "name": "tomo3D",
-        "pluginSourceUrl": "https://github.com/scipion-em/scipion-em-tomo3D.git@devel"
+        "pluginSourceUrl": "https://github.com/scipion-em/scipion-em-tomo3D.git@devel",
+        "NO_TESTS": true
     },
   "scipion-em-pwperformance": {
         "pipName": "scipion-em-pwperformance",
