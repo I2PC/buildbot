@@ -110,6 +110,7 @@ except ImportError:
     RELION_CUDA_BIN = "/usr/local/cuda-10.2/bin"
     CHIMERA_HOME = "/home/buildbot/chimerax-1.0"
     EMAN2_HOME = os.path.join(EM_ROOT, 'eman-3.0.0-alpha')
+    JJSOFT_HOME = "/home/buildbot/scipionBot/jjsoft"
 
     # Cryosparc variables
     # The root directory where cryoSPARC code and dependencies is installed.

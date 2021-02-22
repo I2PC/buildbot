@@ -257,6 +257,16 @@ setCodeSpeedEnv = ShellCommand(
     descriptionDone='Add CODESPEED_ENV in scipion conf',
     haltOnFailure=True)
 
+
+setJjsoftHome = ShellCommand(
+    command=util.Interpolate(
+        'sed -ie "\$aJJSOFT_HOME = {}" %(prop:SCIPION_LOCAL_CONFIG)s'.format(settings.JJSOFT_HOME)),
+    name='Add JJSOFT_HOME in scipion conf',
+    description='Add JJSOFT_HOME in scipion conf',
+    descriptionDone='Add JJSOFT_HOME in scipion conf',
+    haltOnFailure=True)
+
+
 profilingProjectPath = ShellCommand(
     command=util.Interpolate(
         'sed -ie "\$aPROFILING_PROJECTS_PATH = {}" %(prop:SCIPION_LOCAL_CONFIG)s'.format(settings.PROFILING_PROJECTS_PATH)),
@@ -651,7 +661,7 @@ def installProdScipionFactory(groupId):
     installScipionFactorySteps.addStep(setCUDA_LIB)
     installScipionFactorySteps.addStep(setChimeraHome)
     installScipionFactorySteps.addStep(setPhenixHome)
-    # installScipionFactorySteps.addStep(setEman2Home)
+    installScipionFactorySteps.addStep(setJjsoftHome)
     installScipionFactorySteps.addStep(setEnvActivationCMD)
     #installScipionFactorySteps.addStep(setScipionScratchDir)
     installScipionFactorySteps.addStep(
@@ -767,7 +777,7 @@ def installSDevelScipionFactory(groupId):
     installScipionFactorySteps.addStep(setSPIDER_MPI)
     installScipionFactorySteps.addStep(setCUDA_BIN)
     installScipionFactorySteps.addStep(setCUDA_LIB)
-    # installScipionFactorySteps.addStep(setEman2Home)
+    installScipionFactorySteps.addStep(setJjsoftHome)
     installScipionFactorySteps.addStep(setEnvActivationCMD)
     #installScipionFactorySteps.addStep(setScipionScratchDir)
 
