@@ -111,6 +111,7 @@ except ImportError:
     CHIMERA_HOME = "/home/buildbot/chimerax-1.0"
     EMAN2_HOME = os.path.join(EM_ROOT, 'eman-3.0.0-alpha')
     JJSOFT_HOME = "/home/buildbot/scipionBot/jjsoft"
+    BUILD_TESTS = "True"
 
     # Cryosparc variables
     # The root directory where cryoSPARC code and dependencies is installed.

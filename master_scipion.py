@@ -267,6 +267,15 @@ setJjsoftHome = ShellCommand(
     haltOnFailure=True)
 
 
+setBuildXmippTest = ShellCommand(
+    command=util.Interpolate(
+        'sed -ie "\$BUILD_TESTS = {}" %(prop:SCIPION_LOCAL_CONFIG)s'.format(settings.BUILD_TESTS)),
+    name='Add BUILD_TESTS in scipion conf',
+    description='Add BUILD_TESTS in scipion conf',
+    descriptionDone='Add BUILD_TESTS in scipion conf',
+    haltOnFailure=True)
+
+
 profilingProjectPath = ShellCommand(
     command=util.Interpolate(
         'sed -ie "\$aPROFILING_PROJECTS_PATH = {}" %(prop:SCIPION_LOCAL_CONFIG)s'.format(settings.PROFILING_PROJECTS_PATH)),
@@ -663,7 +672,7 @@ def installProdScipionFactory(groupId):
     installScipionFactorySteps.addStep(setPhenixHome)
     installScipionFactorySteps.addStep(setJjsoftHome)
     installScipionFactorySteps.addStep(setEnvActivationCMD)
-    #installScipionFactorySteps.addStep(setScipionScratchDir)
+    installScipionFactorySteps.addStep(setBuildXmippTest)
     installScipionFactorySteps.addStep(
         ScipionCommandStep(command=sprodMoveScipionConfig,
                            name='Move Scipion Config file',
@@ -779,7 +788,7 @@ def installSDevelScipionFactory(groupId):
     installScipionFactorySteps.addStep(setCUDA_LIB)
     installScipionFactorySteps.addStep(setJjsoftHome)
     installScipionFactorySteps.addStep(setEnvActivationCMD)
-    #installScipionFactorySteps.addStep(setScipionScratchDir)
+    installScipionFactorySteps.addStep(setBuildXmippTest)
 
     installScipionFactorySteps.addStep(
     ScipionCommandStep(command=sdevelMoveScipionConfig,
