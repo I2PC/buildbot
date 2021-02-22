@@ -269,7 +269,7 @@ setJjsoftHome = ShellCommand(
 
 setBuildXmippTest = ShellCommand(
     command=util.Interpolate(
-        'sed -ie "\$BUILD_TESTS = {}" %(prop:SCIPION_LOCAL_CONFIG)s'.format(settings.BUILD_TESTS)),
+        'sed -ie "\$aBUILD_TESTS = {}" %(prop:SCIPION_LOCAL_CONFIG)s'.format(settings.BUILD_TESTS)),
     name='Add BUILD_TESTS in scipion conf',
     description='Add BUILD_TESTS in scipion conf',
     descriptionDone='Add BUILD_TESTS in scipion conf',
