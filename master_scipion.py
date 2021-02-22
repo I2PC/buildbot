@@ -721,7 +721,7 @@ def installSDevelScipionFactory(groupId):
     scipionHome = settings.SDEVEL_SCIPION_HOME
     installScipionFactorySteps.addStep(
         (ShellCommand(command=['installscipion', scipionHome, '-noAsk', '-dev', '-n',
-                               'develEnv', '-sciBranch', 'devel', '-conda', '-xmippBranch', 'ds_testTarget'],
+                               'develEnv', '-sciBranch', 'devel', '-conda', '-xmippBranch', 'devel'],
                       name='Install Scipion',
                       description='Install Scipion',
                       descriptionDone='Install Scipion',
@@ -1374,6 +1374,7 @@ def getScipionBuilders(groupId):
             env['LD_LIBRARY_PATH'] = settings.LD_LIBRARY_PATH
             env['PATH'] = ["/usr/local/cuda/bin", "${PATH}"]
             env['PYTHONPATH'] = [settings.DOCS_HOME, "${PYTHONPATH}"]
+            env['BUILD_TESTS'] = 'True'
             scipionBuilders.append(
                 BuilderConfig(name=settings.SCIPION_INSTALL_PREFIX + groupId,
                               tags=[groupId],
