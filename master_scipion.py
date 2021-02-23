@@ -729,13 +729,13 @@ def installSDevelScipionFactory(groupId):
                       haltOnFailure=True
                       )))
 
-    installScipionFactorySteps.addStep(
-        (ShellCommand(command=['chmod', '777', '-R', settings.SDEVEL_ENV_PATH],
-                      name='Change the permission of environment folder',
-                      description='Change the permission of environment folder',
-                      descriptionDone='Change the permission of environment folder',
-                      timeout=settings.timeOutShort
-                      )))
+    # installScipionFactorySteps.addStep(
+    #     (ShellCommand(command=['chmod', '777', '-R', settings.SDEVEL_ENV_PATH],
+    #                   name='Change the permission of environment folder',
+    #                   description='Change the permission of environment folder',
+    #                   descriptionDone='Change the permission of environment folder',
+    #                   timeout=settings.timeOutShort
+    #                   )))
 
     installScipionFactorySteps.addStep(
         steps.JSONStringDownload(dict(scipionSdevelPlugins, **{
