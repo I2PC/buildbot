@@ -9,7 +9,7 @@ except ImportError:
     print("WARNING: local settings not found, using default values.")
     ################## buildbot ##################
     #  worker credentials
-    WORKER = os.environ.get('BUILDBOT_WORKER', 'worker')
+    WORKER = os.environ.get('BUILDBOT_WORKER', 'einstein')
     WORKER1 = os.environ.get('BUILDBOT_WORKER1', 'scipionbox')
     WORKER_PASS = os.environ.get("BUILDBOT_WORKER_PASS", "password")
     PORT = 9989
