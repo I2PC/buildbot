@@ -89,11 +89,12 @@ except ImportError:
     CCP4_HOME = "/opt/xtal/ccp4-7.1"
     PHENIX_HOME = "/home/buildbot/phenix-1.17.1/phenix-1.17.1-3660"
     CONDA_ACTIVATION_CMD = ". /home/buildbot/miniconda3/etc/profile.d/conda.sh"
+    CONDA_ACTIVATION_CMD_DEVEL = ". /home/buildbot/anaconda3/etc/profile.d/conda.sh"
     aphinxENV_ACTIVATE = CONDA_ACTIVATION_CMD + " && . ~/.sphinxVenv/bin/activate"
     CONDA_REMOVE_DEVEL_ENV = "conda env remove -n develEnv"
     DEVEL_ENV = "develEnv"
     PROD_ENV = "prodEnv"
-    DEVEL_ENV_ACTIVATION = CONDA_ACTIVATION_CMD + " && conda activate " + DEVEL_ENV
+    DEVEL_ENV_ACTIVATION = CONDA_ACTIVATION_CMD_DEVEL + " && conda activate " + DEVEL_ENV
     PROD_ENV_ACTIVATION = CONDA_ACTIVATION_CMD + " && conda activate " + PROD_ENV
     CONDA_REMOVE_PROD_ENV = "conda env remove -n prodEnv"
     SDEVEL_SCIPION_HOME = '/home/buildbot/devel/scipion'

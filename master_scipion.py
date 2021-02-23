@@ -200,6 +200,14 @@ setEnvActivationCMD = ShellCommand(
     descriptionDone='Set CONDA_ACTIVATION_CMD in scipion conf',
     haltOnFailure=True)
 
+setEnvActivationCMD_DEVEL = ShellCommand(
+    command=util.Interpolate('sed -ie "\$aCONDA_ACTIVATION_CMD = {}" %(prop:SCIPION_LOCAL_CONFIG)s'.format(settings.CONDA_ACTIVATION_CMD_DEVEL)),
+    name='Set CONDA_ACTIVATION_CMD in scipion conf',
+    description='Set CONDA_ACTIVATION_CMD in scipion conf',
+    descriptionDone='Set CONDA_ACTIVATION_CMD in scipion conf',
+    haltOnFailure=True)
+
+
 setCryoloCuda = ShellCommand(
     command=util.Interpolate(
         'sed -ie "\$aCRYOLO_CUDA_LIB = {}" %(prop:SCIPION_LOCAL_CONFIG)s'.format(settings.CRYOLO_CUDA_LIB)),
@@ -787,7 +795,7 @@ def installSDevelScipionFactory(groupId):
     installScipionFactorySteps.addStep(setCUDA_BIN)
     installScipionFactorySteps.addStep(setCUDA_LIB)
     installScipionFactorySteps.addStep(setJjsoftHome)
-    installScipionFactorySteps.addStep(setEnvActivationCMD)
+    installScipionFactorySteps.addStep(setEnvActivationCMD_DEVEL)
     installScipionFactorySteps.addStep(setBuildXmippTest)
 
     installScipionFactorySteps.addStep(
