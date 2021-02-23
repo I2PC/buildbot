@@ -1282,10 +1282,11 @@ def getLocscaleBuilder(groupId, env):
     builderFactory = util.BuildFactory()
 
     locscaleEnv = {}
-
+    worker = settings.WORKER1
     if groupId == settings.PROD_GROUP_ID:
         builderFactory.addStep(installEman212)
         locscaleEnv.update(settings.EMAN212)
+        worker = settings.WORKER
     else:
         locscaleEnv.update(settings.EMAN23)
 
@@ -1294,7 +1295,7 @@ def getLocscaleBuilder(groupId, env):
     name = str(locscalePluginData['name'])
     return BuilderConfig(name="%s_%s" % (name, groupId),
                          tags=[groupId, name],
-                         workernames=[settings.WORKER],
+                         workernames=[worker],
                          factory=pluginFactory(groupId, 'scipion-em-locscale', factorySteps=builderFactory),
                          workerbuilddir=groupId,
                          properties={'slackChannel': locscalePluginData.get('slackChannel', "")},
@@ -1401,7 +1402,7 @@ def getScipionBuilders(groupId):
         scipionBuilders.append(
             BuilderConfig(name=settings.SCIPION_TESTS_PREFIX + groupId,
                           tags=[groupId],
-                          workernames=[settings.WORKER],
+                          workernames=[settings.WORKER1 if groupId == settings.SDEVEL_GROUP_ID else settings.WORKER],
                           factory=scipionTestFactory(groupId),
                           workerbuilddir=groupId,
                           properties={
