@@ -10,6 +10,7 @@ except ImportError:
     ################## buildbot ##################
     #  worker credentials
     WORKER = os.environ.get('BUILDBOT_WORKER', 'worker')
+    WORKER1 = os.environ.get('BUILDBOT_WORKER1', 'scipionbox')
     WORKER_PASS = os.environ.get("BUILDBOT_WORKER_PASS", "password")
     PORT = 9989
 
