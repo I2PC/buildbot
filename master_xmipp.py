@@ -14,7 +14,7 @@ from settings import (WORKER, XMIPP_SLACK_CHANNEL,
                       FORCE_BUILDER_PREFIX, PROD_GROUP_ID,
                       LD_LIBRARY_PATH, timeOutShort, SDEVEL_GROUP_ID,
                       SPROD_GROUP_ID, PROD_LD_LIBRARY_PATH, PROD_SCIPION_CMD,
-                      XMIPP_INSTALL_PREFIX, XMIPP_DOCS_PREFIX)
+                      XMIPP_INSTALL_PREFIX, XMIPP_DOCS_PREFIX, WORKER1)
 from common_utils import GenerateStagesCommand, changeConfVar
 from master_scipion import pluginFactory, xmippPluginData, ScipionCommandStep
 
@@ -298,10 +298,11 @@ def getXmippBuilders(groupId):
             env['EM_ROOT'] = settings.SPROD_EM_ROOT
             env['LD_LIBRARY_PATH'] = PROD_LD_LIBRARY_PATH
 
+        worker = WORKER if groupId == SPROD_GROUP_ID else WORKER1
         builders.append(
             BuilderConfig(name=XMIPP_TESTS + groupId,
                           tags=[groupId],
-                          workernames=[WORKER],
+                          workernames=[worker],
                           factory=xmippTestFactory(groupId),
                           workerbuilddir=groupId,
                           properties=props,
@@ -314,7 +315,7 @@ def getXmippBuilders(groupId):
                 builders.append(
                     BuilderConfig(name="%s%s" % (settings.XMIPP_DOCS_PREFIX, groupId),
                                   tags=["xmippDocs", groupId],
-                                  workernames=[settings.WORKER],
+                                  workernames=[settings.WORKER1],
                                   factory=docsFactory(groupId),
                                   workerbuilddir=groupId,
                                   properties={
@@ -327,7 +328,7 @@ def getXmippBuilders(groupId):
             builders.append(
                 BuilderConfig(name=XMIPP_BUNDLE_TESTS + groupId,
                               tags=[groupId],
-                              workernames=[WORKER],
+                              workernames=[WORKER1],
                               factory=xmippBundleFactory(groupId),
                               workerbuilddir=groupId,
                               env=bundleEnv,
