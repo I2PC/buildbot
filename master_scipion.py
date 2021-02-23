@@ -1282,11 +1282,10 @@ def getLocscaleBuilder(groupId, env):
     builderFactory = util.BuildFactory()
 
     locscaleEnv = {}
-    worker = settings.WORKER1
+    worker = settings.WORKER1 if groupId == settings.SDEVEL_GROUP_ID else settings.WORKER
     if groupId == settings.PROD_GROUP_ID:
         builderFactory.addStep(installEman212)
         locscaleEnv.update(settings.EMAN212)
-        worker = settings.WORKER
     else:
         locscaleEnv.update(settings.EMAN23)
 
