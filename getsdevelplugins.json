@@ -262,7 +262,8 @@
         "pipName": "scipion-em-reliontomo",
         "id": 4,
         "name": "reliontomo",
-        "pluginSourceUrl": "https://github.com/scipion-em/scipion-em-reliontomo.git@devel"
+        "pluginSourceUrl": "https://github.com/scipion-em/scipion-em-reliontomo.git@devel",
+        "extraBinaries": ["relion-3.0"]
     },
 
   "scipion-em-jjsoft": {
