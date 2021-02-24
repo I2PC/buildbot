@@ -315,7 +315,7 @@ def getXmippBuilders(groupId):
                 builders.append(
                     BuilderConfig(name="%s%s" % (settings.XMIPP_DOCS_PREFIX, groupId),
                                   tags=["xmippDocs", groupId],
-                                  workernames=[settings.WORKER1],
+                                  workernames=[settings.WORKER],
                                   factory=docsFactory(groupId),
                                   workerbuilddir=groupId,
                                   properties={

@@ -1474,7 +1474,7 @@ def getScipionBuilders(groupId):
         if settings.branchsDict[groupId].get(settings.DOCS_BUILD_ID, None) is not None:
             scipionBuilders.append(BuilderConfig(name="%s%s" % (settings.DOCS_PREFIX, groupId),
                                                  tags=["docs", groupId],
-                                                 workernames=[settings.WORKER1],
+                                                 workernames=[settings.WORKER],
                                                  factory=docsFactory(groupId),
                                                  workerbuilddir=groupId,
                                                  properties={
@@ -1484,7 +1484,7 @@ def getScipionBuilders(groupId):
             scipionBuilders.append(
                 BuilderConfig(name="%s%s" % (settings.WEBSITE_PREFIX, groupId),
                               tags=["web", groupId],
-                              workernames=[settings.WORKER1],
+                              workernames=[settings.WORKER],
                               factory=updateWebSite(groupId),
                               workerbuilddir=groupId,
                               properties={
@@ -1494,7 +1494,7 @@ def getScipionBuilders(groupId):
             scipionBuilders.append(
                 BuilderConfig(name="%s%s" % (settings.CHECK_PLUGINS_DIFF, groupId),
                               tags=["plugin_branch_diff", groupId],
-                              workernames=[settings.WORKER1],
+                              workernames=[settings.WORKER],
                               factory=checkPluginDiff(groupId),
                               workerbuilddir=groupId,
                               properties={
