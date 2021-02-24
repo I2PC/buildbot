@@ -100,7 +100,7 @@ except ImportError:
     SDEVEL_SCIPION_HOME = '/home/buildbot/devel/scipion'
     SPROD_SCIPION_HOME = '/home/buildbot/prod/scipion'
     SPROD_ENV_PATH = '/home/buildbot/prod/condaenvs/prodEnv'
-    SDEVEL_ENV_PATH = '/home/buildbot/prod/condaenvs/develEnv'
+    SDEVEL_ENV_PATH = '/home/buildbot/anaconda3/envs/develEnv'
     SDEVEL_XMIPP_HOME = '/home/buildbot/devel/scipion/xmipp-bundle'
     SPROD_XMIPP_HOME = '/home/buildbot/prod/scipion/xmipp-bundle'
     BUILDBOT_HOME = '/home/buildbot/'
@@ -136,7 +136,7 @@ except ImportError:
     DOCS_REPO = "git@github.com:scipion-em/docs.git"
     DOCS_HTML_BRANCH = 'gh-pages'
     DOCS_HOME = "/home/buildbot/scipionBot/devel/docs"
-    SDEVEL_DOCS_PATH = "/home/buildbot/scipionBot/devel/docs"
+    SDEVEL_DOCS_PATH = "/home/buildbot/devel/docs"
     SDEVEL_DOCS_API_PATH = SDEVEL_DOCS_PATH + "/api"
 
     SCIPION_CMD = "./scipion3"
@@ -223,7 +223,7 @@ except ImportError:
     NVCC = 'nvcc'
     NVCC_CXXFLAGS = "--x cu -D_FORCE_INLINES -Xcompiler -fPIC -Wno-deprecated-gpu-targets -ccbin g++-5"
     NVCC_LINKFLAGS = '-L/usr/local/cuda/lib64'
-    LD_LIBRARY_PATH = '/usr/local/cuda-10.2/lib64:/home/buildbot/devel/scipion/software/lib:/home/buildbot/prod/condaenvs/develEnv/lib'
+    LD_LIBRARY_PATH = '/usr/local/cuda-10.2/lib64:/home/buildbot/devel/scipion/software/lib:/home/buildbot/anaconda3/envs/develEnv/lib'
     CUDA_BIN = '/usr/local/cuda-10.2/bin'
     PROD_LD_LIBRARY_PATH = '/usr/local/cuda-10.2/lib64:/home/buildbot/prod/scipion/software/lib:/home/buildbot/prod/condaenvs/prodEnv/lib'
     XMIPP_BUNDLE_VARS = ["LD_LIBRARY_PATH", "PATH", "PYTHONPATH",
