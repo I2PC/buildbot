@@ -87,7 +87,7 @@ except ImportError:
     SPIDER = 'spider_linux_mp_intel64'
     SPIDER_MPI = 'spider_linux_mpi_opt64'
     CCP4_HOME = "/opt/xtal/ccp4-7.1"
-    PHENIX_HOME = "/home/buildbot/phenix-1.19.1"
+    PHENIX_HOME = "/usr/local/phenix-1.19.1-4122"
     CONDA_ACTIVATION_CMD = ". /home/buildbot/miniconda3/etc/profile.d/conda.sh"
     CONDA_ACTIVATION_CMD_DEVEL = ". /home/buildbot/anaconda3/etc/profile.d/conda.sh"
     aphinxENV_ACTIVATE = CONDA_ACTIVATION_CMD + " && . ~/.sphinxVenv/bin/activate"
