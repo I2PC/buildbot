@@ -203,7 +203,8 @@
         "id": 4,
         "name": "tomo",
         "pluginSourceUrl": "https://github.com/scipion-em/scipion-em-tomo.git@devel",
-        "slackChannel":"tomo"
+        "slackChannel":"tomo",
+        "no_production": true
     },
   "scipion-em-pyseg": {
         "pipName": "scipion-em-pyseg",
