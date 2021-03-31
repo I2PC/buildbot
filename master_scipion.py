@@ -1083,9 +1083,9 @@ def cleanUpFactory(groupId, rmXmipp=False):
                                           descriptionDone='scipion-em removed',
                                           timeout=settings.timeOutInstall))
         cleanUpSteps.addStep(ShellCommand(command=['rm', '-rf', 'xmipp-bundle'],
-                                          name='Removing Scipion',
-                                          description='Removing Scipion',
-                                          descriptionDone='Scipion removed',
+                                          name='Removing xmipp-bundle',
+                                          description='Removing xmipp-bundle',
+                                          descriptionDone='xmipp-bundle removed',
                                           timeout=settings.timeOutInstall))
 
         cleanUpSteps.addStep(ShellCommand(command=['rm', '-rf', 'doc'],
