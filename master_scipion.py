@@ -1071,25 +1071,43 @@ def cleanUpFactory(groupId, rmXmipp=False):
                                       descriptionDone='Scipion removed',
                                       timeout=settings.timeOutInstall))
 
-    if rmXmipp:
-        cleanUpSteps.addStep(ShellCommand(command=['rm', '-rf', 'xmipp'],
-                                          name='Removing Xmipp',
-                                          description='Removing Xmipp',
-                                          descriptionDone='Xmipp removed',
+    if groupId == settings.SDEVEL_GROUP_ID:
+        cleanUpSteps.addStep(ShellCommand(command=['rm', '-rf', 'scipion-pyworkflow'],
+                                          name='Removing scipion-pyworkflow',
+                                          description='scipion-pyworkflow',
+                                          descriptionDone='scipion-pyworkflow removed',
+                                          timeout=settings.timeOutInstall))
+        cleanUpSteps.addStep(ShellCommand(command=['rm', '-rf', 'scipion-em'],
+                                          name='Removing scipion-em',
+                                          description='Removing scipion-em',
+                                          descriptionDone='scipion-em removed',
+                                          timeout=settings.timeOutInstall))
+        cleanUpSteps.addStep(ShellCommand(command=['rm', '-rf', 'xmipp-bundle'],
+                                          name='Removing Scipion',
+                                          description='Removing Scipion',
+                                          descriptionDone='Scipion removed',
+                                          timeout=settings.timeOutInstall))
+
+        cleanUpSteps.addStep(ShellCommand(command=['rm', '-rf', 'doc'],
+                                          name='Removing documentation',
+                                          description='Removing documentation',
+                                          descriptionDone='documentation removed',
                                           timeout=settings.timeOutInstall))
 
     if groupId != settings.PROD_GROUP_ID:
         condaEnv = settings.CONDA_REMOVE_DEVEL_ENV
+        condaActivate = settings.CONDA_ACTIVATION_CMD_DEVEL
         if groupId == settings.SPROD_GROUP_ID:
             condaEnv = settings.CONDA_REMOVE_PROD_ENV
+            condaActivate = settings.CONDA_ACTIVATION_CMD
 
-        command = (settings.CONDA_ACTIVATION_CMD + ' ; ' +
+        command = (condaActivate + ' ; ' +
                    condaEnv)
         cleanUpSteps.addStep(ScipionCommandStep(command=command,
-                                                              name='Removing virtual enviroment',
-                                                              description='Removing virtual enviroment',
-                                                              descriptionDone='Removing virtual enviroment',
-                                                              timeout=settings.timeOutInstall))
+                                                name='Removing virtual enviroment',
+                                                description='Removing virtual enviroment',
+                                                descriptionDone='Removing virtual enviroment',
+                                                timeout=settings.timeOutInstall))
 
     return cleanUpSteps
 

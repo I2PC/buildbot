@@ -27,7 +27,6 @@ except ImportError:
     timeOutLongExecute = 20*60*60  # 20 hours
 
     # builder branches
-    DEVEL_GROUP_ID = 'devel'
     PROD_GROUP_ID = 'support'
     SDEVEL_GROUP_ID = 'devel'
     SPROD_GROUP_ID = 'prod'
