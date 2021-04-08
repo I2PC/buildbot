@@ -67,6 +67,7 @@ def xmippBundleFactory(groupId):
                               haltOnFailure=False,
                               pattern='./xmipp test (.*)',
                               rootName=settings.XMIPP_CMD,
+                              timeout=settings.timeOutExecute,
                               blacklist=settings.SCIPION_TESTS_BLACKLIST,
                               env=util.Property('env')))
 
@@ -76,6 +77,7 @@ def xmippBundleFactory(groupId):
                               description="Generating test stages for Xmipp functions",
                               descriptionDone="Generate test stages for Xmipp functions",
                               haltOnFailure=False,
+                              timeout=settings.timeOutExecute,
                               pattern='xmipp_test_(.*)',
                               rootName=settings.XMIPP_CMD,
                               blacklist=settings.SCIPION_TESTS_BLACKLIST,
@@ -112,6 +114,7 @@ def xmippTestFactory(groupId):
                                   haltOnFailure=False,
                                   stagePrefix=[scipionCmd, "test"],
                                   targetTestSet='xmipp3',
+                                  timeout=settings.timeOutExecute,
                                   blacklist=settings.SCIPION_TESTS_BLACKLIST,
                                   stageEnvs=envs))
 
@@ -142,6 +145,7 @@ def xmippTestFactory(groupId):
                 stagePrefix=[settings.SCIPION_CMD, "test"],
                 targetTestSet='xmipp3',
                 rootName='scipion3',
+                timeout=settings.timeOutExecute,
                 blacklist=settings.SCIPION_TESTS_BLACKLIST,
                 stageEnvs=envs))
 
