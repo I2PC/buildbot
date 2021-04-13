@@ -182,21 +182,24 @@
         "id": 4,
         "name": "dynamo",
         "pluginSourceUrl": "https://github.com/scipion-em/scipion-em-dynamo.git@devel",
-        "slackChannel":"dynamo"
+        "slackChannel":"dynamo",
+        "no_production": true
     },
   "scipion-em-novactf": {
         "pipName": "scipion-em-novactf",
         "id": 4,
         "name": "novactf",
         "pluginSourceUrl": "https://github.com/scipion-em/scipion-em-novactf.git@master",
-        "slackChannel":"novactf"
+        "slackChannel":"novactf",
+        "no_production": true
     },
 "scipion-em-imod": {
         "pipName": "scipion-em-imod",
         "id": 4,
         "name": "imod",
         "pluginSourceUrl": "https://github.com/scipion-em/scipion-em-imod.git@devel",
-        "slackChannel":"novactf"
+        "slackChannel":"novactf",
+        "no_production": true
     },
   "scipion-em-tomo": {
         "pipName": "scipion-em-tomo",
@@ -211,7 +214,8 @@
         "id": 4,
         "name": "pyseg",
         "pluginSourceUrl": "https://github.com/scipion-em/scipion-em-pyseg.git@master",
-        "slackChannel":"pyseg"
+        "slackChannel":"pyseg",
+        "no_production": true
     },
   "scipion-em-facilities": {
         "pipName": "scipion-em-facilities",
@@ -224,27 +228,31 @@
         "pipName": "scipion-em-xmipp2",
         "id": 4,
         "name": "xmipp2",
-        "pluginSourceUrl": "https://github.com/I2PC/scipion-em-xmipp2.git@devel"
+        "pluginSourceUrl": "https://github.com/I2PC/scipion-em-xmipp2.git@devel",
+        "no_production": true
     },
   "scipion-em-xmipptomo": {
         "pipName": "scipion-em-xmipptomo",
         "id": 4,
         "name": "xmipptomo",
-        "pluginSourceUrl": "https://github.com/I2PC/scipion-em-xmipptomo.git@devel"
+        "pluginSourceUrl": "https://github.com/I2PC/scipion-em-xmipptomo.git@devel",
+        "no_production": true
     },
   "scipion-em-deepfinder": {
         "pipName": "scipion-em-deepfinder",
         "id": 4,
         "name": "deepfinder",
         "pluginSourceUrl": "https://github.com/scipion-em/scipion-em-deepfinder.git@devel",
-        "NO_TESTS": true
+        "NO_TESTS": true,
+        "no_production": true
     },
   "scipion-em-tomoj": {
         "pipName": "scipion-em-tomoj",
         "id": 4,
         "name": "tomoj",
         "pluginSourceUrl": "https://github.com/scipion-em/scipion-em-tomoj.git@devel",
-        "NO_TESTS": true
+        "NO_TESTS": true,
+        "no_production": true
     },
   "scipion-em-sidesplitter": {
         "pipName": "scipion-em-sidesplitter",
@@ -257,28 +265,32 @@
         "pipName": "scipion-em-emantomo",
         "id": 4,
         "name": "emantomo",
-        "pluginSourceUrl": "https://github.com/scipion-em/scipion-em-emantomo.git@devel"
+        "pluginSourceUrl": "https://github.com/scipion-em/scipion-em-emantomo.git@devel",
+        "no_production": true
     },
   "scipion-em-reliontomo": {
         "pipName": "scipion-em-reliontomo",
         "id": 4,
         "name": "reliontomo",
         "pluginSourceUrl": "https://github.com/scipion-em/scipion-em-reliontomo.git@devel",
-        "extraBinaries": ["relion-3.0"]
+        "extraBinaries": ["relion-3.0"],
+        "no_production": true
     },
 
   "scipion-em-jjsoft": {
         "pipName": "scipion-em-jjsoft",
         "id": 4,
         "name": "jjsoft",
-        "pluginSourceUrl": "https://github.com/scipion-em/scipion-em-jjsoft.git@devel"
+        "pluginSourceUrl": "https://github.com/scipion-em/scipion-em-jjsoft.git@devel",
+        "no_production": true
     },
 
   "scipion-em-cryocare": {
         "pipName": "scipion-em-cryocare",
         "id": 4,
         "name": "cryocare",
-        "pluginSourceUrl": "https://github.com/scipion-em/scipion-em-cryocare.git@devel"
+        "pluginSourceUrl": "https://github.com/scipion-em/scipion-em-cryocare.git@devel",
+        "no_production": true
     },
 
   "scipion-em-tomo3D": {
@@ -286,7 +298,8 @@
         "id": 4,
         "name": "tomo3D",
         "pluginSourceUrl": "https://github.com/scipion-em/scipion-em-tomo3D.git@devel",
-        "NO_TESTS": true
+        "NO_TESTS": true,
+        "no_production": true
     },
   "scipion-em-pwperformance": {
         "pipName": "scipion-em-pwperformance",
