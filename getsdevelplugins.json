@@ -4,56 +4,64 @@
         "id": 4,
         "name": "eman2",
         "pluginSourceUrl": "https://github.com/scipion-em/scipion-em-eman2.git@devel",
-        "slackChannel":"eman"
+        "slackChannel":"eman",
+        "NO_TESTS": true
     },
    "scipion-em-cistem": {
       "pipName": "scipion-em-cistem",
             "id": 51,
             "name": "cistem",
             "pluginSourceUrl": "https://github.com/scipion-em/scipion-em-cistem.git@devel",
-            "no_production": true
+            "no_production": true,
+            "NO_TESTS": true
     },
    "scipion-em-spider": {
           "pipName": "scipion-em-spider",
           "id": 31,
           "name": "spider",
           "slackChannel": "spider",
-          "pluginSourceUrl": "https://github.com/scipion-em/scipion-em-spider.git@devel"
+          "pluginSourceUrl": "https://github.com/scipion-em/scipion-em-spider.git@devel",
+          "NO_TESTS": true
       },
      "scipion-em-gctf": {
           "pipName": "scipion-em-gctf",
           "id": 31,
           "name": "gctf",
           "pluginSourceUrl": "https://github.com/scipion-em/scipion-em-gctf.git@devel",
-          "slackChannel":"gctf"
+          "slackChannel":"gctf",
+          "NO_TESTS": true
       },
     "scipion-em-relion": {
           "pipName": "scipion-em-relion",
           "id": 31,
           "name": "relion",
           "pluginSourceUrl": "https://github.com/scipion-em/scipion-em-relion.git@devel",
-          "slackChannel": "relion"
+          "slackChannel": "relion",
+          "NO_TESTS": true
       },
   "scipion-em-cryosparc2": {
           "pipName": "scipion-em-cryosparc2",
           "id": 31,
           "name": "cryosparc2",
           "pluginSourceUrl": "https://github.com/scipion-em/scipion-em-cryosparc2.git@devel",
-          "slackChannel": "cryosparc"
+          "slackChannel": "cryosparc",
+          "NO_TESTS": true
       },
     "scipion-em-resmap": {
         "pipName": "scipion-em-resmap",
         "id": 20,
         "name": "resmap",
         "pluginSourceUrl": "https://github.com/scipion-em/scipion-em-resmap.git@devel",
-        "slackChannel": "resmap"
+        "slackChannel": "resmap",
+        "NO_TESTS": true
     },
     "scipion-em-bsoft": {
         "pipName": "scipion-em-bsoft",
         "id": 13,
         "name": "bsoft",
         "pluginSourceUrl": "https://github.com/scipion-em/scipion-em-bsoft.git@devel",
-        "slackChannel":"bsoft"
+        "slackChannel":"bsoft",
+        "NO_TESTS": true
     },
     "scipion-em-chimera": {
         "pipName": "scipion-em-chimera",
@@ -62,7 +70,8 @@
         "pluginSourceUrl": "https://github.com/scipion-em/scipion-em-chimera.git@devel",
         "slackChannel" : "chimera",
         "bins": false,
-        "extraBinaries": ["scipionchimera"]
+        "extraBinaries": ["scipionchimera"],
+        "NO_TESTS": true
 
     },
     "scipion-em-appion": {
@@ -77,14 +86,16 @@
         "pipName": "scipion-em-emxlib",
         "id": 15,
         "name": "emxlib",
-        "pluginSourceUrl": "https://github.com/scipion-em/scipion-em-emxlib.git@devel"
+        "pluginSourceUrl": "https://github.com/scipion-em/scipion-em-emxlib.git@devel",
+        "NO_TESTS": true
     },
     "scipion-em-locscale": {
         "pipName": "scipion-em-locscale",
         "id": 32,
         "name": "locscale",
         "pluginSourceUrl": "https://github.com/scipion-em/scipion-em-locscale.git@devel",
-        "slackChannel": "locscale"
+        "slackChannel": "locscale",
+        "NO_TESTS": true
     },
     "scipion-em-atsas": {
         "pipName": "scipion-em-atsas",
@@ -99,14 +110,16 @@
           "id": 31,
           "name": "cryoef",
           "pluginSourceUrl": "https://github.com/scipion-em/scipion-em-cryoef.git@devel",
-          "slackChannel":"cryoef"
+          "slackChannel":"cryoef",
+          "NO_TESTS": true
       },
   "scipion-em-bamfordlab": {
           "pipName": "scipion-em-bamfordlab",
           "id": 31,
           "name": "bamfordlab",
           "pluginSourceUrl": "https://github.com/scipion-em/scipion-em-bamfordlab.git@devel",
-          "slackChannel":"bamfordlab"
+          "slackChannel":"bamfordlab",
+          "NO_TESTS": true
       },
   "scipion-em-fsc3d": {
           "pipName": "scipion-em-fsc3d",
@@ -114,46 +127,53 @@
           "name": "fsc3d",
           "pluginSourceUrl": "https://github.com/scipion-em/scipion-em-fsc3d.git@devel",
           "deleteVirtualEnv": "3DFSC",
-          "binToRemove": ["fsc3D-3.0"]
+          "binToRemove": ["fsc3D-3.0"],
+          "NO_TESTS": true
       },
   "scipion-em-ccp4": {
           "pipName": "scipion-em-ccp4",
           "id": 31,
           "name": "ccp4",
-          "pluginSourceUrl": "https://github.com/scipion-em/scipion-em-ccp4.git@devel"
+          "pluginSourceUrl": "https://github.com/scipion-em/scipion-em-ccp4.git@devel",
+          "NO_TESTS": true
       },
   "scipion-em-phenix": {
           "pipName": "scipion-em-phenix",
           "id": 31,
           "name": "phenix",
           "pluginSourceUrl": "https://github.com/scipion-em/scipion-em-phenix.git@devel",
-          "slackChannel":"phenix"
+          "slackChannel":"phenix",
+          "NO_TESTS": true
       },
   "scipion-em-gautomatch": {
           "pipName": "scipion-em-gautomatch",
           "id": 31,
           "name": "gautomatch",
           "pluginSourceUrl": "https://github.com/scipion-em/scipion-em-gautomatch.git@devel",
-          "slackChannel":"gautomatch"
+          "slackChannel":"gautomatch",
+          "NO_TESTS": true
       },
   "scipion-em-motioncorr": {
           "pipName": "scipion-em-motioncorr",
           "id": 31,
           "name": "motioncorr",
           "pluginSourceUrl": "https://github.com/scipion-em/scipion-em-motioncorr.git@devel",
-          "slackChannel":"motioncorr"
+          "slackChannel":"motioncorr",
+          "NO_TESTS": true
       },
   "scipion-em-atomstructutils": {
     "pipName": "scipion-em-atomstructutils",
           "id": 31,
           "name": "atomstructutils",
-          "pluginSourceUrl": "https://github.com/scipion-em/scipion-em-atomstructutils.git@devel"
+          "pluginSourceUrl": "https://github.com/scipion-em/scipion-em-atomstructutils.git@devel",
+          "NO_TESTS": true
   },
   "scipion-em-localrec": {
     "pipName": "scipion-em-localrec",
           "id": 30,
           "name": "localrec",
-          "pluginSourceUrl": "https://github.com/scipion-em/scipion-em-localrec.git@devel"
+          "pluginSourceUrl": "https://github.com/scipion-em/scipion-em-localrec.git@devel",
+          "NO_TESTS": true
   },
   "scipion-em-sphire": {
     "pipName": "scipion-em-sphire",
@@ -168,14 +188,16 @@
         "id": 27,
         "name": "topaz",
         "pluginSourceUrl": "https://github.com/scipion-em/scipion-em-topaz.git@devel",
-        "slackChannel" : "chimera"
+        "slackChannel" : "chimera",
+        "NO_TESTS": true
     },
   "scipion-em-continuousflex": {
           "pipName": "scipion-em-continuousflex",
           "id": 31,
           "name": "continuousflex",
           "pluginSourceUrl": "https://github.com/scipion-em/scipion-em-continuousflex.git@devel",
-          "slackChannel":"continuousflex"
+          "slackChannel":"continuousflex",
+          "NO_TESTS": true
       },
   "scipion-em-dynamo": {
         "pipName": "scipion-em-dynamo",
@@ -183,7 +205,8 @@
         "name": "dynamo",
         "pluginSourceUrl": "https://github.com/scipion-em/scipion-em-dynamo.git@devel",
         "slackChannel":"dynamo",
-        "no_production": true
+        "no_production": true,
+        "NO_TESTS": true
     },
   "scipion-em-novactf": {
         "pipName": "scipion-em-novactf",
@@ -191,7 +214,8 @@
         "name": "novactf",
         "pluginSourceUrl": "https://github.com/scipion-em/scipion-em-novactf.git@master",
         "slackChannel":"novactf",
-        "no_production": true
+        "no_production": true,
+        "NO_TESTS": true
     },
 "scipion-em-imod": {
         "pipName": "scipion-em-imod",
@@ -199,7 +223,8 @@
         "name": "imod",
         "pluginSourceUrl": "https://github.com/scipion-em/scipion-em-imod.git@devel",
         "slackChannel":"novactf",
-        "no_production": true
+        "no_production": true,
+        "NO_TESTS": true
     },
   "scipion-em-tomo": {
         "pipName": "scipion-em-tomo",
@@ -207,7 +232,8 @@
         "name": "tomo",
         "pluginSourceUrl": "https://github.com/scipion-em/scipion-em-tomo.git@devel",
         "slackChannel":"tomo",
-        "no_production": true
+        "no_production": true,
+        "NO_TESTS": true
     },
   "scipion-em-pyseg": {
         "pipName": "scipion-em-pyseg",
@@ -215,28 +241,32 @@
         "name": "pyseg",
         "pluginSourceUrl": "https://github.com/scipion-em/scipion-em-pyseg.git@master",
         "slackChannel":"pyseg",
-        "no_production": true
+        "no_production": true,
+        "NO_TESTS": true
     },
   "scipion-em-facilities": {
         "pipName": "scipion-em-facilities",
         "id": 4,
         "name": "emfacilities",
         "pluginSourceUrl": "https://github.com/scipion-em/scipion-em-facilities.git@devel",
-        "slackChannel":"facilities"
+        "slackChannel":"facilities",
+        "NO_TESTS": true
     },
   "scipion-em-xmipp2": {
         "pipName": "scipion-em-xmipp2",
         "id": 4,
         "name": "xmipp2",
         "pluginSourceUrl": "https://github.com/I2PC/scipion-em-xmipp2.git@devel",
-        "no_production": true
+        "no_production": true,
+        "NO_TESTS": true
     },
   "scipion-em-xmipptomo": {
         "pipName": "scipion-em-xmipptomo",
         "id": 4,
         "name": "xmipptomo",
         "pluginSourceUrl": "https://github.com/I2PC/scipion-em-xmipptomo.git@devel",
-        "no_production": true
+        "no_production": true,
+        "NO_TESTS": true
     },
   "scipion-em-deepfinder": {
         "pipName": "scipion-em-deepfinder",
@@ -258,7 +288,8 @@
         "pipName": "scipion-em-sidesplitter",
         "id": 4,
         "name": "sidesplitter",
-        "pluginSourceUrl": "https://github.com/scipion-em/scipion-em-sidesplitter.git@devel"
+        "pluginSourceUrl": "https://github.com/scipion-em/scipion-em-sidesplitter.git@devel",
+        "NO_TESTS": true
     },
 
   "scipion-em-emantomo": {
@@ -266,7 +297,8 @@
         "id": 4,
         "name": "emantomo",
         "pluginSourceUrl": "https://github.com/scipion-em/scipion-em-emantomo.git@devel",
-        "no_production": true
+        "no_production": true,
+        "NO_TESTS": true
     },
   "scipion-em-reliontomo": {
         "pipName": "scipion-em-reliontomo",
@@ -274,7 +306,8 @@
         "name": "reliontomo",
         "pluginSourceUrl": "https://github.com/scipion-em/scipion-em-reliontomo.git@devel",
         "extraBinaries": ["relion-3.0"],
-        "no_production": true
+        "no_production": true,
+        "NO_TESTS": true
     },
 
   "scipion-em-jjsoft": {
@@ -282,7 +315,8 @@
         "id": 4,
         "name": "jjsoft",
         "pluginSourceUrl": "https://github.com/scipion-em/scipion-em-jjsoft.git@devel",
-        "no_production": true
+        "no_production": true,
+        "NO_TESTS": true
     },
 
   "scipion-em-cryocare": {
@@ -290,7 +324,8 @@
         "id": 4,
         "name": "cryocare",
         "pluginSourceUrl": "https://github.com/scipion-em/scipion-em-cryocare.git@devel",
-        "no_production": true
+        "no_production": true,
+        "NO_TESTS": true
     },
 
   "scipion-em-tomo3D": {
@@ -306,13 +341,15 @@
         "id": 4,
         "name": "pwperformance",
         "pluginSourceUrl": "https://github.com/scipion-em/scipion-em-pwperformance.git@master",
-        "USE_URL_PROD": true
+        "USE_URL_PROD": true,
+        "NO_TESTS": true
     },
   "scipion-pkpd": {
         "pipName": "scipion-pkpd",
         "id": 4,
         "name": "pkpd",
-        "pluginSourceUrl": "https://github.com/cossorzano/scipion-pkpd.git@python3_migration"
+        "pluginSourceUrl": "https://github.com/cossorzano/scipion-pkpd.git@python3_migration",
+        "NO_TESTS": true
     },
   "scipion-em-xmipp": {
         "pipName": "scipion-em-xmipp",
