@@ -30,6 +30,8 @@ except ImportError:
     PROD_GROUP_ID = 'support'
     SDEVEL_GROUP_ID = 'devel'
     SPROD_GROUP_ID = 'prod'
+    NEW_METADATA_ID = 'jh_metadata'
+
 
     SCIPION_BUILD_ID = 'scipion'  # this will be the name of the builder dir i.e. the scipion home
     XMIPP_BUILD_ID = 'xmipp'  # this will be the dir name of xmipp's home
@@ -61,6 +63,11 @@ except ImportError:
                        XMIPP_DOCS_BUILD_ID: 'gh-pages'
 
                    },
+                   NEW_METADATA_ID: {
+                        SCIPION_BUILD_ID: 'devel',
+                        DOCS_BUILD_ID: 'release-3.0.0',
+                        XMIPP_DOCS_BUILD_ID: 'gh-pages'
+                    },
                     SPROD_GROUP_ID: {
                         SCIPION_BUILD_ID: 'master',
                     }}

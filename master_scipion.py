@@ -727,9 +727,12 @@ def installSDevelScipionFactory(groupId):
 
     # Install Scipion
     scipionHome = settings.SDEVEL_SCIPION_HOME
+    xmippBranch = 'devel'
+    if groupId == settings.NEW_METADATA_ID:
+        xmippBranch = 'jh_metadata'
     installScipionFactorySteps.addStep(
         (ShellCommand(command=['installscipion', scipionHome, '-noAsk', '-dev', '-n',
-                               'develEnv', '-sciBranch', 'devel', '-conda', '-xmippBranch', 'devel'],
+                               'develEnv', '-sciBranch', 'devel', '-conda', '-xmippBranch', xmippBranch],
                       name='Install Scipion',
                       description='Install Scipion',
                       descriptionDone='Install Scipion',
@@ -992,7 +995,7 @@ def pluginFactory(groupId, pluginName, factorySteps=None, shortname=None,
                                       blacklist=settings.SCIPION_TESTS_BLACKLIST,
                                       targetTestSet=shortName))
 
-    elif groupId == settings.SDEVEL_GROUP_ID:
+    elif groupId == settings.SDEVEL_GROUP_ID or groupId == settings.NEW_METADATA_ID:
 
         if deleteVirtualEnv:
             deleteEnv = (settings.CONDA_ACTIVATION_CMD +
@@ -1071,7 +1074,7 @@ def cleanUpFactory(groupId, rmXmipp=False):
                                       descriptionDone='Scipion removed',
                                       timeout=settings.timeOutInstall))
 
-    if groupId == settings.SDEVEL_GROUP_ID:
+    if groupId == settings.SDEVEL_GROUP_ID or groupId == settings.NEW_METADATA_ID:
         cleanUpSteps.addStep(ShellCommand(command=['rm', '-rf', 'scipion-pyworkflow'],
                                           name='Removing scipion-pyworkflow',
                                           description='scipion-pyworkflow',
@@ -1154,7 +1157,7 @@ def docsFactory(groupId):
                      timeout=settings.timeOutShort
                      ))
 
-    if groupId == settings.SDEVEL_GROUP_ID:
+    if groupId == settings.SDEVEL_GROUP_ID or groupId == settings.NEW_METADATA_ID:
 
         factorySteps.addStep(
             ShellCommand(command='rm -rf ' + settings.SDEVEL_DOCS_API_PATH,
@@ -1308,7 +1311,7 @@ def getLocscaleBuilder(groupId, env):
     builderFactory = util.BuildFactory()
 
     locscaleEnv = {}
-    worker = settings.WORKER1 if groupId == settings.SDEVEL_GROUP_ID else settings.WORKER
+    worker = settings.WORKER1 if (groupId == settings.SDEVEL_GROUP_ID or groupId == settings.NEW_METADATA_ID) else settings.WORKER
     if groupId == settings.PROD_GROUP_ID:
         builderFactory.addStep(installEman212)
         locscaleEnv.update(settings.EMAN212)
@@ -1392,9 +1395,10 @@ def getScipionBuilders(groupId):
                                                  properties={
                                                      'slackChannel': "buildbot"},
                                                  env=env))
-    elif groupId == settings.SDEVEL_GROUP_ID or groupId == settings.SPROD_GROUP_ID:
+    elif groupId == settings.SDEVEL_GROUP_ID or groupId == settings.SPROD_GROUP_ID or groupId == settings.NEW_METADATA_ID:
         env['CODESPEED_REVISION'] = groupId
-        if groupId == settings.SDEVEL_GROUP_ID:
+
+        if groupId == settings.SDEVEL_GROUP_ID or groupId == settings.NEW_METADATA_ID:
             env['SCIPION_HOME'] = settings.SDEVEL_SCIPION_HOME
             env['EM_ROOT'] = settings.EM_ROOT
             env['LD_LIBRARY_PATH'] = settings.LD_LIBRARY_PATH
@@ -1410,7 +1414,7 @@ def getScipionBuilders(groupId):
                               properties={
                                   "slackChannel": settings.SCIPION_SLACK_CHANNEL},
                               env=env))
-        else:
+        elif groupId == settings.SPROD_GROUP_ID:
             env['SCIPION_HOME'] = settings.SPROD_SCIPION_HOME
             env['EM_ROOT'] = settings.SPROD_EM_ROOT
             env['LD_LIBRARY_PATH'] = settings.PROD_LD_LIBRARY_PATH
@@ -1427,14 +1431,14 @@ def getScipionBuilders(groupId):
         scipionBuilders.append(
             BuilderConfig(name=settings.SCIPION_TESTS_PREFIX + groupId,
                           tags=[groupId],
-                          workernames=[settings.WORKER1 if groupId == settings.SDEVEL_GROUP_ID else settings.WORKER],
+                          workernames=[settings.WORKER1 if (groupId == settings.SDEVEL_GROUP_ID or groupId == settings.NEW_METADATA_ID) else settings.WORKER],
                           factory=scipionTestFactory(groupId),
                           workerbuilddir=groupId,
                           properties={
                               'slackChannel': settings.SCIPION_SLACK_CHANNEL},
                           env=env)
         )
-        if groupId == settings.SDEVEL_GROUP_ID:
+        if groupId == settings.SDEVEL_GROUP_ID or groupId == settings.NEW_METADATA_ID:
             env['SCIPION_PLUGIN_JSON'] = 'plugins.json'
             scipionBuilders.append(
                 BuilderConfig(name=settings.CLEANUP_PREFIX + groupId,
@@ -1472,7 +1476,7 @@ def getScipionBuilders(groupId):
             scipionBuilders.append(
                 BuilderConfig(name="%s_%s" % (moduleName, groupId),
                               tags=tags,
-                              workernames=[settings.WORKER1 if groupId == settings.SDEVEL_GROUP_ID else settings.WORKER],
+                              workernames=[settings.WORKER1 if (groupId == settings.SDEVEL_GROUP_ID or groupId == settings.NEW_METADATA_ID) else settings.WORKER],
                               factory=pluginFactory(groupId, plugin,
                                                     shortname=moduleName,
                                                     doTest=hastests,
@@ -1498,7 +1502,7 @@ def getScipionBuilders(groupId):
                                                  properties={
                                                      'slackChannel': "buildbot"},
                                                  env=env))
-        if groupId == settings.SDEVEL_GROUP_ID:
+        if groupId == settings.SDEVEL_GROUP_ID or groupId == settings.NEW_METADATA_ID:
             scipionBuilders.append(
                 BuilderConfig(name="%s%s" % (settings.WEBSITE_PREFIX, groupId),
                               tags=["web", groupId],
@@ -1555,7 +1559,7 @@ def checkPluginDiff(groupId):
 
 
 def getScipionSchedulers(groupId):
-    if groupId == settings.SDEVEL_GROUP_ID or groupId == settings.SPROD_GROUP_ID:
+    if groupId == settings.SDEVEL_GROUP_ID or groupId == settings.NEW_METADATA_ID or groupId == settings.SPROD_GROUP_ID:
         scipionSchedulerNames = [settings.SCIPION_INSTALL_PREFIX + groupId,
                                  settings.SCIPION_TESTS_PREFIX + groupId,
                                  settings.CLEANUP_PREFIX + groupId]
@@ -1563,7 +1567,7 @@ def getScipionSchedulers(groupId):
         if settings.branchsDict[groupId].get(settings.DOCS_BUILD_ID, None) is not None:
             scipionSchedulerNames.append("%s%s" % (settings.DOCS_PREFIX, groupId))
 
-        if groupId == settings.SDEVEL_GROUP_ID:
+        if groupId == settings.SDEVEL_GROUP_ID or groupId == settings.NEW_METADATA_ID:
             scipionSchedulerNames.append("%s%s" % (settings.WEBSITE_PREFIX,
                                                    groupId))
             scipionSchedulerNames.append("%s%s" % (settings.CHECK_PLUGINS_DIFF,

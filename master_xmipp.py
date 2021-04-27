@@ -13,6 +13,7 @@ from settings import (WORKER, XMIPP_SLACK_CHANNEL,
                       XMIPP_TESTS, XMIPP_BUNDLE_TESTS, EMAN212,
                       FORCE_BUILDER_PREFIX, PROD_GROUP_ID,
                       LD_LIBRARY_PATH, timeOutShort, SDEVEL_GROUP_ID,
+                      NEW_METADATA_ID,
                       SPROD_GROUP_ID, PROD_LD_LIBRARY_PATH, PROD_SCIPION_CMD,
                       XMIPP_INSTALL_PREFIX, XMIPP_DOCS_PREFIX, WORKER1)
 from common_utils import GenerateStagesCommand, changeConfVar
@@ -288,7 +289,7 @@ def getXmippBuilders(groupId):
                           env=env)
         )
 
-    elif groupId == SDEVEL_GROUP_ID or groupId == SPROD_GROUP_ID:
+    elif groupId == SDEVEL_GROUP_ID or groupId == SPROD_GROUP_ID or groupId == NEW_METADATA_ID:
 
         env = {
             "SCIPION_IGNORE_PYTHONPATH": "True",
@@ -313,7 +314,7 @@ def getXmippBuilders(groupId):
                           env=env)
         )
 
-        if groupId == SDEVEL_GROUP_ID:
+        if groupId == SDEVEL_GROUP_ID or groupId == NEW_METADATA_ID:
             if settings.branchsDict[groupId].get(settings.XMIPP_DOCS_BUILD_ID,
                                                  None) is not None:
                 builders.append(
@@ -352,7 +353,7 @@ def getXmippSchedulers(groupId):
     if groupId == PROD_GROUP_ID:
         xmippSchedulerNames += [XMIPP_INSTALL_PREFIX + groupId]
 
-    if groupId == SDEVEL_GROUP_ID:
+    if groupId == SDEVEL_GROUP_ID or groupId == settings.NEW_METADATA_ID:
         xmippSchedulerNames.append(XMIPP_BUNDLE_TESTS + groupId)
         xmippSchedulerNames.append(XMIPP_DOCS_PREFIX + groupId)
     schedulers = []
