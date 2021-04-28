@@ -1465,7 +1465,10 @@ def getScipionBuilders(groupId):
         for plugin, pluginDict in scipionSdevelPlugins.items():
             moduleName = str(pluginDict.get("name", plugin.rsplit('-', 1)[-1]))
             tags = [groupId, moduleName]
-            hastests = not pluginDict.get("NO_TESTS", False)
+            if groupId == settings.NEW_METADATA_ID:
+                doTest = False
+            else:
+                doTest = not pluginDict.get("NO_TESTS", False)
             extraBinaries = pluginDict.get("extraBinaries", [])
             deleteVirtualEnv = pluginDict.get("deleteVirtualEnv", '')
             binToRemove = pluginDict.get("binToRemove", [])
@@ -1479,7 +1482,7 @@ def getScipionBuilders(groupId):
                               workernames=[settings.WORKER1 if (groupId == settings.SDEVEL_GROUP_ID or groupId == settings.NEW_METADATA_ID) else settings.WORKER],
                               factory=pluginFactory(groupId, plugin,
                                                     shortname=moduleName,
-                                                    doTest=hastests,
+                                                    doTest=doTest,
                                                     extraBinaries=extraBinaries,
                                                     deleteVirtualEnv=deleteVirtualEnv,
                                                     binToRemove=binToRemove,
