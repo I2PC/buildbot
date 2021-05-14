@@ -165,6 +165,7 @@ except ImportError:
     SCIPION_JH_METADATA_ENV_PATH = JH_METADATA_ENV_PATH + "/lib/python3.8/site-packages/"
 
     SDEVEL_SCIPION_CONFIG_PATH = "/home/buildbot/.config/scipion/scipion_devel.conf"
+    JH_METADATA_SCIPION_CONFIG_PATH = "/home/buildbot/.config/scipion/scipion_jh_metadata.conf"
     SPROD_SCIPION_CONFIG_PATH = "/home/buildbot/.config/scipion/scipion_prod.conf"
 
     # SCIPION SCRATCH DIR

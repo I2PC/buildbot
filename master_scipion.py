@@ -186,6 +186,17 @@ setEM_ROOTSdevel = ShellCommand(
     descriptionDone='Added EM_ROOT',
     haltOnFailure=True)
 
+setEM_ROOTJHMetadata = ShellCommand(
+    command=changeConfVar('EM_ROOT', settings.EM_ROOT,
+                          file=settings.SDEVEL_SCIPION_CONFIG_PATH,
+                          escapeSlash=True),
+    name='Change EM_ROOT',
+    description='Add the right EM_ROOT path',
+    descriptionDone='Added EM_ROOT',
+    haltOnFailure=True)
+
+
+
 setNYSBC_3DFSC_HOME = ShellCommand(
     command=util.Interpolate('sed -ie "\$aNYSBC_3DFSC_HOME = {}" %(prop:SCIPION_LOCAL_CONFIG)s'.format(settings.NYSBC_3DFSC_HOME)),
     name='Set NYSBC_3DFSC_HOME in scipion conf',
@@ -728,9 +739,11 @@ def installSDevelScipionFactory(groupId):
     # Install Scipion
     scipionHome = settings.SDEVEL_SCIPION_HOME
     xmippBranch = 'devel'
+    emRoot = setEM_ROOTSdevel
     if groupId == settings.NEW_METADATA_ID:
         xmippBranch = 'jh_metadata'
         scipionHome = settings.JH_METADATA_SCIPION_HOME
+        emRoot = setEM_ROOTJHMetadata
 
     installScipionFactorySteps.addStep(
         (ShellCommand(command=['installscipion', scipionHome, '-noAsk', '-dev', '-n',
@@ -763,7 +776,7 @@ def installSDevelScipionFactory(groupId):
                                                           descriptionDone='Scipion config',
                                                           haltOnFailure=True))
 
-    installScipionFactorySteps.addStep(setEM_ROOTSdevel)
+    installScipionFactorySteps.addStep(emRoot)
     installScipionFactorySteps.addStep(setScipionUserData)
     installScipionFactorySteps.addStep(setNotifyAtFalse)
     installScipionFactorySteps.addStep(setGeneralCuda)
