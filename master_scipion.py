@@ -211,11 +211,18 @@ setEnvActivationCMD = ShellCommand(
     descriptionDone='Set CONDA_ACTIVATION_CMD in scipion conf',
     haltOnFailure=True)
 
+# setEnvActivationCMD_DEVEL = ShellCommand(
+#     command=util.Interpolate('sed -ie "\$aCONDA_ACTIVATION_CMD = {}" %(prop:SCIPION_LOCAL_CONFIG)s'.format(settings.CONDA_ACTIVATION_CMD_DEVEL)),
+#     name='Set CONDA_ACTIVATION_CMD in scipion conf',
+#     description='Set CONDA_ACTIVATION_CMD in scipion conf',
+#     descriptionDone='Set CONDA_ACTIVATION_CMD in scipion conf',
+#     haltOnFailure=True)
+
 setEnvActivationCMD_DEVEL = ShellCommand(
-    command=util.Interpolate('sed -ie "\$aCONDA_ACTIVATION_CMD = {}" %(prop:SCIPION_LOCAL_CONFIG)s'.format(settings.CONDA_ACTIVATION_CMD_DEVEL)),
-    name='Set CONDA_ACTIVATION_CMD in scipion conf',
-    description='Set CONDA_ACTIVATION_CMD in scipion conf',
-    descriptionDone='Set CONDA_ACTIVATION_CMD in scipion conf',
+    command=changeConfVar('CONDA_ACTIVATION_CMD', settings.CONDA_ACTIVATION_CMD_DEVEL, escapeSlash=True),
+    name='Changing CONDA_ACTIVATION_CMD',
+    description='Changing CONDA_ACTIVATION_CMD',
+    descriptionDone='Changing CONDA_ACTIVATION_CMD',
     haltOnFailure=True)
 
 
@@ -826,7 +833,7 @@ def installSDevelScipionFactory(groupId):
     installScipionFactorySteps.addStep(setCUDA_BIN)
     installScipionFactorySteps.addStep(setCUDA_LIB)
     installScipionFactorySteps.addStep(setJjsoftHome)
-    #installScipionFactorySteps.addStep(setEnvActivationCMD_DEVEL)
+    installScipionFactorySteps.addStep(setEnvActivationCMD_DEVEL)
     installScipionFactorySteps.addStep(setBuildXmippTest)
 
     installScipionFactorySteps.addStep(
