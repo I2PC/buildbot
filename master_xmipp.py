@@ -51,6 +51,9 @@ def xmippBundleFactory(groupId):
     xmippTestSteps = util.BuildFactory()
     xmippTestSteps.workdir = settings.SDEVEL_XMIPP_HOME
 
+    if groupId == settings.NEW_METADATA_ID:
+        xmippTestSteps.workdir = settings.JH_METADATA_XMIPP_HOME
+
     env = {"SCIPION_HOME": util.Property("SCIPION_HOME"),
            "SCIPION_LOCAL_CONFIG": util.Property("SCIPION_LOCAL_CONFIG"),
            "LD_LIBRARY_PATH": LD_LIBRARY_PATH,

@@ -730,6 +730,8 @@ def installSDevelScipionFactory(groupId):
     xmippBranch = 'devel'
     if groupId == settings.NEW_METADATA_ID:
         xmippBranch = 'jh_metadata'
+        scipionHome = settings.JH_METADATA_SCIPION_HOME
+
     installScipionFactorySteps.addStep(
         (ShellCommand(command=['installscipion', scipionHome, '-noAsk', '-dev', '-n',
                                'develEnv', '-sciBranch', 'devel', '-conda', '-xmippBranch', xmippBranch],
@@ -1099,6 +1101,8 @@ def cleanUpFactory(groupId, rmXmipp=False):
 
     if groupId != settings.PROD_GROUP_ID:
         condaEnv = settings.CONDA_REMOVE_DEVEL_ENV
+        if groupId == settings.NEW_METADATA_ID:
+            condaEnv = settings.CONDA_REMOVE_JH_METADATA_ENV
         condaActivate = settings.CONDA_ACTIVATION_CMD_DEVEL
         if groupId == settings.SPROD_GROUP_ID:
             condaEnv = settings.CONDA_REMOVE_PROD_ENV
@@ -1157,7 +1161,7 @@ def docsFactory(groupId):
                      timeout=settings.timeOutShort
                      ))
 
-    if groupId == settings.SDEVEL_GROUP_ID or groupId == settings.NEW_METADATA_ID:
+    if groupId == settings.SDEVEL_GROUP_ID:
 
         factorySteps.addStep(
             ShellCommand(command='rm -rf ' + settings.SDEVEL_DOCS_API_PATH,
@@ -1399,7 +1403,11 @@ def getScipionBuilders(groupId):
         env['CODESPEED_REVISION'] = groupId
 
         if groupId == settings.SDEVEL_GROUP_ID or groupId == settings.NEW_METADATA_ID:
-            env['SCIPION_HOME'] = settings.SDEVEL_SCIPION_HOME
+            scipionHome = settings.SDEVEL_SCIPION_HOME
+            if groupId == settings.NEW_METADATA_ID:
+                scipionHome = settings.JH_METADATA_SCIPION_HOME
+
+            env['SCIPION_HOME'] = scipionHome
             env['EM_ROOT'] = settings.EM_ROOT
             env['LD_LIBRARY_PATH'] = settings.LD_LIBRARY_PATH
             env['PATH'] = ["/usr/local/cuda/bin", "${PATH}"]
