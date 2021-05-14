@@ -489,6 +489,10 @@ sdevelScipionConfig = ('./scipion3 config --notify --overwrite && cp ' +
 sdevelMoveScipionConfig = ('cp ' + settings.SDEVEL_SCIPION_CONFIG_PATH + ' ' +
                             settings.SDEVEL_SCIPION_HOME + '/config/scipion.conf')
 
+
+jhMetadataMoveScipionConfig = ('cp ' + settings.JH_METADATA_SCIPION_CONFIG_PATH + ' ' +
+                            settings.SDEVEL_SCIPION_HOME + '/config/scipion.conf')
+
 sprodScipionConfig = ('./scipion3 config --notify --overwrite && cp ' +
                       settings.SPROD_SCIPION_HOME +
                        '/config/scipion.conf' + ' ' +
@@ -740,10 +744,12 @@ def installSDevelScipionFactory(groupId):
     scipionHome = settings.SDEVEL_SCIPION_HOME
     xmippBranch = 'devel'
     emRoot = setEM_ROOTSdevel
+    scipionConfigCMD = sdevelMoveScipionConfig
     if groupId == settings.NEW_METADATA_ID:
         xmippBranch = 'jh_metadata'
         scipionHome = settings.JH_METADATA_SCIPION_HOME
         emRoot = setEM_ROOTJHMetadata
+        scipionConfigCMD = jhMetadataMoveScipionConfig
 
     installScipionFactorySteps.addStep(
         (ShellCommand(command=['installscipion', scipionHome, '-noAsk', '-dev', '-n',
@@ -817,7 +823,7 @@ def installSDevelScipionFactory(groupId):
     installScipionFactorySteps.addStep(setBuildXmippTest)
 
     installScipionFactorySteps.addStep(
-    ScipionCommandStep(command=sdevelMoveScipionConfig,
+    ScipionCommandStep(command=scipionConfigCMD,
                        name='Move Scipion Config file',
                        description='Move Scipion Config file',
                        descriptionDone='Move Scipion Config file',
