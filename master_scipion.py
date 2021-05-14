@@ -729,7 +729,7 @@ def installSDevelScipionFactory(groupId):
     scipionHome = settings.SDEVEL_SCIPION_HOME
     installScipionFactorySteps.addStep(
         (ShellCommand(command=['installscipion', scipionHome, '-noAsk', '-dev', '-n',
-                               'develEnv', '-sciBranch', 'devel', '-conda', '-xmippBranch', 'devel'],
+                               'develEnv', '-sciBranch', 'devel', '-conda', '-xmippBranch', 'jh_metadata'],
                       name='Install Scipion',
                       description='Install Scipion',
                       descriptionDone='Install Scipion',
