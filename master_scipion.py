@@ -826,7 +826,7 @@ def installSDevelScipionFactory(groupId):
     installScipionFactorySteps.addStep(setCUDA_BIN)
     installScipionFactorySteps.addStep(setCUDA_LIB)
     installScipionFactorySteps.addStep(setJjsoftHome)
-    installScipionFactorySteps.addStep(setEnvActivationCMD_DEVEL)
+    #installScipionFactorySteps.addStep(setEnvActivationCMD_DEVEL)
     installScipionFactorySteps.addStep(setBuildXmippTest)
 
     installScipionFactorySteps.addStep(
