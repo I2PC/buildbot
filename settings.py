@@ -191,9 +191,6 @@ except ImportError:
                                 "pwem.tests.workflows.test_parallel_gpu_queue.TestQueueALL",
                                 "tomo.tests.test_tomo_base.TestTomoAssignAlignment",
                                 "spider.tests.test_protocols_spider_align.TestSpiderAlign",
-                                "CtfEstimateFromMicrograph",
-                                "xmipp3.tests.test_protocols_metaprotocol_heterogeneity.TestMetaprotHeterogeneity",
-                                "xmipp3.tests.test_protocols_sph.TestStructureMapSPH",
                                 "cryosparc2.tests.test_protocols_cryosparc2.TestCryosparcGlobalCtfRefinement",
                                 "pwperformance.tests.test_exportsteps.TestExportSteps",
                                 'pwperformance.tests.test_profiling_load'])
