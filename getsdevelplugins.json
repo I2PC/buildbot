@@ -184,19 +184,19 @@
         "slackChannel":"dynamo",
         "no_production": true
     },
-  "scipion-em-novactf": {
-        "pipName": "scipion-em-novactf",
-        "id": 4,
-        "name": "novactf",
-        "pluginSourceUrl": "https://github.com/scipion-em/scipion-em-novactf.git@master",
-        "slackChannel":"novactf",
-        "no_production": true
-    },
 "scipion-em-imod": {
         "pipName": "scipion-em-imod",
         "id": 4,
         "name": "imod",
         "pluginSourceUrl": "https://github.com/scipion-em/scipion-em-imod.git@devel",
+        "slackChannel":"novactf",
+        "no_production": true
+    },
+  "scipion-em-novactf": {
+        "pipName": "scipion-em-novactf",
+        "id": 4,
+        "name": "novactf",
+        "pluginSourceUrl": "https://github.com/scipion-em/scipion-em-novactf.git@master",
         "slackChannel":"novactf",
         "no_production": true
     },

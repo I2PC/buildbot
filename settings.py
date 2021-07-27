@@ -173,8 +173,7 @@ except ImportError:
                           "pyworkflow.tests.em.workflows.test_workflow_modeling.TestMolprobityValidation",
                           "pyworkflow.tests.em.workflows.test_workflow_initialvolume.TestRibosome",
                           "pyworkflow.tests.em.workflows.test_workflow_initialvolume.TestBPV",
-                          "pyworkflow.tests.em.workflows.test_workflow_xmipp_rct.TestXmippRCTWorkflow",
-                          ]
+                          "pyworkflow.tests.em.workflows.test_workflow_xmipp_rct.TestXmippRCTWorkflow"]
 
     # Scipion test blacklist - these wont be executed with the rest of pyworkflow tests
     SCIPION_TESTS_BLACKLIST = (SCIPION_LONG_TESTS +
