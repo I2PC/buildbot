@@ -208,9 +208,9 @@ except ImportError:
     XMIPP_SDEVEL_PY_DOCS_PATH = "/home/buildbot/devel/xmippPythonDoc/html"
     XMIPP_SDEVEL_JAR_DOCS_PATH = "/home/buildbot/devel/xmippJavaDoc/html"
 
-    XMIPP_SDEVEL_C_DOCS_REPO = "https://github.com/I2PC/xmippDoc.git"
-    XMIPP_SDEVEL_PY_DOCS_REPO = "https://github.com/I2PC/xmippPythonDoc.git"
-    XMIPP_SDEVEL_JAR_DOCS_REPO = "https://github.com/I2PC/xmippJavaDoc.git"
+    XMIPP_SDEVEL_C_DOCS_REPO = "git@github.com:I2PC/xmippDoc.git"
+    XMIPP_SDEVEL_PY_DOCS_REPO = "git@github.com:I2PC/xmippPythonDoc.git"
+    XMIPP_SDEVEL_JAR_DOCS_REPO = "git@github.com:I2PC/xmippJavaDoc.git"
 
 
     # xmipp.conf variables
