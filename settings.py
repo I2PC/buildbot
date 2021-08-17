@@ -109,6 +109,8 @@ except ImportError:
     CRYOLO_CUDA_LIB = "/usr/local/cuda-10.2/lib64"
     RELION_CUDA_LIB = "/usr/local/cuda-10.2/lib64"
     RELION_CUDA_BIN = "/usr/local/cuda-10.2/bin"
+    RELION4_BINARY_PATH = "/home/buildbot/devel/relion-4.0"
+
     CHIMERA_HOME = "/home/buildbot/chimerax-1.1"
     EMAN2_HOME = os.path.join(EM_ROOT, 'eman-3.0.0-alpha')
     JJSOFT_HOME = "/home/buildbot/jjsoft"

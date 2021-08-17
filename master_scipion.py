@@ -478,6 +478,9 @@ sdevelScipionConfig = ('./scipion3 config --notify --overwrite && cp ' +
 sdevelMoveScipionConfig = ('cp ' + settings.SDEVEL_SCIPION_CONFIG_PATH + ' ' +
                             settings.SDEVEL_SCIPION_HOME + '/config/scipion.conf')
 
+sdevelCopyRelion4 = ('cp ' + settings.RELION4_BINARY_PATH + ' ' +
+                     settings.SDEVEL_SCIPION_HOME + '/software/em')
+
 sprodScipionConfig = ('./scipion3 config --notify --overwrite && cp ' +
                       settings.SPROD_SCIPION_HOME +
                        '/config/scipion.conf' + ' ' +
@@ -815,6 +818,12 @@ def installSDevelScipionFactory(groupId):
         descriptionDone='Installed plugin scipion-em-tomo',
         timeout=settings.timeOutInstall,
         haltOnFailure=True))
+
+    ScipionCommandStep(command=sdevelCopyRelion4,
+                       name='Move Relion 4 binaries to em folder',
+                       description='Move Relion 4 binaries to em folder',
+                       descriptionDone='Move Relion 4 binaries to em folder',
+                       haltOnFailure=True)
 
     return installScipionFactorySteps
 
