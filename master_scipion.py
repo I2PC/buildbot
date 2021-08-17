@@ -819,11 +819,11 @@ def installSDevelScipionFactory(groupId):
         timeout=settings.timeOutInstall,
         haltOnFailure=True))
 
-    ScipionCommandStep(command=sdevelCopyRelion4,
+    installScipionFactorySteps.addStep(ScipionCommandStep(command=sdevelCopyRelion4,
                        name='Move Relion 4 binaries to em folder',
                        description='Move Relion 4 binaries to em folder',
                        descriptionDone='Move Relion 4 binaries to em folder',
-                       haltOnFailure=True)
+                       haltOnFailure=True))
 
     return installScipionFactorySteps
 
