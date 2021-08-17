@@ -478,7 +478,7 @@ sdevelScipionConfig = ('./scipion3 config --notify --overwrite && cp ' +
 sdevelMoveScipionConfig = ('cp ' + settings.SDEVEL_SCIPION_CONFIG_PATH + ' ' +
                             settings.SDEVEL_SCIPION_HOME + '/config/scipion.conf')
 
-sdevelCopyRelion4 = ('cp ' + settings.RELION4_BINARY_PATH + ' ' +
+sdevelCopyRelion4 = ('cp -r ' + settings.RELION4_BINARY_PATH + ' ' +
                      settings.SDEVEL_SCIPION_HOME + '/software/em')
 
 sprodScipionConfig = ('./scipion3 config --notify --overwrite && cp ' +
