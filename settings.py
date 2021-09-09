@@ -194,7 +194,8 @@ except ImportError:
                                 "spider.tests.test_protocols_spider_align.TestSpiderAlign",
                                 "cryosparc2.tests.test_protocols_cryosparc2.TestCryosparcGlobalCtfRefinement",
                                 "pwperformance.tests.test_exportsteps.TestExportSteps",
-                                'pwperformance.tests.test_profiling_load'])
+                                'pwperformance.tests.test_profiling_load',
+                                'xmipp2.tests.test_protocols_xmipp2.TestXmipp2Mltomo'])
 
     ################### Xmipp settings ##################
     # builder prefixes
