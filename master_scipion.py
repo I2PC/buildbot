@@ -232,6 +232,14 @@ setPhenixHome = ShellCommand(
     descriptionDone='Add PHENIX_HOME in scipion conf',
     haltOnFailure=True)
 
+setRelionHome = ShellCommand(
+    command=util.Interpolate(
+        'sed -ie "\$aRELION_HOME = {}" %(prop:SCIPION_LOCAL_CONFIG)s'.format(settings.SDEVEL_RELION_HOME)),
+    name='Add RELION_HOME in scipion conf',
+    description='Add RELION_HOME in scipion conf',
+    descriptionDone='Add RELION_HOME in scipion conf',
+    haltOnFailure=True)
+
 setCryosparcDir = ShellCommand(
     command=util.Interpolate(
         'sed -ie "\$aCRYOSPARC_DIR = {}" %(prop:SCIPION_LOCAL_CONFIG)s'.format(settings.CRYOSPARC_DIR)),
@@ -774,7 +782,7 @@ def installSDevelScipionFactory(groupId):
     installScipionFactorySteps.addStep(setMotioncorrCuda)
     installScipionFactorySteps.addStep(setCryoloCuda)
     installScipionFactorySteps.addStep(setCcp4Home)
-    #installScipionFactorySteps.addStep(setNYSBC_3DFSC_HOMESdevel)
+    installScipionFactorySteps.addStep(setRelionHome)
     #installScipionFactorySteps.addStep(setCryoloModelSdevel)
     #installScipionFactorySteps.addStep(setCryoloEnvActivationSdevel)
     installScipionFactorySteps.addStep(setCryosparcDir)
@@ -818,12 +826,6 @@ def installSDevelScipionFactory(groupId):
         descriptionDone='Installed plugin scipion-em-tomo',
         timeout=settings.timeOutInstall,
         haltOnFailure=True))
-
-    installScipionFactorySteps.addStep(ScipionCommandStep(command=sdevelCopyRelion4,
-                       name='Move Relion 4 binaries to em folder',
-                       description='Move Relion 4 binaries to em folder',
-                       descriptionDone='Move Relion 4 binaries to em folder',
-                       haltOnFailure=True))
 
     return installScipionFactorySteps
 
