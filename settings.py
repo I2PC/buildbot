@@ -21,7 +21,7 @@ except ImportError:
     SCIPION_SITE_URL = 'http://scipion.i2pc.es/'
 
     # builder timeouts
-    timeOutShort = 5*60  # 5 minutes
+    timeOutShort = 20*60  # 20 minutes
     timeOutInstall = 60*60  # 1 hour
     timeOutExecute = 5*60*60  # 5 hours
     timeOutLongExecute = 20*60*60  # 20 hours
