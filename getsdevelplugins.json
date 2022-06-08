@@ -246,11 +246,11 @@
         "NO_TESTS": true,
         "no_production": true
     },
-  "scipion-em-tomoj": {
-        "pipName": "scipion-em-tomoj",
+  "scipion-em-tomoviz": {
+        "pipName": "scipion-em-tomoviz",
         "id": 4,
-        "name": "tomoj",
-        "pluginSourceUrl": "https://github.com/scipion-em/scipion-em-tomoj.git@devel",
+        "name": "tomoviz",
+        "pluginSourceUrl": "https://github.com/scipion-em/scipion-em-tomoviz.git@devel",
         "NO_TESTS": true,
         "no_production": true
     },
@@ -277,11 +277,11 @@
         "no_production": true
     },
 
-  "scipion-em-jjsoft": {
-        "pipName": "scipion-em-jjsoft",
+  "scipion-em-tomo3d": {
+        "pipName": "scipion-em-tomo3d",
         "id": 4,
-        "name": "jjsoft",
-        "pluginSourceUrl": "https://github.com/scipion-em/scipion-em-jjsoft.git@devel",
+        "name": "tomo3d",
+        "pluginSourceUrl": "https://github.com/scipion-em/scipion-em-tomo3d.git@devel",
         "no_production": true
     },
 
@@ -293,14 +293,6 @@
         "no_production": true
     },
 
-  "scipion-em-tomo3D": {
-        "pipName": "scipion-em-tomo3D",
-        "id": 4,
-        "name": "tomo3D",
-        "pluginSourceUrl": "https://github.com/scipion-em/scipion-em-tomo3D.git@devel",
-        "NO_TESTS": true,
-        "no_production": true
-    },
   "scipion-em-pwperformance": {
         "pipName": "scipion-em-pwperformance",
         "id": 4,

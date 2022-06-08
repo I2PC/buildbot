@@ -1262,13 +1262,13 @@ def docsFactory(groupId):
             command = (settings.DEVEL_ENV_ACTIVATION + '&& sphinx-apidoc -f -e -o api/' + moduleName + ' ' +
                         modulePath + ' ' + modulePath + '/tests')
 
-            factorySteps.addStep(
-                ScipionCommandStep(command=command,
-                                   name='Generating ' + moduleName + ' .rst files',
-                                   description='Generating ' + moduleName + ' .rst files',
-                                   descriptionDone='Generating ' + moduleName + ' .rst files',
-                                   timeout=settings.timeOutInstall,
-                                   haltOnFailure=False))
+            #factorySteps.addStep(
+            #    ScipionCommandStep(command=command,
+            #                       name='Generating ' + moduleName + ' .rst files',
+            #                       description='Generating ' + moduleName + ' .rst files',
+            #                       descriptionDone='Generating ' + moduleName + ' .rst files',
+            #                       timeout=settings.timeOutInstall,
+            #                       haltOnFailure=False))
 
         factorySteps.addStep(
             SetPropertyFromCommand(command='echo $PWD', property='DOCS_HOME',
@@ -1295,7 +1295,7 @@ def docsFactory(groupId):
                                           timeout=settings.timeOutInstall,
                                           haltOnFailure=False))
 
-        cmd = (settings.DEVEL_ENV_ACTIVATION + " && sphinx-versioning push -r " + docsBranch + " " +
+        cmd = (settings.DEVEL_ENV_ACTIVATION + " && sphinx-versioning push -r " + docsBranch + " -w " + docsBranch + " " +
                settings.SDEVEL_DOCS_PATH + " " + settings.DOCS_HTML_BRANCH +
                " .")
 
