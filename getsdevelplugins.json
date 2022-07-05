@@ -293,6 +293,13 @@
         "no_production": true
     },
 
+  "scipion-em-prody": {
+        "pipName": "scipion-em-prody",
+        "id": 4,
+        "name": "prody",
+        "pluginSourceUrl": "https://github.com/scipion-em/scipion-em-prody.git@devel",
+        "no_production": true
+    },
   "scipion-em-pwperformance": {
         "pipName": "scipion-em-pwperformance",
         "id": 4,

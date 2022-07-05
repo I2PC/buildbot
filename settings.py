@@ -195,7 +195,8 @@ except ImportError:
                                 "cryosparc2.tests.test_protocols_cryosparc2.TestCryosparcGlobalCtfRefinement",
                                 "pwperformance.tests.test_exportsteps.TestExportSteps",
                                 'pwperformance.tests.test_profiling_load',
-                                'xmipp2.tests.test_protocols_xmipp2.TestXmipp2Mltomo'])
+                                'xmipp2.tests.test_protocols_xmipp2.TestXmipp2Mltomo',
+                                'spider.tests.test_workflow_spiderMDA.TestSpiderWorkflow'])
 
     ################### Xmipp settings ##################
     # builder prefixes
