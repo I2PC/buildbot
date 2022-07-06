@@ -1333,32 +1333,25 @@ def docsFactory(groupId):
                                descriptionDone='Copying the builded documentation to gh_pages branch',
                                timeout=settings.timeOutInstall))
 
-        factorySteps.addStep(
-            ShellCommand(command='rm -rf ' + htmlDocPath,
-                         name='Remove the builded folder',
-                         description='Remove the builded folder',
-                         descriptionDone='Remove builded folder',
-                         timeout=settings.timeOutInstall))
-
         factorySteps.addStep(ShellCommand(command=["bash", "-c", "git add ."],
-                                          name='Git add generated doc',
-                                          description='Git add generated doc',
-                                          descriptionDone='Git add generated doc',
+                                          name='Git add builded documentation',
+                                          description='Git add builded documentation',
+                                          descriptionDone='Git add builded documentation',
                                           timeout=settings.timeOutInstall))
 
         factorySteps.addStep(ShellCommand(
             command=["bash", "-c",
                      "git commit -m \'buildbot automated-update\'"],
-            name='Git commit generated doc',
-            description='Git commit generated doc',
-            descriptionDone='Git commit generated doc',
+            name='Git commit builded doc',
+            description='Git commit builded doc',
+            descriptionDone='Git commit builded doc',
             timeout=settings.timeOutInstall,
             haltOnFailure=False))
 
         factorySteps.addStep(ShellCommand(command=["bash", "-c", "git push"],
-                                          name='Git push generated doc to repo',
-                                          description='Git push generated doc to repo',
-                                          descriptionDone='Git push generated doc to repo',
+                                          name='Git push builded doc to repo',
+                                          description='Git push builded doc to repo',
+                                          descriptionDone='Git push builded doc to repo',
                                           timeout=settings.timeOutInstall,
                                           haltOnFailure=False))
 
