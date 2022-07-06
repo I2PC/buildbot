@@ -1133,12 +1133,15 @@ def doCommit(step):
 def docsFactory(groupId):
     factorySteps = util.BuildFactory()
     factorySteps.workdir = settings.DOCS_BUILD_ID
+    htmlDocPath = settings.SDEVEL_SCIPION_HOME + "/html"
+    removeFoldersCmd = 'rm -rf %s %s' % (settings.SDEVEL_DOCS_PATH,
+                                         htmlDocPath)
     factorySteps.addStep(
-        ShellCommand(command='rm -rf ' + settings.SDEVEL_DOCS_PATH,
-                     name='Remove the docs folder',
-                     description='Remove the docs folder',
-                     descriptionDone='Remove the docs folder',
-                     timeout=settings.timeOutInstall))
+        ScipionCommandStep(command=removeFoldersCmd,
+                           name='Remove the docs folders',
+                           description='Remove the docs folders',
+                           descriptionDone='Remove the docs folders',
+                           timeout=settings.timeOutInstall))
 
     docsBranch = settings.branchsDict[groupId].get(settings.DOCS_BUILD_ID, None)
     factorySteps.addStep(Git(repourl=settings.DOCS_REPO,
@@ -1302,7 +1305,6 @@ def docsFactory(groupId):
                              descriptionDone='Creating the folder where the documentation will be compile',
                              timeout=settings.timeOutInstall))
 
-        htmlDocPath = settings.SDEVEL_SCIPION_HOME + "/html"
         cmd = "cd %s && %s && sphinx-multiversion . %s" % (settings.SDEVEL_DOCS_PATH,
                                                            settings.DEVEL_ENV_ACTIVATION,
                                                            htmlDocPath)
@@ -1313,8 +1315,8 @@ def docsFactory(groupId):
                              descriptionDone='Building the documentation',
                              timeout=settings.timeOutInstall))
 
-        changeTo_gh_pagesBranchCmd = "cd %s git checkout %s" % (settings.SDEVEL_DOCS_PATH,
-                                                           settings.DOCS_HTML_BRANCH)
+        changeTo_gh_pagesBranchCmd = "cd %s && git checkout %s" % (settings.SDEVEL_DOCS_PATH,
+                                                                   settings.DOCS_HTML_BRANCH)
 
         factorySteps.addStep(ScipionCommandStep(command=changeTo_gh_pagesBranchCmd,
                                                 name='Changing to gh_pages branch',
@@ -1322,8 +1324,8 @@ def docsFactory(groupId):
                                                 descriptionDone='Changing to gh_pages branch',
                                                 timeout=settings.timeOutInstall))
 
-
-        copyHtmlDocCmd = "cp -R %s/* %s" %(htmlDocPath, settings.SDEVEL_DOCS_PATH)
+        copyHtmlDocCmd = "cp -R %s/* %s" % (htmlDocPath,
+                                            settings.SDEVEL_DOCS_PATH)
 
         factorySteps.addStep(ScipionCommandStep(command=copyHtmlDocCmd,
                                name='Copying the builded documentation to gh_pages branch',
