@@ -1303,8 +1303,9 @@ def docsFactory(groupId):
                              timeout=settings.timeOutInstall))
 
         htmlDocPath = settings.SDEVEL_SCIPION_HOME + "/html"
-        cmd = (settings.DEVEL_ENV_ACTIVATION + " && sphinx-multiversion " +
-               settings.SDEVEL_DOCS_PATH + " " + htmlDocPath)
+        cmd = "cd %s && %s && sphinx-multiversion . %s" % (settings.SDEVEL_DOCS_PATH,
+                                                           settings.DEVEL_ENV_ACTIVATION,
+                                                           htmlDocPath)
 
         factorySteps.addStep(ScipionCommandStep(command=cmd,
                              name='Building the documentation',
@@ -1330,6 +1331,13 @@ def docsFactory(groupId):
                                descriptionDone='Copying the builded documentation to gh_pages branch',
                                timeout=settings.timeOutInstall))
 
+        factorySteps.addStep(
+            ShellCommand(command='rm -rf ' + htmlDocPath,
+                         name='Remove the builded folder',
+                         description='Remove the builded folder',
+                         descriptionDone='Remove builded folder',
+                         timeout=settings.timeOutInstall))
+
         factorySteps.addStep(ShellCommand(command=["bash", "-c", "git add ."],
                                           name='Git add generated doc',
                                           description='Git add generated doc',
@@ -1351,17 +1359,6 @@ def docsFactory(groupId):
                                           descriptionDone='Git push generated doc to repo',
                                           timeout=settings.timeOutInstall,
                                           haltOnFailure=False))
-
-        # cmd = (settings.DEVEL_ENV_ACTIVATION + " && sphinx-versioning push -r " + docsBranch + " -w " + docsBranch + " " +
-        #        settings.SDEVEL_DOCS_PATH + " " + settings.DOCS_HTML_BRANCH +
-        #        " .")
-        #
-        # factorySteps.addStep(
-        #     ShellCommand(command=["bash", "-c", cmd],
-        #                  name='Building and pushing the documentation',
-        #                  description='Building and pushing the documentation',
-        #                  descriptionDone='Building and pushing the documentation',
-        #                  timeout=settings.timeOutInstall))
 
     return factorySteps
 
