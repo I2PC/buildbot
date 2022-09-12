@@ -161,7 +161,8 @@
           "id": 51,
           "name": "sphire",
           "pluginSourceUrl": "https://github.com/scipion-em/scipion-em-sphire.git@devel",
-          "extraBinaries": ["cryolo_negstain_model"]
+          "extraBinaries": ["cryolo_negstain_model", "cryolo_model-201910",
+                            "cryolo_model-202002_N63"]
   },
   "scipion-em-topaz": {
         "pipName": "scipion-em-topaz",
@@ -209,14 +210,6 @@
         "slackChannel":"tomo",
         "no_production": true
     },
-  "scipion-em-pyseg": {
-        "pipName": "scipion-em-pyseg",
-        "id": 4,
-        "name": "pyseg",
-        "pluginSourceUrl": "https://github.com/scipion-em/scipion-em-pyseg.git@master",
-        "slackChannel":"pyseg",
-        "no_production": true
-    },
   "scipion-em-facilities": {
         "pipName": "scipion-em-facilities",
         "id": 4,
@@ -243,7 +236,6 @@
         "id": 4,
         "name": "deepfinder",
         "pluginSourceUrl": "https://github.com/scipion-em/scipion-em-deepfinder.git@devel",
-        "NO_TESTS": true,
         "no_production": true
     },
   "scipion-em-tomoviz": {
@@ -274,6 +266,14 @@
         "name": "reliontomo",
         "pluginSourceUrl": "https://github.com/scipion-em/scipion-em-reliontomo.git@devel",
         "extraBinaries": ["relion-3.0"],
+        "no_production": true
+    },
+  "scipion-em-pyseg": {
+        "pipName": "scipion-em-pyseg",
+        "id": 4,
+        "name": "pyseg",
+        "pluginSourceUrl": "https://github.com/scipion-em/scipion-em-pyseg.git@master",
+        "slackChannel":"pyseg",
         "no_production": true
     },
 
