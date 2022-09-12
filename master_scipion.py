@@ -1133,12 +1133,15 @@ def doCommit(step):
 def docsFactory(groupId):
     factorySteps = util.BuildFactory()
     factorySteps.workdir = settings.DOCS_BUILD_ID
+    htmlDocPath = settings.SDEVEL_SCIPION_HOME + "/html"
+    removeFoldersCmd = 'rm -rf %s %s' % (settings.SDEVEL_DOCS_PATH,
+                                         htmlDocPath)
     factorySteps.addStep(
-        ShellCommand(command='rm -rf ' + settings.SDEVEL_DOCS_PATH,
-                     name='Remove the docs folder',
-                     description='Remove the docs folder',
-                     descriptionDone='Remove the docs folder',
-                     timeout=settings.timeOutInstall))
+        ScipionCommandStep(command=removeFoldersCmd,
+                           name='Remove the docs folders',
+                           description='Remove the docs folders',
+                           descriptionDone='Remove the docs folders',
+                           timeout=settings.timeOutInstall))
 
     docsBranch = settings.branchsDict[groupId].get(settings.DOCS_BUILD_ID, None)
     factorySteps.addStep(Git(repourl=settings.DOCS_REPO,
@@ -1262,13 +1265,13 @@ def docsFactory(groupId):
             command = (settings.DEVEL_ENV_ACTIVATION + '&& sphinx-apidoc -f -e -o api/' + moduleName + ' ' +
                         modulePath + ' ' + modulePath + '/tests')
 
-            factorySteps.addStep(
-                ScipionCommandStep(command=command,
-                                   name='Generating ' + moduleName + ' .rst files',
-                                   description='Generating ' + moduleName + ' .rst files',
-                                   descriptionDone='Generating ' + moduleName + ' .rst files',
-                                   timeout=settings.timeOutInstall,
-                                   haltOnFailure=False))
+            #factorySteps.addStep(
+            #    ScipionCommandStep(command=command,
+            #                       name='Generating ' + moduleName + ' .rst files',
+            #                       description='Generating ' + moduleName + ' .rst files',
+            #                       descriptionDone='Generating ' + moduleName + ' .rst files',
+            #                       timeout=settings.timeOutInstall,
+            #                       haltOnFailure=False))
 
         factorySteps.addStep(
             SetPropertyFromCommand(command='echo $PWD', property='DOCS_HOME',
@@ -1295,16 +1298,62 @@ def docsFactory(groupId):
                                           timeout=settings.timeOutInstall,
                                           haltOnFailure=False))
 
-        cmd = (settings.DEVEL_ENV_ACTIVATION + " && sphinx-versioning push -r " + docsBranch + " " +
-               settings.SDEVEL_DOCS_PATH + " " + settings.DOCS_HTML_BRANCH +
-               " .")
+        cmd = "cd %s && mkdir html" %settings.SDEVEL_SCIPION_HOME
+        factorySteps.addStep(ScipionCommandStep(command=cmd,
+                             name='Creating the folder where the documentation will be compile',
+                             description='Creating the folder where the documentation will be compile',
+                             descriptionDone='Creating the folder where the documentation will be compile',
+                             timeout=settings.timeOutInstall))
 
-        factorySteps.addStep(
-            ShellCommand(command=["bash", "-c", cmd],
-                         name='Building and pushing the documentation',
-                         description='Building and pushing the documentation',
-                         descriptionDone='Building and pushing the documentation',
-                         timeout=settings.timeOutInstall))
+        cmd = "cd %s && %s && sphinx-multiversion . %s" % (settings.SDEVEL_DOCS_PATH,
+                                                           settings.DEVEL_ENV_ACTIVATION,
+                                                           htmlDocPath)
+
+        factorySteps.addStep(ScipionCommandStep(command=cmd,
+                             name='Building the documentation',
+                             description='Building the documentation',
+                             descriptionDone='Building the documentation',
+                             timeout=settings.timeOutInstall))
+
+        changeTo_gh_pagesBranchCmd = "cd %s && git checkout %s" % (settings.SDEVEL_DOCS_PATH,
+                                                                   settings.DOCS_HTML_BRANCH)
+
+        factorySteps.addStep(ScipionCommandStep(command=changeTo_gh_pagesBranchCmd,
+                                                name='Changing to gh_pages branch',
+                                                description='Changing to gh_pages branch',
+                                                descriptionDone='Changing to gh_pages branch',
+                                                timeout=settings.timeOutInstall))
+
+        copyHtmlDocCmd = "cp -R %s/* %s" % (htmlDocPath,
+                                            settings.SDEVEL_DOCS_PATH)
+
+        factorySteps.addStep(ScipionCommandStep(command=copyHtmlDocCmd,
+                               name='Copying the builded documentation to gh_pages branch',
+                               description='Copying the builded documentation to gh_pages branch',
+                               descriptionDone='Copying the builded documentation to gh_pages branch',
+                               timeout=settings.timeOutInstall))
+
+        factorySteps.addStep(ShellCommand(command=["bash", "-c", "git add ."],
+                                          name='Git add builded documentation',
+                                          description='Git add builded documentation',
+                                          descriptionDone='Git add builded documentation',
+                                          timeout=settings.timeOutInstall))
+
+        factorySteps.addStep(ShellCommand(
+            command=["bash", "-c",
+                     "git commit -m \'buildbot automated-update\'"],
+            name='Git commit builded doc',
+            description='Git commit builded doc',
+            descriptionDone='Git commit builded doc',
+            timeout=settings.timeOutInstall,
+            haltOnFailure=False))
+
+        factorySteps.addStep(ShellCommand(command=["bash", "-c", "git push"],
+                                          name='Git push builded doc to repo',
+                                          description='Git push builded doc to repo',
+                                          descriptionDone='Git push builded doc to repo',
+                                          timeout=settings.timeOutInstall,
+                                          haltOnFailure=False))
 
     return factorySteps
 
