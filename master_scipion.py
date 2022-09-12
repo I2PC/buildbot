@@ -659,7 +659,7 @@ def installProdScipionFactory(groupId):
     installScipionFactorySteps.addStep(setDataTestsDir)
     # Activating the Anaconda environment
     # Set the anaconda environment
-    installScipionFactorySteps.addStep(setMotioncorrCuda)
+    #installScipionFactorySteps.addStep(setMotioncorrCuda)
     installScipionFactorySteps.addStep(setCryoloCuda)
 
     installScipionFactorySteps.addStep(setCcp4Home)
@@ -776,7 +776,7 @@ def installSDevelScipionFactory(groupId):
     installScipionFactorySteps.addStep(setDataTestsDir)
     # Activating the Anaconda environment
     # Set the anaconda environment
-    installScipionFactorySteps.addStep(setMotioncorrCuda)
+    #installScipionFactorySteps.addStep(setMotioncorrCuda)
     installScipionFactorySteps.addStep(setCryoloCuda)
     installScipionFactorySteps.addStep(setCcp4Home)
     installScipionFactorySteps.addStep(setRelionHome)
