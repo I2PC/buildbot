@@ -113,7 +113,7 @@ except ImportError:
 
     CHIMERA_HOME = "/home/buildbot/chimerax-1.1"
     EMAN2_HOME = os.path.join(EM_ROOT, 'eman-3.0.0-alpha')
-    JJSOFT_HOME = "/home/buildbot/jjsoft"
+    TOMO3D_HOME = "/home/buildbot/jjsoft"
     BUILD_TESTS = "True"
 
     # Cryosparc variables
