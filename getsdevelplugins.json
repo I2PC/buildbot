@@ -198,7 +198,7 @@
         "pipName": "scipion-em-novactf",
         "id": 4,
         "name": "novactf",
-        "pluginSourceUrl": "https://github.com/scipion-em/scipion-em-novactf.git@master",
+        "pluginSourceUrl": "https://github.com/scipion-em/scipion-em-novactf.git@devel",
         "slackChannel":"novactf",
         "no_production": true
     },
