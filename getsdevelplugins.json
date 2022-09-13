@@ -272,7 +272,7 @@
         "pipName": "scipion-em-pyseg",
         "id": 4,
         "name": "pyseg",
-        "pluginSourceUrl": "https://github.com/scipion-em/scipion-em-pyseg.git@master",
+        "pluginSourceUrl": "https://github.com/scipion-em/scipion-em-pyseg.git@devel",
         "slackChannel":"pyseg",
         "no_production": true
     },
