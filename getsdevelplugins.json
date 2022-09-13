@@ -265,7 +265,6 @@
         "id": 4,
         "name": "reliontomo",
         "pluginSourceUrl": "https://github.com/scipion-em/scipion-em-reliontomo.git@devel",
-        "extraBinaries": ["relion-3.0"],
         "no_production": true
     },
   "scipion-em-pyseg": {
