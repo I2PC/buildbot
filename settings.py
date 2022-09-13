@@ -78,7 +78,7 @@ except ImportError:
     MOTIONCOR2_BIN_SUPPORT = 'MotionCor2_1.3.0-Cuda80'
     MOTIONCOR2_CUDA_LIB = "/usr/local/cuda-10.2/lib64"
     MOTIONCOR2_BIN = 'MotionCor2_1.3.2-Cuda102'
-    MOTIONCOR2_BIN_DEVEL = 'MotionCor2_1.4.0_Cuda102'
+    MOTIONCOR2_BIN_DEVEL = 'MotionCor2_1.5.0_Cuda102_05-31-2022'
     GCTF = 'Gctf_v1.18_sm30-75_cu10.1'
     GCTF_CUDA_LIB = '/usr/local/cuda-10.2/lib64'
     GAUTOMATCH = 'Gautomatch_v0.56_sm30-75_cu10.1'
