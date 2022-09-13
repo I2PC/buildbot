@@ -198,7 +198,7 @@
         "pipName": "scipion-em-novactf",
         "id": 4,
         "name": "novactf",
-        "pluginSourceUrl": "https://github.com/scipion-em/scipion-em-novactf.git@master",
+        "pluginSourceUrl": "https://github.com/scipion-em/scipion-em-novactf.git@devel",
         "slackChannel":"novactf",
         "no_production": true
     },
@@ -265,14 +265,13 @@
         "id": 4,
         "name": "reliontomo",
         "pluginSourceUrl": "https://github.com/scipion-em/scipion-em-reliontomo.git@devel",
-        "extraBinaries": ["relion-3.0"],
         "no_production": true
     },
   "scipion-em-pyseg": {
         "pipName": "scipion-em-pyseg",
         "id": 4,
         "name": "pyseg",
-        "pluginSourceUrl": "https://github.com/scipion-em/scipion-em-pyseg.git@master",
+        "pluginSourceUrl": "https://github.com/scipion-em/scipion-em-pyseg.git@devel",
         "slackChannel":"pyseg",
         "no_production": true
     },
