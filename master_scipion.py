@@ -276,7 +276,7 @@ setCodeSpeedEnv = ShellCommand(
 
 setJjsoftHome = ShellCommand(
     command=util.Interpolate(
-        'sed -ie "\$aJJSOFT_HOME = {}" %(prop:SCIPION_LOCAL_CONFIG)s'.format(settings.JJSOFT_HOME)),
+        'sed -ie "\$aTOMO3D_HOME = {}" %(prop:SCIPION_LOCAL_CONFIG)s'.format(settings.JJSOFT_HOME)),
     name='Add JJSOFT_HOME in scipion conf',
     description='Add JJSOFT_HOME in scipion conf',
     descriptionDone='Add JJSOFT_HOME in scipion conf',
