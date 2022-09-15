@@ -1427,12 +1427,12 @@ def getScipionBuilders(groupId):
         for plugin, pluginDict in scipionPlugins.items():
             moduleName = str(pluginDict.get("name", plugin.rsplit('-', 1)[-1]))
             tags = [groupId, moduleName]
-            hastests = not pluginDict.get("NO_TESTS", False)
+            doTests = pluginDict.get("DO_TESTS", True)
             scipionBuilders.append(
                 BuilderConfig(name="%s_%s" % (moduleName, groupId),
                               tags=tags,
                               workernames=[settings.WORKER],
-                              factory=pluginFactory(groupId, plugin, shortname=moduleName, doTest=hastests),
+                              factory=pluginFactory(groupId, plugin, shortname=moduleName, doTest=doTests),
                               workerbuilddir=groupId,
                               properties={'slackChannel': scipionPlugins[plugin].get('slackChannel', "")},
                               env=env)
@@ -1518,7 +1518,7 @@ def getScipionBuilders(groupId):
         for plugin, pluginDict in scipionSdevelPlugins.items():
             moduleName = str(pluginDict.get("name", plugin.rsplit('-', 1)[-1]))
             tags = [groupId, moduleName]
-            hastests = not pluginDict.get("NO_TESTS", False)
+            doTests = pluginDict.get("DO_TESTS", True)
             extraBinaries = pluginDict.get("extraBinaries", [])
             deleteVirtualEnv = pluginDict.get("deleteVirtualEnv", '')
             binToRemove = pluginDict.get("binToRemove", [])
@@ -1532,7 +1532,7 @@ def getScipionBuilders(groupId):
                               workernames=[settings.WORKER1 if groupId == settings.SDEVEL_GROUP_ID else settings.WORKER],
                               factory=pluginFactory(groupId, plugin,
                                                     shortname=moduleName,
-                                                    doTest=hastests,
+                                                    doTest=doTests,
                                                     extraBinaries=extraBinaries,
                                                     deleteVirtualEnv=deleteVirtualEnv,
                                                     binToRemove=binToRemove,
