@@ -1365,7 +1365,7 @@ def getLocscaleBuilder(groupId, env):
     builderFactory = util.BuildFactory()
 
     locscaleEnv = {}
-    worker = settings.WORKER1 if groupId == settings.SDEVEL_GROUP_ID else settings.WORKER
+    worker = settings.WORKER1 if groupId == settings.SDEVEL_GROUP_ID or groupId == settings.SPROD_GROUP_ID else settings.WORKER
     if groupId == settings.PROD_GROUP_ID:
         builderFactory.addStep(installEman212)
         locscaleEnv.update(settings.EMAN212)
@@ -1475,7 +1475,7 @@ def getScipionBuilders(groupId):
             scipionBuilders.append(
                 BuilderConfig(name=settings.SCIPION_INSTALL_PREFIX + groupId,
                               tags=[groupId],
-                              workernames=[settings.WORKER],
+                              workernames=[settings.WORKER1],
                               factory=installProdScipionFactory(groupId),
                               workerbuilddir=groupId,
                               properties={
@@ -1484,7 +1484,7 @@ def getScipionBuilders(groupId):
         scipionBuilders.append(
             BuilderConfig(name=settings.SCIPION_TESTS_PREFIX + groupId,
                           tags=[groupId],
-                          workernames=[settings.WORKER1 if groupId == settings.SDEVEL_GROUP_ID else settings.WORKER],
+                          workernames=[settings.WORKER1 if groupId == settings.SDEVEL_GROUP_ID or groupId == settings.SPROD_GROUP_ID else settings.WORKER],
                           factory=scipionTestFactory(groupId),
                           workerbuilddir=groupId,
                           properties={
@@ -1507,7 +1507,7 @@ def getScipionBuilders(groupId):
             scipionBuilders.append(
                 BuilderConfig(name=settings.CLEANUP_PREFIX + groupId,
                               tags=[groupId],
-                              workernames=[settings.WORKER],
+                              workernames=[settings.WORKER1],
                               factory=cleanUpFactory(groupId),
                               workerbuilddir=groupId,
                               properties={
@@ -1529,7 +1529,7 @@ def getScipionBuilders(groupId):
             scipionBuilders.append(
                 BuilderConfig(name="%s_%s" % (moduleName, groupId),
                               tags=tags,
-                              workernames=[settings.WORKER1 if groupId == settings.SDEVEL_GROUP_ID else settings.WORKER],
+                              workernames=[settings.WORKER1 if groupId == settings.SDEVEL_GROUP_ID or groupId == settings.SPROD_GROUP_ID else settings.WORKER],
                               factory=pluginFactory(groupId, plugin,
                                                     shortname=moduleName,
                                                     doTest=doTests,
