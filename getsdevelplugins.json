@@ -39,7 +39,7 @@
           "id": 31,
           "name": "cryosparc2",
           "pluginSourceUrl": "https://github.com/scipion-em/scipion-em-cryosparc2.git@devel",
-          "slackChannel": "cryosparc",
+          "slackChannel": "cryosparc"
       },
     "scipion-em-resmap": {
         "pipName": "scipion-em-resmap",
