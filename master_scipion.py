@@ -1484,7 +1484,7 @@ def getScipionBuilders(groupId):
         scipionBuilders.append(
             BuilderConfig(name=settings.SCIPION_TESTS_PREFIX + groupId,
                           tags=[groupId],
-                          workernames=[settings.WORKER1 if groupId == settings.SDEVEL_GROUP_ID or groupId == settings.SPROD_GROUP_ID else settings.WORKER],
+                          workernames=[settings.WORKER1],
                           factory=scipionTestFactory(groupId),
                           workerbuilddir=groupId,
                           properties={
@@ -1529,7 +1529,7 @@ def getScipionBuilders(groupId):
             scipionBuilders.append(
                 BuilderConfig(name="%s_%s" % (moduleName, groupId),
                               tags=tags,
-                              workernames=[settings.WORKER1 if groupId == settings.SDEVEL_GROUP_ID or groupId == settings.SPROD_GROUP_ID else settings.WORKER],
+                              workernames=[settings.WORKER1],
                               factory=pluginFactory(groupId, plugin,
                                                     shortname=moduleName,
                                                     doTest=doTests,
