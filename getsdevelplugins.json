@@ -32,15 +32,14 @@
           "id": 31,
           "name": "relion",
           "pluginSourceUrl": "https://github.com/scipion-em/scipion-em-relion.git@devel",
-          "slackChannel": "relion",
-          "bins": false
+          "slackChannel": "relion"
     },
   "scipion-em-cryosparc2": {
           "pipName": "scipion-em-cryosparc2",
           "id": 31,
           "name": "cryosparc2",
           "pluginSourceUrl": "https://github.com/scipion-em/scipion-em-cryosparc2.git@devel",
-          "slackChannel": "cryosparc"
+          "slackChannel": "cryosparc",
       },
     "scipion-em-resmap": {
         "pipName": "scipion-em-resmap",
@@ -72,7 +71,7 @@
         "name": "appion",
         "pluginSourceUrl": "https://github.com/scipion-em/scipion-em-appion.git@devel",
         "slackChannel":"appion",
-        "NO_TESTS": true
+        "DO_TESTS": false
     },
     "scipion-em-emxlib": {
         "pipName": "scipion-em-emxlib",
@@ -93,7 +92,7 @@
         "name": "atsas",
         "pluginSourceUrl": "https://github.com/scipion-em/scipion-em-atsas.git@devel",
         "slackChannel":"atsas",
-        "NO_TESTS": true
+        "DO_TESTS": false
     },
     "scipion-em-cryoef": {
           "pipName": "scipion-em-cryoef",
@@ -243,7 +242,7 @@
         "id": 4,
         "name": "tomoviz",
         "pluginSourceUrl": "https://github.com/scipion-em/scipion-em-tomoviz.git@devel",
-        "NO_TESTS": true,
+        "DO_TESTS": false,
         "no_production": true
     },
   "scipion-em-sidesplitter": {
