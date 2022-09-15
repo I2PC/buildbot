@@ -302,7 +302,7 @@ def getXmippBuilders(groupId):
             env['EM_ROOT'] = settings.SPROD_EM_ROOT
             env['LD_LIBRARY_PATH'] = PROD_LD_LIBRARY_PATH
 
-        worker = WORKER if groupId == SPROD_GROUP_ID else WORKER1
+        worker = WORKER if groupId == PROD_GROUP_ID else WORKER1
         builders.append(
             BuilderConfig(name=XMIPP_TESTS + groupId,
                           tags=[groupId],
