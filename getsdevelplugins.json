@@ -160,8 +160,12 @@
           "id": 51,
           "name": "sphire",
           "pluginSourceUrl": "https://github.com/scipion-em/scipion-em-sphire.git@devel",
-          "extraBinaries": ["cryolo_negstain_model", "cryolo_model-201910",
-                            "cryolo_model-202002_N63"]
+          "extraBinaries": ["cryolo_negstain_model",
+                            "cryolo_model-201910",
+                            "cryolo_model-202005_N63_c17",
+                            "cryolo_model-202005_nn_N63_c17",
+                            "cryolo_model-202002_N63",
+                            "janni_model"]
   },
   "scipion-em-topaz": {
         "pipName": "scipion-em-topaz",
