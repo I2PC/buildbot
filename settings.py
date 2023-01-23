@@ -121,7 +121,7 @@ except ImportError:
     CRYOSPARC_DIR = "/home/buildbot/cryosparc/"
 
     # full name of the initial admin account to be created
-    CRYOSPARC_USER = "Yunior C. Fonseca Reyna"
+    CRYOSPARC_USER = "cfonseca@cnb.csic.es"
 
     # data for the builders
     PLUGINS_JSON_FILE = "getplugins.json"
