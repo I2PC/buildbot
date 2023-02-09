@@ -294,6 +294,20 @@
         "pluginSourceUrl": "https://github.com/scipion-em/scipion-em-cryocare.git@devel",
         "no_production": true
     },
+  "scipion-em-isonet": {
+        "pipName": "scipion-em-isonet",
+        "id": 4,
+        "name": "isonet",
+        "pluginSourceUrl": "https://github.com/scipion-em/scipion-em-isonet.git@devel",
+        "no_production": true
+    },
+  "scipion-em-cryodrgn": {
+        "pipName": "scipion-em-cryodrgn",
+        "id": 4,
+        "name": "cryodrgn",
+        "pluginSourceUrl": "https://github.com/scipion-em/scipion-em-cryodrgn.git@devel",
+        "no_production": true
+    },
 
   "scipion-em-prody": {
         "pipName": "scipion-em-prody",
