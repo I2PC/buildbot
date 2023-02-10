@@ -59,7 +59,7 @@ def xmippBundleFactory(groupId):
                                        extract_fn=glob2list,
                                        env=env))
 
-    command = "cd .. && scipion3 run xmipp-bundle/xmipp test --show"
+    command = "cd .. && ./scipion3 run xmipp-bundle/xmipp test --show"
     xmippTestSteps.addStep(
         GenerateStagesCommand(command=["bash", "-c", command],
                               name="Generate test stages for Xmipp programs",
