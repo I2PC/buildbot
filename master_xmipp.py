@@ -60,7 +60,7 @@ def xmippBundleFactory(groupId):
                                        env=env))
 
     xmippTestSteps.addStep(
-        GenerateStagesCommand(command=["./xmipp", "test", "--show"],
+        GenerateStagesCommand(command=["scipion3", "run", "./xmipp test --show"],
                               name="Generate test stages for Xmipp programs",
                               description="Generating test stages for Xmipp programs",
                               descriptionDone="Generate test stages for Xmipp programs",
@@ -72,7 +72,7 @@ def xmippBundleFactory(groupId):
                               env=util.Property('env')))
 
     xmippTestSteps.addStep(
-        GenerateStagesCommand(command=["./xmipp", "test", "--show"],
+        GenerateStagesCommand(command=["scipion3", "run", "./xmipp test --show"],
                               name="Generate test stages for Xmipp functions",
                               description="Generating test stages for Xmipp functions",
                               descriptionDone="Generate test stages for Xmipp functions",
