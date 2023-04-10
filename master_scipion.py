@@ -779,7 +779,6 @@ def installSDevelScipionFactory(groupId):
     installScipionFactorySteps.addStep(setGctfBin)
     installScipionFactorySteps.addStep(setGCTFCuda)
     installScipionFactorySteps.addStep(setCryosparcUser)
-    installScipionFactorySteps.addStep(setMotincor2BinDevel)
     installScipionFactorySteps.addStep(setGautomatchBin)
     installScipionFactorySteps.addStep(setGautomatchCudaBin)
     installScipionFactorySteps.addStep(setRelionCudaBin)
