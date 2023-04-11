@@ -232,14 +232,6 @@ setPhenixHome = ShellCommand(
     descriptionDone='Add PHENIX_HOME in scipion conf',
     haltOnFailure=True)
 
-setRelionHome = ShellCommand(
-    command=util.Interpolate(
-        'sed -ie "\$aRELION_HOME = {}" %(prop:SCIPION_LOCAL_CONFIG)s'.format(settings.SDEVEL_RELION_HOME)),
-    name='Add RELION_HOME in scipion conf',
-    description='Add RELION_HOME in scipion conf',
-    descriptionDone='Add RELION_HOME in scipion conf',
-    haltOnFailure=True)
-
 setCryosparcDir = ShellCommand(
     command=util.Interpolate(
         'sed -ie "\$aCRYOSPARC_DIR = {}" %(prop:SCIPION_LOCAL_CONFIG)s'.format(settings.CRYOSPARC_DIR)),
@@ -776,12 +768,8 @@ def installSDevelScipionFactory(groupId):
     installScipionFactorySteps.addStep(setDataTestsDir)
     # Activating the Anaconda environment
     # Set the anaconda environment
-    #installScipionFactorySteps.addStep(setMotioncorrCuda)
     installScipionFactorySteps.addStep(setCryoloCuda)
     installScipionFactorySteps.addStep(setCcp4Home)
-    installScipionFactorySteps.addStep(setRelionHome)
-    #installScipionFactorySteps.addStep(setCryoloModelSdevel)
-    #installScipionFactorySteps.addStep(setCryoloEnvActivationSdevel)
     installScipionFactorySteps.addStep(setCryosparcDir)
     installScipionFactorySteps.addStep(setCryosparcProjectDir)
     installScipionFactorySteps.addStep(setCryosparcHome)
@@ -791,7 +779,6 @@ def installSDevelScipionFactory(groupId):
     installScipionFactorySteps.addStep(setGctfBin)
     installScipionFactorySteps.addStep(setGCTFCuda)
     installScipionFactorySteps.addStep(setCryosparcUser)
-    installScipionFactorySteps.addStep(setMotincor2BinDevel)
     installScipionFactorySteps.addStep(setGautomatchBin)
     installScipionFactorySteps.addStep(setGautomatchCudaBin)
     installScipionFactorySteps.addStep(setRelionCudaBin)
