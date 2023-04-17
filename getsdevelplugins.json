@@ -103,8 +103,7 @@
         "name": "atsas",
         "pluginSourceUrl": "https://github.com/scipion-em/scipion-em-atsas.git@devel",
         "slackChannel":"atsas",
-        "DO_TESTS": false,
-       "DO_TESTS": false
+        "DO_TESTS": false
     },
     "scipion-em-cryoef": {
           "pipName": "scipion-em-cryoef",
