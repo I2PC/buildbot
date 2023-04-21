@@ -250,7 +250,7 @@ setCryosparcHome = ShellCommand(
 
 setPysegHome = ShellCommand(
     command=util.Interpolate(
-        'sed -ie "\$PYSEG_HOME = {}" %(prop:SCIPION_LOCAL_CONFIG)s'.format(settings.PYSEG_HOME)),
+        'sed -ie "\$aPYSEG_HOME = {}" %(prop:SCIPION_LOCAL_CONFIG)s'.format(settings.PYSEG_HOME)),
     name='Set PYSEG_HOME in scipion conf',
     description='Set PYSEG_HOME in scipion conf',
     descriptionDone='Set PYSEG_HOME in scipion conf',
