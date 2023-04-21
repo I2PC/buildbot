@@ -248,6 +248,14 @@ setCryosparcHome = ShellCommand(
     descriptionDone='Set CRYOSPARC_HOME in scipion conf',
     haltOnFailure=True)
 
+setPysegHome = ShellCommand(
+    command=util.Interpolate(
+        'sed -ie "\$PYSEG_HOME = {}" %(prop:SCIPION_LOCAL_CONFIG)s'.format(settings.PYSEG_HOME)),
+    name='Set PYSEG_HOME in scipion conf',
+    description='Set PYSEG_HOME in scipion conf',
+    descriptionDone='Set PYSEG_HOME in scipion conf',
+    haltOnFailure=True)
+
 setCodeSpeedUrl = ShellCommand(
     command=util.Interpolate(
         'sed -ie "\$aCODESPEED_URL = {}" %(prop:SCIPION_LOCAL_CONFIG)s'.format(settings.CODESPEED_URL)),
@@ -773,6 +781,7 @@ def installSDevelScipionFactory(groupId):
     installScipionFactorySteps.addStep(setCryosparcDir)
     installScipionFactorySteps.addStep(setCryosparcProjectDir)
     installScipionFactorySteps.addStep(setCryosparcHome)
+    installScipionFactorySteps.addStep(setPysegHome)
     installScipionFactorySteps.addStep(setCodeSpeedUrl)
     installScipionFactorySteps.addStep(setCodeSpeedEnv)
     installScipionFactorySteps.addStep(profilingProjectPath)
