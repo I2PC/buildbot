@@ -115,6 +115,8 @@ except ImportError:
     TOMO3D_HOME = "/home/buildbot/jjsoft"
     BUILD_TESTS = "True"
 
+    PYSEG_HOME = "/home/buildbot/pyseg-v2.0.5"
+
     # Cryosparc variables
     # The root directory where cryoSPARC code and dependencies is installed.
     CRYOSPARC_DIR = "/home/buildbot/cryosparc/"

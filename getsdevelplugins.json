@@ -4,7 +4,8 @@
         "id": 4,
         "name": "eman2",
         "pluginSourceUrl": "https://github.com/scipion-em/scipion-em-eman2.git@devel",
-        "slackChannel":"eman"
+        "slackChannel":"eman",
+        "DO_TESTS": false
     },
    "scipion-em-cistem": {
       "pipName": "scipion-em-cistem",
@@ -95,7 +96,7 @@
         "name": "locscale",
         "pluginSourceUrl": "https://github.com/scipion-em/scipion-em-locscale.git@devel",
         "slackChannel": "locscale",
-       "DO_TESTS": false
+        "DO_TESTS": false
     },
     "scipion-em-atsas": {
         "pipName": "scipion-em-atsas",
@@ -195,7 +196,7 @@
         "name": "topaz",
         "pluginSourceUrl": "https://github.com/scipion-em/scipion-em-topaz.git@devel",
         "slackChannel" : "chimera",
-     "DO_TESTS": false
+        "DO_TESTS": false
     },
   "scipion-em-continuousflex": {
           "pipName": "scipion-em-continuousflex",
@@ -300,6 +301,7 @@
         "name": "pyseg",
         "pluginSourceUrl": "https://github.com/scipion-em/scipion-em-pyseg.git@devel",
         "slackChannel":"pyseg",
+        "bins": false,
         "no_production": true
     },
 
