@@ -362,7 +362,7 @@
         "id": 32,
         "name": "xmipp",
         "pluginSourceUrl": "https://github.com/I2PC/xmipp.git@devel",
-        "slackChannel": "xmipp",
+        "slackChannel": "xmipp"
     },
   "scipion-pyworkflow": {
         "pipName": "scipion-pyworkflow",
@@ -386,3 +386,4 @@
         "slackChannel": "xmipp"
     }
 }
+
