@@ -335,7 +335,13 @@
         "pluginSourceUrl": "https://github.com/scipion-em/scipion-em-cryodrgn.git@devel",
         "no_production": true
     },
-
+  "scipion-em-aretomo": {
+        "pipName": "scipion-em-aretomo",
+        "id": 4,
+        "name": "aretomo",
+        "pluginSourceUrl": "https://github.com/scipion-em/scipion-em-aretomo.git@devel",
+        "no_production": true
+    },
   "scipion-em-prody": {
         "pipName": "scipion-em-prody",
         "id": 4,
