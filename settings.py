@@ -88,7 +88,7 @@ except ImportError:
     CCP4_HOME = "/opt/xtal/ccp4-7.1"
     PHENIX_HOME = "/usr/local/phenix-1.20.1-4487"
     CONDA_ACTIVATION_CMD = ". /home/buildbot/miniconda3/etc/profile.d/conda.sh"
-    CONDA_ACTIVATION_CMD_DEVEL = ". /home/buildbot/anaconda3/etc/profile.d/conda.sh"
+    CONDA_ACTIVATION_CMD_DEVEL = ". /home/buildbot/miniconda3/etc/profile.d/conda.sh"
     aphinxENV_ACTIVATE = CONDA_ACTIVATION_CMD + " && . ~/.sphinxVenv/bin/activate"
     CONDA_REMOVE_DEVEL_ENV = "conda env remove -n develEnv"
     DEVEL_ENV = "develEnv"
@@ -99,13 +99,12 @@ except ImportError:
     SDEVEL_SCIPION_HOME = '/home/buildbot/devel/scipion'
     SPROD_SCIPION_HOME = '/home/buildbot/prod/scipion'
     SPROD_ENV_PATH = '/home/buildbot/prod/condaenvs/prodEnv'
-    SDEVEL_ENV_PATH = '/home/buildbot/anaconda3/envs/develEnv'
+    SDEVEL_ENV_PATH = '/home/buildbot/miniconda3/envs/develEnv'
     SDEVEL_XMIPP_HOME = '/home/buildbot/devel/scipion/xmipp-bundle'
     SPROD_XMIPP_HOME = '/home/buildbot/prod/scipion/xmipp-bundle'
     BUILDBOT_HOME = '/home/buildbot/'
     NYSBC_3DFSC_HOME = SDEVEL_SCIPION_HOME + "/software/em/fsc3D-3.0"
     CRYOLO_NS_GENERIC_MODEL = SDEVEL_SCIPION_HOME + "/software/em/cryolo_model-202002_N63/gmodel_phosnet_202002_N63.h5"
-    CRYOLO_ENV_ACTIVATION = ". /home/buildbot/miniconda3/etc/profile.d/conda.sh; conda activate cryolo-1.6.1"
     CRYOLO_CUDA_LIB = "/usr/local/cuda-10.2/lib64"
     RELION_CUDA_LIB = "/usr/local/cuda-10.2/lib64"
     RELION_CUDA_BIN = "/usr/local/cuda-10.2/bin"
@@ -223,7 +222,7 @@ except ImportError:
     NVCC = 'nvcc'
     NVCC_CXXFLAGS = "--x cu -D_FORCE_INLINES -Xcompiler -fPIC -Wno-deprecated-gpu-targets -ccbin g++-5"
     NVCC_LINKFLAGS = '-L/usr/local/cuda/lib64'
-    LD_LIBRARY_PATH = '/usr/local/cuda-10.2/lib64:/home/buildbot/devel/scipion/software/lib:/home/buildbot/anaconda3/envs/develEnv/lib'
+    LD_LIBRARY_PATH = '/usr/local/cuda-10.2/lib64:/home/buildbot/devel/scipion/software/lib:/home/buildbot/miniconda3/envs/develEnv/lib'
     CUDA_BIN = '/usr/local/cuda-10.2/bin'
     PROD_LD_LIBRARY_PATH = '/usr/local/cuda-10.2/lib64:/home/buildbot/prod/scipion/software/lib:/home/buildbot/prod/condaenvs/prodEnv/lib'
     XMIPP_BUNDLE_VARS = ["LD_LIBRARY_PATH", "PATH", "PYTHONPATH",
