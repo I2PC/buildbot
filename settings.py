@@ -101,7 +101,7 @@ except ImportError:
     SPROD_ENV_PATH = '/home/buildbot/anaconda3/envs/prodEnv'
     SDEVEL_ENV_PATH = '/home/buildbot/anaconda3/envs/develEnv'
     SDEVEL_XMIPP_HOME = '/home/buildbot/devel/scipion/xmipp-bundle'
-    SPROD_XMIPP_HOME = '/home/buildbot/prod/scipion/xmipp-bundle'
+    SPROD_XMIPP_HOME = '/home/buildbot/prod/scipion/software/em/xmipp/bin'
     BUILDBOT_HOME = '/home/buildbot/'
     NYSBC_3DFSC_HOME = SDEVEL_SCIPION_HOME + "/software/em/fsc3D-3.0"
     CRYOLO_NS_GENERIC_MODEL = SDEVEL_SCIPION_HOME + "/software/em/cryolo_model-202002_N63/gmodel_phosnet_202002_N63.h5"
