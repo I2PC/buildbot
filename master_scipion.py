@@ -28,7 +28,7 @@ with open(settings.SDEVELPLUGINS_JSON_FILE) as f:
     # read in order, since we have taken into account dependencies in
     # between plugins when completing the json file
     scipionSdevelPlugins = json.load(f, object_pairs_hook=OrderedDict)
-    xmippSdevelPluginData = scipionSdevelPlugins.pop('scipion-em-xmipp')
+    # xmippSdevelPluginData = scipionSdevelPlugins.pop('scipion-em-xmipp')
     locscaleSdevelPluginData = scipionSdevelPlugins.pop("scipion-em-locscale")
     emSdevelPackageData = scipionSdevelPlugins.pop("scipion-em")
     pyworkflowSdevelPackageData = scipionSdevelPlugins.pop("scipion-pyworkflow")
@@ -753,6 +753,7 @@ def installSDevelScipionFactory(groupId):
     #                   timeout=settings.timeOutShort
     #                   )))
 
+    xmippSdevelPluginData = scipionSdevelPlugins.pop('scipion-em-xmipp')
     installScipionFactorySteps.addStep(
         steps.JSONStringDownload(dict(scipionSdevelPlugins, **{
             "scipion-em-locscale": locscaleSdevelPluginData}),
