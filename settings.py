@@ -98,8 +98,8 @@ except ImportError:
     CONDA_REMOVE_PROD_ENV = "conda env remove -n prodEnv"
     SDEVEL_SCIPION_HOME = '/home/buildbot/devel/scipion'
     SPROD_SCIPION_HOME = '/home/buildbot/prod/scipion'
-    SPROD_ENV_PATH = '/home/buildbot/prod/condaenvs/prodEnv'
-    SDEVEL_ENV_PATH = '/home/buildbot/miniconda3/envs/develEnv'
+    SPROD_ENV_PATH = '/home/buildbot/anaconda3/envs/prodEnv'
+    SDEVEL_ENV_PATH = '/home/buildbot/anaconda3/envs/develEnv'
     SDEVEL_XMIPP_HOME = '/home/buildbot/devel/scipion/xmipp-bundle'
     SPROD_XMIPP_HOME = '/home/buildbot/prod/scipion/xmipp-bundle'
     BUILDBOT_HOME = '/home/buildbot/'
