@@ -1466,7 +1466,7 @@ def getScipionBuilders(groupId):
                               env=env))
         else:
             env['SCIPION_HOME'] = settings.SPROD_SCIPION_HOME
-            env['EM_ROOT'] = settings.SPROD_EM_ROOT
+            env['EM_ROOT'] = 'software/em'
             env['LD_LIBRARY_PATH'] = settings.PROD_LD_LIBRARY_PATH
             env['PATH'] = ["/usr/local/cuda/bin", "${PATH}"]
             scipionBuilders.append(
