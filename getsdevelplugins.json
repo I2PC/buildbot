@@ -206,14 +206,6 @@
         "slackChannel":"novactf",
         "no_production": true
     },
-  "scipion-em-tomo": {
-        "pipName": "scipion-em-tomo",
-        "id": 4,
-        "name": "tomo",
-        "pluginSourceUrl": "https://github.com/scipion-em/scipion-em-tomo.git@devel",
-        "slackChannel":"tomo",
-        "no_production": true
-    },
   "scipion-em-facilities": {
         "pipName": "scipion-em-facilities",
         "id": 4,
@@ -221,13 +213,6 @@
         "pluginSourceUrl": "https://github.com/scipion-em/scipion-em-facilities.git@devel",
         "slackChannel":"facilities",
         "DO_TESTS": false
-    },
-  "scipion-em-xmipp2": {
-        "pipName": "scipion-em-xmipp2",
-        "id": 4,
-        "name": "xmipp2",
-        "pluginSourceUrl": "https://github.com/I2PC/scipion-em-xmipp2.git@devel",
-        "no_production": true
     },
   "scipion-em-xmipptomo": {
         "pipName": "scipion-em-xmipptomo",
@@ -317,6 +302,14 @@
         "id": 4,
         "name": "aretomo",
         "pluginSourceUrl": "https://github.com/scipion-em/scipion-em-aretomo.git@devel",
+        "no_production": true
+    },
+  "scipion-em-tomo": {
+        "pipName": "scipion-em-tomo",
+        "id": 4,
+        "name": "tomo",
+        "pluginSourceUrl": "https://github.com/scipion-em/scipion-em-tomo.git@devel",
+        "slackChannel":"tomo",
         "no_production": true
     },
   "scipion-em-prody": {
