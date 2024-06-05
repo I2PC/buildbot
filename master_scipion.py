@@ -660,7 +660,7 @@ def installProdScipionFactory(groupId):
     # Activating the Anaconda environment
     # Set the anaconda environment
     #installScipionFactorySteps.addStep(setMotioncorrCuda)
-    installScipionFactorySteps.addStep(setCryoloCuda)
+    # installScipionFactorySteps.addStep(setCryoloCuda)
 
     installScipionFactorySteps.addStep(setCcp4Home)
     # installScipionFactorySteps.addStep(setNYSBC_3DFSC_HOMESdevel)
@@ -678,8 +678,8 @@ def installProdScipionFactory(groupId):
     installScipionFactorySteps.addStep(setGCTFCuda)
     installScipionFactorySteps.addStep(setGautomatchBin)
     installScipionFactorySteps.addStep(setGautomatchCudaBin)
-    installScipionFactorySteps.addStep(setRelionCudaBin)
-    installScipionFactorySteps.addStep(setRelionCudaLib)
+    # installScipionFactorySteps.addStep(setRelionCudaBin)
+    # installScipionFactorySteps.addStep(setRelionCudaLib)
     installScipionFactorySteps.addStep(setSPIDERBin)
     installScipionFactorySteps.addStep(setSPIDER_MPI)
     installScipionFactorySteps.addStep(setCUDA_BIN)
@@ -776,7 +776,7 @@ def installSDevelScipionFactory(groupId):
     installScipionFactorySteps.addStep(setDataTestsDir)
     # Activating the Anaconda environment
     # Set the anaconda environment
-    installScipionFactorySteps.addStep(setCryoloCuda)
+    # installScipionFactorySteps.addStep(setCryoloCuda)
     installScipionFactorySteps.addStep(setCcp4Home)
     installScipionFactorySteps.addStep(setCryosparcDir)
     installScipionFactorySteps.addStep(setCryosparcProjectDir)
@@ -790,8 +790,8 @@ def installSDevelScipionFactory(groupId):
     installScipionFactorySteps.addStep(setCryosparcUser)
     installScipionFactorySteps.addStep(setGautomatchBin)
     installScipionFactorySteps.addStep(setGautomatchCudaBin)
-    installScipionFactorySteps.addStep(setRelionCudaBin)
-    installScipionFactorySteps.addStep(setRelionCudaLib)
+    # installScipionFactorySteps.addStep(setRelionCudaBin)
+    # installScipionFactorySteps.addStep(setRelionCudaLib)
     installScipionFactorySteps.addStep(setChimeraHome)
     installScipionFactorySteps.addStep(setPhenixHome)
     installScipionFactorySteps.addStep(setSPIDERBin)
