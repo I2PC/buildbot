@@ -520,7 +520,7 @@ def addScipionGitAndConfigSteps(factorySteps, groupId):
                              haltOnFailure=True))
 
     factorySteps.addStep(removeScipionConf)
-    factorySteps.addStep(removeHomeConfig)
+    # factorySteps.addStep(removeHomeConfig)
     factorySteps.addStep(configScipion)
     factorySteps.addStep(setNotifyAtFalse)
     factorySteps.addStep(setGeneralCuda)
@@ -642,7 +642,7 @@ def installProdScipionFactory(groupId):
 
     # Scipion config
     installScipionFactorySteps.addStep(removeScipionProdConf)
-    installScipionFactorySteps.addStep(removeHomeConfig)
+    # installScipionFactorySteps.addStep(removeHomeConfig)
     installScipionFactorySteps.addStep(
         ShellCommand(command=sprodScipionConfig,
                            name='Scipion Config',
@@ -759,7 +759,7 @@ def installSDevelScipionFactory(groupId):
                                  workerdest="plugins.json"))
 
     installScipionFactorySteps.addStep(removeScipionDevelConf)
-    installScipionFactorySteps.addStep(removeHomeConfig)
+    # installScipionFactorySteps.addStep(removeHomeConfig)
     installScipionFactorySteps.addStep(ShellCommand(command=sdevelScipionConfig,
                                                           name='Scipion Config',
                                                           description='Create installation configuration files',
