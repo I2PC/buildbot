@@ -113,7 +113,7 @@ class GenerateStagesCommand(buildstep.ShellMixin, steps.BuildStep):
                 stageName = stage[:46] + '...' if len(stage) > 50 else stage
                 testShellCommands.append(steps.ShellCommand(
                     command=command,
-                    name=stageName[:46],
+                    name=stageName,
                     description="Testing %s" % self.rootName + stage.split('.')[-1],
                     descriptionDone=self.rootName + stage.split('.')[-1],
                     timeout=self.timeout,
