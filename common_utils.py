@@ -110,9 +110,10 @@ class GenerateStagesCommand(buildstep.ShellMixin, steps.BuildStep):
                                " && source build/xmipp.bashrc && ../scipion3 run "
                                + stage.strip()]
 
+                stageName = stage[:46] + '...' if len(stage) > 50 else stage
                 testShellCommands.append(steps.ShellCommand(
                     command=command,
-                    name=stage,
+                    name=stageName[:46],
                     description="Testing %s" % self.rootName + stage.split('.')[-1],
                     descriptionDone=self.rootName + stage.split('.')[-1],
                     timeout=self.timeout,
