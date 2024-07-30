@@ -576,7 +576,7 @@ def installScipionFactory(groupId):
     installScipionFactorySteps.addStep(setMotincor2BinSupport)
     installScipionFactorySteps.addStep(setCcp4Home)
     installScipionFactorySteps.addStep(setNYSBC_3DFSC_HOME)
-    installScipionFactorySteps.addStep(setEnvActivationCMD)
+    # installScipionFactorySteps.addStep(setEnvActivationCMD)
     # installScipionFactorySteps.addStep(setCryoloModel)
     #installScipionFactorySteps.addStep(setCryoloEnvActivation)
     return installScipionFactorySteps
@@ -676,7 +676,7 @@ def installProdScipionFactory(groupId):
     installScipionFactorySteps.addStep(setChimeraHome)
     installScipionFactorySteps.addStep(setPhenixHome)
     installScipionFactorySteps.addStep(setJjsoftHome)
-    installScipionFactorySteps.addStep(setEnvActivationCMD)
+    # installScipionFactorySteps.addStep(setEnvActivationCMD)
     installScipionFactorySteps.addStep(setBuildXmippTest)
     installCmd = (settings.SCIPION_CMD + ' installp -p scipion-em-tomo' +
                   ' -j ' + '8')
@@ -782,7 +782,7 @@ def installSDevelScipionFactory(groupId):
     installScipionFactorySteps.addStep(setCUDA_BIN)
     installScipionFactorySteps.addStep(setCUDA_LIB)
     installScipionFactorySteps.addStep(setJjsoftHome)
-    installScipionFactorySteps.addStep(setEnvActivationCMD_DEVEL)
+    # installScipionFactorySteps.addStep(setEnvActivationCMD_DEVEL)
     installScipionFactorySteps.addStep(setBuildXmippTest)
 
     # installScipionFactorySteps.addStep(
