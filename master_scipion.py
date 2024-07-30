@@ -749,7 +749,7 @@ def installSDevelScipionFactory(groupId):
                                                           descriptionDone='Scipion config',
                                                           haltOnFailure=True))
 
-    installScipionFactorySteps.addStep(setEM_ROOTSdevel)
+    # installScipionFactorySteps.addStep(setEM_ROOTSdevel)
     installScipionFactorySteps.addStep(setScipionUserData)
     installScipionFactorySteps.addStep(setNotifyAtFalse)
     installScipionFactorySteps.addStep(setGeneralCuda)
@@ -1129,11 +1129,11 @@ def docsFactory(groupId):
                              name='Scipion docs repository pull',
                              haltOnFailure=True))
 
-    factorySteps.addStep(steps.SetProperty(property='SCIPION_LOCAL_CONFIG',
-                                           value="~/.config/scipion/scipion_%s.conf" % groupId,
-                                           name="Set SCIPION_LOCAL_CONFIG",
-                                           description="Set SCIPION_LOCAL_CONFIG",
-                                           descriptionDone="SCIPION_LOCAL_CONFIG set"))
+    # factorySteps.addStep(steps.SetProperty(property='SCIPION_LOCAL_CONFIG',
+    #                                        value="~/.config/scipion/scipion_%s.conf" % groupId,
+    #                                        name="Set SCIPION_LOCAL_CONFIG",
+    #                                        description="Set SCIPION_LOCAL_CONFIG",
+    #                                        descriptionDone="SCIPION_LOCAL_CONFIG set"))
 
     factorySteps.addStep(
         ShellCommand(command=['echo', 'SCIPION_LOCAL_CONFIG',
