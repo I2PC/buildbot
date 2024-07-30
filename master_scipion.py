@@ -1130,7 +1130,7 @@ def docsFactory(groupId):
                              haltOnFailure=True))
 
     factorySteps.addStep(steps.SetProperty(property='SCIPION_LOCAL_CONFIG',
-                                           value="~/%s/scipion/scipion.conf" % groupId,
+                                           value="~/%s/scipion/config/scipion.conf" % groupId,
                                            name="Set SCIPION_LOCAL_CONFIG",
                                            description="Set SCIPION_LOCAL_CONFIG",
                                            descriptionDone="SCIPION_LOCAL_CONFIG set"))
