@@ -2,7 +2,7 @@ import os
 import re
 
 from buildbot.plugins import util, steps
-from buildbot.steps.shell import ShellCommand, SetProperty
+from buildbot.steps.shell import ShellCommand, SetPropertyFromCommand
 from buildbot.config import BuilderConfig
 from buildbot.schedulers import triggerable
 from buildbot.schedulers.forcesched import ForceScheduler
@@ -55,9 +55,10 @@ def xmippBundleFactory(groupId):
            "LD_LIBRARY_PATH": LD_LIBRARY_PATH,
            "EM_ROOT": settings.EM_ROOT}
 
-    xmippTestSteps.addStep(SetProperty(command=["bash", "-c", "source build/xmipp.bashrc; env"],
-                                       extract_fn=glob2list,
-                                       env=env))
+    xmippTestSteps.addStep(SetPropertyFromCommand(command=["bash", "-c", "source build/xmipp.bashrc; env"],
+                                                  extract_fn=glob2list,
+                                                  env=env))
+
 
     command = "cd .. && ./scipion3 run xmipp-bundle/xmipp test --show"
     xmippTestSteps.addStep(

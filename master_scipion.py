@@ -1279,9 +1279,9 @@ def docsFactory(groupId):
 
         cmd = "cd %s && mkdir html" %settings.SDEVEL_SCIPION_HOME
         factorySteps.addStep(ScipionCommandStep(command=cmd,
-                             name='Creating the folder where the documentation will be compile',
-                             description='Creating the folder where the documentation will be compile',
-                             descriptionDone='Creating the folder where the documentation will be compile',
+                             name='Creating the folder where the doc will be compile',
+                             description='Creating the folder where the doc will be compile',
+                             descriptionDone='Creating the folder where the doc will be compile',
                              timeout=settings.timeOutInstall))
 
         cmd = "cd %s && %s && sphinx-multiversion . %s" % (settings.SDEVEL_DOCS_PATH,
@@ -1307,9 +1307,9 @@ def docsFactory(groupId):
                                             settings.SDEVEL_DOCS_PATH)
 
         factorySteps.addStep(ScipionCommandStep(command=copyHtmlDocCmd,
-                               name='Copying the builded documentation to gh_pages branch',
-                               description='Copying the builded documentation to gh_pages branch',
-                               descriptionDone='Copying the builded documentation to gh_pages branch',
+                               name='Copying the builded doc to gh_pages branch',
+                               description='Copying the builded doc to gh_pages branch',
+                               descriptionDone='Copying the builded doc to gh_pages branch',
                                timeout=settings.timeOutInstall))
 
         factorySteps.addStep(ShellCommand(command=["bash", "-c", "git add ."],
