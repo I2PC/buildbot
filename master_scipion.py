@@ -463,6 +463,7 @@ removeEMtgz = ShellCommand(
 # Clean the Cryosparc projects
 removeCryosParcProjectCmd = ('rm -rf ' + settings.CRYOSPARC_DIR +
                              '/scipion_projects/* ; ')
+
 removeCryosParcProjectTest = ShellCommand(
     command=['bash', '-c', removeCryosParcProjectCmd],
     name='Clean CryosPARC projects',
@@ -478,21 +479,9 @@ installScipion = ShellCommand(command=['./scipion', 'install', '-j', '8'],
                               timeout=settings.timeOutInstall,
                               haltOnFailure=True)
 
-sdevelScipionConfig = ('./scipion3 config --notify --overwrite && cp ' +
-                      settings.SDEVEL_SCIPION_HOME +
-                       '/config/scipion.conf' + ' ' +
-                       settings.SDEVEL_SCIPION_CONFIG_PATH)
+sdevelScipionConfig = './scipion3 config'
 
-sdevelMoveScipionConfig = ('cp ' + settings.SDEVEL_SCIPION_CONFIG_PATH + ' ' +
-                            settings.SDEVEL_SCIPION_HOME + '/config/scipion.conf')
-
-sprodScipionConfig = ('./scipion3 config --notify --overwrite && cp ' +
-                      settings.SPROD_SCIPION_HOME +
-                       '/config/scipion.conf' + ' ' +
-                       settings.SPROD_SCIPION_CONFIG_PATH)
-
-sprodMoveScipionConfig = ('cp ' + settings.SPROD_SCIPION_CONFIG_PATH + ' ' +
-                            settings.SPROD_SCIPION_HOME + '/config/scipion.conf')
+sprodScipionConfig = sdevelScipionConfig
 
 
 # Update the Scipion web site
@@ -689,12 +678,6 @@ def installProdScipionFactory(groupId):
     installScipionFactorySteps.addStep(setJjsoftHome)
     installScipionFactorySteps.addStep(setEnvActivationCMD)
     installScipionFactorySteps.addStep(setBuildXmippTest)
-    installScipionFactorySteps.addStep(
-        ScipionCommandStep(command=sprodMoveScipionConfig,
-                           name='Move Scipion Config file',
-                           description='Move Scipion Config file',
-                           descriptionDone='Move Scipion Config file',
-                           haltOnFailure=True))
     installCmd = (settings.SCIPION_CMD + ' installp -p scipion-em-tomo' +
                   ' -j ' + '8')
 
@@ -802,12 +785,12 @@ def installSDevelScipionFactory(groupId):
     installScipionFactorySteps.addStep(setEnvActivationCMD_DEVEL)
     installScipionFactorySteps.addStep(setBuildXmippTest)
 
-    installScipionFactorySteps.addStep(
-    ScipionCommandStep(command=sdevelMoveScipionConfig,
-                       name='Move Scipion Config file',
-                       description='Move Scipion Config file',
-                       descriptionDone='Move Scipion Config file',
-                       haltOnFailure=True))
+    # installScipionFactorySteps.addStep(
+    # ScipionCommandStep(command=sdevelMoveScipionConfig,
+    #                    name='Move Scipion Config file',
+    #                    description='Move Scipion Config file',
+    #                    descriptionDone='Move Scipion Config file',
+    #                    haltOnFailure=True))
 
     installCmd = (settings.SCIPION_CMD + ' installp -p scipion-em-tomo' +
                   ' -j ' + '8')
