@@ -639,7 +639,7 @@ def installProdScipionFactory(groupId):
                            descriptionDone='Scipion config',
                            haltOnFailure=True))
 
-    installScipionFactorySteps.addStep(setScipionUserData)
+    # installScipionFactorySteps.addStep(setScipionUserData)
     installScipionFactorySteps.addStep(setNotifyAtFalse)
     installScipionFactorySteps.addStep(setGeneralCuda)
     installScipionFactorySteps.addStep(setMpiLibPath)
@@ -750,7 +750,7 @@ def installSDevelScipionFactory(groupId):
                                                           haltOnFailure=True))
 
     # installScipionFactorySteps.addStep(setEM_ROOTSdevel)
-    installScipionFactorySteps.addStep(setScipionUserData)
+    # installScipionFactorySteps.addStep(setScipionUserData)
     installScipionFactorySteps.addStep(setNotifyAtFalse)
     installScipionFactorySteps.addStep(setGeneralCuda)
     installScipionFactorySteps.addStep(setMpiLibPath)
