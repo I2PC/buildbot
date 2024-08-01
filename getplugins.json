@@ -138,6 +138,13 @@
         "name": "xmipp",
         "pluginSourceUrl": "https://github.com/I2PC/xmipp.git@devel",
         "slackChannel": "xmipp"
+    },
+  "scipion-pkpd": {
+        "pipName": "scipion-pkpd",
+        "id": 4,
+        "name": "pkpd",
+        "pluginSourceUrl": "https://github.com/cossorzano/scipion-pkpd.git@master",
+        "DO_TESTS": false
     }
 }
 

@@ -325,13 +325,7 @@
         "pluginSourceUrl": "https://github.com/scipion-em/scipion-em-pwperformance.git@master",
         "USE_URL_PROD": true
     },
-  "scipion-pkpd": {
-        "pipName": "scipion-pkpd",
-        "id": 4,
-        "name": "pkpd",
-        "pluginSourceUrl": "https://github.com/cossorzano/scipion-pkpd.git@master",
-        "DO_TESTS": false
-    },
+
   "scipion-em-xmipp": {
         "pipName": "scipion-em-xmipp",
         "id": 32,
