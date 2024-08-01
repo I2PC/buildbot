@@ -949,7 +949,7 @@ def pluginFactory(groupId, pluginName, factorySteps=None, shortname=None,
         if extraBinaries:
             extraBinaries = [extraBinaries] if isinstance(extraBinaries, str) else extraBinaries
             for binary in extraBinaries:
-                binaryName = binary[:25] + '...' if len(binary) > 50 else binary
+                binaryName = binary[:25] + '...' if len(binary) > 25 else binary
                 factorySteps.addStep(ShellCommand(command=[scipionCmd, 'installb', binary, '-j', '8'],
                                                   name='Install extra package %s' % binaryName,
                                                   description='Install extra package  %s' % binary,
@@ -1022,8 +1022,9 @@ def pluginFactory(groupId, pluginName, factorySteps=None, shortname=None,
 
         if extraBinaries:
             for binary in extraBinaries:
+                binaryName = binary[:25] + '...' if len(binary) > 25 else binary
                 factorySteps.addStep(ScipionCommandStep(command=('%s installb %s -j 8') %(settings.SCIPION_CMD, binary),
-                                                  name='Install extra package %s' % binary,
+                                                  name='Install extra package %s' % binaryName,
                                                   description='Install extra package  %s' % binary,
                                                   descriptionDone='Installed extra package  %s' % binary,
                                                   timeout=settings.timeOutInstall,
