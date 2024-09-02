@@ -722,7 +722,7 @@ def installSDevelScipionFactory(groupId):
 
     # Install Scipion by the installer script
     # Downloading the installer from pypi and install it
-    installerCmd = 'conda activate && pip install --force-reinstall scipion-installer'
+    installerCmd = '%s && conda activate && pip install --force-reinstall scipion-installer' % settings.CONDA_ACTIVATION_CMD_DEVEL
     installScipionFactorySteps.addStep(
         (ScipionCommandStep(command=installerCmd,
                           name='Installing scipion-installer from pypi',
@@ -740,7 +740,7 @@ def installSDevelScipionFactory(groupId):
 
     # Install Scipion core in production: Using the new installer
     scipionHome = settings.SDEVEL_SCIPION_HOME
-    installScipionCmd = 'conda activate && installscipion %s -noAsk -n develEnv -conda' % scipionHome
+    installScipionCmd = '%s && conda activate && installscipion %s -noAsk -n develEnv -conda' % (settings.CONDA_ACTIVATION_CMD_DEVEL, scipionHome)
     installScipionFactorySteps.addStep(
         (ScipionCommandStep(command=installScipionCmd,
                       name='Install Scipion',
