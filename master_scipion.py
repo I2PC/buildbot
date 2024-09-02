@@ -791,7 +791,7 @@ def installSDevelScipionFactory(groupId):
         timeout=settings.timeOutInstall,
         haltOnFailure=True))
 
-    installScipionFactorySteps.addStep(ScipionCommandStep(
+    installScipionFactorySteps.addStep(ShellCommand(
         command=compileXmippCmd,
         name='Compile Xmipp',
         description='Compile Xmipp',
@@ -1138,10 +1138,10 @@ def cleanUpFactory(groupId, rmXmipp=False):
                                           description='Removing scipion-em',
                                           descriptionDone='scipion-em removed',
                                           timeout=settings.timeOutInstall))
-        cleanUpSteps.addStep(ShellCommand(command=['rm', '-rf', 'xmipp-bundle'],
-                                          name='Removing xmipp-bundle',
-                                          description='Removing xmipp-bundle',
-                                          descriptionDone='xmipp-bundle removed',
+        cleanUpSteps.addStep(ShellCommand(command=['rm', '-rf', 'xmipp'],
+                                          name='Removing xmipp',
+                                          description='Removing xmipp',
+                                          descriptionDone='xmipp removed',
                                           timeout=settings.timeOutInstall))
 
         cleanUpSteps.addStep(ShellCommand(command=['rm', '-rf', 'doc'],

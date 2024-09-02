@@ -98,7 +98,7 @@ except ImportError:
     SPROD_SCIPION_HOME = '/home/buildbot/prod/scipion'
     SPROD_ENV_PATH = '/home/buildbot/anaconda3/envs/prodEnv'
     SDEVEL_ENV_PATH = '/home/buildbot/anaconda3/envs/develEnv'
-    SDEVEL_XMIPP_HOME = '/home/buildbot/devel/scipion/xmipp-bundle'
+    SDEVEL_XMIPP_HOME = '/home/buildbot/devel/scipion/xmipp'
     SPROD_XMIPP_HOME = '/home/buildbot/prod/scipion/software/em/xmipp'
     BUILDBOT_HOME = '/home/buildbot/'
     NYSBC_3DFSC_HOME = SDEVEL_SCIPION_HOME + "/software/em/fsc3D-3.0"
