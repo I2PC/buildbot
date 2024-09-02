@@ -731,6 +731,12 @@ def installSDevelScipionFactory(groupId):
                       haltOnFailure=False
                       )))
 
+    # Generating plugin.json file
+    installScipionFactorySteps.addStep(
+        steps.JSONStringDownload(dict(scipionSdevelPlugins, **{
+            "scipion-em-locscale": locscaleSdevelPluginData}),
+                                 workerdest="plugins.json"))
+
     # Install Scipion core in production: Using the new installer
     scipionHome = settings.SDEVEL_SCIPION_HOME
     installScipionFactorySteps.addStep(
@@ -741,11 +747,6 @@ def installSDevelScipionFactory(groupId):
                       timeout=settings.timeOutShort,
                       haltOnFailure=True
                       )))
-
-    installScipionFactorySteps.addStep(
-        steps.JSONStringDownload(dict(scipionSdevelPlugins, **{
-            "scipion-em-locscale": locscaleSdevelPluginData}),
-                                 workerdest="plugins.json"))
 
     # Clone the Scipion packages(scipion-app, scipion-em, scipion-pyworkflow) and install its
     installPyworkflowCmd = 'git clone git@github.com:scipion-em/scipion-pyworkflow.git && ./scipion3 python -m pip install -e scipion-pyworkflow'
