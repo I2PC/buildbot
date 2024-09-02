@@ -722,14 +722,15 @@ def installSDevelScipionFactory(groupId):
 
     # Install Scipion by the installer script
     # Downloading the installer from pypi and install it
+    installerCmd = 'deactivate && conda activate && pip install --force-reinstall scipion-installer'
     installScipionFactorySteps.addStep(
-        (ShellCommand(command=['pip', 'install', '--force-reinstall', 'scipion-installer'],
-                      name='Installing scipion-installer from pypi',
-                      description='Installing scipion-installer from pypi',
-                      descriptionDone='Installing scipion-installer from pypi',
-                      timeout=settings.timeOutShort,
-                      haltOnFailure=False
-                      )))
+        (ScipionCommandStep(command=installerCmd,
+                          name='Installing scipion-installer from pypi',
+                          description='Installing scipion-installer from pypi',
+                          descriptionDone='Installing scipion-installer from pypi',
+                          timeout=settings.timeOutShort,
+                          haltOnFailure=False
+                          )))
 
     # Generating plugin.json file
     installScipionFactorySteps.addStep(
@@ -739,8 +740,9 @@ def installSDevelScipionFactory(groupId):
 
     # Install Scipion core in production: Using the new installer
     scipionHome = settings.SDEVEL_SCIPION_HOME
+    installScipionCmd = 'conda activate && installscipion %s -noAsk -n develEnv -conda' % scipionHome
     installScipionFactorySteps.addStep(
-        (ShellCommand(command=['installscipion', scipionHome, '-noAsk', '-n', 'develEnv', '-conda'],
+        (ScipionCommandStep(command=installScipionCmd,
                       name='Install Scipion',
                       description='Install Scipion',
                       descriptionDone='Install Scipion',
