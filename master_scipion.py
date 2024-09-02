@@ -751,9 +751,9 @@ def installSDevelScipionFactory(groupId):
                       )))
 
     # Clone the Scipion packages(scipion-app, scipion-em, scipion-pyworkflow) and install its
-    installPyworkflowCmd = 'git clone git@github.com:scipion-em/scipion-pyworkflow.git && ./scipion3 python -m pip install -e scipion-pyworkflow'
-    installEMCmd = 'git clone git@github.com:scipion-em/scipion-em.git && ./scipion3 python -m pip install -e scipion-em'
-    installAppCmd = 'git clone git@github.com:scipion-em/scipion-app.git && ./scipion3 python -m pip install -e scipion-app'
+    installPyworkflowCmd = 'rm -rf scipion-pyworkflow && git clone git@github.com:scipion-em/scipion-pyworkflow.git && ./scipion3 python -m pip install -e scipion-pyworkflow'
+    installEMCmd = 'rm -rf scipion-em && git clone git@github.com:scipion-em/scipion-em.git && ./scipion3 python -m pip install -e scipion-em'
+    installAppCmd = 'rm -rf scipion-app && git clone git@github.com:scipion-em/scipion-app.git && ./scipion3 python -m pip install -e scipion-app'
 
     installScipionFactorySteps.addStep(ScipionCommandStep(
         command=installPyworkflowCmd,
@@ -780,8 +780,8 @@ def installSDevelScipionFactory(groupId):
         haltOnFailure=True))
 
     # Clone and Install Xmipp
-    installXmippCmd = 'git clone https://github.com/I2PC/xmipp.git && cd xmipp && ./xmipp getSources -b devel && cd .. && ./scipion3 installp -p src/scipion-em-xmipp --devel'
-    compileXmippCmd = './scipion3 run ./xmipp'
+    installXmippCmd = 'git clone https://github.com/I2PC/xmipp.git && xmipp/xmipp getSources -b devel && ./scipion3 installp -p xmipp/src/scipion-em-xmipp --devel'
+    compileXmippCmd = './scipion3 run xmipp/xmipp'
 
     installScipionFactorySteps.addStep(ScipionCommandStep(
         command=installXmippCmd,
