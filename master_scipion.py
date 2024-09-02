@@ -616,6 +616,18 @@ def installProdScipionFactory(groupId):
                       haltOnFailure=True
                       )))
 
+    # Install Xmipp
+    installXmippCmd = (settings.SCIPION_CMD + ' installp -p scipion-em-xmipp -j 8')
+
+    installScipionFactorySteps.addStep(ScipionCommandStep(
+        command=installXmippCmd,
+        name='Installing Xmipp',
+        description='Installing Xmipp',
+        descriptionDone='Xmipp Installed',
+        timeout=settings.timeOutInstall,
+        haltOnFailure=True))
+
+
     installScipionFactorySteps.addStep(
         (ShellCommand(command=['chmod', '777', '-R', settings.SPROD_ENV_PATH],
                       name='Change the permission of environment folder',
@@ -693,6 +705,9 @@ def installProdScipionFactory(groupId):
 
 
 def installSDevelScipionFactory(groupId):
+    """
+    Scipion devel Factory
+    """
     installScipionFactorySteps = util.BuildFactory()
     installScipionFactorySteps.workdir = settings.SCIPION_BUILD_ID
 
@@ -716,17 +731,65 @@ def installSDevelScipionFactory(groupId):
                       haltOnFailure=False
                       )))
 
-    # Install Scipion
+    # Install Scipion core in production: Using the new installer
     scipionHome = settings.SDEVEL_SCIPION_HOME
     installScipionFactorySteps.addStep(
-        (ShellCommand(command=['installscipion', scipionHome, '-noAsk', '-dev', '-n',
-                               'develEnv', '-sciBranch', 'devel', '-conda', '-xmippBranch', 'devel'],
+        (ShellCommand(command=['installscipion', scipionHome, '-noAsk', '-n', 'develEnv', '-conda'],
                       name='Install Scipion',
                       description='Install Scipion',
                       descriptionDone='Install Scipion',
                       timeout=settings.timeOutShort,
                       haltOnFailure=True
                       )))
+
+    # Clone the Scipion packages(scipion-app, scipion-em, scipion-pyworkflow) and install its
+    installPyworkflowCmd = 'git clone git@github.com:scipion-em/scipion-pyworkflow.git && ./scipion3 python -m pip install -e scipion-pyworkflow'
+    installEMCmd = 'git clone git@github.com:scipion-em/scipion-em.git && ./scipion3 python -m pip install -e scipion-em'
+    installAppCmd = 'git clone git@github.com:scipion-em/scipion-app.git && ./scipion3 python -m pip install -e scipion-app'
+
+    installScipionFactorySteps.addStep(ScipionCommandStep(
+        command=installPyworkflowCmd,
+        name='Installing scipion-pyworkflow',
+        description='Installing scipion-pyworkflow',
+        descriptionDone='scipion-pyworkflow installed',
+        timeout=settings.timeOutInstall,
+        haltOnFailure=True))
+
+    installScipionFactorySteps.addStep(ScipionCommandStep(
+        command=installEMCmd,
+        name='Installing scipion-em',
+        description='Installing scipion-em',
+        descriptionDone='scipion-em installed',
+        timeout=settings.timeOutInstall,
+        haltOnFailure=True))
+
+    installScipionFactorySteps.addStep(ScipionCommandStep(
+        command=installAppCmd,
+        name='Installing scipion-app',
+        description='Installing scipion-app',
+        descriptionDone='scipion-app installed',
+        timeout=settings.timeOutInstall,
+        haltOnFailure=True))
+
+    # Clone and Install Xmipp
+    installXmippCmd = 'git clone https://github.com/I2PC/xmipp.git && cd xmipp && ./xmipp getSources -b devel && ./scipion3 installp -p src/scipion-em-xmipp --devel'
+    compileXmippCmd = './scipion3 run ./xmipp'
+
+    installScipionFactorySteps.addStep(ScipionCommandStep(
+        command=installXmippCmd,
+        name='Install Xmipp',
+        description='Install Xmipp',
+        descriptionDone='Install Xmipp',
+        timeout=settings.timeOutInstall,
+        haltOnFailure=True))
+
+    installScipionFactorySteps.addStep(ScipionCommandStep(
+        command=compileXmippCmd,
+        name='Compile Xmipp',
+        description='Compile Xmipp',
+        descriptionDone='Compile Xmipp',
+        timeout=settings.timeOutInstall,
+        haltOnFailure=True))
 
     # installScipionFactorySteps.addStep(
     #     (ShellCommand(command=['chmod', '777', '-R', settings.SDEVEL_ENV_PATH],
