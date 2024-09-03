@@ -416,23 +416,21 @@ setSPIDER_MPI = ShellCommand(
     descriptionDone='Add the right SPIDER_MPI file',
     haltOnFailure=True)
 
-setCUDA_LIB = ShellCommand(
-    command=util.Interpolate(
-        'sed -ie "\$aCUDA_LIB = {}" %(prop:SCIPION_LOCAL_CONFIG)s'.format(settings.CUDA_LIB)),
-    name='Add the right CUDA_LIB file',
-    description='Add the right CUDA_LIB file',
-    descriptionDone='Add the right CUDA_LIB file',
-    haltOnFailure=True)
-
-setCUDA_BIN = ShellCommand(
-    command=util.Interpolate(
-        'sed -ie "\$aCUDA_BIN = {}" %(prop:SCIPION_LOCAL_CONFIG)s'.format(settings.CUDA_BIN)),
-    name='Add the right CUDA_BIN file',
-    description='Add the right CUDA_BIN file',
-    descriptionDone='Add the right CUDA_BIN file',
-    haltOnFailure=True)
-
-
+# setCUDA_LIB = ShellCommand(
+#     command=util.Interpolate(
+#         'sed -ie "\$aCUDA_LIB = {}" %(prop:SCIPION_LOCAL_CONFIG)s'.format(settings.CUDA_LIB)),
+#     name='Add the right CUDA_LIB file',
+#     description='Add the right CUDA_LIB file',
+#     descriptionDone='Add the right CUDA_LIB file',
+#     haltOnFailure=True)
+#
+# setCUDA_BIN = ShellCommand(
+#     command=util.Interpolate(
+#         'sed -ie "\$aCUDA_BIN = {}" %(prop:SCIPION_LOCAL_CONFIG)s'.format(settings.CUDA_BIN)),
+#     name='Add the right CUDA_BIN file',
+#     description='Add the right CUDA_BIN file',
+#     descriptionDone='Add the right CUDA_BIN file',
+#     haltOnFailure=True)
 
 installEman212 = ShellCommand(command=['./scipion', 'installb', 'eman-2.12'],
                               name='Install eman-2.12',
@@ -683,8 +681,8 @@ def installProdScipionFactory(groupId):
     # installScipionFactorySteps.addStep(setRelionCudaLib)
     installScipionFactorySteps.addStep(setSPIDERBin)
     installScipionFactorySteps.addStep(setSPIDER_MPI)
-    installScipionFactorySteps.addStep(setCUDA_BIN)
-    installScipionFactorySteps.addStep(setCUDA_LIB)
+    # installScipionFactorySteps.addStep(setCUDA_BIN)
+    # installScipionFactorySteps.addStep(setCUDA_LIB)
     installScipionFactorySteps.addStep(setChimeraHome)
     installScipionFactorySteps.addStep(setPhenixHome)
     installScipionFactorySteps.addStep(setJjsoftHome)
@@ -781,7 +779,7 @@ def installSDevelScipionFactory(groupId):
 
     # Clone and Install Xmipp
     installXmippCmd = 'rm -rf xmipp && git clone https://github.com/I2PC/xmipp.git && xmipp/xmipp getSources -b devel && ./scipion3 installp -p xmipp/src/scipion-em-xmipp --noBin --devel'
-    compileXmippCmd = './scipion3 run xmipp/xmipp'
+    compileXmippCmd = 'cd xmipp && ../scipion3 run ./xmipp'
 
     installScipionFactorySteps.addStep(ScipionCommandStep(
         command=installXmippCmd,
@@ -846,8 +844,8 @@ def installSDevelScipionFactory(groupId):
     installScipionFactorySteps.addStep(setPhenixHome)
     installScipionFactorySteps.addStep(setSPIDERBin)
     installScipionFactorySteps.addStep(setSPIDER_MPI)
-    installScipionFactorySteps.addStep(setCUDA_BIN)
-    installScipionFactorySteps.addStep(setCUDA_LIB)
+    # installScipionFactorySteps.addStep(setCUDA_BIN)
+    # installScipionFactorySteps.addStep(setCUDA_LIB)
     installScipionFactorySteps.addStep(setJjsoftHome)
     # installScipionFactorySteps.addStep(setEnvActivationCMD_DEVEL)
     installScipionFactorySteps.addStep(setBuildXmippTest)

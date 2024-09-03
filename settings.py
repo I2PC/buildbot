@@ -71,7 +71,6 @@ except ImportError:
     MPI_LIBDIR = "/usr/lib/x86_64-linux-gnu/openmpi/lib"
     MPI_INCLUDE = "/usr/lib/x86_64-linux-gnu/openmpi/include"
     MPI_BINDIR = "/usr/bin"
-    CUDA_LIB = "/usr/local/cuda-11.2/lib64"
     MOTIONCOR2_CUDA_LIB_SUPPORT = "/usr/local/cuda-8.0/lib64"
     MOTIONCOR2_BIN_SUPPORT = 'MotionCor2_1.3.0-Cuda80'
     MOTIONCOR2_CUDA_LIB = "/usr/local/cuda-10.2/lib64"
@@ -221,7 +220,8 @@ except ImportError:
     NVCC_CXXFLAGS = "--x cu -D_FORCE_INLINES -Xcompiler -fPIC -Wno-deprecated-gpu-targets -ccbin g++-5"
     NVCC_LINKFLAGS = '-L/usr/local/cuda/lib64'
     LD_LIBRARY_PATH = '/usr/local/cuda-10.2/lib64:/home/buildbot/devel/scipion/software/lib:/home/buildbot/miniconda3/envs/develEnv/lib'
-    CUDA_BIN = '/usr/local/cuda-10.2/bin'
+    CUDA_BIN = '/usr/local/cuda-11.8/bin'
+    CUDA_LIB = "/usr/local/cuda-11.8/lib64"
     PROD_LD_LIBRARY_PATH = '/usr/local/cuda-10.2/lib64:/home/buildbot/prod/scipion/software/lib:/home/buildbot/prod/condaenvs/prodEnv/lib'
     XMIPP_BUNDLE_VARS = ["LD_LIBRARY_PATH", "PATH", "PYTHONPATH",
                          "XMIPP_HOME", "XMIPP_SRC"]
