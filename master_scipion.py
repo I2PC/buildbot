@@ -780,7 +780,7 @@ def installSDevelScipionFactory(groupId):
         haltOnFailure=True))
 
     # Clone and Install Xmipp
-    installXmippCmd = 'rm -rf xmipp && git clone https://github.com/I2PC/xmipp.git && xmipp/xmipp getSources -b devel && ./scipion3 installp -p xmipp/src/scipion-em-xmipp --devel'
+    installXmippCmd = 'rm -rf xmipp && git clone https://github.com/I2PC/xmipp.git && xmipp/xmipp getSources -b devel && ./scipion3 installp -p xmipp/src/scipion-em-xmipp --noBin --devel'
     compileXmippCmd = './scipion3 run xmipp/xmipp'
 
     installScipionFactorySteps.addStep(ScipionCommandStep(
@@ -791,7 +791,7 @@ def installSDevelScipionFactory(groupId):
         timeout=settings.timeOutInstall,
         haltOnFailure=True))
 
-    installScipionFactorySteps.addStep(ShellCommand(
+    installScipionFactorySteps.addStep(ScipionCommandStep(
         command=compileXmippCmd,
         name='Compile Xmipp',
         description='Compile Xmipp',
