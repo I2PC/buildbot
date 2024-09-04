@@ -783,17 +783,26 @@ def installSDevelScipionFactory(groupId):
 
     installScipionFactorySteps.addStep(ScipionCommandStep(
         command=installXmippCmd,
-        name='Install Xmipp',
-        description='Install Xmipp',
-        descriptionDone='Install Xmipp',
+        name='Installing Xmipp',
+        description='Installing Xmipp',
+        descriptionDone='Installing Xmipp',
         timeout=settings.timeOutInstall,
         haltOnFailure=True))
 
     installScipionFactorySteps.addStep(ShellCommand(
         command=compileXmippCmd,
-        name='Compile Xmipp',
-        description='Compile Xmipp',
-        descriptionDone='Compile Xmipp',
+        name='Compiling Xmipp',
+        description='Compiling Xmipp',
+        descriptionDone='Compiling Xmipp',
+        timeout=settings.timeOutInstall,
+        haltOnFailure=True))
+
+    # TODO Remove this builder
+    installScipionFactorySteps.addStep(ShellCommand(
+        command=compileXmippCmd,
+        name='Linking bindings file',
+        description='Linking bindings file',
+        descriptionDone='Linking bindings file',
         timeout=settings.timeOutInstall,
         haltOnFailure=True))
 
