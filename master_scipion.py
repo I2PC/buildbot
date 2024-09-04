@@ -477,7 +477,7 @@ installScipion = ShellCommand(command=['./scipion', 'install', '-j', '8'],
                               timeout=settings.timeOutInstall,
                               haltOnFailure=True)
 
-sdevelScipionConfig = './scipion3 config'
+sdevelScipionConfig = './scipion3 config --update'
 
 sprodScipionConfig = sdevelScipionConfig
 
