@@ -789,7 +789,7 @@ def installSDevelScipionFactory(groupId):
         timeout=settings.timeOutInstall,
         haltOnFailure=True))
 
-    installScipionFactorySteps.addStep(ScipionCommandStep(
+    installScipionFactorySteps.addStep(ShellCommand(
         command=compileXmippCmd,
         name='Compile Xmipp',
         description='Compile Xmipp',
