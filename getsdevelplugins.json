@@ -303,6 +303,13 @@
         "pluginSourceUrl": "https://github.com/scipion-em/scipion-em-aretomo.git@devel",
         "no_production": true
     },
+  "scipion-em-warp": {
+        "pipName": "scipion-em-warp",
+        "id": 4,
+        "name": "warp",
+        "pluginSourceUrl": "https://github.com/scipion-em/scipion-em-warp.git@devel",
+        "no_production": true
+    },
   "scipion-em-tomo": {
         "pipName": "scipion-em-tomo",
         "id": 4,
