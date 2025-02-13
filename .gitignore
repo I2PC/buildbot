@@ -5,6 +5,8 @@
 *.pid
 *.tac
 master.py
+checkScipionPlugins.py
+updateScipionSite.py
 *.sample
 ###tmp file
 *KK
