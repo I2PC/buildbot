@@ -786,7 +786,7 @@ def installSDevelScipionFactory(groupId):
         description='Installing Xmipp',
         descriptionDone='Installing Xmipp',
         timeout=settings.timeOutInstall,
-        haltOnFailure=True))
+        haltOnFailure=False))
 
     # installScipionFactorySteps.addStep(
     #     (ShellCommand(command=['chmod', '777', '-R', settings.SDEVEL_ENV_PATH],
@@ -1251,10 +1251,11 @@ def docsFactory(groupId):
 
         factorySteps.addStep(
             ScipionCommandStep(command=command,
-                         name='Generating scipion-pyworkflow .rst files',
-                         description='Generating scipion-pyworkflow .rst files',
-                         descriptionDone='Generating scipion-pyworkflow .rst files',
-                         timeout=settings.timeOutInstall))
+                               name='Generating scipion-pyworkflow .rst files',
+                               description='Generating scipion-pyworkflow .rst files',
+                               descriptionDone='Generating scipion-pyworkflow .rst files',
+                               haltOnFailure=False,
+                               timeout=settings.timeOutInstall))
 
         command = (settings.DEVEL_ENV_ACTIVATION + '&& sphinx-apidoc -f -e -o api/pwem ' +
                    settings.SDEVEL_SCIPION_HOME + "/scipion-em" +
@@ -1262,10 +1263,11 @@ def docsFactory(groupId):
 
         factorySteps.addStep(
             ScipionCommandStep(command=command,
-                         name='Generating scipion-em .rst files',
-                         description='Generating scipion-em .rst files',
-                         descriptionDone='Generating scipion-em .rst files',
-                         timeout=settings.timeOutInstall))
+                               name='Generating scipion-em .rst files',
+                               description='Generating scipion-em .rst files',
+                               descriptionDone='Generating scipion-em .rst files',
+                               haltOnFailure=False,
+                               timeout=settings.timeOutInstall))
 
         command = (settings.DEVEL_ENV_ACTIVATION + '&& sphinx-apidoc -f -e -o api/xmipp3 ' +
                    settings.SDEVEL_XMIPP_HOME + "/src/scipion-em-xmipp" +
@@ -1276,6 +1278,7 @@ def docsFactory(groupId):
                                name='Generating scipion-em-xmipp .rst files',
                                description='Generating scipion-em-xmipp .rst files',
                                descriptionDone='Generating scipion-em-xmipp .rst files',
+                               haltOnFailure=False,
                                timeout=settings.timeOutInstall))
 
         command = (
@@ -1288,6 +1291,7 @@ def docsFactory(groupId):
                                name='Generating scipion-app .rst files',
                                description='Generating scipion-app .rst files',
                                descriptionDone='Generating scipion-app .rst files',
+                               haltOnFailure=False,
                                timeout=settings.timeOutInstall))
 
         # Generate the plugins documentation
