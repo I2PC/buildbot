@@ -780,13 +780,13 @@ def installSDevelScipionFactory(groupId):
     # Clone and Install Xmipp
     installXmippCmd = 'rm -rf xmipp3 && rm -rf scipion-em-xmipp && git clone https://github.com/I2PC/xmipp3.git && ./scipion3 run pip install xmipp3-installer && ./scipion3 run xmipp3/xmipp  &&  cd xmipp3/src && git clone https://github.com/I2PC/scipion-em-xmipp.git && ../../scipion3 installp -p scipion-em-xmipp --devel'
 
-    installScipionFactorySteps.addStep(ScipionCommandStep(
-        command=installXmippCmd,
-        name='Installing Xmipp',
-        description='Installing Xmipp',
-        descriptionDone='Installing Xmipp',
-        timeout=settings.timeOutInstall,
-        haltOnFailure=False))
+    # installScipionFactorySteps.addStep(ScipionCommandStep(
+    #     command=installXmippCmd,
+    #     name='Installing Xmipp',
+    #     description='Installing Xmipp',
+    #     descriptionDone='Installing Xmipp',
+    #     timeout=settings.timeOutInstall,
+    #     haltOnFailure=False))
 
     # installScipionFactorySteps.addStep(
     #     (ShellCommand(command=['chmod', '777', '-R', settings.SDEVEL_ENV_PATH],
