@@ -60,7 +60,7 @@ def xmippBundleFactory(groupId):
                                                   env=env))
 
 
-    command = "cd .. && ./scipion3 run xmipp3/xmipp test --show"
+    command = "cd .. && ./scipion3 run xmipp-bundle/xmipp test --show"
     xmippTestSteps.addStep(
         GenerateStagesCommand(command=["bash", "-c", command],
                               name="Generate test stages for Xmipp programs",
@@ -100,7 +100,7 @@ def xmippTestFactory(groupId):
                      descriptionDone='Echo scipion home',
                      timeout=timeOutShort))
     # add TestRelionExtractStreaming manually because it needs eman 2.12
-    gpucorrclassifiers = ["xmipp3.tests.test_protocols_gpuCorr_classifier.TestGpuCorrClassifier",
+    gpucorrclassifiers = [".tests.test_protocols_gpuCorr_classifier.TestGpuCorrClassifier",
                           "xmipp3.tests.test_protocols_gpuCorr_semiStreaming.TestGpuCorrSemiStreaming",
                           "xmipp3.tests.test_protocols_gpuCorr_fullStreaming.TestGpuCorrFullStreaming"]
 
