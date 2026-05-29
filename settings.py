@@ -105,11 +105,11 @@ except ImportError:
     CRYOLO_CUDA_LIB = "/usr/local/cuda-10.2/lib64"
     RELION_CUDA_LIB = "/usr/local/cuda-10.2/lib64"
     RELION_CUDA_BIN = "/usr/local/cuda-10.2/bin"
-    RELION_MPI_BIN = /usr/bin
-    RELION_MPI_LIB = /usr/lib/x86_64-linux-gnu
-    PIP_DEFAULT_TIMEOUT=120
-    PIP_RETRIES=10
-    PIP_NO_CACHE_DIR=1
+    RELION_MPI_BIN = "/usr/bin"
+    RELION_MPI_LIB = "/usr/lib/x86_64-linux-gnu"
+    PIP_DEFAULT_TIMEOUT="120"
+    PIP_RETRIES="10"
+    PIP_NO_CACHE_DIR="1"
 
     CHIMERA_HOME = "/home/buildbot/chimerax-1.1"
     EMAN2_HOME = os.path.join(EM_ROOT, 'eman-3.0.0-alpha')
