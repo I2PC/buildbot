@@ -316,6 +316,51 @@ setCryosparcUser = ShellCommand(
     descriptionDone='Set CRYOSPARC_USER in scipion conf',
     haltOnFailure=True)
 
+setRelionMpiBin = ShellCommand(
+    command=util.Interpolate(
+        'sed -ie "\$aRELION_MPI_BIN = /usr/bin" %(prop:SCIPION_LOCAL_CONFIG)s'),
+    name='Set RELION_MPI_BIN in scipion conf',
+    description='Set RELION_MPI_BIN in scipion conf',
+    descriptionDone='Set RELION_MPI_BIN in scipion conf',
+    haltOnFailure=True
+)
+
+setRelionMpiLib = ShellCommand(
+    command=util.Interpolate(
+        'sed -ie "\$aRELION_MPI_LIB = /usr/lib/x86_64-linux-gnu" %(prop:SCIPION_LOCAL_CONFIG)s'),
+    name='Set RELION_MPI_LIB in scipion conf',
+    description='Set RELION_MPI_LIB in scipion conf',
+    descriptionDone='Set RELION_MPI_LIB in scipion conf',
+    haltOnFailure=True
+)
+
+setPipTimeout = ShellCommand(
+    command=util.Interpolate(
+        'sed -ie "\$aPIP_DEFAULT_TIMEOUT = 120" %(prop:SCIPION_LOCAL_CONFIG)s'),
+    name='Set PIP_DEFAULT_TIMEOUT in scipion conf',
+    description='Set PIP_DEFAULT_TIMEOUT in scipion conf',
+    descriptionDone='Set PIP_DEFAULT_TIMEOUT in scipion conf',
+    haltOnFailure=True
+)
+
+setPipRetries = ShellCommand(
+    command=util.Interpolate(
+        'sed -ie "\$aPIP_RETRIES = 10" %(prop:SCIPION_LOCAL_CONFIG)s'),
+    name='Set PIP_RETRIES in scipion conf',
+    description='Set PIP_RETRIES in scipion conf',
+    descriptionDone='Set PIP_RETRIES in scipion conf',
+    haltOnFailure=True
+)
+
+setPipNoCache = ShellCommand(
+    command=util.Interpolate(
+        'sed -ie "\$aPIP_NO_CACHE_DIR = 1" %(prop:SCIPION_LOCAL_CONFIG)s'),
+    name='Set PIP_NO_CACHE_DIR in scipion conf',
+    description='Set PIP_NO_CACHE_DIR in scipion conf',
+    descriptionDone='Set PIP_NO_CACHE_DIR in scipion conf',
+    haltOnFailure=True
+)
+
 setScipionScratchDir = ShellCommand(
     command=util.Interpolate(
         'sed -ie "\$aSCIPION_SCRATCH = {}" %(prop:SCIPION_LOCAL_CONFIG)s'.format(settings.SCIPION_SCRATCH)),
@@ -648,6 +693,7 @@ def installProdScipionFactory(groupId):
                            description='Create installation configuration files',
                            descriptionDone='Scipion config',
                            haltOnFailure=True))
+    
 
     # installScipionFactorySteps.addStep(setScipionUserData)
     # installScipionFactorySteps.addStep(setNotifyAtFalse)
