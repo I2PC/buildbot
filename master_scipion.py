@@ -896,6 +896,11 @@ def installSDevelScipionFactory(groupId):
     installScipionFactorySteps.addStep(setJjsoftHome)
     # installScipionFactorySteps.addStep(setEnvActivationCMD_DEVEL)
     installScipionFactorySteps.addStep(setBuildXmippTest)
+    installScipionFactorySteps.addStep(setRelionMpiBin)
+    installScipionFactorySteps.addStep(setRelionMpiLib)
+    installScipionFactorySteps.addStep(setPipTimeout)
+    installScipionFactorySteps.addStep(setPipRetries)
+    installScipionFactorySteps.addStep(setPipNoCache)  
 
     # installScipionFactorySteps.addStep(
     # ScipionCommandStep(command=sdevelMoveScipionConfig,
