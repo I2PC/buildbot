@@ -808,7 +808,7 @@ def installSDevelScipionFactory(groupId):
     installPyworkflowCmd = 'rm -rf scipion-pyworkflow && git clone git@github.com:scipion-em/scipion-pyworkflow.git && ./scipion3 python -m pip install -e scipion-pyworkflow'
     installEMCmd = 'rm -rf scipion-em && git clone git@github.com:scipion-em/scipion-em.git && ./scipion3 python -m pip install -e scipion-em'
     installAppCmd = 'rm -rf scipion-app && git clone git@github.com:scipion-em/scipion-app.git && ./scipion3 python -m pip install -e scipion-app'
-
+    installPyTestForRelion = './scipion3 run conda install pytest -y'
     installScipionFactorySteps.addStep(ScipionCommandStep(
         command=installPyworkflowCmd,
         name='Installing scipion-pyworkflow',
@@ -833,6 +833,15 @@ def installSDevelScipionFactory(groupId):
         timeout=settings.timeOutInstall,
         haltOnFailure=True))
 
+    installScipionFactorySteps.addStep(ScipionCommandStep(
+        command=installPyTestForRelion,
+        name='Installing pyTest for Relion requirement',
+        description='Installing pyTest for Relion requirement',
+        descriptionDone='pyTest installed',
+        timeout=settings.timeOutInstall,
+        haltOnFailure=True))
+    
+    
     # Clone and Install Xmipp
     installXmippCmd = 'rm -rf xmipp-bundle && rm -rf scipion-em-xmipp && git clone https://github.com/I2PC/xmipp3.git xmipp-bundle && ./scipion3 run pip install xmipp3-installer && cd xmipp-bundle && git checkout pyxmipp && cd .. && ./scipion3 run xmipp-bundle/xmipp  &&  cd xmipp-bundle/src && git clone https://github.com/I2PC/scipion-em-xmipp.git && cd scipion-em-xmipp && git checkout pyxmipp && ../../../scipion3 installp -p . --devel'
 
