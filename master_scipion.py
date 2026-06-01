@@ -466,6 +466,15 @@ setSPIDER_MPI = ShellCommand(
     descriptionDone='Add the right SPIDER_MPI file',
     haltOnFailure=True)
 
+setXMIPPCUDA_BIN = ShellCommand(
+    command=util.Interpolate(
+        'sed -ie "\$aSPIDER_MPI = {}" %(prop:SCIPION_LOCAL_CONFIG)s'.format(settings.XMIPP_CUDA_BIN)),
+    name='Add the right CUDA bin path',
+    description='Add the right CUDA bin path',
+    descriptionDone='Add the right CUDA bin path',
+    haltOnFailure=True)
+
+
 # setCUDA_LIB = ShellCommand(
 #     command=util.Interpolate(
 #         'sed -ie "\$aCUDA_LIB = {}" %(prop:SCIPION_LOCAL_CONFIG)s'.format(settings.CUDA_LIB)),
@@ -744,6 +753,8 @@ def installProdScipionFactory(groupId):
     installScipionFactorySteps.addStep(setJjsoftHome)
     # installScipionFactorySteps.addStep(setEnvActivationCMD)
     installScipionFactorySteps.addStep(setBuildXmippTest)
+    installScipionFactorySteps.addStep(setXMIPPCUDA_BIN)
+
     installCmd = (settings.SCIPION_CMD + ' installp -p scipion-em-tomo' +
                   ' -j ' + '8')
 
@@ -910,6 +921,8 @@ def installSDevelScipionFactory(groupId):
     installScipionFactorySteps.addStep(setPipTimeout)
     installScipionFactorySteps.addStep(setPipRetries)
     installScipionFactorySteps.addStep(setPipNoCache)  
+    installScipionFactorySteps.addStep(setXMIPPCUDA_BIN)
+
 
     # installScipionFactorySteps.addStep(
     # ScipionCommandStep(command=sdevelMoveScipionConfig,
