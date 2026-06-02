@@ -867,7 +867,7 @@ def installSDevelScipionFactory(groupId):
     # installScipionFactorySteps.addStep(setEM_ROOTSdevel)
     # installScipionFactorySteps.addStep(setScipionUserData)
     # installScipionFactorySteps.addStep(setNotifyAtFalse)
-    installScipionFactorySteps.addStep(setGeneralCuda)
+    # installScipionFactorySteps.addStep(setGeneralCuda)
     installScipionFactorySteps.addStep(setMpiLibPath)
     installScipionFactorySteps.addStep(setMpiBinPath)
     installScipionFactorySteps.addStep(setMpiIncludePath)
