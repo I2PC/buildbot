@@ -819,7 +819,6 @@ def installSDevelScipionFactory(groupId):
     installPyworkflowCmd = 'rm -rf scipion-pyworkflow && git clone git@github.com:scipion-em/scipion-pyworkflow.git && ./scipion3 python -m pip install -e scipion-pyworkflow'
     installEMCmd = 'rm -rf scipion-em && git clone git@github.com:scipion-em/scipion-em.git && ./scipion3 python -m pip install -e scipion-em'
     installAppCmd = 'rm -rf scipion-app && git clone git@github.com:scipion-em/scipion-app.git && ./scipion3 python -m pip install -e scipion-app'
-    installPyTestForRelion = './scipion3 run conda install pytest -y'
     installScipionFactorySteps.addStep(ScipionCommandStep(
         command=installPyworkflowCmd,
         name='Installing scipion-pyworkflow',
@@ -841,14 +840,6 @@ def installSDevelScipionFactory(groupId):
         name='Installing scipion-app',
         description='Installing scipion-app',
         descriptionDone='scipion-app installed',
-        timeout=settings.timeOutInstall,
-        haltOnFailure=True))
-
-    installScipionFactorySteps.addStep(ScipionCommandStep(
-        command=installPyTestForRelion,
-        name='Installing pyTest for Relion requirement',
-        description='Installing pyTest for Relion requirement',
-        descriptionDone='pyTest installed',
         timeout=settings.timeOutInstall,
         haltOnFailure=True))
     
@@ -949,6 +940,17 @@ def installSDevelScipionFactory(groupId):
         name='Install pyxmipp3',
         description='Install pyxmipp3',
         descriptionDone='Installed pyxmipp3',
+        timeout=settings.timeOutInstall,
+        haltOnFailure=True))
+
+    
+    installCmd = (settings.SCIPION_CMD + ' pip install pytest')
+
+    installScipionFactorySteps.addStep(ScipionCommandStep(
+        command=installCmd,
+        name='Install pytest',
+        description='Install pytest',
+        descriptionDone='Installed pytest',
         timeout=settings.timeOutInstall,
         haltOnFailure=True))
 
