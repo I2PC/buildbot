@@ -220,13 +220,6 @@ except ImportError:
 
 
     # xmipp.conf variables
-    CUDA = 'True'
-    NVCC = 'nvcc'
-    NVCC_CXXFLAGS = "--x cu -D_FORCE_INLINES -Xcompiler -fPIC -Wno-deprecated-gpu-targets -ccbin g++-5"
-    NVCC_LINKFLAGS = '-L/usr/local/cuda/lib64'
-    LD_LIBRARY_PATH = '/usr/local/cuda-10.2/lib64:/home/buildbot/devel/scipion/software/lib:/home/buildbot/anaconda3/envs/develEnv/lib'
-    CUDA_BIN = '/usr/local/cuda-11.8/bin'
-    CUDA_LIB = "/usr/local/cuda-11.8/lib64"
-    PROD_LD_LIBRARY_PATH = '/usr/local/cuda-10.2/lib64:/home/buildbot/prod/scipion/software/lib:/home/buildbot/prod/condaenvs/prodEnv/lib'
-    XMIPP_BUNDLE_VARS = ["LD_LIBRARY_PATH", "PATH", "PYTHONPATH",
-                         "XMIPP_HOME", "XMIPP_SRC"]
+    LD_LIBRARY_PATH = '/home/buildbot/devel/scipion/software/lib:/home/buildbot/anaconda3/envs/develEnv/lib'
+    PROD_LD_LIBRARY_PATH = '/home/buildbot/prod/scipion/software/lib:/home/buildbot/prod/condaenvs/prodEnv/lib'
+    XMIPP_BUNDLE_VARS = ["LD_LIBRARY_PATH", "PATH", "PYTHONPATH", "XMIPP_HOME", "XMIPP_SRC"]
