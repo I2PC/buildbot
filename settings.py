@@ -110,7 +110,7 @@ except ImportError:
     PIP_DEFAULT_TIMEOUT="120"
     PIP_RETRIES="10"
     PIP_NO_CACHE_DIR="1"
-    XMIPP_CUDA_BIN='/usr/local/cuda/bin/'
+    XMIPP_CUDA_BIN='/usr/local/cuda-11.8/bin/'
     CHIMERA_HOME = "/home/buildbot/chimerax-1.1"
     EMAN2_HOME = os.path.join(EM_ROOT, 'eman-3.0.0-alpha')
     TOMO3D_HOME = "/home/buildbot/jjsoft"
