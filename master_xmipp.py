@@ -257,12 +257,8 @@ def getXmippBuilders(groupId):
         "SCIPION_HOME": util.Property('SCIPION_HOME'),
         "PROT_LOGS_LAST_LINES": settings.PROT_LOGS_LAST_LINES
     }
-    cudaEnv = {'PATH': [settings.CUDA_BIN, "${PATH}"]}
-    cudaEnv.update(env)
     installEnv = {'SCIPION_HOME': util.Property('SCIPION_HOME')}
-    installEnv.update(cudaEnv)
     bundleEnv = {}
-    bundleEnv.update(cudaEnv)
     bundleEnv.update(installEnv)
 
     if groupId == PROD_GROUP_ID:
