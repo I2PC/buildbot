@@ -84,14 +84,6 @@ setNotifyAtFalse = ShellCommand(
     descriptionDone='Disable notification',
     haltOnFailure=True)
 
-setGeneralCuda = ShellCommand(
-    command=util.Interpolate(
-        'sed -ie "\$aCUDA = {}" %(prop:SCIPION_LOCAL_CONFIG)s'.format(settings.CUDA)),
-    name='Set CUDA in scipion conf',
-    description='Set CUDA in scipion conf',
-    descriptionDone='Set CUDA in scipion conf',
-    haltOnFailure=True)
-
 setMpiLibPath = ShellCommand(
     # command=changeConfVar.withArgs('MPI_LIBDIR', mpilibdir),
     command=changeConfVar("MPI_LIBDIR", settings.MPI_LIBDIR, escapeSlash=True),
