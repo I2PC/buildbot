@@ -460,7 +460,7 @@ setSPIDER_MPI = ShellCommand(
 
 setXMIPPCUDA_BIN = ShellCommand(
     command=util.Interpolate(
-        'sed -ie "\$aXMIPP_CUDA_BIN = {}" %(prop:SCIPION_LOCAL_CONFIG)s'.format(settings.XMIPP_CUDA_BIN)),
+        'sed -ie "\$aCUDA_BIN = {}" %(prop:SCIPION_LOCAL_CONFIG)s'.format(settings.XMIPP_CUDA_BIN)),
     name='Add the right CUDA bin path',
     description='Add the right CUDA bin path',
     descriptionDone='Add the right CUDA bin path',
