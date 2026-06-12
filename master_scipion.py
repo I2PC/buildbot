@@ -837,8 +837,8 @@ def installSDevelScipionFactory(groupId):
     
     
     # Clone and Install Xmipp
-    installXmippCmd = 'rm -rf xmipp-bundle && rm -rf scipion-em-xmipp && git clone https://github.com/I2PC/xmipp3.git xmipp-bundle && ./scipion3 run pip install xmipp3-installer && cd xmipp-bundle && git checkout pyxmipp && cd .. && ./scipion3 run xmipp-bundle/xmipp  &&  cd xmipp-bundle/src && git clone https://github.com/I2PC/scipion-em-xmipp.git && cd scipion-em-xmipp && git checkout pyxmipp && ../../../scipion3 installp -p . --devel'
-    #installXmippCmd =  'rm -rf xmipp-bundle && rm -rf scipion-em-xmipp && git clone https://github.com/I2PC/xmipp3.git xmipp-bundle && ./scipion3 run pip install xmipp3-installer && ./scipion3 run xmipp-bundle/xmipp  &&  cd xmipp-bundle/src && git clone https://github.com/I2PC/scipion-em-xmipp.git && ../../scipion3 installp -p scipion-em-xmipp --devel'
+    installXmippCmd = 'rm -rf xmipp-bundle && rm -rf scipion-em-xmipp && export XMIPP3_CMAKE_CUDA_COMPILER=/usr/local/cuda/bin/nvcc && git clone https://github.com/I2PC/xmipp3.git xmipp-bundle && ./scipion3 run pip install xmipp3-installer && cd xmipp-bundle && git checkout pyxmipp && cd .. && ./scipion3 run xmipp-bundle/xmipp  &&  cd xmipp-bundle/src && git clone https://github.com/I2PC/scipion-em-xmipp.git && cd scipion-em-xmipp && git checkout pyxmipp && ../../../scipion3 installp -p . --devel'
+    #installXmippCmd =  'rm -rf xmipp-bundle && rm -rf scipion-em-xmipp && export XMIPP3_CMAKE_CUDA_COMPILER=/usr/local/cuda/bin/nvcc && git clone https://github.com/I2PC/xmipp3.git xmipp-bundle && ./scipion3 run pip install xmipp3-installer && ./scipion3 run xmipp-bundle/xmipp  &&  cd xmipp-bundle/src && git clone https://github.com/I2PC/scipion-em-xmipp.git && ../../scipion3 installp -p scipion-em-xmipp --devel'
     installScipionFactorySteps.addStep(ScipionCommandStep(
         command=installXmippCmd,
         name='Installing Xmipp',
