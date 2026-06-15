@@ -118,7 +118,8 @@ def xmippTestFactory(groupId):
                                   targetTestSet='xmipp3',
                                   timeout=settings.timeOutExecute,
                                   blacklist=settings.SCIPION_TESTS_BLACKLIST,
-                                  stageEnvs=envs))
+                                  stageEnvs=envs,
+                                  env={"CUDA_VISIBLE_DEVICES": "0,1"}))
 
     else:
 
@@ -149,7 +150,8 @@ def xmippTestFactory(groupId):
                 rootName='scipion3',
                 timeout=settings.timeOutExecute,
                 blacklist=settings.SCIPION_TESTS_BLACKLIST,
-                stageEnvs=envs))
+                stageEnvs=envs,
+                env={"CUDA_VISIBLE_DEVICES": "0,1"})) #avoid the GPU Quadro M4000 because Maxwell 52 cuda arch
 
     return xmippTestSteps
 
