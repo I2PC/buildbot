@@ -729,7 +729,7 @@ def installProdScipionFactory(groupId):
     installScipionFactorySteps.addStep(setMpiLibPath)
     installScipionFactorySteps.addStep(setMpiBinPath)
     installScipionFactorySteps.addStep(setMpiIncludePath)
-    installScipionFactorySteps.addStep(setDataTestsDir)
+    #installScipionFactorySteps.addStep(setDataTestsDir)
     # Activating the Anaconda environment
     # Set the anaconda environment
     #installScipionFactorySteps.addStep(setMotioncorrCuda)
