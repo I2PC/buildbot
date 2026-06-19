@@ -587,7 +587,7 @@ def addScipionGitAndConfigSteps(factorySteps, groupId):
     factorySteps.addStep(setMpiLibPath)
     factorySteps.addStep(setMpiBinPath)
     factorySteps.addStep(setMpiIncludePath)
-    factorySteps.addStep(setDataTestsDir)
+    #factorySteps.addStep(setDataTestsDir)
     # factorySteps.addStep(removeScipionUserData)  # to avoid old tests when are renamed
     factorySteps.addStep(setScipionUserData)
 
@@ -894,7 +894,7 @@ def installSDevelScipionFactory(groupId):
     installScipionFactorySteps.addStep(setMpiLibPath)
     installScipionFactorySteps.addStep(setMpiBinPath)
     installScipionFactorySteps.addStep(setMpiIncludePath)
-    installScipionFactorySteps.addStep(setDataTestsDir)
+    #installScipionFactorySteps.addStep(setDataTestsDir)
     # Activating the Anaconda environment
     # Set the anaconda environment
     # installScipionFactorySteps.addStep(setCryoloCuda)
