@@ -109,15 +109,27 @@ setMpiBinPath = ShellCommand(
 # Use a common home data tests folder to save storage
 setDataTestsDir = ShellCommand(
     command=[
-        'sed',
-        '-i',
-        '-e',
-        's|^SCIPION_TESTS\\s*=.*|SCIPION_TESTS = /data/buildbot/tests|g',
-        'config/scipion.conf'],
+        'bash',
+        '-c',
+        '''
+        FILE=config/scipion.conf
+        VALUE="SCIPION_TESTS = /data/buildbot/tests"
+
+        if grep -q "^SCIPION_TESTS\\s*=" "$FILE"; then
+            sed -i "s|^SCIPION_TESTS\\s*=.*|$VALUE|g" "$FILE"
+        else
+            echo "$VALUE" >> "$FILE"
+        fi
+        '''
+    ],
     name='Set data tests dir',
     description='Using a common data tests dir',
     descriptionDone='Change data tests dir',
-    haltOnFailure=True)
+    haltOnFailure=True
+)
+
+
+
 
 
 # Use an internal dir to allow a branch-dependent project inspection
