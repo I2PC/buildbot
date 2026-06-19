@@ -107,26 +107,26 @@ setMpiBinPath = ShellCommand(
     haltOnFailure=True)
 
 # Use a common home data tests folder to save storage
-setDataTestsDir = ShellCommand(
-    command=[
-        'bash',
-        '-c',
-        '''
-        FILE=config/scipion.conf
-        VALUE="SCIPION_TESTS = /data/buildbot/tests"
+# setDataTestsDir = ShellCommand(
+#     command=[
+#         'bash',
+#         '-c',
+#         '''
+#         FILE=config/scipion.conf
+#         VALUE="SCIPION_TESTS = /data/buildbot/tests"
 
-        if grep -q "^SCIPION_TESTS\\s*=" "$FILE"; then
-            sed -i "s|^SCIPION_TESTS\\s*=.*|$VALUE|g" "$FILE"
-        else
-            echo "$VALUE" >> "$FILE"
-        fi
-        '''
-    ],
-    name='Set data tests dir',
-    description='Using a common data tests dir',
-    descriptionDone='Change data tests dir',
-    haltOnFailure=True
-)
+#         if grep -q "^SCIPION_TESTS\\s*=" "$FILE"; then
+#             sed -i "s|^SCIPION_TESTS\\s*=.*|$VALUE|g" "$FILE"
+#         else
+#             echo "$VALUE" >> "$FILE"
+#         fi
+#         '''
+#     ],
+#     name='Set data tests dir',
+#     description='Using a common data tests dir',
+#     descriptionDone='Change data tests dir',
+#     haltOnFailure=True
+# )
 
 
 
