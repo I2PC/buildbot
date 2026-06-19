@@ -297,6 +297,14 @@ setBuildXmippTest = ShellCommand(
     descriptionDone='Add BUILD_TESTS in scipion conf',
     haltOnFailure=True)
 
+setSCIPOION_TESTS = ShellCommand(
+    command=util.Interpolate(
+        'sed -ie "\$aSCIPION_TESTS = {}" %(prop:SCIPION_LOCAL_CONFIG)s'.format(settings.SCIPION_TESTS)),
+    name='Add SCIPION_TESTS path in scipion conf',
+    description='Add SCIPION_TESTS path in scipion conf',
+    descriptionDone='Add SCIPION_TESTS path in scipion conf',
+    haltOnFailure=True)
+
 
 profilingProjectPath = ShellCommand(
     command=util.Interpolate(
@@ -759,6 +767,7 @@ def installProdScipionFactory(groupId):
     installScipionFactorySteps.addStep(setJjsoftHome)
     # installScipionFactorySteps.addStep(setEnvActivationCMD)
     installScipionFactorySteps.addStep(setBuildXmippTest)
+    installScipionFactorySteps.addStep(setSCIPOION_TESTS)
     installScipionFactorySteps.addStep(setXMIPPCUDA_BIN)
 
     installCmd = (settings.SCIPION_CMD + ' installp -p scipion-em-tomo' +
@@ -913,6 +922,7 @@ def installSDevelScipionFactory(groupId):
     installScipionFactorySteps.addStep(setJjsoftHome)
     # installScipionFactorySteps.addStep(setEnvActivationCMD_DEVEL)
     installScipionFactorySteps.addStep(setBuildXmippTest)
+    installScipionFactorySteps.addStep(setSCIPOION_TESTS)
     installScipionFactorySteps.addStep(setRelionMpiBin)
     installScipionFactorySteps.addStep(setRelionMpiLib)
     installScipionFactorySteps.addStep(setPipTimeout)
