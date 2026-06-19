@@ -115,7 +115,7 @@ except ImportError:
     EMAN2_HOME = os.path.join(EM_ROOT, 'eman-3.0.0-alpha')
     TOMO3D_HOME = "/home/buildbot/jjsoft"
     BUILD_TESTS = "True"
-    SCIPION_TEST = "/data/buildbot/tests"
+    SCIPION_TESTS = "/data/buildbot/tests"
     PYSEG_HOME = "/home/buildbot/pyseg-v2.0.5"
 
     # Cryosparc variables
